@@ -1,0 +1,89 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --color-background: rgb(253, 247, 228);
+  --color-layout: rgb(222, 208, 182);
+  --color-green: #5dffcf;
+  --color-yellow: #ffc139;
+  --color-blue: #4ec9ff;
+  --color-turkish-blue: #3ef1fc;
+
+  --color-orange: #ff8150;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, 'system-ui', 'Segoe UI', 'Noto Sans', Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  background: var(--color-background);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: black;
+}
+header {
+  min-height: 50px;
+  background: white;
+}
+main {
+  flex: 1;
+}
+nav {
+  width: 100vw;
+  height: 4rem;
+  background: var(--color-turkish-blue);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  > div a {
+    margin: 0.25rem;
+  }
+}
+h1 {
+  text-align: center;
+}
+
+button {
+  font-size: 0.875rem;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+footer {
+  min-height: 50px;
+  width: 100%;
+  background-color: var(--color-yellow);
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
