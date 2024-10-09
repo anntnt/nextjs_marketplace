@@ -1,11 +1,11 @@
 'use server';
-import { getCookie, setCookie } from '@/util/cookies';
-import { parseJson } from '@/util/json';
 import { stringifyCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
+import { getCookie, setCookie } from '../../../util/cookies';
+import { parseJson } from '../../../util/json';
 
 export default async function createOrUpdateCartCookie(productId, quantity) {
-  const productQuantitiesCookie = await getCookie('productQuantities');
+  const productQuantitiesCookie = await getCookie('cart');
 
   // A: If there is no productQuantitiesCookie then create am empty array, else copy cookie value into productQuantities array
   const productQuantities =
@@ -26,6 +26,5 @@ export default async function createOrUpdateCartCookie(productId, quantity) {
   else {
     currentProductQuantity.quantity = quantity;
   }
-  await setCookie('productQuantities', JSON.stringify(productQuantities));
-  //(await cookies()).set('productQuantities', JSON.stringify(productQuantities));
+  await setCookie('cart', JSON.stringify(productQuantities));
 }

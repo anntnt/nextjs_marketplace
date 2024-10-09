@@ -1,0 +1,24 @@
+.cartContent {
+  padding: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 62rem;
+
+  gap: 2rem;
+  width: 100%;
+}
+.productWrap {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: center;
+  align-content: center;
+}
+.productOrder {
+  flex-direction: column;
+  display: flex;
+  text-align: left;
+}

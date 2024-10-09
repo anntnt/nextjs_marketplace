@@ -1,14 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getProducts } from '../../database/products';
+import { getProductsInsecure } from '../../database/products';
 import styles from '../page.module.scss';
 
 export const metadata = {
   title: 'Products',
   description: 'Tropical Snack Products',
 };
-export default function ProductsPage() {
-  const products = getProducts();
+export default async function ProductsPage() {
+  // const products = getProducts();
+  const products = await getProductsInsecure();
   return (
     <div>
       <h1> Yummy snack food from the tropics</h1>

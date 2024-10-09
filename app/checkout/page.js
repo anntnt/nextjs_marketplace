@@ -3,9 +3,8 @@ import Link from 'next/link';
 import { getProductsInsecure } from '../../database/products';
 import { getCookie } from '../../util/cookies';
 import { parseJson } from '../../util/json';
-import ButtonCheckout from './buttonCheckout';
-import CartForm from './cartForm';
-import styles from './page.module.scss';
+
+// import styles from './page.module.scss';
 
 export const metadata = {
   title: 'Cart',
@@ -21,35 +20,26 @@ export default async function CartPage() {
   if (!Array.isArray(productQuantities)) {
     productQuantities = [];
   }
-
-  if (!productQuantitiesCookie || productQuantities.length === 0) {
+  if (!productQuantitiesCookie)
     return (
       <div>
         <h1> Cart </h1>
 
+        <p className={styles.cartContent}>
+          Product Quantities Cookie: {productQuantitiesCookie}
+        </p>
         <p className={styles.cartContent}>Your cart is empty</p>
       </div>
     );
-  }
-  /* const cartProducts = products.map((product) => {
-    const productInCart = productQuantities.find(
-      (productObject) => productObject.id === product.id,
-    );
-    return {
-      ...product,
-      productAmount: productInCart.quantity,
-    };
-  });
 
-  console.log('cartProducts:' + parseJson(cartProducts));*/
   return (
     <div>
+      Product Quantities Cookie: {productQuantitiesCookie}
       <h1> Cart </h1>
-      <p>Cart cookie: {productQuantitiesCookie}</p>
       <div className={styles.cartContent}>
         {products.map((product) => {
           const productQuantity = productQuantities.find(
-            (productObject) => product.id === productObject.id,
+            (productObject) => product.id == productObject.id,
           );
           const productTotalPrice = productQuantity
             ? product.price * parseInt(productQuantity.quantity)
@@ -58,11 +48,7 @@ export default async function CartPage() {
             orderPrice += productTotalPrice;
             totalProducts += parseInt(productQuantity.quantity);
             return (
-              <div
-                key={`product-${product.id}`}
-                className={styles.productWrap}
-                data-test-id={`cart-product-${product.id}`}
-              >
+              <div key={`product-${product.id}`} className={styles.productWrap}>
                 <Link
                   href={`/products/${product.id}`}
                   data-test-id={`product-${product.id}`}
@@ -76,15 +62,9 @@ export default async function CartPage() {
                 </Link>
                 <div className={styles.productOrder}>
                   <h3>{product.name}</h3>
-                  <div>
-                    Amount:{' '}
-                    <span data-test-id={`cart-product-quantity-${product.id}`}>
-                      {productQuantity?.quantity}
-                    </span>
-                  </div>
+                  <div>Amount: {productQuantity?.quantity}</div>
                 </div>
                 <h3>€ {productTotalPrice}</h3>
-                <CartForm productId={product.id} />
               </div>
             );
           }
@@ -92,14 +72,8 @@ export default async function CartPage() {
       </div>
       <div>
         <div>
-          Total ({totalProducts}):{' '}
-          <strong>
-            € <span data-test-id="cart-total">{orderPrice}</span>
-          </strong>
+          Total ({totalProducts}): <strong>€ {orderPrice}</strong>
         </div>
-        <Link href="/checkout">
-          <ButtonCheckout />
-        </Link>
       </div>
     </div>
   );

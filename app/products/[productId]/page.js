@@ -1,13 +1,17 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { util } from 'prettier';
 // import { useRouter } from 'next/navigation';
 import React from 'react';
-import { getProduct } from '../../../database/products';
+import { getProductInsecure } from '../../../database/products';
+import { parseJson } from '../../../util/json.js';
 import styles from '../../page.module.scss';
 import ProductForm from './productForm.js';
 
 export async function generateMetadata(props) {
-  const singleProduct = getProduct(Number((await props.params).productId));
+  const singleProduct = getProductInsecure(
+    Number((await props.params).productId),
+  );
   if (!singleProduct) {
     return notFound();
   }
@@ -18,11 +22,13 @@ export async function generateMetadata(props) {
 }
 
 export default async function SingleProductPage(props) {
-  // const router = useRouter();
-  const singleProduct = getProduct(Number((await props.params).productId));
+  const singleProduct = await getProductInsecure(
+    Number((await props.params).productId),
+  );
   if (!singleProduct) {
     return notFound();
   }
+
   return (
     <div>
       <h1>{singleProduct.name}</h1>
@@ -35,7 +41,7 @@ export default async function SingleProductPage(props) {
           data-test-id="product-image"
         />
         <h2>
-          <span data-test-id="product-price">{singleProduct.price}</span> €
+          <span data-test-id="product-price">€ {singleProduct.price}</span>
         </h2>
         <ProductForm productId={singleProduct.id} />
       </div>
