@@ -1,6 +1,7 @@
 import './globals.scss';
 import localFont from 'next/font/local';
 import Link from 'next/link';
+import itemsFromCart from './components/itemsFromCart';
 import styles from './page.module.scss';
 
 const geistSans = localFont({
@@ -23,6 +24,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const items = itemsFromCart();
   return (
     <html lang="en">
       <body
@@ -31,14 +33,21 @@ export default function RootLayout({ children }) {
         <header>
           <nav>
             <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-            <Link href="/products">Products</Link>
-            <Link href="/cart">Cart</Link>
+            <Link href="/products" data-test-id="products-link">
+              Products
+            </Link>
+            <Link href="/cart" data-test-id="cart-link">
+              <strong>
+                Cart (<span data-test-id="cart-count">{items})</span>
+              </strong>
+            </Link>
           </nav>
         </header>
         <main className={`${styles.main}`}>{children}</main>
 
-        <footer ><div>Tropical Snacks 2024</div></footer>
+        <footer>
+          <div>Tropical Snacks 2024</div>
+        </footer>
       </body>
     </html>
   );

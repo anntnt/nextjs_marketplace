@@ -1,18 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getProductsInsecure } from '../../database/products';
 import { getCookie } from '../../util/cookies';
 import { parseJson } from '../../util/json';
+import productsFromCart from '../components/productsFromCart';
 import ButtonCheckout from './buttonCheckout';
 import CartForm from './cartForm';
 import styles from './page.module.scss';
 
 export const metadata = {
   title: 'Cart',
-  description: 'Cart',
+  description: 'Cart page',
 };
 export default async function CartPage() {
-  const products = await getProductsInsecure();
   const productQuantitiesCookie = await getCookie('cart');
   let orderPrice = 0;
   let totalProducts = 0;
@@ -31,63 +30,50 @@ export default async function CartPage() {
       </div>
     );
   }
-  /* const cartProducts = products.map((product) => {
-    const productInCart = productQuantities.find(
-      (productObject) => productObject.id === product.id,
-    );
-    return {
-      ...product,
-      productAmount: productInCart.quantity,
-    };
-  });
 
-  console.log('cartProducts:' + parseJson(cartProducts));*/
+  const cartProducts = await productsFromCart();
+
   return (
     <div>
       <h1> Cart </h1>
-      <p>Cart cookie: {productQuantitiesCookie}</p>
+      {/* <p>Cart cookie: {productQuantitiesCookie}</p>*/}
       <div className={styles.cartContent}>
-        {products.map((product) => {
-          const productQuantity = productQuantities.find(
-            (productObject) => product.id === productObject.id,
-          );
-          const productTotalPrice = productQuantity
-            ? product.price * parseInt(productQuantity.quantity)
-            : 0;
-          if (productTotalPrice > 0) {
-            orderPrice += productTotalPrice;
-            totalProducts += parseInt(productQuantity.quantity);
-            return (
-              <div
-                key={`product-${product.id}`}
-                className={styles.productWrap}
-                data-test-id={`cart-product-${product.id}`}
+        {cartProducts.map((cartProduct) => {
+          orderPrice += cartProduct.totalPrice;
+          totalProducts += cartProduct.quantity;
+
+          return (
+            <div
+              key={`product-${cartProduct.id}`}
+              className={styles.productWrap}
+              data-test-id={`cart-product-${cartProduct.id}`}
+            >
+              <Link
+                href={`/products/${cartProduct.id}`}
+                data-test-id={`product-${cartProduct.id}`}
               >
-                <Link
-                  href={`/products/${product.id}`}
-                  data-test-id={`product-${product.id}`}
-                >
-                  <Image
-                    src={`/images/${product.image}`}
-                    alt={product.name}
-                    width={200}
-                    height={200}
-                  />
-                </Link>
-                <div className={styles.productOrder}>
-                  <h3>{product.name}</h3>
-                  <div>
-                    Amount:{' '}
-                    <span data-test-id={`cart-product-quantity-${product.id}`}>
-                      {productQuantity?.quantity}
-                    </span>
-                  </div>
+                <Image
+                  src={`/images/${cartProduct.image}`}
+                  alt={cartProduct.name}
+                  width={150}
+                  height={150}
+                />
+              </Link>
+              <div className={styles.productOrder}>
+                <h3>{cartProduct.name}</h3>
+                <div>
+                  Amount:{' '}
+                  <span
+                    data-test-id={`cart-product-quantity-${cartProduct.id}`}
+                  >
+                    {cartProduct.quantity}
+                  </span>
                 </div>
-                <h3>€ {productTotalPrice}</h3>
-                <CartForm productId={product.id} />
               </div>
-            );
-          }
+              <h3>€ {cartProduct.totalPrice}</h3>
+              <CartForm productId={cartProduct.id} />
+            </div>
+          );
         })}
       </div>
       <div>

@@ -12,7 +12,7 @@ export default async function ProductsPage() {
   const products = await getProductsInsecure();
   return (
     <div>
-      <h1> Yummy snack food from the tropics</h1>
+      <h1> Yummy snacks from the tropics</h1>
       <div className={styles.content}>
         {products.map((product) => {
           return (

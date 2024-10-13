@@ -1,5 +1,9 @@
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Not found',
+  description: 'This page was not found',
+};
 export default function RootNotFound() {
   // You can add any UI inside RootNotFound, including Animations.
   return (

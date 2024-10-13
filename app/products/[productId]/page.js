@@ -1,10 +1,8 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { util } from 'prettier';
 // import { useRouter } from 'next/navigation';
 import React from 'react';
 import { getProductInsecure } from '../../../database/products';
-import { parseJson } from '../../../util/json.js';
 import styles from '../../page.module.scss';
 import ProductForm from './productForm.js';
 
@@ -12,12 +10,9 @@ export async function generateMetadata(props) {
   const singleProduct = getProductInsecure(
     Number((await props.params).productId),
   );
-  if (!singleProduct) {
-    return notFound();
-  }
   return {
     title: singleProduct.name,
-    description: singleProduct.name,
+    description: singleProduct.description,
   };
 }
 

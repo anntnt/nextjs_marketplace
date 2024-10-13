@@ -1,6 +1,5 @@
 'use server';
-import { stringifyCookie } from 'next/dist/compiled/@edge-runtime/cookies';
-import { cookies } from 'next/headers';
+
 import { getCookie, setCookie } from '../../../util/cookies';
 import { parseJson } from '../../../util/json';
 
@@ -24,7 +23,8 @@ export default async function createOrUpdateCartCookie(productId, quantity) {
   }
   // C: currentProductQuantity is already in cookie array
   else {
-    currentProductQuantity.quantity = quantity;
+    currentProductQuantity.quantity =
+      parseInt(currentProductQuantity.quantity) + parseInt(quantity);
   }
   await setCookie('cart', JSON.stringify(productQuantities));
 }

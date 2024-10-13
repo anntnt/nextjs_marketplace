@@ -13,7 +13,7 @@ export default function cartForm(props) {
           formAction={async () => {
             await deleteProductFromCartCookie(props.productId);
             // reload Cart page
-            router.refresh();
+            // router.refresh();
           }}
           data-test-id={`cart-product-remove-${props.productId}`}
         >

@@ -1,6 +1,11 @@
 .homePage {
   width: 100%;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
   p {
     margin-top: 2rem;
     font-size: 1.3rem;
@@ -8,7 +13,7 @@
   }
 }
 .main {
-  padding-top: 5rem;
+  padding-top: 3rem;
   max-width: 62rem;
   margin: 0 auto;
 }

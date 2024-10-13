@@ -6,7 +6,8 @@ const products = [
     name: 'Cashew nuts',
     price: 6,
     image: 'cashew-nuts.jpg',
-    description: 'Cashew nuts',
+    description:
+      'Cashew nuts are rich, buttery seeds packed with healthy fats, protein, and essential nutrients. Perfect for snacking or cooking, they offer a creamy texture and delicious flavor.',
   },
   {
     id: 2,
