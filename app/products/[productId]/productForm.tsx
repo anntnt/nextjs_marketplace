@@ -2,11 +2,14 @@
 
 import { useState } from 'react';
 import createOrUpdateCartCookie from './action';
-import styles from './productForm.scss';
+import styles from './productForm.module.scss';
 
-export default function ProductForm(props) {
+type Props = {
+  productId: number;
+};
+export default function ProductForm(props: Props) {
   const [quantity, setQuantity] = useState('1');
-  async function clickHandler(productId, amount) {
+  async function clickHandler(productId: number, amount: string) {
     await createOrUpdateCartCookie(productId, amount);
   }
   return (

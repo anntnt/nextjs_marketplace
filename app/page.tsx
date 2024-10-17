@@ -1,9 +1,12 @@
 import Image from 'next/image';
+// import { usePathname } from 'next/navigation';
 import ButtonLink from './components/buttonLink';
 // import Link from 'next/link';
 import styles from './page.module.scss';
 
 export default function Home() {
+  // const productsLink = usePathname();
+
   return (
     <div className={`${styles.homePage} `}>
       <h1>Welcome to Tropical Snacks!</h1>

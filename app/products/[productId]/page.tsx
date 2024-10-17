@@ -4,19 +4,26 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import { getProductInsecure } from '../../../database/products';
 import styles from '../../page.module.scss';
-import ProductForm from './productForm.js';
+import ProductForm from './productForm';
 
-export async function generateMetadata(props) {
+type Props = {
+  params: Promise<{
+    productId: string;
+  }>;
+};
+
+/* export async function generateMetadata(props: Props) {
   const singleProduct = getProductInsecure(
     Number((await props.params).productId),
   );
   return {
+    // Optional chaining because we cannot call notFound() in generateMetadata
     title: singleProduct.name,
     description: singleProduct.description,
   };
-}
+}*/
 
-export default async function SingleProductPage(props) {
+export default async function SingleProductPage(props: Props) {
   const singleProduct = await getProductInsecure(
     Number((await props.params).productId),
   );

@@ -1,6 +1,7 @@
 import './globals.scss';
 import localFont from 'next/font/local';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 import itemsFromCart from './components/itemsFromCart';
 import styles from './page.module.scss';
 
@@ -23,7 +24,10 @@ export const metadata = {
   description: 'Delicious snack food from the tropics',
 };
 
-export default function RootLayout({ children }) {
+type Props = {
+  children: ReactNode;
+};
+export default function RootLayout({ children }: Props) {
   const items = itemsFromCart();
   return (
     <html lang="en">

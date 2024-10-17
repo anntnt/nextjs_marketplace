@@ -1,6 +1,7 @@
 import 'server-only';
 import { config } from 'dotenv-safe';
-import postgres, { Sql } from 'postgres';
+import type { Sql } from 'postgres';
+import postgres from 'postgres';
 import { postgresConfig } from '../util/config';
 
 config();

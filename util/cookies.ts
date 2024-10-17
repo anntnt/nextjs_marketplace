@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-export async function getCookie(name) {
+export async function getCookie(name: string) {
   const cookie = (await cookies()).get(name);
   if (!cookie) {
     return undefined;
@@ -8,10 +8,10 @@ export async function getCookie(name) {
   return cookie.value;
 }
 
-export async function setCookie(name, value) {
+export async function setCookie(name: string, value: string) {
   (await cookies()).set(name, value);
 }
 
-export async function deleteCookie(name) {
+export async function deleteCookie(name: string) {
   (await cookies()).delete(name);
 }
