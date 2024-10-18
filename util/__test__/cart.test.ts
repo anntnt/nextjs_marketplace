@@ -20,26 +20,20 @@ test('Add to cart', async () => {
     },
   ];
 
-  const addToEmptyCart = 'id: 1, quantity: 4';
-  const addToNonEmptyCartWithTheSameId: Cart = {
+  const testStrAddToEmptyCart = 'id: 1, quantity: 4';
+  const testStrAddToNonEmptyCartWithTheSameId: Cart = {
     id: 1,
     quantity: '14',
   };
-  const addToNonEmptyCartWithAnotherI: Cart = {
+  const testStrAddToNonEmptyCartWithAnotherI: Cart = {
     id: 1,
     quantity: '14',
   };
-  // console.log(cart[0]?.id, cart[0]?.quantity);
+
   if (cart[0]) {
     await createOrUpdateCartCookie(cart[0]?.id, cart[0]?.quantity);
-    /*   .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.error('An error occurred:', error);
-      });*/
   }
 
-  expect(getCookie('cart')).toStrictEqual(addToEmptyCart);
+  expect(getCookie('cart')).toStrictEqual(testStrAddToEmptyCart);
   console.log(getCookie('cart'));
 });
