@@ -16,6 +16,7 @@
     "**/*.jsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "app/products/[productId]/_action.ts.old"
   ]
 }

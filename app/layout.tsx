@@ -1,7 +1,7 @@
 import './globals.scss';
 import localFont from 'next/font/local';
 import Link from 'next/link';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import itemsFromCart from './components/itemsFromCart';
 import styles from './page.module.scss';
 

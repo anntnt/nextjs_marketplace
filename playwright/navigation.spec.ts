@@ -134,7 +134,7 @@ test('navigation test', async ({ page }) => {
 
   await page.getByTestId('checkout-first-name').fill('John');
   await page.getByTestId('checkout-last-name').fill('Doe');
-  await page.getByTestId('checkout-email').fill('Doegmail.com');
+  await page.getByTestId('checkout-email').fill('Doe@gmail.com');
   await page.getByTestId('checkout-address').fill('Test Street');
   await page.getByTestId('checkout-city').fill('Vienna');
   await page.getByTestId('checkout-postal-code').fill('1020');
@@ -145,7 +145,6 @@ test('navigation test', async ({ page }) => {
 
   await page.getByTestId('checkout-confirm-order').click();
   await page.waitForURL('/thank-you');
-  // await expect(page).toHaveURL('/thank-you');
-  await expect(page).toHaveTitle('Thank you for your order');
+  await expect(page).toHaveTitle('Thank you for your order | Tropical Snacks');
   await expect(page.getByRole('link', { name: 'Cart (0)' })).toBeVisible();
 });

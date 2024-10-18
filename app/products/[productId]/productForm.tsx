@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import createOrUpdateCartCookie from './action';
+import createOrUpdateCartCookie from '../../../util/createOrUpdateCartCookie';
 import styles from './productForm.module.scss';
 
 type Props = {
