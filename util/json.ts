@@ -1,10 +1,10 @@
 import sjson from 'secure-json-parse';
-import type { Cart } from '../app/products/[productId]/_action.ts.old';
+import type { ProductQuantityInCart } from './cart';
 
 export function parseJson(json: string | undefined) {
   if (!json) return undefined;
   try {
-    return sjson(json) as Cart[];
+    return sjson(json) as ProductQuantityInCart[];
   } catch {
     return undefined;
   }

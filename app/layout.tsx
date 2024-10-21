@@ -2,7 +2,7 @@ import './globals.scss';
 import localFont from 'next/font/local';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import itemsFromCart from './components/itemsFromCart';
+import itemsFromCart from '../util/itemsFromCart';
 import styles from './page.module.scss';
 
 const geistSans = localFont({

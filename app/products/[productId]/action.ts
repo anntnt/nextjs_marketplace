@@ -1,21 +1,19 @@
 'use server';
 
-import { getCookie, setCookie } from './cookies';
-import { parseJson } from './json';
+import type { ProductQuantityInCart } from '../../../util/cart';
+import { getCookie, setCookie } from '../../../util/cookies';
+import { parseJson } from '../../../util/json';
+import { add } from '../../../util/math';
 
-export type Cart = {
-  id: number;
-  quantity: string;
-};
 export default async function createOrUpdateCartCookie(
-  productId: Cart['id'],
-  quantity: Cart['quantity'],
+  productId: ProductQuantityInCart['productId'],
+  quantity: ProductQuantityInCart['quantity'],
 ) {
   // 1. get current cookie!
   const productQuantitiesCookie = await getCookie('cart');
 
   // 2. parse the cookie value
-  const productQuantities: Cart[] =
+  const productQuantities: ProductQuantityInCart[] =
     productQuantitiesCookie === undefined
       ? // Case A: cookie undefined
         []
@@ -23,18 +21,19 @@ export default async function createOrUpdateCartCookie(
 
   // 3. edit the cookie value
   const currentProductQuantity = productQuantities.find((productQuantity) => {
-    return productQuantity.id === productId;
+    return productQuantity.productId === productId;
   });
 
   // Case B: cookie set, id doesn't exist
   if (!currentProductQuantity) {
-    productQuantities.push({ id: productId, quantity: quantity });
+    productQuantities.push({ productId: productId, quantity: quantity });
   }
   // Case C: cookie set, id exists already
   else {
-    currentProductQuantity.quantity = (
-      parseInt(currentProductQuantity.quantity) + parseInt(quantity)
-    ).toString();
+    currentProductQuantity.quantity = add(
+      currentProductQuantity.quantity,
+      quantity,
+    );
   }
   await setCookie('cart', JSON.stringify(productQuantities));
 }

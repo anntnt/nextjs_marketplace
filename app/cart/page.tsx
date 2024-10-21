@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { ProductQuantityInCart } from '../../util/cart';
 import { getCookie } from '../../util/cookies';
 import { parseJson } from '../../util/json';
-import productsFromCart from '../components/productsFromCart';
+import productsFromCart from '../../util/productsFromCart';
 import ButtonCheckout from './buttonCheckout';
 import CartForm from './cartForm';
 import styles from './page.module.scss';
@@ -15,7 +16,8 @@ export default async function CartPage() {
   const productQuantitiesCookie = await getCookie('cart');
   let orderPrice = 0;
   let totalProducts = 0;
-  let productQuantities = parseJson(productQuantitiesCookie) || [];
+  let productQuantities: ProductQuantityInCart[] =
+    parseJson(productQuantitiesCookie) || [];
 
   if (!Array.isArray(productQuantities)) {
     productQuantities = [];
@@ -36,7 +38,7 @@ export default async function CartPage() {
   return (
     <div>
       <h1> Cart </h1>
-      {/* <p>Cart cookie: {productQuantitiesCookie}</p>*/}
+      {/* <p>Cart cookie: {productQuantitiesCookie}</p> */}
       <div className={styles.cartContent}>
         {cartProducts.map((cartProduct) => {
           orderPrice += cartProduct.totalPrice;

@@ -1,11 +1,10 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import deleteProductFromCartCookie from './action.js';
+
+import deleteProductFromCartCookie from './action';
 
 // import styles from './productForm.scss';
 
 export default function cartForm(props) {
-  const router = useRouter;
   return (
     <div>
       <form>

@@ -17,6 +17,7 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    "app/products/[productId]/_action.ts.old"
+    "app/products/[productId]/action.ts",
+    "util/__test__/cartProductQuantityUpdate.test.ts"
   ]
 }

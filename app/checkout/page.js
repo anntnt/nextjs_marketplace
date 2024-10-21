@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getCookie } from '../../util/cookies';
 import { parseJson } from '../../util/json';
-import productsFromCart from '../components/productsFromCart';
+import productsFromCart from '../../util/productsFromCart';
 import CheckoutForm from './checkoutForm';
 import styles from './page.module.scss';
 

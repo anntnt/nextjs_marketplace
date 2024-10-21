@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import createOrUpdateCartCookie from '../../../util/createOrUpdateCartCookie';
+import createOrUpdateCartCookie from './action';
 import styles from './productForm.module.scss';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 };
 export default function ProductForm(props: Props) {
   const [quantity, setQuantity] = useState('1');
-  async function clickHandler(productId: number, amount: string) {
+  async function clickHandler(productId: number, amount: number) {
     await createOrUpdateCartCookie(productId, amount);
   }
   return (
@@ -34,7 +34,7 @@ export default function ProductForm(props: Props) {
         </select>
 
         <button
-          formAction={() => clickHandler(props.productId, quantity)}
+          formAction={() => clickHandler(props.productId, parseInt(quantity))}
           data-test-id="product-add-to-cart"
         >
           Add to cart
