@@ -1,7 +1,7 @@
 'use client';
-import { Route } from 'next';
+import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
