@@ -17,10 +17,10 @@ export default async function deleteProductFromCartCookie(productId: number) {
 
   // find product object in cookie 'cart' then remove it from cookie 'cart', by removing this object from array productQuantities and update the cookie by setCookie
   // if (productQuantities) {
-    const productIndex = productQuantities.findIndex(
-      (key) => key.productId === productId,
-    );
-    productQuantities.splice(productIndex, 1);
-    await setCookie('cart', JSON.stringify(productQuantities));
+  const productIndex = productQuantities.findIndex(
+    (key) => key.productId === productId,
+  );
+  productQuantities.splice(productIndex, 1);
+  await setCookie('cart', JSON.stringify(productQuantities));
   // }
 }
