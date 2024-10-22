@@ -1,10 +1,8 @@
-# UpLeveled Next.js example - Fall 2024
+# Next.js Ecommerce Store
 
-The Next.js example - Fall 2024 is a project that demonstrates how to use Next.js to build a full-stack web application. It is part of the curriculum for the [UpLeveled Fullstack Web Development Bootcamp](https://upleveled.io/web-development-bootcamp).
+The Ecommerce Store Tropical Snacks is a project which I used Next.js to build a full-stack web application.
 
-![alt text](./public/homepage.png)
-
-<img width="1470" alt="Screenshot 2024-10-16 at 13 35 18" src="https://github.com/user-attachments/assets/142f6778-3a63-4057-a3f7-a1fdb1f0f193">
+![alt text](./public/products.jpg)
 
 ## Technologies
 
