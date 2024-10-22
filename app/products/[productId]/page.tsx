@@ -43,7 +43,7 @@ export default async function SingleProductPage(props: Props) {
           data-test-id="product-image"
         />
         <h2>
-          <span data-test-id="product-price">€ {singleProduct.price}</span>
+          € <span data-test-id="product-price">{singleProduct.price}</span>
         </h2>
         <ProductForm productId={singleProduct.id} />
       </div>
