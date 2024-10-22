@@ -55,7 +55,7 @@ test('navigation test', async ({ page }) => {
   }*/
   await page.getByRole('link', { name: 'Cashew nuts' }).click();
   await page.waitForURL('/products/1');
-  await page.setViewportSize({ width: 1920, height: 911 });
+  //  await page.setViewportSize({ width: 1920, height: 911 });
 
   await page.getByTestId('product-quantity').selectOption('2');
   await page.getByRole('button', { name: 'Add to cart' }).click();
