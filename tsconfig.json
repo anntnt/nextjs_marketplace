@@ -6,8 +6,7 @@
       {
         "name": "next"
       }
-    ],
-    "jsx": "preserve"
+    ]
   },
   "include": [
     "**/*.ts",
@@ -16,8 +15,6 @@
     "**/*.jsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts",
-    "app/products/[productId]/action.ts",
-    "util/__test__/cartProductQuantityUpdate.test.ts"
+    ".next/types/**/*.ts"
   ]
 }
