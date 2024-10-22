@@ -18,14 +18,14 @@
   margin: 0 auto;
 }
 .content {
-  padding-top: 5rem;
+  padding: 5rem 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   text-align: center;
   max-width: 62rem;
-
+  flex-wrap: wrap;
   gap: 2rem;
   width: 100%;
 }
