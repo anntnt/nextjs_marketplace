@@ -8,7 +8,7 @@ test('navigation test', async ({ page }) => {
   await page.getByRole('link', { name: 'Products' }).click();
   await page.waitForURL('/products');
 
-  const products = [
+  /* const products = [
     {
       id: 1,
       name: 'Cashew nuts',
@@ -46,7 +46,7 @@ test('navigation test', async ({ page }) => {
       description: 'Instant noodles',
     },
   ];
-  /*  for (const product of products) {
+   for (const product of products) {
     await expect(page.getByTestId(`product-${product.id}`)).toHaveText(
       product.name,
     );
