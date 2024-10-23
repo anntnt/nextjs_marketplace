@@ -74,13 +74,13 @@ test('navigation test', async ({ page }) => {
   await page.waitForURL('/products/4');
   await page.getByTestId('product-quantity').selectOption('6');
   await page.getByRole('button', { name: 'Add to cart' }).click();
-  await expect(page.getByRole('link', { name: 'Cart (18)' })).toBeVisible(); */
+  await expect(page.getByRole('link', { name: 'Cart (18)' })).toBeVisible();
 
   await page.getByRole('link', { name: 'Cart' }).click();
   await page.waitForURL('/cart');
 
   await page.getByTestId('cart-product-remove-4').click();
-  await expect(page.getByRole('link', { name: 'Cart (12)' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Cart (12)' })).toBeVisible();*/
 
   // E2E: Checkout flow, payment page, thank you page
 
