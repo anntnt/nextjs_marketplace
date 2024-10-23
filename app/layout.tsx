@@ -42,7 +42,7 @@ export default function RootLayout({ children }: Props) {
             </Link>
             <Link href="/cart" data-test-id="cart-link">
               <strong>
-                Cart (<span data-test-id="cart-count">{items})</span>
+                Cart (<span data-test-id="cart-count">{items}</span>)
               </strong>
             </Link>
           </nav>
