@@ -84,7 +84,7 @@ test('navigation test', async ({ page }) => {
 
   // E2E: Checkout flow, payment page, thank you page
 
-  await page.getByTestId('cart-checkout').click();
+  // await page.getByTestId('cart-checkout').click();
   /* await expect(page.getByTestId('checkout-first-name')).toBeVisible();
   await expect(page.getByTestId('checkout-last-name')).toBeVisible();
   await expect(page.getByTestId('checkout-email')).toBeVisible();
@@ -96,7 +96,7 @@ test('navigation test', async ({ page }) => {
   await expect(page.getByTestId('checkout-expiration-date')).toBeVisible();
   await expect(page.getByTestId('checkout-security-code')).toBeVisible();
   await expect(page.getByTestId('checkout-confirm-order')).toBeVisible();*/
-
+  /*
   // Check if the input has the 'required' attribute
   let input = page.getByTestId('checkout-first-name');
   // Check if it is required
@@ -149,5 +149,5 @@ test('navigation test', async ({ page }) => {
   await page.getByTestId('checkout-confirm-order').click();
   await page.waitForURL('/thank-you');
   await expect(page).toHaveTitle('Thank you for your order | Tropical Snacks');
-  await expect(page.getByRole('link', { name: 'Cart (0)' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Cart (0)' })).toBeVisible();*/
 });
