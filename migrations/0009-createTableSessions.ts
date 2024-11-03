@@ -9,9 +9,9 @@ export async function up(sql: Sql) {
   await sql`
     CREATE TABLE sessions (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-      user_id integer NOT NULL REFERENCES users (id) ON DELETE cascade,
-      token varchar(150) NOT NULL,
+      token varchar(150) NOT NULL UNIQUE,
       expiry_timestamp timestamp NOT NULL DEFAULT now() + interval '24 hours',
+      user_id integer NOT NULL REFERENCES users (id) ON DELETE cascade,
       cart_id integer NOT NULL REFERENCES carts (id) ON DELETE cascade
     )
   `;
