@@ -1,8 +1,11 @@
 import './globals.scss';
 import localFont from 'next/font/local';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { getUser } from '../database/users';
 import itemsFromCart from '../util/itemsFromCart';
+import LogoutButton from './(auth)/logout/LogoutButton';
 import styles from './page.module.scss';
 
 const geistSans = localFont({
@@ -27,8 +30,18 @@ export const metadata = {
 type Props = {
   children: ReactNode;
 };
-export default function RootLayout({ children }: Props) {
+export default async function RootLayout({ children }: Props) {
   const items = itemsFromCart();
+  // Task: Display the logged in user's username in the navigation bar and hide the login and register links depending on whether the user is logged in or not
+  // 1. Checking if the sessionToken cookie exists
+  const sessionTokenCookie = (await cookies()).get('sessionToken');
+
+  // 2. Get the current logged in user from the database using the sessionToken value
+  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
+
+  // console.log('User: ', user);
+
+  // 3. Make decision whether to show the login and register links or not
   return (
     <html lang="en">
       <body
@@ -45,13 +58,21 @@ export default function RootLayout({ children }: Props) {
                 Cart (<span data-test-id="cart-count">{items}</span>)
               </strong>
             </Link>
-            <Link href="/login" data-test-id="login-link">
-              <strong>Login</strong>
-            </Link>
-            /
-            <Link href="/register" data-test-id="register-link">
-              <strong>Register</strong>
-            </Link>
+            <div>
+              {user ? (
+                <>
+                  <Link href={`/profile/${user.username}`}>
+                    {user.username}
+                  </Link>
+                  <LogoutButton />
+                </>
+              ) : (
+                <>
+                  <Link href="/register">Register</Link>
+                  <Link href="/login">Login</Link>
+                </>
+              )}
+            </div>
           </nav>
         </header>
         <main className={`${styles.main}`}>{children}</main>
