@@ -7,7 +7,7 @@ import { getUserWithPasswordHashInsecure } from '../../../../database/users';
 import {
   type User,
   userSchema,
-} from '../../../../migrations/00000-createTableUsers';
+} from '../../../../migrations/0000-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 export type LoginResponseBody =

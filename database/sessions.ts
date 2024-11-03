@@ -1,18 +1,18 @@
 import { cache } from 'react';
-import type { User } from '../migrations/00000-createTableUsers';
-import type { Session } from '../migrations/00009-createTableSessions';
+import type { User } from '../migrations/0000-createTableUsers';
+import type { Session } from '../migrations/0009-createTableSessions';
 import { sql } from './connect';
 
 export const getValidSessionToken = cache(
   async (sessionToken: Session['token']) => {
     const [session] = await sql<Session[]>`
       SELECT
-        sessions.session_token,
+        sessions.token,
         sessions.user_id
       FROM
         sessions
       WHERE
-        sessions.session_token = ${sessionToken}
+        sessions.token = ${sessionToken}
         AND sessions.expiry_timestamp > now()
     `;
 

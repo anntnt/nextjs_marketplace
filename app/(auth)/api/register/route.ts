@@ -10,7 +10,7 @@ import {
 import {
   type User,
   userSchema,
-} from '../../../../migrations/00000-createTableUsers';
+} from '../../../../migrations/0000-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 export type RegisterResponseBody =
@@ -42,6 +42,7 @@ export async function POST(
   }
 
   // 3. Check if user already exist in the database
+  console.log('result.data.username ' + result.data.username);
   const user = await getUserInsecure(result.data.username);
 
   if (user) {

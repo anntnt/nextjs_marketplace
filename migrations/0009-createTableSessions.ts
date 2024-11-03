@@ -10,13 +10,13 @@ export async function up(sql: Sql) {
     CREATE TABLE sessions (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       user_id integer NOT NULL REFERENCES users (id) ON DELETE cascade,
-      session_token varchar(150) NOT NULL,
-      expiry_timestamp date NOT NULL,
+      token varchar(150) NOT NULL,
+      expiry_timestamp timestamp NOT NULL DEFAULT now() + interval '24 hours',
       cart_id integer NOT NULL REFERENCES carts (id) ON DELETE cascade
     )
   `;
 }
 
 export async function down(sql: Sql) {
-  await sql`DROP TABLE sessions`;
+  await sql`DROP TABLE sessions cascade`;
 }

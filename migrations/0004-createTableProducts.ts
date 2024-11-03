@@ -17,5 +17,5 @@ export async function up(sql: Sql) {
 }
 
 export async function down(sql: Sql) {
-  await sql`DROP TABLE products`;
+  await sql`DROP TABLE products cascade`;
 }

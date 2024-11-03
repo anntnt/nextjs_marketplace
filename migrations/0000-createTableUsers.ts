@@ -27,9 +27,9 @@ export async function up(sql: Sql) {
     CREATE TABLE users (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       username varchar(50) NOT NULL,
-      firstname varchar(50) NOT NULL,
-      lastname varchar(50) NOT NULL,
-      email_address varchar(50) NOT NULL,
+      firstname varchar(50),
+      lastname varchar(50),
+      email_address varchar(50),
       password_hash varchar(150) NOT NULL,
       birthday date,
       gender varchar(10),
@@ -39,5 +39,5 @@ export async function up(sql: Sql) {
 }
 
 export async function down(sql: Sql) {
-  await sql`DROP TABLE users`;
+  await sql`DROP TABLE users cascade`;
 }
