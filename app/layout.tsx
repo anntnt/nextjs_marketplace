@@ -45,12 +45,19 @@ export default function RootLayout({ children }: Props) {
                 Cart (<span data-test-id="cart-count">{items}</span>)
               </strong>
             </Link>
+            <Link href="/login" data-test-id="login-link">
+              <strong>Login</strong>
+            </Link>
+            /
+            <Link href="/register" data-test-id="register-link">
+              <strong>Register</strong>
+            </Link>
           </nav>
         </header>
         <main className={`${styles.main}`}>{children}</main>
 
         <footer>
-          <div>Tropical Snacks 2024</div>
+          <div>MarketLink 2024</div>
         </footer>
       </body>
     </html>
