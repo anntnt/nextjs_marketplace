@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import { getUser } from '../database/users';
 import itemsFromCart from '../util/itemsFromCart';
 import LogoutButton from './(auth)/logout/LogoutButton';
+import Header from './components/Header';
 import styles from './page.module.scss';
 
 const geistSans = localFont({
@@ -47,6 +48,7 @@ export default async function RootLayout({ children }: Props) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Header />
         <header>
           <nav>
             <Link href="/">Home</Link>
