@@ -1,13 +1,18 @@
-import './globals.scss';
+// import './globals.scss';
+import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import Header from '../components/Header';
+import { TailwindIndicator } from '../components/tailwind-indicator';
 import { getUser } from '../database/users';
 import itemsFromCart from '../util/itemsFromCart';
 import LogoutButton from './(auth)/logout/LogoutButton';
-import Header from './components/Header';
-import styles from './page.module.scss';
+
+// import styles from './page.module.scss';
+
+const inter = Inter({ subsets: ['latin'] });
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -45,39 +50,11 @@ export default async function RootLayout({ children }: Props) {
   // 3. Make decision whether to show the login and register links or not
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={inter.className}>
         <Header />
-        <header>
-          <nav>
-            <Link href="/">Home</Link>
-            <Link href="/products" data-test-id="products-link">
-              Products
-            </Link>
-            <Link href="/cart" data-test-id="cart-link">
-              <strong>
-                Cart (<span data-test-id="cart-count">{items}</span>)
-              </strong>
-            </Link>
-            <div>
-              {user ? (
-                <>
-                  <Link href={`/profile/${user.username}`}>
-                    {user.username}
-                  </Link>
-                  <LogoutButton />
-                </>
-              ) : (
-                <>
-                  <Link href="/register">Register</Link>
-                  <Link href="/login">Login</Link>
-                </>
-              )}
-            </div>
-          </nav>
-        </header>
-        <main className={`${styles.main}`}>{children}</main>
+
+        {children}
+        <TailwindIndicator />
 
         <footer>
           <div>MarketLink 2024</div>

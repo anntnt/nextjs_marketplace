@@ -11,12 +11,11 @@ export async function up(sql: Sql) {
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       token varchar(150) NOT NULL UNIQUE,
       expiry_timestamp timestamp NOT NULL DEFAULT now() + interval '24 hours',
-      user_id integer NOT NULL REFERENCES users (id) ON DELETE cascade,
-      cart_id integer REFERENCES carts (id) ON DELETE cascade
+      user_id integer NOT NULL REFERENCES users (id) ON DELETE cascade
     )
   `;
 }
 
 export async function down(sql: Sql) {
-  await sql`DROP TABLE sessions cascade`;
+  await sql`DROP TABLE sessions`;
 }
