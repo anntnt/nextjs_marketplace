@@ -1,17 +1,13 @@
-// import './globals.scss';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import Header from '../components/Header';
-import { TailwindIndicator } from '../components/tailwind-indicator';
+import Navbar from '../components/Navbar';
 import { getUser } from '../database/users';
 import itemsFromCart from '../util/itemsFromCart';
 import LogoutButton from './(auth)/logout/LogoutButton';
-
-// import styles from './page.module.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -52,10 +48,9 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
+        <Navbar />
 
         {children}
-        <TailwindIndicator />
 
         <footer>
           <div>MarketLink 2024</div>
