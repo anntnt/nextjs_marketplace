@@ -89,6 +89,7 @@ const Navbar: React.FC = () => {
           >
             Register
           </Link>
+
         </div>
 
         {/* Mobile Menu Toggle */}
