@@ -1,6 +1,6 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 // import { usePathname } from 'next/navigation';
-import ButtonLink from './components/buttonLink';
+// import ButtonLink from './components/buttonLink';
 
 // import Link from 'next/link';
 // import styles from './page.module.scss';

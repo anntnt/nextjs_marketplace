@@ -1,4 +1,5 @@
 // import './globals.scss';
+import './globals.css';
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
