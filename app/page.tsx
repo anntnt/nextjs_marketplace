@@ -8,9 +8,5 @@
 export default function Home() {
   // const productsLink = usePathname();
 
-  return (
-    <main className="container">
-      <h1>Home page</h1>
-    </main>
-  );
+  return <h1 className="mb-4 text-4xl text-center">Home page</h1>;
 }

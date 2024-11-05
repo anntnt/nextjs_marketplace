@@ -26,7 +26,7 @@ export default async function CartPage() {
   if (!productQuantitiesCookie || productQuantities.length === 0) {
     return (
       <div>
-        <h1> Cart </h1>
+        <h1 className="mb-4 text-4xl text-center">Cart</h1>
 
         <p className={styles.cartContent}>Your cart is empty</p>
       </div>

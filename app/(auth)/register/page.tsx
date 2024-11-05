@@ -32,6 +32,7 @@ export default async function RegisterPage(props: Props) {
 
   return (
     <div>
+      <h1 className="mb-4 text-4xl text-center">Register</h1>
       <RegisterForm returnTo={returnTo} />
     </div>
   );

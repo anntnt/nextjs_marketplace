@@ -3,5 +3,5 @@ export const metadata = {
   description: 'Support',
 };
 export default function Page() {
-  return <h1>Support</h1>;
+  return <h1 className="mb-4 text-4xl text-center">Support</h1>;
 }

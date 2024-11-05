@@ -4,6 +4,8 @@ import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import { getUser } from '../database/users';
 import itemsFromCart from '../util/itemsFromCart';
@@ -48,13 +50,20 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
+        <div className="flex flex-col h-screen">
+          <Header />
+          {/*flex flex-col min-h-screen on the outer div makes the layout stretch to fill the viewport. */}
 
-        {children}
+          {/* Main Content */}
+          {/* flex-grow allows it to expand and take up any available space between the header */}
 
-        <footer>
-          <div>MarketLink 2024</div>
-        </footer>
+          <main className="flex-grow  w-full max-w-full px-20 py-12">
+            {/* Your page content goes here */}
+            {children}
+          </main>
+
+          <Footer />
+        </div>
       </body>
     </html>
   );

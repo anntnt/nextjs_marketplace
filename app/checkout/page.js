@@ -33,7 +33,7 @@ export default async function checkOutPage() {
   const cartProducts = await productsFromCart();
   return (
     <div>
-      <h1> Checkout </h1>
+      <h1 className="mb-4 text-4xl text-center">Checkout</h1>
       {/* <p>Cart cookie: {productQuantitiesCookie}</p>*/}
       <CheckoutForm />
       <div className={styles.cartContent}>

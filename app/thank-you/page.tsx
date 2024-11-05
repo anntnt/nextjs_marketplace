@@ -3,5 +3,7 @@ export const metadata = {
   description: 'Thank you for your order',
 };
 export default function AboutPage() {
-  return <h1>Thank you for your order</h1>;
+  return (
+    <h1 className="mb-4 text-4xl text-center">Thank you for your order</h1>
+  );
 }
