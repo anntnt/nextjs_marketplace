@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -11,9 +12,12 @@ const Navbar: React.FC = () => {
     <nav className="bg-white border-gray-200 px-4 py-2.5 dark:bg-gray-900">
       <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
         <Link href="/" className="flex items-center">
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            Logo
-          </span>
+          <Image
+            src="/images/vilya_logo.jpg"
+            width={165}
+            height={54}
+            alt="Vilya logo"
+          />
         </Link>
         <button
           onClick={toggleMenu}
@@ -45,26 +49,34 @@ const Navbar: React.FC = () => {
           <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <Link
-                href="/"
+                href="/marketplace"
                 className="block py-2 pl-3 pr-4 text-gray-700 rounded md:bg-transparent md:text-gray-700 md:p-0 dark:text-white"
               >
-                Home
+                Marketplace
               </Link>
             </li>
             <li>
               <Link
-                href="/"
+                href="/sell"
                 className="block py-2 pl-3 pr-4 text-gray-700 rounded md:bg-transparent md:text-gray-700 md:p-0 dark:text-white"
               >
-                About
+                Sell
               </Link>
             </li>
             <li>
               <Link
-                href="/"
+                href="/about"
                 className="block py-2 pl-3 pr-4 text-gray-700 rounded md:bg-transparent md:text-gray-700 md:p-0 dark:text-white"
               >
-                Services
+                About us
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/contact"
+                className="block py-2 pl-3 pr-4 text-gray-700 rounded md:bg-transparent md:text-gray-700 md:p-0 dark:text-white"
+              >
+                Contact
               </Link>
             </li>
             <li>
