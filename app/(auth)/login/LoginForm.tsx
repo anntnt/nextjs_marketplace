@@ -28,6 +28,8 @@ export default function LoginForm(props: Props) {
 
     const data: LoginResponseBody = await response.json();
 
+    console.log('data ' + data);
+
     if ('errors' in data) {
       setErrors(data.errors);
       return;
@@ -76,10 +78,7 @@ export default function LoginForm(props: Props) {
           />
         </div>
         <div className="mb-5">
-          <button
-            type="button"
-            className="text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          >
+          <button className="text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             Login
           </button>
         </div>

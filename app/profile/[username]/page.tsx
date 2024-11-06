@@ -24,7 +24,7 @@ export default async function UserProfilePage() {
 
   return (
     <div>
-      <h2>{user.username}'s Profile</h2>
+      <h1 className="mb-4 text-4xl text-center">{user.username}'s Profile</h1>
     </div>
   );
 }
