@@ -6,7 +6,6 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import Navbar from '../components/Navbar';
 import { getUser } from '../database/users';
 import type { User } from '../migrations/0000-createTableUsers';
 import itemsFromCart from '../util/itemsFromCart';
@@ -43,8 +42,7 @@ export default async function RootLayout({ children }: Props) {
   const sessionTokenCookie = (await cookies()).get('sessionToken');
 
   // 2. Get the current logged in user from the database using the sessionToken value
-  const user =
-    sessionTokenCookie && (await getUser(sessionTokenCookie.value));
+  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
 
   // console.log('User: ', user);
 
@@ -53,7 +51,7 @@ export default async function RootLayout({ children }: Props) {
     <html lang="en">
       <body className={inter.className}>
         <div className="flex flex-col h-screen">
-          <Header  />
+          <Header user={user} />
           {/*flex flex-col min-h-screen on the outer div makes the layout stretch to fill the viewport. */}
 
           {/* Main Content */}
