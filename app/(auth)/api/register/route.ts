@@ -77,6 +77,7 @@ export async function POST(
     result.data.birthday,
     result.data.gender || null,
     result.data.uAddress || null,
+    result.data.roleId,
   );
 
   if (!newUser) {

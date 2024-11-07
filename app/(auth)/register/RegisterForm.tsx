@@ -18,16 +18,26 @@ export default function RegisterForm(props: Props) {
   const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
   const [uAddress, setUAddress] = useState('');
+  const [isRoleChecked, setIsRoleChecked] = useState(false);
+  const [roleId, setRoleId] = useState(3);
   const [errors, setErrors] = useState<{ message: string }[]>([]);
 
   const router = useRouter();
 
   async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log('username ' + username);
     console.log('bd ' + birthday);
     console.log('emailAddress ' + emailAddress);
     console.log('lastName ' + lastName);
     console.log('firstName ' + firstName);
+
+    console.log('isRoleChecked1 ' + isRoleChecked);
+    console.log('roleId1 ' + roleId);
+
+    if (isRoleChecked) setRoleId(2);
+    //else setRoleId(3);
+    console.log('roleId ' + roleId);
 
     const response = await fetch('api/register', {
       method: 'POST',
@@ -40,6 +50,7 @@ export default function RegisterForm(props: Props) {
         birthday,
         gender,
         uAddress,
+        roleId,
       }),
     });
 
@@ -64,6 +75,16 @@ export default function RegisterForm(props: Props) {
 
     router.refresh();
   }
+
+  /* const roleCheckHandler = () => {
+    console.log('isRoleChecked1 ' + isRoleChecked);
+    console.log('roleId1 ' + roleId);
+    setIsRoleChecked(!isRoleChecked);
+    console.log('isRoleChecked2 ' + isRoleChecked);
+    if (isRoleChecked) setRoleId(2);
+    console.log('roleId ' + roleId);
+  };*/
+  // isRoleChecked ? setRoleId(2) : roleId;
 
   return (
     <div className="max-w-sm mx-auto">
@@ -147,7 +168,7 @@ export default function RegisterForm(props: Props) {
               onChange={(event) => setGender(event.currentTarget.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option selected>Please select one...</option>
+              <option>Please select one...</option>
               <option value="female">female</option>
               <option value="male">male</option>
               <option value="other">other</option>
@@ -168,7 +189,10 @@ export default function RegisterForm(props: Props) {
           <div className="flex items-center">
             <input
               type="checkbox"
-              value=""
+              checked={isRoleChecked}
+              onChange={(event) =>
+                setIsRoleChecked(event.currentTarget.checked)
+              }
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -181,7 +205,6 @@ export default function RegisterForm(props: Props) {
             <input
               type="checkbox"
               required
-              value=""
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">

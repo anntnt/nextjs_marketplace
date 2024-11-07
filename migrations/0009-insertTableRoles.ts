@@ -19,9 +19,10 @@ export async function up(sql: Sql) {
   for (const role of roles) {
     await sql`
       INSERT INTO
-        roles (role_name)
+        roles (id, role_name)
       VALUES
         (
+          ${role.id},
           ${role.name}
         )
     `;

@@ -22,16 +22,19 @@ export default function Home() {
       </p>
       <br />
       <p>
-        Discover Vilya, the ultimate destination for buying, selling, and
-        connecting with others in one vibrant marketplace. Whether you’re
-        searching for unique finds, everyday essentials, or want to turn your
-        own items into cash, Vilya is here to make it easy, secure, and fun.
-        Explore an extensive range of categories, from fashion and electronics
-        to home goods and handcrafted treasures. Our platform is designed for
-        simplicity, so you can list, browse, and buy in just a few clicks. Plus,
-        with trusted sellers and a dedicated customer support team, you’re in
-        good hands every step of the way. Join the Vilya community today and
-        experience a better way to buy and sell online!
+        At vero eos et accusamus et iusto odio dignissimos ducimus qui
+        blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
+        et quas molestias excepturi sint occaecati cupiditate non provident,
+        similique sunt in culpa qui officia deserunt mollitia animi, id est
+        laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita
+        distinctio. Nam libero tempore, cum soluta nobis est eligendi optio
+        cumque nihil impedit quo minus id quod maxime placeat facere possimus,
+        omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem
+        quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet
+        ut et voluptates repudiandae sint et molestiae non recusandae. Itaque
+        earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
+        voluptatibus maiores alias consequatur aut perferendis doloribus
+        asperiores repellat.
       </p>
     </div>
   );

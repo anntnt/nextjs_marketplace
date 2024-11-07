@@ -49,6 +49,7 @@ export const createUserInsecure = cache(
     birthday: User['birthday'],
     gender: User['gender'],
     uAddress: User['uAddress'],
+    roleId: User['roleId'],
   ) => {
     const [user] = await sql<User[]>`
       INSERT INTO
@@ -60,7 +61,8 @@ export const createUserInsecure = cache(
           email_address,
           birthday,
           gender,
-          u_address
+          u_address,
+          role_id
         )
       VALUES
         (
@@ -71,7 +73,8 @@ export const createUserInsecure = cache(
           ${emailAddress},
           ${birthday},
           ${gender},
-          ${uAddress}
+          ${uAddress},
+          ${roleId}
         )
       RETURNING
         users.id,
