@@ -11,7 +11,7 @@ export async function up(sql: Sql) {
       size varchar(50),
       color varchar(50),
       seller_id integer NOT NULL REFERENCES users (id) ON DELETE cascade,
-      category_id integer NOT NULL REFERENCES product_categories (id)
+      category_id integer REFERENCES product_categories (id)
     )
   `;
 }

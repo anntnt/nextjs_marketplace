@@ -184,6 +184,7 @@ export default function RegisterForm(props: Props) {
             </label>
           </div>
         </div>
+
         <div className="mb-5">
           <div className="flex items-center">
             <input

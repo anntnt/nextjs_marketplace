@@ -59,127 +59,127 @@ const product_categories = [
     id: 10,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730211468/samples/food/fish-vegetables.jpg',
-    name: 'Food & Grocery',
+    name: 'Lorem Ipsum',
   },
   {
     id: 11,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917186/pexels-punttim-139764_o7mxjx.jpg',
-    name: 'Pictures',
+    name: 'Lorem Ipsum',
   },
   {
     id: 12,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917317/pexels-pixabay-220749_hu5oni.jpg',
-    name: 'Furniture',
+    name: 'Lorem Ipsum',
   },
   {
     id: 13,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730211468/samples/food/fish-vegetables.jpg',
-    name: 'Food & Grocery',
+    name: 'Lorem Ipsum',
   },
   {
     id: 14,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917186/pexels-punttim-139764_o7mxjx.jpg',
-    name: 'Pictures',
+    name: 'Lorem Ipsum',
   },
   {
     id: 15,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917317/pexels-pixabay-220749_hu5oni.jpg',
-    name: 'Furniture',
+    name: 'Lorem Ipsum',
   },
   {
     id: 16,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730211468/samples/food/fish-vegetables.jpg',
-    name: 'Food & Grocery',
+    name: 'Lorem Ipsum',
   },
   {
     id: 17,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917186/pexels-punttim-139764_o7mxjx.jpg',
-    name: 'Pictures',
+    name: 'Lorem Ipsum',
   },
   {
     id: 18,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917317/pexels-pixabay-220749_hu5oni.jpg',
-    name: 'Furniture',
+    name: 'Lorem Ipsum',
   },
   {
     id: 19,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730211468/samples/food/fish-vegetables.jpg',
-    name: 'Food & Grocery',
+    name: 'Lorem Ipsum',
   },
   {
     id: 20,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917186/pexels-punttim-139764_o7mxjx.jpg',
-    name: 'Pictures',
+    name: 'Lorem Ipsum',
   },
   {
     id: 21,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917317/pexels-pixabay-220749_hu5oni.jpg',
-    name: 'Furniture',
+    name: 'Lorem Ipsum',
   },
   {
     id: 22,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730211468/samples/food/fish-vegetables.jpg',
-    name: 'Food & Grocery',
+    name: 'Lorem Ipsum',
   },
   {
     id: 23,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917186/pexels-punttim-139764_o7mxjx.jpg',
-    name: 'Pictures',
+    name: 'Lorem Ipsum',
   },
   {
     id: 24,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917317/pexels-pixabay-220749_hu5oni.jpg',
-    name: 'Furniture',
+    name: 'Lorem Ipsum',
   },
   {
     id: 25,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730211468/samples/food/fish-vegetables.jpg',
-    name: 'Food & Grocery',
+    name: 'Lorem Ipsum',
   },
   {
     id: 26,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917186/pexels-punttim-139764_o7mxjx.jpg',
-    name: 'Pictures',
+    name: 'Lorem Ipsum',
   },
   {
     id: 27,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,w_500,h_375,ar_4:3,e_improve,e_sharpen/v1730211468/samples/animals/cat.jpg',
-    name: 'Furniture',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,w_500,h_375,ar_4:3,e_improve,e_sharpen/v1730211477/samples/chair-and-coffee-table.jpg',
+    name: 'Lorem Ipsum',
   },
   {
     id: 28,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,w_500,h_375,ar_4:3,e_improve,e_sharpen/v1730211468/samples/animals/cat.jpg',
-    name: 'Food & Grocery',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,w_500,h_375,ar_4:3,e_improve,e_sharpen/v1730211477/samples/chair-and-coffee-table.jpg',
+    name: 'Lorem Ipsum',
   },
   {
     id: 29,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,w_500,h_375,ar_4:3,e_improve,e_sharpen/v1730211466/sample.jpg',
-    name: 'Pictures',
+    name: 'Lorem Ipsum',
   },
   {
     id: 30,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,w_500,h_375,ar_4:3,e_improve,e_sharpen/v1730211468/samples/ecommerce/analog-classic.jpg',
-    name: 'Furniture',
+    name: 'Lorem Ip',
   },
 ];
 
