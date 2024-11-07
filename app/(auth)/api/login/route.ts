@@ -7,7 +7,7 @@ import { getUserWithPasswordHashInsecure } from '../../../../database/users';
 import {
   type User,
   userSchema,
-} from '../../../../migrations/0000-createTableUsers';
+} from '../../../../migrations/0002-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 export type LoginResponseBody =
@@ -25,6 +25,7 @@ export async function POST(
 
   // 1. Get the user data from the request
   const requestBody = await request.json();
+  console.log('requestBody' + requestBody);
 
   // 2. Validate the user data with zod
   const result = userSchema.safeParse(requestBody);

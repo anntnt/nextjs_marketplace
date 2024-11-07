@@ -14,7 +14,7 @@ export default function Home() {
         Welcome to Vilya – Your Marketplace for Everything!
       </h1>
       <br />
-      <p>
+      <p className="text-red-600">
         <i>
           Note: This website is a project created solely for study and
           educational purposes. It is not an actual marketplace.

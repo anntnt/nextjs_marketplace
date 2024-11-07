@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { BsCart4 } from 'react-icons/bs';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
-import type { User } from '../migrations/0000-createTableUsers';
+import type { User } from '../migrations/0002-createTableUsers';
 
 type userProps = { user?: User };
 

@@ -10,7 +10,7 @@ import {
 import {
   type User,
   userSchema,
-} from '../../../../migrations/0000-createTableUsers';
+} from '../../../../migrations/0002-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 export type RegisterResponseBody =
@@ -25,7 +25,7 @@ export async function POST(
   request: Request,
 ): Promise<NextResponse<RegisterResponseBody>> {
   // Task: Implement the user registration workflow
-
+  console.log('request' + request);
   // 1. Get the user data from the request
   const requestBody = await request.json();
 

@@ -7,8 +7,8 @@ export const userSchema = z.object({
   lastName: z.string(),
   password: z.string().min(3),
   emailAddress: z.string(),
-  birthDate: z.coerce.date().optional(),
-  gender: z.string(),
+  birthday: z.coerce.date(),
+  gender: z.string().optional(),
   uAddress: z.string().optional(),
 });
 
@@ -18,9 +18,9 @@ export type User = {
   firstName: string;
   lastName: string;
   emailAddress: string;
-  birthDate: Date;
-  gender: string;
-  uAddress: string;
+  birthday: Date;
+  gender?: string;
+  uAddress?: string;
 };
 export async function up(sql: Sql) {
   await sql`

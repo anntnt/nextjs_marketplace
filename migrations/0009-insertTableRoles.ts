@@ -19,7 +19,7 @@ export async function up(sql: Sql) {
   for (const role of roles) {
     await sql`
       INSERT INTO
-        roles (name)
+        roles (role_name)
       VALUES
         (
           ${role.name}
@@ -31,7 +31,7 @@ export async function up(sql: Sql) {
 export async function down(sql: Sql) {
   for (const role of roles) {
     await sql`
-      DELETE FROM products
+      DELETE FROM roles
       WHERE
         id = ${role.id}
     `;
