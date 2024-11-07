@@ -31,7 +31,7 @@ export async function up(sql: Sql) {
 export async function down(sql: Sql) {
   for (const payment of payments) {
     await sql`
-      DELETE FROM payments
+      DELETE FROM payment_types
       WHERE
         id = ${payment.id}
     `;

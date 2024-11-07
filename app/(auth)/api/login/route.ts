@@ -5,14 +5,14 @@ import { NextResponse } from 'next/server';
 import { createSessionInsecure } from '../../../../database/sessions';
 import { getUserWithPasswordHashInsecure } from '../../../../database/users';
 import {
-  type User,
-  userSchema,
+  type UserLogin,
+  userLoginSchema,
 } from '../../../../migrations/0002-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 export type LoginResponseBody =
   | {
-      user: { username: User['username'] };
+      user: { username: UserLogin['username'] };
     }
   | {
       errors: { message: string }[];
@@ -28,7 +28,7 @@ export async function POST(
   console.log('requestBody' + requestBody);
 
   // 2. Validate the user data with zod
-  const result = userSchema.safeParse(requestBody);
+  const result = userLoginSchema.safeParse(requestBody);
 
   if (!result.success) {
     return NextResponse.json(

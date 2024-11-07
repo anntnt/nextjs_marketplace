@@ -25,6 +25,7 @@ export async function POST(
   request: Request,
 ): Promise<NextResponse<RegisterResponseBody>> {
   // Task: Implement the user registration workflow
+  console.log('HHHHi');
   console.log('request' + request);
   // 1. Get the user data from the request
   const requestBody = await request.json();
@@ -67,7 +68,16 @@ export async function POST(
   console.log('passwordHash ' + passwordHash);
 
   // 5. Save the user information with the hashed password in the database
-  const newUser = await createUserInsecure(result.data.username, passwordHash);
+  const newUser = await createUserInsecure(
+    result.data.username,
+    passwordHash,
+    result.data.firstName,
+    result.data.lastName,
+    result.data.emailAddress,
+    result.data.birthday,
+    result.data.gender || null,
+    result.data.uAddress || null,
+  );
 
   if (!newUser) {
     return NextResponse.json(

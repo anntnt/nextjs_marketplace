@@ -17,7 +17,7 @@ export default function RegisterForm(props: Props) {
   const [emailAddress, setEmailAddress] = useState('');
   const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
-  const [userAddress, setUserAddress] = useState('');
+  const [uAddress, setUAddress] = useState('');
   const [errors, setErrors] = useState<{ message: string }[]>([]);
 
   const router = useRouter();
@@ -39,7 +39,7 @@ export default function RegisterForm(props: Props) {
         emailAddress,
         birthday,
         gender,
-        userAddress,
+        uAddress,
       }),
     });
 
@@ -158,8 +158,8 @@ export default function RegisterForm(props: Props) {
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Address
             <input
-              value={userAddress}
-              onChange={(event) => setUserAddress(event.currentTarget.value)}
+              value={uAddress}
+              onChange={(event) => setUAddress(event.currentTarget.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
             />
           </label>

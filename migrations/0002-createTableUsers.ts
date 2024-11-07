@@ -1,6 +1,16 @@
 import type { Sql } from 'postgres';
 import { z } from 'zod';
 
+export const userLoginSchema = z.object({
+  username: z.string().min(3),
+  password: z.string().min(3),
+});
+
+export type UserLogin = {
+  id: number;
+  username: string;
+};
+
 export const userSchema = z.object({
   username: z.string().min(3),
   firstName: z.string(),
@@ -19,8 +29,8 @@ export type User = {
   lastName: string;
   emailAddress: string;
   birthday: Date;
-  gender?: string;
-  uAddress?: string;
+  gender: string | null;
+  uAddress: string | null;
 };
 export async function up(sql: Sql) {
   await sql`

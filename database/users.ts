@@ -43,14 +43,35 @@ export const createUserInsecure = cache(
   async (
     username: User['username'],
     passwordHash: UserWithPasswordHash['passwordHash'],
+    firstName: User['firstName'],
+    lastName: User['lastName'],
+    emailAddress: User['emailAddress'],
+    birthday: User['birthday'],
+    gender: User['gender'],
+    uAddress: User['uAddress'],
   ) => {
     const [user] = await sql<User[]>`
       INSERT INTO
-        users (username, password_hash)
+        users (
+          username,
+          password_hash,
+          firstname,
+          lastname,
+          email_address,
+          birthday,
+          gender,
+          u_address
+        )
       VALUES
         (
           ${username},
-          ${passwordHash}
+          ${passwordHash},
+          ${firstName},
+          ${lastName},
+          ${emailAddress},
+          ${birthday},
+          ${gender},
+          ${uAddress}
         )
       RETURNING
         users.id,
