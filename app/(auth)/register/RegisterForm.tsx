@@ -26,18 +26,6 @@ export default function RegisterForm(props: Props) {
 
   async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log('username ' + username);
-    console.log('bd ' + birthday);
-    console.log('emailAddress ' + emailAddress);
-    console.log('lastName ' + lastName);
-    console.log('firstName ' + firstName);
-
-    console.log('isRoleChecked1 ' + isRoleChecked);
-    console.log('roleId1 ' + roleId);
-
-    if (isRoleChecked) setRoleId(2);
-    //else setRoleId(3);
-    console.log('roleId ' + roleId);
 
     const response = await fetch('api/register', {
       method: 'POST',
@@ -76,15 +64,14 @@ export default function RegisterForm(props: Props) {
     router.refresh();
   }
 
-  /* const roleCheckHandler = () => {
-    console.log('isRoleChecked1 ' + isRoleChecked);
-    console.log('roleId1 ' + roleId);
-    setIsRoleChecked(!isRoleChecked);
-    console.log('isRoleChecked2 ' + isRoleChecked);
-    if (isRoleChecked) setRoleId(2);
-    console.log('roleId ' + roleId);
-  };*/
-  // isRoleChecked ? setRoleId(2) : roleId;
+  const handleCheckboxChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setIsRoleChecked(event.target.checked);
+    if (event.target.checked) {
+      setRoleId(2);
+    } else setRoleId(3);
+  };
 
   return (
     <div className="max-w-sm mx-auto">
@@ -189,10 +176,7 @@ export default function RegisterForm(props: Props) {
           <div className="flex items-center">
             <input
               type="checkbox"
-              checked={isRoleChecked}
-              onChange={(event) =>
-                setIsRoleChecked(event.currentTarget.checked)
-              }
+              onChange={handleCheckboxChange}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
