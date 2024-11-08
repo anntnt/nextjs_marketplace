@@ -31,3 +31,15 @@ export const getCategoryInsecure = cache(async (id: number) => {
 
   return productCategory;
 });
+export const getCategoryNameInsecure = cache(async (id: number) => {
+  const [productCategoryName] = await sql<String[]>`
+    SELECT
+      category_name
+    FROM
+      product_categories
+    WHERE
+      id = ${id}
+  `;
+
+  return productCategoryName;
+});

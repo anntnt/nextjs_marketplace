@@ -13,6 +13,10 @@ const roles = [
     id: 3,
     name: 'Buyer',
   },
+  {
+    id: 4,
+    name: 'Supporter',
+  },
 ];
 
 export async function up(sql: Sql) {
