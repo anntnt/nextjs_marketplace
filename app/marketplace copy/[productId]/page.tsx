@@ -11,17 +11,6 @@ type Props = {
   }>;
 };
 
-/* export async function generateMetadata(props: Props) {
-  const singleProduct = getProductInsecure(
-    Number((await props.params).productId),
-  );
-  return {
-    // Optional chaining because we cannot call notFound() in generateMetadata
-    title: singleProduct.name,
-    description: singleProduct.description,
-  };
-}*/
-
 export default async function SingleProductPage(props: Props) {
   const singleProduct = await getProductInsecure(
     Number((await props.params).productId),

@@ -26,10 +26,10 @@ const geistMono = localFont({
 
 export const metadata = {
   title: {
-    default: 'Home | Tropical Snacks',
-    template: '%s | Tropical Snacks',
+    default: 'Home | Vilya',
+    template: '%s | Vilya',
   },
-  description: 'Delicious snack food from the tropics',
+  description: 'Vilya Marketplace',
 };
 
 type Props = {

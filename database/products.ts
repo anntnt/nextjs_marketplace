@@ -5,8 +5,10 @@ export type Product = {
   id: number;
   name: string;
   price: number;
-  image: string;
+  imageUrl: string;
   description: string;
+  sellerId: string;
+  categoryId: number;
 };
 
 export const getProductsInsecure = cache(async () => {
@@ -31,4 +33,17 @@ export const getProductInsecure = cache(async (id: number) => {
   `;
 
   return product;
+});
+
+export const getCategoryProductsInsecure = cache(async (categoryId: number) => {
+  const products = await sql<Product[]>`
+    SELECT
+      *
+    FROM
+      products
+    WHERE
+      category_id = ${categoryId}
+  `;
+
+  return products;
 });

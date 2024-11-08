@@ -166,7 +166,8 @@ export async function up(sql: Sql) {
           price,
           image_url,
           description,
-          seller_id
+          seller_id,
+          category_id
         )
       VALUES
         (
@@ -174,7 +175,8 @@ export async function up(sql: Sql) {
           ${product.price},
           ${product.image_url},
           ${product.description},
-          ${product.seller_id}
+          ${product.seller_id},
+          ${product.category_id}
         )
     `;
   }
