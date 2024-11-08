@@ -76,6 +76,7 @@ export async function POST(
     result.data.emailAddress,
     result.data.birthday,
     result.data.gender || null,
+    result.data.storeName || null,
     result.data.uAddress || null,
     result.data.roleId,
   );

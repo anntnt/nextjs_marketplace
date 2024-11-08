@@ -183,7 +183,7 @@ export default function RegisterForm(props: Props) {
               Store name
               <input
                 value={storeName}
-                onChange={(event) => setUAddress(event.currentTarget.value)}
+                onChange={(event) => setStoreName(event.currentTarget.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
               />
             </label>
