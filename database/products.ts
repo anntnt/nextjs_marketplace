@@ -7,6 +7,8 @@ export type Product = {
   price: number;
   imageUrl: string;
   description: string;
+  size: string;
+  color: string;
   sellerId: string;
   categoryId: number;
 };
@@ -17,8 +19,10 @@ export type ProductWithSeller = {
   price: number;
   imageUrl: string;
   description: string;
+  size: string;
+  color: string;
   sellerId: string;
-  sellerName: string;
+  storeName: string;
   categoryId: number;
 };
 export const getProductsInsecure = cache(async () => {
@@ -58,19 +62,20 @@ export const getCategoryProductsInsecure = cache(async (categoryId: number) => {
   return products;
 });
 
-export const getCategoryProductsWithSellerInsecure = cache(
-  async (categoryId: number) => {
-    const products = await sql<ProductWithSeller[]>`
+export const getCategoryProductWithSellerInsecure = cache(
+  async (categoryId: number, productId: number) => {
+    const [product] = await sql<ProductWithSeller[]>`
       SELECT
-        products.* products
+        products.*,
+        users.store_name
       FROM
-        products,
-        users
+        products
+        INNER JOIN users ON products.seller_id = users.id
       WHERE
         products.category_id = ${categoryId}
-        AND products.seller_id = users.id
+        AND products.id = ${productId}
     `;
 
-    return products;
+    return product;
   },
 );

@@ -13,16 +13,13 @@ type Props = {
 };
 
 export default async function SingleCategoryPage(props: Props) {
-  const categoryNameObj = await getCategoryNameInsecure(
-    Number((await props.params).productCategoryId),
-  );
-  const products = await getCategoryProductsInsecure(
-    Number((await props.params).productCategoryId),
-  );
+  const categoryId = Number((await props.params).productCategoryId);
+  const categoryNameObj = await getCategoryNameInsecure(categoryId);
+  const products = await getCategoryProductsInsecure(categoryId);
   if (!products || !categoryNameObj) {
     return notFound();
   }
-  console.log('categoryName ' + categoryNameObj.categoryName);
+
   return (
     <div>
       <h1 className="mb-4 text-4xl text-center">
@@ -69,7 +66,9 @@ export default async function SingleCategoryPage(props: Props) {
                   data-test-id={`product-id-${product.id}`}
                 >
                   <div className="h-56 w-full">
-                    <Link href={`/marketplace/${product.id}`}>
+                    <Link
+                      href={`/marketplace/${categoryId}/product/${product.id}`}
+                    >
                       <Image
                         className="mx-auto "
                         alt={`Product ${product.name}`}
@@ -125,7 +124,7 @@ export default async function SingleCategoryPage(props: Props) {
                     </div>
                   </div>
                   <Link
-                    href={`/marketplace/${product.id}`}
+                    href={`/marketplace/${categoryId}/product/${product.id}`}
                     className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                   >
                     {product.name}
