@@ -13,19 +13,21 @@ type Props = {
 };
 
 export default async function SingleCategoryPage(props: Props) {
-  const categoryName = await getCategoryNameInsecure(
+  const categoryNameObj = await getCategoryNameInsecure(
     Number((await props.params).productCategoryId),
   );
   const products = await getCategoryProductsInsecure(
     Number((await props.params).productCategoryId),
   );
-  if (!products || !categoryName) {
+  if (!products || !categoryNameObj) {
     return notFound();
   }
-  console.log('categoryName ' + categoryName.toString());
+  console.log('categoryName ' + categoryNameObj.categoryName);
   return (
     <div>
-      <h1 className="mb-4 text-4xl text-center">{categoryName}</h1>
+      <h1 className="mb-4 text-4xl text-center">
+        {categoryNameObj.categoryName}
+      </h1>
       <section className="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div className="mb-4 flex items-center justify-between gap-4 md:mb-8">

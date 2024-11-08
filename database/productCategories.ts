@@ -7,6 +7,9 @@ export type ProductCategory = {
   imageUrl: string;
   parentCategoryId: number;
 };
+export type ProductCategoryName = {
+  categoryName: string;
+};
 
 export const getProductCategoriesInsecure = cache(async () => {
   const productCategories = await sql<ProductCategory[]>`
@@ -32,9 +35,9 @@ export const getCategoryInsecure = cache(async (id: number) => {
   return productCategory;
 });
 export const getCategoryNameInsecure = cache(async (id: number) => {
-  const [productCategoryName] = await sql<String[]>`
+  const [productCategoryName] = await sql<ProductCategoryName[]>`
     SELECT
-      category_name
+      product_categories.category_name
     FROM
       product_categories
     WHERE
