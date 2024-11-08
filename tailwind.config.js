@@ -16,7 +16,9 @@ export default {
       blue: {
         1000: '#0D93C9',
       },
-      purple: '#734AEE',
+      purple: {
+        1000: '#734AEE',
+      },
       red: '#F24932',
       green: {
         100: '#88D8CD',

@@ -48,6 +48,7 @@ export const createUserInsecure = cache(
     emailAddress: User['emailAddress'],
     birthday: User['birthday'],
     gender: User['gender'],
+    storeName: User['storeName'],
     uAddress: User['uAddress'],
     roleId: User['roleId'],
   ) => {
@@ -61,6 +62,7 @@ export const createUserInsecure = cache(
           email_address,
           birthday,
           gender,
+          store_name,
           u_address,
           role_id
         )
@@ -73,6 +75,7 @@ export const createUserInsecure = cache(
           ${emailAddress},
           ${birthday},
           ${gender},
+          ${storeName},
           ${uAddress},
           ${roleId}
         )

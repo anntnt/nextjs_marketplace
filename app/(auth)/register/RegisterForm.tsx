@@ -17,9 +17,11 @@ export default function RegisterForm(props: Props) {
   const [emailAddress, setEmailAddress] = useState('');
   const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
-  const [uAddress, setUAddress] = useState('');
-  const [isRoleChecked, setIsRoleChecked] = useState(false);
+  const [isSellerChecked, setIsSellerChecked] = useState(false);
   const [roleId, setRoleId] = useState(3);
+  const [storeName, setStoreName] = useState('');
+  const [uAddress, setUAddress] = useState('');
+
   const [errors, setErrors] = useState<{ message: string }[]>([]);
 
   const router = useRouter();
@@ -37,6 +39,7 @@ export default function RegisterForm(props: Props) {
         emailAddress,
         birthday,
         gender,
+        storeName,
         uAddress,
         roleId,
       }),
@@ -67,7 +70,7 @@ export default function RegisterForm(props: Props) {
   const handleCheckboxChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setIsRoleChecked(event.target.checked);
+    setIsSellerChecked(event.target.checked);
     if (event.target.checked) {
       setRoleId(2);
     } else setRoleId(3);
@@ -163,6 +166,30 @@ export default function RegisterForm(props: Props) {
           </label>
         </div>
         <div className="mb-5">
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              onChange={handleCheckboxChange}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label className="ms-2 text-sm font-medium text-blue-600 ">
+              <strong>Apply to Sell on Vilya</strong>
+            </label>
+          </div>
+        </div>
+        {isSellerChecked && (
+          <div className="mb-5">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Store name
+              <input
+                value={storeName}
+                onChange={(event) => setUAddress(event.currentTarget.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+              />
+            </label>
+          </div>
+        )}
+        <div className="mb-5">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Address
             <input
@@ -171,18 +198,6 @@ export default function RegisterForm(props: Props) {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
             />
           </label>
-        </div>
-        <div className="mb-5">
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              onChange={handleCheckboxChange}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-              Apply to Sell on Vilya
-            </label>
-          </div>
         </div>
 
         <div className="mb-5">

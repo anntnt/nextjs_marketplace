@@ -19,6 +19,7 @@ export const userSchema = z.object({
   emailAddress: z.string(),
   birthday: z.coerce.date(),
   gender: z.string().optional(),
+  storeName: z.string().optional(),
   uAddress: z.string().optional(),
   roleId: z.number(),
 });
@@ -31,6 +32,7 @@ export type User = {
   emailAddress: string;
   birthday: Date;
   gender: string | null;
+  storeName: string | null;
   uAddress: string | null;
   roleId: number;
 };
@@ -45,6 +47,7 @@ export async function up(sql: Sql) {
       password_hash varchar(150) NOT NULL,
       birthday date NOT NULL,
       gender varchar(10),
+      store_name varchar(50),
       u_address varchar(50),
       role_id integer NOT NULL REFERENCES roles (id)
     )
