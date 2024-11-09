@@ -63,7 +63,7 @@ export const getCategoryProductsInsecure = cache(async (categoryId: number) => {
 });
 
 export const getCategoryProductWithSellerInsecure = cache(
-  async (categoryId: number, productId: number) => {
+  async (productId: number) => {
     const [product] = await sql<ProductWithSeller[]>`
       SELECT
         products.*,
@@ -72,8 +72,7 @@ export const getCategoryProductWithSellerInsecure = cache(
         products
         INNER JOIN users ON products.seller_id = users.id
       WHERE
-        products.category_id = ${categoryId}
-        AND products.id = ${productId}
+        products.id = ${productId}
     `;
 
     return product;

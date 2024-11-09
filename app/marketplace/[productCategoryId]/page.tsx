@@ -66,9 +66,7 @@ export default async function SingleCategoryPage(props: Props) {
                   data-test-id={`product-id-${product.id}`}
                 >
                   <div className="h-56 w-full">
-                    <Link
-                      href={`/marketplace/${categoryId}/product/${product.id}`}
-                    >
+                    <Link href={`/marketplace/product/${product.id}`}>
                       <Image
                         className="mx-auto "
                         alt={`Product ${product.name}`}
@@ -124,7 +122,7 @@ export default async function SingleCategoryPage(props: Props) {
                     </div>
                   </div>
                   <Link
-                    href={`/marketplace/${categoryId}/product/${product.id}`}
+                    href={`/marketplace/product/${product.id}`}
                     className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                   >
                     {product.name}
