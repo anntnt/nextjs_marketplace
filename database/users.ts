@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import type { User } from '../migrations/0002-createTableUsers';
+import type { User } from '../migrations/0001-createTableUsers';
 import type { Session } from '../migrations/0008-createTableSessions';
 import { sql } from './connect';
 

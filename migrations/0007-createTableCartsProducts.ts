@@ -5,8 +5,8 @@ export async function up(sql: Sql) {
     CREATE TABLE carts_products (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       product_id integer NOT NULL REFERENCES products (id) ON DELETE cascade,
-      cart_id integer NOT NULL REFERENCES carts (id),
-      amount integer NOT NULL
+      amount integer NOT NULL,
+      cart_id integer NOT NULL REFERENCES carts (id) ON DELETE cascade
     )
   `;
 }

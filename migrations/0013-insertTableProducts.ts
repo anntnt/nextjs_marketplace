@@ -42,7 +42,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917187/pexels-cong-h-613161-1404825_oqrqbr.jpg',
     description:
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consecteturx ea commodi consequatur',
-    seller_id: 5,
+    seller_id: 2,
     category_id: 2,
   },
   {
@@ -64,7 +64,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917189/pexels-b3stography-609537_dxsifi.jpg',
     description:
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consecteturx ea commodi consequatur',
-    seller_id: 4,
+    seller_id: 2,
     category_id: 2,
   },
   {
@@ -75,7 +75,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917186/pexels-punttim-139764_o7mxjx.jpg',
     description:
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium',
-    seller_id: 4,
+    seller_id: 2,
     category_id: 2,
   },
   {
@@ -97,7 +97,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917308/pexels-kowalievska-1148955_byvwe3.jpg',
     description:
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium',
-    seller_id: 1,
+    seller_id: 3,
     category_id: 3,
   },
   {
@@ -119,7 +119,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917187/pexels-robin-schreiner-1188739-2261165_imdq16.jpg',
     description:
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consecteturx ea commodi consequatur',
-    seller_id: 4,
+    seller_id: 2,
     category_id: 3,
   },
   {
@@ -130,7 +130,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917313/pexels-pixabay-276534_vxp9wb.jpg',
     description:
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium',
-    seller_id: 4,
+    seller_id: 2,
     category_id: 3,
   },
   {
@@ -141,7 +141,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917314/pexels-pixabay-276583_wiikri.jpg',
     description:
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium',
-    seller_id: 1,
+    seller_id: 2,
     category_id: 3,
   },
   {
@@ -152,7 +152,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730917314/pexels-pixabay-279746_wwcvpt.jpg',
     description:
       'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium',
-    seller_id: 4,
+    seller_id: 2,
     category_id: 3,
   },
 ];

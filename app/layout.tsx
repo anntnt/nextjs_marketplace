@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { getUser } from '../database/users';
-import type { User } from '../migrations/0002-createTableUsers';
+import type { User } from '../migrations/0001-createTableUsers';
 import itemsFromCart from '../util/itemsFromCart';
 import LogoutButton from './(auth)/logout/LogoutButton';
 

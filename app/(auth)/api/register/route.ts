@@ -10,7 +10,7 @@ import {
 import {
   type User,
   userSchema,
-} from '../../../../migrations/0002-createTableUsers';
+} from '../../../../migrations/0001-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 export type RegisterResponseBody =
