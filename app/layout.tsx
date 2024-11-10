@@ -8,7 +8,6 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { getUser } from '../database/users';
 import type { User } from '../migrations/0001-createTableUsers';
-import itemsFromCart from '../util/itemsFromCart';
 import LogoutButton from './(auth)/logout/LogoutButton';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -36,7 +35,6 @@ type Props = {
   children: ReactNode;
 };
 export default async function RootLayout({ children }: Props) {
-  const items = itemsFromCart();
   // Task: Display the logged in user's username in the navigation bar and hide the login and register links depending on whether the user is logged in or not
   // 1. Checking if the sessionToken cookie exists
   const sessionTokenCookie = (await cookies()).get('sessionToken');

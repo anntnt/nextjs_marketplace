@@ -3,9 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
-import { BsCart4 } from 'react-icons/bs';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
+import Cart from './Cart';
 
 type userProps = { user?: User };
 
@@ -73,13 +73,7 @@ export default function Component(props: userProps) {
                 placeholder="Search..."
               />
             </div>
-            {/* Cart Icon */}
-            <Link
-              href="/cart"
-              className="text-black dark:text-white hover:text-blue-1000"
-            >
-              <BsCart4 size={30} />
-            </Link>
+            <Cart />
 
             {props.user ? (
               <>

@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import { getCategoryNameInsecure } from '../../../../database/productCategories';
 import { getCategoryProductWithSellerInsecure } from '../../../../database/products';
+import ProductForm from './productForm';
 
 type Props = {
   params: Promise<{
@@ -121,7 +122,9 @@ export default async function SingleCategoryPage(props: Props) {
                   </a>
                 </div>
               </div>
-
+              <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                <ProductForm productId={product.id} />
+              </div>
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                 <a
                   href="#"
