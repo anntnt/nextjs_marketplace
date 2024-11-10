@@ -49,7 +49,7 @@ export async function up(sql: Sql) {
       gender varchar(10),
       store_name varchar(50),
       u_address varchar(50),
-      role_id integer NOT NULL REFERENCES roles (id)
+      role_id integer NOT NULL REFERENCES roles (id) ON DELETE cascade
     )
   `;
 }

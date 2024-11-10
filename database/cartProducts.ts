@@ -1,16 +1,23 @@
 import { cache } from 'react';
+import { z } from 'zod';
+import type { Session } from '../migrations/0010-createTableSessions';
 import { sql } from './connect';
 
 export type CartProduct = {
-  id: number;
+  productId: number;
   name: string;
   price: number;
   imageUrl: string;
   amount: number;
 };
+export const cartProductSchema = z.object({
+  productId: z.number(),
+  amount: z.number(),
+  userId: z.number(),
+});
 
 export const getCartProducts = cache(async (sessionToken: string) => {
-  const notes = await sql<CartProduct[]>`
+  const cartProducts = await sql<CartProduct[]>`
     SELECT
       carts_products.product_id,
       products.name,
@@ -18,68 +25,33 @@ export const getCartProducts = cache(async (sessionToken: string) => {
       products.image_url,
       carts_products.amount
     FROM
-      carts
-      INNER JOIN sessions ON (
-        sessions.token = ${sessionToken}
-        AND sessions.user_id = carts.user_id
-      ) (
-        carts.id = carts_products.cart_id
-        AND sessions.expiry_timestamp > now()
-      )
+      carts_products
+      INNER JOIN sessions ON sessions.token = ${sessionToken}
+      AND sessions.user_id = carts_products.user_id
+      AND sessions.expiry_timestamp > now()
+      INNER JOIN products ON carts_products.product_id = products.id
   `;
-  return notes;
+  return cartProducts;
 });
-
-export const getCartProductsInsecure = cache(async () => {
-  const products = await sql<Product[]>`
-    SELECT
-      *
-    FROM
-      products
-  `;
-
-  return products;
-});
-
-export const getProductInsecure = cache(async (id: number) => {
-  const [product] = await sql<Product[]>`
-    SELECT
-      *
-    FROM
-      products
-    WHERE
-      id = ${id}
-  `;
-
-  return product;
-});
-
-export const getCategoryProductsInsecure = cache(async (categoryId: number) => {
-  const products = await sql<Product[]>`
-    SELECT
-      *
-    FROM
-      products
-    WHERE
-      category_id = ${categoryId}
-  `;
-
-  return products;
-});
-
-export const getCategoryProductWithSellerInsecure = cache(
-  async (productId: number) => {
-    const [product] = await sql<ProductWithSeller[]>`
-      SELECT
-        products.*,
-        users.store_name
-      FROM
-        products
-        INNER JOIN users ON products.seller_id = users.id
-      WHERE
-        products.id = ${productId}
+export const createCartProduct = cache(
+  async (sessionToken: Session['token'], productId: number, amount: number) => {
+    const [cart_product] = await sql<CartProduct[]>`
+      INSERT INTO
+        carts_product (product_id, amount, user_id) (
+          SELECT
+            ${productId},
+            ${amount},
+            sessions.user_id
+          FROM
+            sessions
+          WHERE
+            token = ${sessionToken}
+            AND sessions.expiry_timestamp > now()
+        )
+      RETURNING
+        cart_product.*
     `;
 
-    return product;
+    return cart_product;
   },
 );

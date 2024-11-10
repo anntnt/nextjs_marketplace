@@ -1,7 +1,7 @@
 import { Card } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect, useRouter } from 'next/navigation';
 import React from 'react';
 import { getCategoryNameInsecure } from '../../../../database/productCategories';
 import { getCategoryProductWithSellerInsecure } from '../../../../database/products';
@@ -123,7 +123,7 @@ export default async function SingleCategoryPage(props: Props) {
                 </div>
               </div>
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                <ProductForm productId={product.id} />
+                <ProductForm productId={product.id}  />
               </div>
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                 <a
