@@ -5,12 +5,14 @@ import { getCookie, setCookie } from '../../../../util/cookies';
 import { parseJson } from '../../../../util/json';
 import { add } from '../../../../util/math';
 
-export default async function createOrUpdateCartCookie(
+export default async function createOrUpdateCart(
   productId: ProductQuantityInCart['productId'],
   quantity: ProductQuantityInCart['quantity'],
 ) {
   // 1. get current cookie!
-  const productQuantitiesCookie = await getCookie('cart');
+  const sessionTokenCookie = await getCookie('sessionToken');
+  // 2. Get the current logged in user from the database using the sessionToken value
+  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
 
   // 2. parse the cookie value
   const productQuantities: ProductQuantityInCart[] =

@@ -73,7 +73,6 @@ export default function Component(props: userProps) {
                 placeholder="Search..."
               />
             </div>
-            <Cart />
 
             {props.user ? (
               <>

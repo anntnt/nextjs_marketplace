@@ -11,7 +11,7 @@ export async function up(sql: Sql) {
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       token varchar(150) NOT NULL UNIQUE,
       expiry_timestamp timestamp NOT NULL DEFAULT now() + interval '24 hours',
-      user_id integer REFERENCES users (id) ON DELETE cascade
+      user_id integer NOT NULL REFERENCES users (id) ON DELETE cascade
     )
   `;
 }

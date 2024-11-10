@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import createOrUpdateCartCookie from './action';
+import createOrUpdateCart from './action';
 
 type Props = {
   productId: number;
@@ -12,7 +12,7 @@ export default function ProductForm(props: Props) {
   const router = useRouter();
 
   async function clickHandler(productId: number, amount: number) {
-    await createOrUpdateCartCookie(productId, amount);
+    await createOrUpdateCart(productId, amount);
     router.refresh();
   }
   return (
