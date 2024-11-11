@@ -40,16 +40,11 @@ export async function POST(
 
   // 3. Get the token from the cookie
   const sessionTokenCookie = await getCookie('sessionToken');
-  console.log('sessionTokenCookie ' + sessionTokenCookie);
+  console.log('sessionTokenCookie:' + sessionTokenCookie);
   if (!sessionTokenCookie) {
-    //redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
-    redirect('http://www.example.com');
-    return NextResponse.json(
-      { error: '307' },
-      {
-        status: 307,
-      },
-    );
+    redirect('www.example.com');
+    // redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
+    // redirect('/login?returnTo=/marketplace');
   }
 
   // 4. Create the new cart product

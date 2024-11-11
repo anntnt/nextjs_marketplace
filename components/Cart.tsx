@@ -3,7 +3,6 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { BsCart4 } from 'react-icons/bs';
 import type { User } from '../migrations/0001-createTableUsers';
-import itemsFromCart from '../util/itemsFromCart';
 
 type userProps = { user?: User };
 export default function Component(props: userProps) {

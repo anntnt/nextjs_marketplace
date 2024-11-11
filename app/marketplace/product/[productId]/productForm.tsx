@@ -18,18 +18,6 @@ export default function ProductForm(props: Props) {
   const [userId, setUserId] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
-  // 2. Query user with the sessionToken
-
-  // 3. If the user does not exist, redirect to the login with the returnTo query parameter
-  /* if (!props.token) {
-    redirect(`/login?returnTo=/marketplace/product/${productId}`);
-  } */
-  // setUserId(user.id);
-
-  /* async function clickHandler(productId: number, amount: number) {
-    await createOrUpdateCart(productId, amount);
-    router.refresh();
-  } */
 
   return (
     <div>
@@ -59,7 +47,7 @@ export default function ProductForm(props: Props) {
             }
           }
 
-          router.refresh();
+          //router.refresh();
         }}
       >
         <button

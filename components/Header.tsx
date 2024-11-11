@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
 import Cart from './Cart';
@@ -11,8 +11,26 @@ type userProps = { user?: User };
 
 export default function Component(props: userProps) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [cartItems, setCartItems] = useState([]);
   const toggleMenu = () => setIsOpen(!isOpen);
+  const [error, setError] = useState(null);
+
+  //get Cart Itames to show on Navbar
+  /* useEffect(() => {
+    const getCartItems = async () => {
+      const response = await fetch('/api/cartItems');
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const result = await response.json();
+      setCartItems([data.results[0]]);
+    };
+
+    getCartItems().catch((error) => {
+      console.log(error);
+    });
+  }, []); */ // Empty dependency array means the effect runs only once after initial render
+
   return (
     <header className="sticky top-0 bg-white shadow-md z-10">
       <nav className="bg-yellow-100 border-gray-200  py-2.5 dark:bg-gray-900 flex justify-between items-center p-4  mx-auto">
