@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 import {
   type CartProduct,
@@ -23,10 +24,15 @@ export async function POST(
 
   // 2. Validate notes data with zod
   const result = cartProductSchema.safeParse(body);
-
   if (!result.success) {
+    let errorMessage = '';
+    if (result.error) console.log('result' + result.error.issues);
+    result.error.issues.forEach((issue) => {
+      errorMessage = errorMessage + issue.path[0] + ':' + issue.message + '. ';
+    });
+    console.log('errorMessage: ' + errorMessage);
     return NextResponse.json(
-      { error: 'Request does not contain cartProduct object' },
+      { error: errorMessage },
       {
         status: 400,
       },
@@ -35,6 +41,13 @@ export async function POST(
 
   // 3. Get the token from the cookie
   const sessionTokenCookie = await getCookie('sessionToken');
+  if (!sessionTokenCookie) {
+    redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
+    // redirect('/login?returnTo=/marketplace');
+  }
+  /*console.log('sessionTokenCookie: ' + sessionTokenCookie);
+  console.log('result.data.productId: ' + result.data.productId);
+  console.log('result.data.quantity: ' + result.data.quantity); */
 
   // 4. Create the note
   const newCartProduct =
@@ -42,10 +55,10 @@ export async function POST(
     (await createCartProduct(
       sessionTokenCookie,
       result.data.productId,
-      result.data.amount,
+      result.data.quantity,
     ));
 
-  // 5. If the note creation fails, return an error
+  // 5. If the newCartProduct creation fails, return an error
   if (!newCartProduct) {
     return NextResponse.json(
       { error: 'cartProduct not created or access denied creating note' },

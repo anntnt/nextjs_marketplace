@@ -3,21 +3,27 @@ import { z } from 'zod';
 import type { Session } from '../migrations/0010-createTableSessions';
 import { sql } from './connect';
 
-export type CartProduct = {
+export type ProductsFromCart = {
   productId: number;
   name: string;
   price: number;
   imageUrl: string;
-  amount: number;
+  quantity: number;
+};
+export type CartProduct = {
+  productId: number;
+  quantity: number;
+};
+export type CartSum = {
+  totalAmount: number;
 };
 export const cartProductSchema = z.object({
   productId: z.number(),
-  amount: z.number(),
-  userId: z.number(),
+  quantity: z.number(),
 });
 
 export const getCartProducts = cache(async (sessionToken: string) => {
-  const cartProducts = await sql<CartProduct[]>`
+  const cartProducts = await sql<ProductsFromCart[]>`
     SELECT
       carts_products.product_id,
       products.name,
@@ -34,13 +40,17 @@ export const getCartProducts = cache(async (sessionToken: string) => {
   return cartProducts;
 });
 export const createCartProduct = cache(
-  async (sessionToken: Session['token'], productId: number, amount: number) => {
+  async (
+    sessionToken: Session['token'],
+    productId: number,
+    quantity: number,
+  ) => {
     const [cart_product] = await sql<CartProduct[]>`
       INSERT INTO
-        carts_product (product_id, amount, user_id) (
+        carts_products (product_id, amount, user_id) (
           SELECT
             ${productId},
-            ${amount},
+            ${quantity},
             sessions.user_id
           FROM
             sessions
@@ -49,9 +59,26 @@ export const createCartProduct = cache(
             AND sessions.expiry_timestamp > now()
         )
       RETURNING
-        cart_product.*
+        carts_products.*
     `;
 
     return cart_product;
   },
 );
+
+export const getCartSum = cache(async (sessionToken: Session['token']) => {
+  const [cartSum] = await sql<CartSum[]>`
+    SELECT
+      sum(amount)
+    FROM
+      carts_products
+      INNER JOIN sessions ON (
+        sessions.user_id = carts_products.user_id
+        AND sessions.expiry_timestamp > now()
+      )
+    WHERE
+      sessions.token = ${sessionToken}
+  `;
+
+  return cartSum;
+});

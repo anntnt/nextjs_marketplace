@@ -5,6 +5,8 @@ import { notFound, redirect, useRouter } from 'next/navigation';
 import React from 'react';
 import { getCategoryNameInsecure } from '../../../../database/productCategories';
 import { getCategoryProductWithSellerInsecure } from '../../../../database/products';
+import { getUser } from '../../../../database/users';
+import { getCookie } from '../../../../util/cookies';
 import ProductForm from './productForm';
 
 type Props = {
@@ -15,6 +17,8 @@ type Props = {
 
 export default async function SingleCategoryPage(props: Props) {
   const productId = Number((await props.params).productId);
+  // const sessionTokenCookie = await getCookie('sessionToken');
+  //const user = sessionTokenCookie && (await getUser(sessionTokenCookie));
 
   const product = await getCategoryProductWithSellerInsecure(productId);
   if (!product) {
@@ -123,7 +127,7 @@ export default async function SingleCategoryPage(props: Props) {
                 </div>
               </div>
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                <ProductForm productId={product.id}  />
+                <ProductForm productId={productId} />
               </div>
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                 <a

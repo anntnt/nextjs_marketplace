@@ -28,7 +28,7 @@ export default function LoginForm(props: Props) {
 
     const data: LoginResponseBody = await response.json();
 
-    console.log('data ' + data);
+    //console.log('data ' + data);
 
     if ('errors' in data) {
       setErrors(data.errors);
@@ -46,6 +46,7 @@ export default function LoginForm(props: Props) {
     router.push(
       getSafeReturnToPath(props.returnTo) || `/profile/${data.user.username}`,
     );
+    console.log('props.returnTo' + props.returnTo);
 
     router.refresh();
   }

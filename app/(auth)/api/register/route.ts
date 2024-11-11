@@ -25,7 +25,7 @@ export async function POST(
   request: Request,
 ): Promise<NextResponse<RegisterResponseBody>> {
   // Task: Implement the user registration workflow
-  console.log('HHHHi');
+  //console.log('HHHHi');
   console.log('request' + request);
   // 1. Get the user data from the request
   const requestBody = await request.json();
