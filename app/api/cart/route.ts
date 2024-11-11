@@ -42,8 +42,8 @@ export async function POST(
   const sessionTokenCookie = await getCookie('sessionToken');
   console.log('sessionTokenCookie ' + sessionTokenCookie);
   if (!sessionTokenCookie) {
-    //redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
-    redirect('http://www.example.com');
+    redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
+    //redirect('http://www.example.com');
     return NextResponse.json(
       { error: '307' },
       {
