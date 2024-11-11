@@ -4,6 +4,8 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
+import type { CartItemsResponse } from '../app/api/cartItems/route';
+import { type CartSum, getCartSum } from '../database/cartProducts';
 import type { User } from '../migrations/0001-createTableUsers';
 import Cart from './Cart';
 
@@ -11,26 +13,51 @@ type userProps = { user?: User };
 
 export default function Component(props: userProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState<string>('');
   const toggleMenu = () => setIsOpen(!isOpen);
   const [error, setError] = useState(null);
+  const [data, setData] = useState<CartItemsResponse | null>(null);
 
-  //get Cart Itames to show on Navbar
-  /* useEffect(() => {
+  //get Cart Items to show on Navbar
+  useEffect(() => {
     const getCartItems = async () => {
-      const response = await fetch('/api/cartItems');
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
+      try {
+        const response = await fetch('/api/cartItems');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const result: CartItemsResponse = await response.json(); // Type the result
+        //console.log('API Response:', result); // Log the API response to inspect the data
+        setData(result); // Set data
+      } catch (error) {
+        console.log(error);
       }
-      const result = await response.json();
-      setCartItems([data.results[0]]);
     };
 
-    getCartItems().catch((error) => {
-      console.log(error);
-    });
-  }, []); */ // Empty dependency array means the effect runs only once after initial render
+    getCartItems();
+  }, []);
 
+  useEffect(() => {
+    if (data) {
+      //console.log('Data inside useEffect:', data); // Log the data after it's set
+      // Type guard to check if `data` has cartSum
+      if ('cartSum' in data) {
+        // console.log('cartSum object:', data.cartSum); // Log the cartSum object
+        //console.log('totalAmount as string:', data.cartSum.totalamount); // Log the totalAmount before conversion
+        const totalAmount = data.cartSum.totalamount;
+        //console.log('Converted totalAmount:', totalAmount); // Log the converted totalAmount
+
+        //if (!isNaN(totalAmount)) {
+        setCartItems(totalAmount); // Only set if the conversion is valid
+        /* } else {
+          console.error('totalAmount is not a valid number');
+        }*/
+      } else if ('error' in data) {
+        console.error(data.error); // Log the error if `data` contains an error message
+      }
+    }
+  }, [data]); // This effect will run whenever `data` changes
   return (
     <header className="sticky top-0 bg-white shadow-md z-10">
       <nav className="bg-yellow-100 border-gray-200  py-2.5 dark:bg-gray-900 flex justify-between items-center p-4  mx-auto">
@@ -91,7 +118,7 @@ export default function Component(props: userProps) {
                 placeholder="Search..."
               />
             </div>
-            <Cart />
+            <Cart cartItems={cartItems} />
 
             {props.user ? (
               <>

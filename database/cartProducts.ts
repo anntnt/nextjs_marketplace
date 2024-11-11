@@ -15,7 +15,7 @@ export type CartProduct = {
   quantity: number;
 };
 export type CartSum = {
-  totalAmount: number;
+  totalamount: string;
 };
 export const cartProductSchema = z.object({
   productId: z.number(),
@@ -69,7 +69,7 @@ export const createCartProduct = cache(
 export const getCartSum = cache(async (sessionToken: Session['token']) => {
   const [cartSum] = await sql<CartSum[]>`
     SELECT
-      sum(amount)
+      cast(sum(amount) AS varchar(50)) AS totalamount
     FROM
       carts_products
       INNER JOIN sessions ON (

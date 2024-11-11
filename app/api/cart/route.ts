@@ -40,7 +40,7 @@ export async function POST(
 
   // 3. Get the token from the cookie
   const sessionTokenCookie = await getCookie('sessionToken');
-  console.log('sessionTokenCookie ' + sessionTokenCookie);
+  //console.log('sessionTokenCookie ' + sessionTokenCookie);
   if (!sessionTokenCookie) {
     redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
     //redirect('http://www.example.com');
@@ -73,7 +73,7 @@ export async function POST(
     );
   }
 
-  // 6. Return the text content of the cart product
+  // 6. Return the content of the cart product
   return NextResponse.json({
     cartProduct: { productId: newCartProduct.productId },
   });

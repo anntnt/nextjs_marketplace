@@ -1,75 +1,56 @@
 import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
-import {
-  type CartProduct,
-  cartProductSchema,
-  createCartProduct,
-} from '../../../database/cartProducts';
+import { type CartSum, getCartSum } from '../../../database/cartProducts';
 import { getCookie } from '../../../util/cookies';
 
-export type CreateCartProductResponseBodyPost =
+export type CartItemsResponse =
   | {
-      cartProduct: { productId: CartProduct['productId'] };
+      cartSum: {
+        totalamount: CartSum['totalamount'];
+      };
+      //cartSum: CartSum;
     }
   | {
       error: string;
     };
 
-export async function POST(
+export async function GET(
   request: Request,
-): Promise<NextResponse<CreateCartProductResponseBodyPost>> {
-  // 1. Get the cart product data from the request
-  const body = await request.json();
-
-  // 2. Validate cart product data with zod
-  const result = cartProductSchema.safeParse(body);
-  if (!result.success) {
-    let errorMessage = '';
-    if (result.error) console.log('result' + result.error.issues);
-    result.error.issues.forEach((issue) => {
-      errorMessage = errorMessage + issue.path[0] + ':' + issue.message + '. ';
-    });
-
-    return NextResponse.json(
-      { error: errorMessage },
-      {
-        status: 400,
-      },
-    );
-  }
-
-  // 3. Get the token from the cookie
+): Promise<NextResponse<CartItemsResponse>> {
+  // 1. Get the token from the cookie
   const sessionTokenCookie = await getCookie('sessionToken');
-  console.log('sessionTokenCookie:' + sessionTokenCookie);
+  console.log('sessionTokenCookie: ' + sessionTokenCookie);
+
+  // If no session token, return an error
   if (!sessionTokenCookie) {
-    redirect('www.example.com');
-    // redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
-    // redirect('/login?returnTo=/marketplace');
-  }
-
-  // 4. Create the new cart product
-  const newCartProduct =
-    sessionTokenCookie &&
-    (await createCartProduct(
-      sessionTokenCookie,
-      result.data.productId,
-      result.data.quantity,
-    ));
-
-  // 5. If the new CartProduct creation fails, return an error
-  if (!newCartProduct) {
     return NextResponse.json(
       {
-        error: 'cartProduct not created or access denied creating cart product',
+        cartSum: { totalamount: '0' },
       },
       {
-        status: 400,
+        status: 200, // Unauthorized
       },
     );
   }
 
-  // 6. Return the text content of the cart product
-  return NextResponse.json({
-    cartProduct: { productId: newCartProduct.productId },
-  });
+  // 2. Try to fetch the cart sum using the session token
+  const cartSumResult = await getCartSum(sessionTokenCookie);
+
+  // 3. If the cart's total amount can't be read, return an error
+  if (!cartSumResult) {
+    return NextResponse.json(
+      {
+        error: "Cart's total amount can't be read",
+      },
+      {
+        status: 400, // Bad Request
+      },
+    );
+  }
+
+  // 4. Return the cart sum (totalAmount) in the response
+  /*return NextResponse.json({
+    cartSum: { totalAmount: cartSumResult.totalAmount },
+  });*/
+  return NextResponse.json({ cartSum: cartSumResult });
 }
