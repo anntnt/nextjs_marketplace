@@ -6,6 +6,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
 import type { User } from '../migrations/0001-createTableUsers';
 import LogoutButton from './(auth)/logout/LogoutButton';
@@ -41,7 +42,8 @@ export default async function RootLayout({ children }: Props) {
 
   // 2. Get the current logged in user from the database using the sessionToken value
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
-
+  const cartSumResult =
+    sessionTokenCookie && (await getCartSum(sessionTokenCookie.value));
   // console.log('User: ', user);
 
   // 3. Make decision whether to show the login and register links or not
@@ -49,7 +51,8 @@ export default async function RootLayout({ children }: Props) {
     <html lang="en">
       <body className={inter.className}>
         <div className="flex flex-col h-screen">
-          <Header user={user} />
+          {cartSumResult?.totalamount}
+          {/*<Header user={user} /> */}
           {/*flex flex-col min-h-screen on the outer div makes the layout stretch to fill the viewport. */}
 
           {/* Main Content */}

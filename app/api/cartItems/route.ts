@@ -35,6 +35,7 @@ export async function GET(
 
   // 2. Try to fetch the cart sum using the session token
   const cartSumResult = await getCartSum(sessionTokenCookie);
+  console.log('cartSumResult:', cartSumResult);
 
   // 3. If the cart's total amount can't be read, return an error
   if (!cartSumResult) {

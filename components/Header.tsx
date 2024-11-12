@@ -28,6 +28,7 @@ export default function Component(props: userProps) {
         }
 
         const result: CartItemsResponse = await response.json(); // Type the result
+        console.log('result:', result);
 
         setData(result); // Set data
       } catch (error) {
@@ -38,9 +39,11 @@ export default function Component(props: userProps) {
     getCartItems();
   }, []);
   //}); // runs after initial render and after every re-render
+  console.log('data ', data);
 
   useEffect(() => {
     if (data) {
+      console.log('data2 ', data);
       // Type guard to check if `data` has cartSum
       if ('cartSum' in data) {
         const totalAmount = data.cartSum.totalamount;
