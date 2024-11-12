@@ -46,7 +46,7 @@ export default function LoginForm(props: Props) {
     router.push(
       getSafeReturnToPath(props.returnTo) || `/profile/${data.user.username}`,
     );
-    console.log('props.returnTo' + props.returnTo);
+    // console.log('props.returnTo' + props.returnTo);
 
     router.refresh();
   }

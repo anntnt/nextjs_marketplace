@@ -13,7 +13,7 @@ type userProps = { user?: User };
 
 export default function Component(props: userProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<string>('');
+  const [cartItems, setCartItems] = useState<string>('0');
   const toggleMenu = () => setIsOpen(!isOpen);
   const [error, setError] = useState(null);
   const [data, setData] = useState<CartItemsResponse | null>(null);
