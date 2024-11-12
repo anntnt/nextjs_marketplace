@@ -9,6 +9,8 @@ export async function up(sql: Sql) {
       amount integer NOT NULL
     )
   `;
+  // Create the unique index on (product_id, user_id)
+  await sql` CREATE UNIQUE index ON orders_products (order_id, product_id); `;
 }
 
 export async function down(sql: Sql) {

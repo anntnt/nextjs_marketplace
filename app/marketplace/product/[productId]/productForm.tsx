@@ -6,8 +6,6 @@ import type { User } from '../../../../migrations/0001-createTableUsers';
 import type { CreateCartProductResponseBodyPost } from '../../../api/cart/route';
 import ErrorMessage from '../../../ErrorMessage';
 
-// import createOrUpdateCart from './action';
-
 type Props = {
   productId: number;
 };
@@ -75,7 +73,7 @@ export default function ProductForm(props: Props) {
               }
             }
 
-            //router.refresh();
+            router.refresh();
           }}
         >
           <div className="flex items-center justify-between md:order-3 md:justify-end flex-wrap gap-4">

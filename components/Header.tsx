@@ -28,7 +28,7 @@ export default function Component(props: userProps) {
         }
 
         const result: CartItemsResponse = await response.json(); // Type the result
-        //console.log('API Response:', result); // Log the API response to inspect the data
+
         setData(result); // Set data
       } catch (error) {
         console.log(error);
@@ -37,22 +37,16 @@ export default function Component(props: userProps) {
 
     getCartItems();
   }, []);
+  //}); // runs after initial render and after every re-render
 
   useEffect(() => {
     if (data) {
-      //console.log('Data inside useEffect:', data); // Log the data after it's set
       // Type guard to check if `data` has cartSum
       if ('cartSum' in data) {
-        // console.log('cartSum object:', data.cartSum); // Log the cartSum object
-        //console.log('totalAmount as string:', data.cartSum.totalamount); // Log the totalAmount before conversion
         const totalAmount = data.cartSum.totalamount;
-        //console.log('Converted totalAmount:', totalAmount); // Log the converted totalAmount
 
         //if (!isNaN(totalAmount)) {
         setCartItems(totalAmount); // Only set if the conversion is valid
-        /* } else {
-          console.error('totalAmount is not a valid number');
-        }*/
       } else if ('error' in data) {
         console.error(data.error); // Log the error if `data` contains an error message
       }

@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import {
   type CartProduct,
   cartProductSchema,
-  createCartProduct,
+  createOrUpdateCartItem,
 } from '../../../database/cartProducts';
 import { getCookie } from '../../../util/cookies';
 
@@ -56,7 +56,7 @@ export async function POST(
   // 4. Create the new cart product
   const newCartProduct =
     sessionTokenCookie &&
-    (await createCartProduct(
+    (await createOrUpdateCartItem(
       sessionTokenCookie,
       result.data.productId,
       result.data.quantity,

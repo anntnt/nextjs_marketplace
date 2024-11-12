@@ -39,7 +39,7 @@ export const getCartProducts = cache(async (sessionToken: string) => {
   `;
   return cartProducts;
 });
-export const createCartProduct = cache(
+export const createOrUpdateCartItem = cache(
   async (
     sessionToken: Session['token'],
     productId: number,
@@ -58,8 +58,12 @@ export const createCartProduct = cache(
             token = ${sessionToken}
             AND sessions.expiry_timestamp > now()
         )
+      ON CONFLICT (product_id, user_id) DO
+      UPDATE
+      SET
+        amount = carts_products.amount + ${quantity}
       RETURNING
-        carts_products.*
+        carts_products.*;
     `;
 
     return cart_product;
