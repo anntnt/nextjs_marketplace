@@ -48,7 +48,7 @@ export async function up(sql: Sql) {
       birthday date NOT NULL,
       gender varchar(10),
       store_name varchar(50),
-      u_address varchar(50),
+      address varchar(50),
       role_id integer NOT NULL REFERENCES roles (id) ON DELETE cascade
     )
   `;

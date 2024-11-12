@@ -39,18 +39,19 @@ export async function POST(
   }
 
   // 3. Get the token from the cookie
+  /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
-  //console.log('sessionTokenCookie ' + sessionTokenCookie);
-  if (!sessionTokenCookie) {
+
+  /*if (!sessionTokenCookie) {
     redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
-    //redirect('http://www.example.com');
     return NextResponse.json(
       { error: '307' },
       {
         status: 307,
       },
     );
-  }
+  }*/
+  /* Assume that user logged in and click the button 'Add to cart' */
 
   // 4. Create the new cart product
   const newCartProduct =

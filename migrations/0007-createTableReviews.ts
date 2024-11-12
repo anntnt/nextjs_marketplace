@@ -5,7 +5,7 @@ export async function up(sql: Sql) {
     CREATE TABLE reviews (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       star int NOT NULL,
-      review_content text,
+      content text,
       product_id integer NOT NULL REFERENCES products (id) ON DELETE cascade,
       user_id integer NOT NULL REFERENCES users (id)
     )

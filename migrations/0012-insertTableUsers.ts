@@ -12,7 +12,7 @@ const users = [
     birthday: '2000-11-11',
     gender: '',
     store_name: '',
-    u_address: '',
+    address: '',
     role_id: 3,
   },
   {
@@ -26,7 +26,7 @@ const users = [
     birthday: '2000-11-11',
     gender: 'male',
     store_name: 'Oberlaa House',
-    u_address: 'Oberlaa Park, 1100 Vienna, Austria',
+    address: 'Oberlaa Park, 1100 Vienna, Austria',
     role_id: 2,
   },
   {
@@ -40,7 +40,7 @@ const users = [
     birthday: '2000-11-11',
     gender: 'female',
     store_name: 'Donau Store',
-    u_address: 'Donau Park, 1220 Vienna, Austria',
+    address: 'Donau Park, 1220 Vienna, Austria',
     role_id: 2,
   },
 ];
@@ -58,7 +58,7 @@ export async function up(sql: Sql) {
           birthday,
           gender,
           store_name,
-          u_address,
+          address,
           role_id
         )
       VALUES
@@ -71,7 +71,7 @@ export async function up(sql: Sql) {
           ${user.birthday},
           ${user.gender},
           ${user.store_name},
-          ${user.u_address},
+          ${user.address},
           ${user.role_id}
         )
     `;

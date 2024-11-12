@@ -4,10 +4,11 @@ export async function up(sql: Sql) {
   await sql`
     CREATE TABLE messages (
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-      user1_id integer NOT NULL REFERENCES users (id),
-      user2_id integer NOT NULL REFERENCES users (id),
-      message_content text NOT NULL,
-      message_time timestamp NOT NULL
+      sender_id integer NOT NULL REFERENCES users (id),
+      receiver_id integer NOT NULL REFERENCES users (id),
+      content text NOT NULL,
+      sending_timestamp timestamp NOT NULL,
+      is_read boolean NOT NULL DEFAULT FALSE
     )
   `;
 }

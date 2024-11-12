@@ -4,7 +4,7 @@ export async function up(sql: Sql) {
   await sql`
     CREATE TABLE roles (
       id integer PRIMARY KEY,
-      role_name varchar(50) NOT NULL
+      name varchar(50) NOT NULL
     )
   `;
 }
