@@ -4,9 +4,10 @@ import type { ReactNode } from 'react';
 import { BsCart4 } from 'react-icons/bs';
 import type { User } from '../migrations/0001-createTableUsers';
 
-type itemsProps = { cartItems: String };
+type itemsProps = { cartSum?: String };
+
 export default function Component(props: itemsProps) {
-  const cartItems = props.cartItems;
+  const cartItems = props.cartSum;
   return (
     <div>
       <div className="text-white text-center rounded-full bg-red-500">

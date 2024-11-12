@@ -83,7 +83,6 @@ export const getCartSum = cache(async (sessionToken: Session['token']) => {
     WHERE
       sessions.token = ${sessionToken}
   `;
-  console.log('cartSum', cartSum);
 
   return cartSum;
 });

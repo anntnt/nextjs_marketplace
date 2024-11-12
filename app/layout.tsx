@@ -42,17 +42,23 @@ export default async function RootLayout({ children }: Props) {
 
   // 2. Get the current logged in user from the database using the sessionToken value
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
+  let cartSum = '0';
   const cartSumResult =
     sessionTokenCookie && (await getCartSum(sessionTokenCookie.value));
-  // console.log('User: ', user);
+  if (cartSumResult && cartSumResult.totalamount)
+    cartSum = cartSumResult.totalamount;
+
+  // cartSum = cartSumResult ? cartSumResult.totalamount : '0';
+  console.log('cartSumResult', cartSumResult);
+  console.log('cartSum', cartSum);
+  console.log('user', user);
 
   // 3. Make decision whether to show the login and register links or not
   return (
     <html lang="en">
       <body className={inter.className}>
         <div className="flex flex-col h-screen">
-          {cartSumResult?.totalamount}
-          {/*<Header user={user} /> */}
+          <Header user={user} cartSum={cartSum} />
           {/*flex flex-col min-h-screen on the outer div makes the layout stretch to fill the viewport. */}
 
           {/* Main Content */}

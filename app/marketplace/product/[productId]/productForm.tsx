@@ -13,7 +13,6 @@ export default function ProductForm(props: Props) {
   const [quantity, setQuantity] = useState(1);
   const [productId, setProductId] = useState(props.productId);
 
-  const [userId, setUserId] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 

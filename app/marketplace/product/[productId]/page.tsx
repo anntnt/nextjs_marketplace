@@ -1,7 +1,7 @@
 import { Card } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound, redirect, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import React from 'react';
 import { getCategoryNameInsecure } from '../../../../database/productCategories';
 import { getCategoryProductWithSellerInsecure } from '../../../../database/products';
@@ -15,7 +15,7 @@ type Props = {
   }>;
 };
 
-export default async function SingleCategoryPage(props: Props) {
+export default async function SingleProductPage(props: Props) {
   const productId = Number((await props.params).productId);
   // const sessionTokenCookie = await getCookie('sessionToken');
   //const user = sessionTokenCookie && (await getUser(sessionTokenCookie));

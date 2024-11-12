@@ -4,57 +4,20 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
-import type { CartItemsResponse } from '../app/api/cartItems/route';
 import { type CartSum, getCartSum } from '../database/cartProducts';
 import type { User } from '../migrations/0001-createTableUsers';
 import Cart from './Cart';
 
-type userProps = { user?: User };
+type userProps = {
+  user?: User;
+  cartSum?: String;
+};
 
 export default function Component(props: userProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<string>('0');
+
   const toggleMenu = () => setIsOpen(!isOpen);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState<CartItemsResponse | null>(null);
 
-  //get Cart Items to show on Navbar
-  useEffect(() => {
-    const getCartItems = async () => {
-      try {
-        const response = await fetch('/api/cartItems');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
-        const result: CartItemsResponse = await response.json(); // Type the result
-        console.log('result:', result);
-
-        setData(result); // Set data
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCartItems();
-  }, []);
-  //}); // runs after initial render and after every re-render
-  console.log('data ', data);
-
-  useEffect(() => {
-    if (data) {
-      console.log('data2 ', data);
-      // Type guard to check if `data` has cartSum
-      if ('cartSum' in data) {
-        const totalAmount = data.cartSum.totalamount;
-
-        //if (!isNaN(totalAmount)) {
-        setCartItems(totalAmount); // Only set if the conversion is valid
-      } else if ('error' in data) {
-        console.error(data.error); // Log the error if `data` contains an error message
-      }
-    }
-  }, [data]); // This effect will run whenever `data` changes
   return (
     <header className="sticky top-0 bg-white shadow-md z-10">
       <nav className="bg-yellow-100 border-gray-200  py-2.5 dark:bg-gray-900 flex justify-between items-center p-4  mx-auto">
@@ -115,7 +78,7 @@ export default function Component(props: userProps) {
                 placeholder="Search..."
               />
             </div>
-            <Cart cartItems={cartItems} />
+            <Cart cartSum={props.cartSum} />
 
             {props.user ? (
               <>
