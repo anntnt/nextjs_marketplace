@@ -26,7 +26,7 @@ export default async function SingleProductPage(props: Props) {
   }
 
   return (
-    <div>
+    <main className="flex-grow  w-full max-w-full px-20 py-12">
       <h1 className="mb-4 text-4xl text-center"></h1>
       <section className="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
@@ -138,6 +138,6 @@ export default async function SingleProductPage(props: Props) {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

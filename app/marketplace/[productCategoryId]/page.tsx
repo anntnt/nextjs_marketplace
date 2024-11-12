@@ -23,7 +23,7 @@ export default async function SingleCategoryPage(props: Props) {
   }
 
   return (
-    <div>
+    <main className="flex-grow  w-full max-w-full px-20 py-12">
       <h1 className="mb-4 text-4xl text-center">
         {categoryNameObj.categoryName}
       </h1>
@@ -200,6 +200,6 @@ export default async function SingleCategoryPage(props: Props) {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

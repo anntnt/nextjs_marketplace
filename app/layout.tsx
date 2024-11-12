@@ -64,10 +64,8 @@ export default async function RootLayout({ children }: Props) {
           {/* Main Content */}
           {/* flex-grow allows it to expand and take up any available space between the header */}
 
-          <main className="flex-grow  w-full max-w-full px-20 py-12">
-            {/* Your page content goes here */}
-            {children}
-          </main>
+          {/* Your page content goes here */}
+          {children}
 
           <Footer />
         </div>

@@ -10,7 +10,7 @@ export const metadata = {
 export default async function Page() {
   const productCategories = await getProductCategoriesInsecure();
   return (
-    <div>
+    <main className="flex-grow  w-full max-w-full px-20 py-12">
       <h1 className="mb-4 text-4xl text-center">Marketplace</h1>
       <section className="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-16">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -71,6 +71,6 @@ export default async function Page() {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
