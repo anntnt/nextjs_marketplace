@@ -33,523 +33,152 @@ export default async function CartPage() {
   }*/
 
   return (
-    <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
-      <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
-          Shopping Cart
-        </h2>
-
-        <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
-          <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
-            <div className="space-y-6">
-              <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
-                <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                  <a href="#" className="w-20 shrink-0 md:order-1">
-                    <img
-                      className="h-20 w-20 dark:hidden"
-                      src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/iphone-light.svg"
-                      alt="imac image"
-                    />
-                    <img
-                      className="hidden h-20 w-20 dark:block"
-                      src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/iphone-dark.svg"
-                      alt="imac image"
-                    />
-                  </a>
-
-                  <label className="sr-only">Choose quantity:</label>
-                  <div className="flex items-center justify-between md:order-3 md:justify-end">
-                    <div className="flex items-center">
-                      <button
-                        type="button"
-                        id="decrement-button-5"
-                        data-input-counter-decrement="counter-input-5"
-                        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
-                      >
-                        <svg
-                          className="h-2.5 w-2.5 text-gray-900 dark:text-white"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 18 2"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M1 1h16"
-                          />
-                        </svg>
-                      </button>
-                      <input
-                        type="text"
-                        id="counter-input-5"
-                        data-input-counter
-                        className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
-                        placeholder=""
-                        value="3"
-                        required
-                      />
-                      <button
-                        type="button"
-                        id="increment-button-5"
-                        data-input-counter-increment="counter-input-5"
-                        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
-                      >
-                        <svg
-                          className="h-2.5 w-2.5 text-gray-900 dark:text-white"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 18 18"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 1v16M1 9h16"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="text-end md:order-4 md:w-32">
-                      <p className="text-base font-bold text-gray-900 dark:text-white">
-                        $2,997
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                    <a
-                      href="#"
-                      className="text-base font-medium text-gray-900 hover:underline dark:text-white"
-                    >
-                      APPLE iPhone 15 5G phone, 256GB, Gold
-                    </a>
-
-                    <div className="flex items-center gap-4">
-                      <button
-                        type="button"
-                        className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
-                      >
-                        <svg
-                          className="me-1.5 h-5 w-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
-                          />
-                        </svg>
-                        Add to Favorites
-                      </button>
-
-                      <button
-                        type="button"
-                        className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
-                      >
-                        <svg
-                          className="me-1.5 h-5 w-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M6 18 17.94 6M18 18 6.06 6"
-                          />
-                        </svg>
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="hidden xl:mt-8 xl:block">
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                People also bought
-              </h3>
-              <div className="mt-6 grid grid-cols-3 gap-4 sm:mt-8">
-                <div className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                  <a href="#" className="overflow-hidden rounded">
-                    <img
-                      className="mx-auto h-44 w-44 dark:hidden"
-                      src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
-                      alt="imac image"
-                    />
-                    <img
-                      className="mx-auto hidden h-44 w-44 dark:block"
-                      src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                      alt="imac image"
-                    />
-                  </a>
-                  <div>
-                    <a
-                      href="#"
-                      className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
-                    >
-                      iMac 27”
-                    </a>
-                    <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                      This generation has some improvements, including a longer
-                      continuous battery life.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-lg font-bold text-gray-900 dark:text-white">
-                      <span className="line-through"> $399,99 </span>
-                    </p>
-                    <p className="text-lg font-bold leading-tight text-red-600 dark:text-red-500">
-                      $299
-                    </p>
-                  </div>
-                  <div className="mt-6 flex items-center gap-2.5">
-                    <button
-                      data-tooltip-target="favourites-tooltip-1"
-                      type="button"
-                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white p-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-                    >
-                      <svg
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                        ></path>
-                      </svg>
-                    </button>
-                    <div
-                      id="favourites-tooltip-1"
-                      role="tooltip"
-                      className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                    >
-                      Add to favourites
-                      <div className="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                    <button
-                      type="button"
-                      className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                    >
-                      <svg
-                        className="-ms-2 me-2 h-5 w-5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4"
-                        />
-                      </svg>
-                      Add to cart
-                    </button>
-                  </div>
-                </div>
-                <div className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                  <a href="#" className="overflow-hidden rounded">
-                    <img
-                      className="mx-auto h-44 w-44 dark:hidden"
-                      src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/ps5-light.svg"
-                      alt="imac image"
-                    />
-                    <img
-                      className="mx-auto hidden h-44 w-44 dark:block"
-                      src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/ps5-dark.svg"
-                      alt="imac image"
-                    />
-                  </a>
-                  <div>
-                    <a
-                      href="#"
-                      className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
-                    >
-                      Playstation 5
-                    </a>
-                    <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                      This generation has some improvements, including a longer
-                      continuous battery life.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-lg font-bold text-gray-900 dark:text-white">
-                      <span className="line-through"> $799,99 </span>
-                    </p>
-                    <p className="text-lg font-bold leading-tight text-red-600 dark:text-red-500">
-                      $499
-                    </p>
-                  </div>
-                  <div className="mt-6 flex items-center gap-2.5">
-                    <button
-                      data-tooltip-target="favourites-tooltip-2"
-                      type="button"
-                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white p-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-                    >
-                      <svg
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                        ></path>
-                      </svg>
-                    </button>
-                    <div
-                      id="favourites-tooltip-2"
-                      role="tooltip"
-                      className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                    >
-                      Add to favourites
-                      <div className="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                    <button
-                      type="button"
-                      className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                    >
-                      <svg
-                        className="-ms-2 me-2 h-5 w-5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4"
-                        />
-                      </svg>
-                      Add to cart
-                    </button>
-                  </div>
-                </div>
-                <div className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                  <a href="#" className="overflow-hidden rounded">
-                    <img
-                      className="mx-auto h-44 w-44 dark:hidden"
-                      src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/apple-watch-light.svg"
-                      alt="imac image"
-                    />
-                    <img
-                      className="mx-auto hidden h-44 w-44 dark:block"
-                      src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/apple-watch-dark.svg"
-                      alt="imac image"
-                    />
-                  </a>
-                  <div>
-                    <a
-                      href="#"
-                      className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
-                    >
-                      Apple Watch Series 8
-                    </a>
-                    <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                      This generation has some improvements, including a longer
-                      continuous battery life.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-lg font-bold text-gray-900 dark:text-white">
-                      <span className="line-through"> $1799,99 </span>
-                    </p>
-                    <p className="text-lg font-bold leading-tight text-red-600 dark:text-red-500">
-                      $1199
-                    </p>
-                  </div>
-                  <div className="mt-6 flex items-center gap-2.5">
-                    <button
-                      data-tooltip-target="favourites-tooltip-3"
-                      type="button"
-                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white p-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-                    >
-                      <svg
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                        ></path>
-                      </svg>
-                    </button>
-                    <div
-                      id="favourites-tooltip-3"
-                      role="tooltip"
-                      className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                    >
-                      Add to favourites
-                      <div className="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-
-                    <button
-                      type="button"
-                      className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                    >
-                      <svg
-                        className="-ms-2 me-2 h-5 w-5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4"
-                        />
-                      </svg>
-                      Add to cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
-            <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-              <p className="text-xl font-semibold text-gray-900 dark:text-white">
-                Order summary
-              </p>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Original price
-                    </dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      $7,592.00
-                    </dd>
-                  </dl>
-
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Savings
-                    </dt>
-                    <dd className="text-base font-medium text-green-600">
-                      -$299.00
-                    </dd>
-                  </dl>
-
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Store Pickup
-                    </dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      $99
-                    </dd>
-                  </dl>
-
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Tax
-                    </dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      $799
-                    </dd>
-                  </dl>
-                </div>
-
-                <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
-                  <dt className="text-base font-bold text-gray-900 dark:text-white">
-                    Total
-                  </dt>
-                  <dd className="text-base font-bold text-gray-900 dark:text-white">
-                    $8,191.00
-                  </dd>
-                </dl>
+    <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+      <h1 className="text-2xl font-extrabold text-gray-800">Your Cart</h1>
+      <div className="grid sm:grid-cols-2 gap-4 mt-8">
+        <div className="md:col-span-2 space-y-4">
+          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6 flex gap-4  px-4 py-6 ">
+            <div className="flex gap-4">
+              <div className="w-28 h-28 max-sm:w-24 max-sm:h-24 shrink-0">
+                <img
+                  src="https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_500,h_375,ar_4:3,g_auto,e_improve,e_sharpen/v1730211477/samples/breakfast.jpg"
+                  className="w-full h-full object-contain"
+                />
               </div>
 
-              <a
-                href="#"
-                className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Proceed to Checkout
-              </a>
+              <div className="flex flex-col gap-4">
+                <div>
+                  <h3 className="text-base font-bold text-gray-800">
+                    Stylish Golden Watch
+                  </h3>
+                  <p className="text-sm font-semibold text-gray-500 mt-2 flex items-center gap-2">
+                    Color:{' '}
+                    <span className="inline-block w-5 h-5 rounded-md bg-[#ac7f48]"></span>
+                  </p>
+                </div>
 
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  {' '}
-                  or{' '}
-                </span>
-                <a
-                  href="#"
-                  title=""
-                  className="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500"
-                >
-                  Continue Shopping
-                  <svg
-                    className="h-5 w-5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
+                <div className="mt-auto flex items-center gap-3">
+                  <button
+                    type="button"
+                    className="flex items-center justify-center w-5 h-5 bg-gray-400 outline-none rounded-full"
                   >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 12H5m14 0-4 4m4-4-4-4"
-                    />
-                  </svg>
-                </a>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-2 fill-white"
+                      viewBox="0 0 124 124"
+                    >
+                      <path
+                        d="M112 50H12C5.4 50 0 55.4 0 62s5.4 12 12 12h100c6.6 0 12-5.4 12-12s-5.4-12-12-12z"
+                        data-original="#000000"
+                      ></path>
+                    </svg>
+                  </button>
+                  <span className="font-bold text-sm leading-[18px]">2</span>
+                  <button
+                    type="button"
+                    className="flex items-center justify-center w-5 h-5 bg-gray-400 outline-none rounded-full"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-2 fill-white"
+                      viewBox="0 0 42 42"
+                    >
+                      <path
+                        d="M37.059 16H26V4.941C26 2.224 23.718 0 21 0s-5 2.224-5 4.941V16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5H16v11.059C16 39.776 18.282 42 21 42s5-2.224 5-4.941V26h11.059C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z"
+                        data-original="#000000"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
               </div>
+            </div>
+
+            <div className="ml-auto flex flex-col">
+              <div className="flex items-start gap-4 justify-end">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 cursor-pointer fill-gray-400 inline-block"
+                  viewBox="0 0 64 64"
+                >
+                  <path
+                    d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z"
+                    data-original="#000000"
+                  ></path>
+                </svg>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 cursor-pointer fill-gray-400 inline-block"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
+                    data-original="#000000"
+                  ></path>
+                  <path
+                    d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
+                    data-original="#000000"
+                  ></path>
+                </svg>
+              </div>
+              <h3 className="text-base font-bold text-gray-800 mt-auto">
+                $120.00
+              </h3>
             </div>
           </div>
         </div>
+
+        <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6bg-white  px-4 py-6 h-max ">
+          <ul className="text-gray-800 space-y-4">
+            <li className="flex flex-wrap gap-4 text-sm">
+              Subtotal <span className="ml-auto font-bold">$200.00</span>
+            </li>
+            <li className="flex flex-wrap gap-4 text-sm">
+              Shipping <span className="ml-auto font-bold">$2.00</span>
+            </li>
+            <li className="flex flex-wrap gap-4 text-sm">
+              Tax <span className="ml-auto font-bold">$4.00</span>
+            </li>
+            <hr className="border-gray-300" />
+            <li className="flex flex-wrap gap-4 text-sm font-bold">
+              Total <span className="ml-auto">$206.00</span>
+            </li>
+          </ul>
+
+          <div className="mt-8 space-y-2">
+            <button
+              type="button"
+              className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-gray-800 hover:bg-gray-900 text-white rounded-md"
+            >
+              Buy Now
+            </button>
+            <button
+              type="button"
+              className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-100 text-gray-800 border border-gray-300 rounded-md"
+            >
+              Continue Shopping{' '}
+            </button>
+          </div>
+
+          <div className="mt-4 flex flex-wrap justify-center gap-4">
+            <img
+              src="https://readymadeui.com/images/master.webp"
+              alt="card1"
+              className="w-10 object-contain"
+            />
+            <img
+              src="https://readymadeui.com/images/visa.webp"
+              alt="card2"
+              className="w-10 object-contain"
+            />
+            <img
+              src="https://readymadeui.com/images/american-express.webp"
+              alt="card3"
+              className="w-10 object-contain"
+            />
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
