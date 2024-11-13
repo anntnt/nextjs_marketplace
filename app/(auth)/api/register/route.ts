@@ -26,7 +26,7 @@ export async function POST(
 ): Promise<NextResponse<RegisterResponseBody>> {
   // Task: Implement the user registration workflow
   //console.log('HHHHi');
-  console.log('request' + request);
+  //console.log('request' + request);
   // 1. Get the user data from the request
   const requestBody = await request.json();
 
@@ -43,7 +43,7 @@ export async function POST(
   }
 
   // 3. Check if user already exist in the database
-  console.log('result.data.username ' + result.data.username);
+  //console.log('result.data.username ' + result.data.username);
   const user = await getUserInsecure(result.data.username);
 
   if (user) {
@@ -65,7 +65,7 @@ export async function POST(
 
   // 4. Hash the plain password from the user
   const passwordHash = await bcrypt.hash(result.data.password, 12);
-  console.log('passwordHash ' + passwordHash);
+  //console.log('passwordHash ' + passwordHash);
 
   // 5. Save the user information with the hashed password in the database
   const newUser = await createUserInsecure(
@@ -99,10 +99,10 @@ export async function POST(
   // 6. Create a token
   const token = crypto.randomBytes(100).toString('base64');
 
-  console.log('token1 ' + token);
+  //console.log('token1 ' + token);
   // 7. Create the session record
   const session = await createSessionInsecure(newUser.id, token);
-  console.log('token2 ' + token);
+  //console.log('token2 ' + token);
   if (!session) {
     return NextResponse.json(
       {

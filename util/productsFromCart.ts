@@ -25,7 +25,7 @@ export function combineProductData(
   products: Product[],
   productQuantities: ProductQuantityInCart[],
 ) {
-  const cartProducts: DataOfProductInCart[] = products
+ // const cartProducts: DataOfProductInCart[] = products
     .filter((product) =>
       productQuantities.some(
         (productQuantity) => product.id === productQuantity.productId,

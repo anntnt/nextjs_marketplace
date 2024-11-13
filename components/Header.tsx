@@ -17,6 +17,7 @@ export default function Component(props: userProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+  //if (props.user) console.log('props.user.roleId', props.user.roleId);
 
   return (
     <header className="sticky top-0 bg-white shadow-md z-10">
@@ -36,19 +37,12 @@ export default function Component(props: userProps) {
               <li>
                 <Link
                   href="/marketplace"
-                  className="text-black dark:text-white hover:text-blue-1000"
+                  className="text-black dark:text-white hover:text-blue-1000  active:text-blue-1000 active:font-semibold focus:text-blue-1000 focus:font-semibold"
                 >
                   Marketplace
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/sell"
-                  className="text-black dark:text-white hover:text-blue-1000"
-                >
-                  Sell
-                </Link>
-              </li>
+
               <li>
                 <Link
                   href="/about"
@@ -65,6 +59,34 @@ export default function Component(props: userProps) {
                   Support
                 </Link>
               </li>
+
+              {!props.user || props.user.roleId === 3 ? (
+                <>
+                  <li>
+                    <Link
+                      href="/sell"
+                      className="text-black dark:text-white hover:text-blue-1000"
+                    >
+                      <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                        Become a Seller
+                      </span>
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link
+                      href={`/business/${props.user.username}`}
+                      className="text-black dark:text-white hover:text-blue-1000"
+                    >
+                      <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                        My Business
+                      </span>
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
@@ -78,14 +100,21 @@ export default function Component(props: userProps) {
                 placeholder="Search..."
               />
             </div>
-            <Cart cartSum={props.cartSum} />
+            {/* only display cart icon when user role is buyer */}
+            {props.user && props.user.roleId === 3 ? (
+              <>
+                <Cart cartSum={props.cartSum} />
+              </>
+            ) : (
+              <></>
+            )}
 
             {props.user ? (
               <>
                 <div className="hidden md:flex  items-center relative  space-x-2">
                   <Link
                     href={`/profile/${props.user.username}`}
-                    className=" text-black dark:text-white hover:text-blue-1000"
+                    className=" text-black dark:text-white hover:text-blue-1000 font-bold"
                   >
                     {props.user.username}
                   </Link>
@@ -149,14 +178,7 @@ export default function Component(props: userProps) {
                     Marketplace
                   </Link>
                 </li>
-                <li className="w-full">
-                  <Link
-                    href="/sell"
-                    className="block w-full py-2 text-black dark:text-white"
-                  >
-                    Sell
-                  </Link>
-                </li>
+
                 <li className="w-full">
                   <Link
                     href="/about"
@@ -173,10 +195,37 @@ export default function Component(props: userProps) {
                     Support
                   </Link>
                 </li>
+                {!props.user || props.user.roleId === 3 ? (
+                  <>
+                    <li className="w-full">
+                      <Link
+                        href="/sell"
+                        className="block w-full py-2 text-black dark:text-white"
+                      >
+                        <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                          Become a Seller
+                        </span>
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="w-full">
+                      <Link
+                        href={`/business/${props.user.username}`}
+                        className="block w-full py-2 text-black dark:text-white "
+                      >
+                        <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                          My Business
+                        </span>
+                      </Link>
+                    </li>
+                  </>
+                )}
 
                 {props.user ? (
                   <>
-                    <li className="w-full ">
+                    <li className="w-full font-bold">
                       <Link href={`/profile/${props.user.username}`}>
                         {props.user.username}
                       </Link>

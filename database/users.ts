@@ -11,7 +11,8 @@ export const getUser = cache(async (sessionToken: Session['token']) => {
   const [user] = await sql<User[]>`
     SELECT
       users.id,
-      users.username
+      users.username,
+      users.role_id
     FROM
       users
       INNER JOIN sessions ON (

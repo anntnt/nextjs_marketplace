@@ -17,8 +17,6 @@ type Props = {
 
 export default async function SingleProductPage(props: Props) {
   const productId = Number((await props.params).productId);
-  // const sessionTokenCookie = await getCookie('sessionToken');
-  //const user = sessionTokenCookie && (await getUser(sessionTokenCookie));
 
   const product = await getCategoryProductWithSellerInsecure(productId);
   if (!product) {
