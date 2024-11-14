@@ -1,11 +1,7 @@
 import { cache } from 'react';
-import { sql } from './connect';
-import type { Session } from '../migrations/0010-createTableSessions';
 import { z } from 'zod';
-
-export const removeProductSchema = z.object({
-  id: z.number(),
-});
+import type { Session } from '../migrations/0010-createTableSessions';
+import { sql } from './connect';
 
 export type Product = {
   id: number;
@@ -13,9 +9,9 @@ export type Product = {
   price: number;
   imageUrl: string;
   description: string;
-  size: string;
-  color: string;
-  sellerId: string;
+  size: string | null;
+  color: string | null;
+  sellerId: number;
   categoryId: number;
 };
 
@@ -27,10 +23,52 @@ export type ProductWithSeller = {
   description: string;
   size: string;
   color: string;
-  sellerId: string;
+  sellerId: number;
   storeName: string;
   categoryId: number;
 };
+
+export const newProductSchema = z.object({
+  name: z.string(),
+  price: z.number(),
+  imageUrl: z.string(),
+  description: z.string(),
+  sellerId: z.number(),
+  categoryId: z.number(),
+});
+
+export const createProduct = cache(
+  async (sessionToken: Session['token'], newProduct: Omit<Product, 'id'>) => {
+    const [product] = await sql<Product[]>`
+      INSERT INTO
+        products (
+          name,
+          price,
+          image_url,
+          description,
+          seller_id,
+          category_id
+        ) (
+          SELECT
+            ${newProduct.name},
+            ${newProduct.price},
+            ${newProduct.imageUrl},
+            ${newProduct.description},
+            ${newProduct.sellerId},
+            ${newProduct.categoryId},
+          FROM
+            sessions
+          WHERE
+            token = ${sessionToken}
+            AND sessions.expiry_timestamp > now()
+        )
+      RETURNING
+        products.*
+    `;
+
+    return product;
+  },
+);
 export const getProductsInsecure = cache(async () => {
   const products = await sql<Product[]>`
     SELECT

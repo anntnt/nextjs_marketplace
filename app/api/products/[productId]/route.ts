@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { type Product, removeProduct } from '../../../../database/products';
 import { getCookie } from '../../../../util/cookies';
-import { removeProduct, type Product } from '../../../../database/products';
 
 export type ProductResponseDelete =
   | {
@@ -22,8 +22,8 @@ export async function DELETE(
   // 3. Get the token from the cookie
 
   const sessionTokenCookie = await getCookie('sessionToken');
-  console.log('id1 ', Number((await params).productId));
-  console.log('sessionToken1 ', sessionTokenCookie);
+  //console.log('id1 ', Number((await params).productId));
+  // console.log('sessionToken1 ', sessionTokenCookie);
   // 4. Remove product
   const product =
     sessionTokenCookie &&

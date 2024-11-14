@@ -65,7 +65,6 @@ export async function POST(
 
   // 4. Hash the plain password from the user
   const passwordHash = await bcrypt.hash(result.data.password, 12);
-  //console.log('passwordHash ' + passwordHash);
 
   // 5. Save the user information with the hashed password in the database
   const newUser = await createUserInsecure(
