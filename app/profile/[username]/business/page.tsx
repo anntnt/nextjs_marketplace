@@ -1,14 +1,10 @@
+import { Tooltip } from 'flowbite-react';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { notFound, redirect } from 'next/navigation';
+import { getProductsOfSeller } from '../../../../database/products';
 import { getUser } from '../../../../database/users';
-import {
-  getProductsOfSeller,
-  removeProduct,
-} from '../../../../database/products';
-import { notFound } from 'next/navigation';
-import { Tooltip } from 'flowbite-react';
 import ButtonRemoveProduct from './ButtonRemoveProduct';
 
 export default async function SellerProductsPage() {
@@ -29,6 +25,9 @@ export default async function SellerProductsPage() {
   // 3. If user doesn't exist, redirect to login page
   if (!user) {
     redirect('/login');
+  }
+  if (user.roleId !== 2) {
+    redirect('/seller-area-only');
   }
 
   const products = await getProductsOfSeller(sessionTokenCookie.value);

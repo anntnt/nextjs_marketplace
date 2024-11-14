@@ -1,6 +1,8 @@
+import { Button } from 'flowbite-react';
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { getUser } from '../../../database/users';
+import { getUser } from '../../../../database/users';
 
 export default async function UserProfilePage() {
   // const { username } = await props.params;
@@ -24,7 +26,7 @@ export default async function UserProfilePage() {
 
   return (
     <main className="flex-grow  w-full max-w-full px-20 py-12">
-      <h1 className="mb-4 text-4xl text-center">{user.username}'s Business</h1>
+      <h1 className="mb-4 text-4xl text-center">Messages Inbox</h1>
     </main>
   );
 }

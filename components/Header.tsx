@@ -64,7 +64,7 @@ export default function Component(props: userProps) {
                 <>
                   <li>
                     <Link
-                      href="/sell"
+                      href="/become-a-seller"
                       className="text-black dark:text-white hover:text-blue-1000"
                     >
                       <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
@@ -77,7 +77,7 @@ export default function Component(props: userProps) {
                 <>
                   <li>
                     <Link
-                      href={`/business/${props.user.username}`}
+                      href={`/profile/${props.user.username}/business`}
                       className="text-black dark:text-white hover:text-blue-1000"
                     >
                       <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
@@ -199,7 +199,7 @@ export default function Component(props: userProps) {
                   <>
                     <li className="w-full">
                       <Link
-                        href="/sell"
+                        href="/become-a-seller"
                         className="block w-full py-2 text-black dark:text-white"
                       >
                         <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
@@ -212,7 +212,7 @@ export default function Component(props: userProps) {
                   <>
                     <li className="w-full">
                       <Link
-                        href={`/business/${props.user.username}`}
+                        href={`/profile/${props.user.username}/business`}
                         className="block w-full py-2 text-black dark:text-white "
                       >
                         <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">

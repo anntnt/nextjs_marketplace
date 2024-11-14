@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { ProductResponseDelete } from '../../../api/products/[productId]/route';
+import { useState } from 'react';
 import type { Product } from '../../../../database/products';
+import type { ProductResponseDelete } from '../../../api/products/[productId]/route';
 
 type Props = { id: Product['id'] };
 
@@ -15,44 +15,13 @@ export default function ButtonRemoveForm(props: Props) {
 
   // Reset form states to default values so that the form is
   // cleared after an add, edit or delete action
-  //const id = String(props.id);
   function resetFormStates() {
     setProductId(0);
     setProductName('');
     setImageUrl('');
   }
-  //console.log('props.productId 1 ', props.id);
-
   const router = useRouter();
-  /* async function clickHandler(id: string) {
-    console.log('props.productId 2 ', id);
-    const response = await fetch(`/api/products/${id}`, {
-      method: 'DELETE',
-    });
-    console.log('response ', response);
-    setErrorMessage('');
 
-    if (!response.ok) {
-      let newErrorMessage = 'Error deleting product';
-
-      const responseBody: ProductResponseDelete = await response.json();
-
-      if ('error' in responseBody) {
-        newErrorMessage = responseBody.error;
-      }
-
-      // TODO: Use toast instead of showing
-      // this below creation / update form
-      setErrorMessage(newErrorMessage);
-      return;
-    }
-
-    router.refresh();
-
-    // Reset form states if deleting an
-    // animal after editing it
-    resetFormStates();
-  }*/
   return (
     <button
       className="bg-white"
