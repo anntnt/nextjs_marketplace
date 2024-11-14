@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ErrorMessage from '../../../../ErrorMessage';
 
 type Props = { sellerId: number };
@@ -17,7 +17,14 @@ export default function ProductFormApi(props: Props) {
   const [category, setCategory] = useState('');*/
 
   const router = useRouter();
-
+  const form = useRef<HTMLFormElement>();
+  function resetFormStates(formData: FormData) {
+    formData.delete('username');
+    formData.delete('price');
+    formData.delete('imageUrl');
+    formData.delete('description');
+    formData.delete('categoryId');
+  }
   async function productFormApiHandler(formData: FormData) {
     const response = await fetch('/api/new-product', {
       method: 'POST',
@@ -41,7 +48,8 @@ export default function ProductFormApi(props: Props) {
 
     router.refresh();
 
-    setSuccessMessage('Image uploaded successfully');
+    setSuccessMessage('Product created successfully');
+    resetFormStates;
   }
 
   return (

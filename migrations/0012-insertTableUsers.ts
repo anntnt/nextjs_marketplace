@@ -36,7 +36,7 @@ const users = [
     lastname: '2',
     email_address: 'ann.tran.vie@gmail.com',
     password_hash:
-      '$2b$12$/61QBjHA1CkV/9ItWztgD.wOx2ed40o7i5amUaniJFaOAyUqMgxXW ',
+      '$2b$12$k2OUXYqqGveofPsgefyQi.p6S8.v7688hg7pQ076rav60vzNtx9j.',
     birthday: '2000-11-11',
     gender: 'female',
     store_name: 'Donau Store',
