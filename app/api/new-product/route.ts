@@ -30,16 +30,16 @@ export async function POST(
     const response = await cloudinaryUpload(formData, 'server-action-images');
 
     if (!response || !response.imageUrl) {
-      return NextResponse.json({ error: 'Image upload failed' });
+      return NextResponse.json({ error: 'Image upload failed 0' });
     }
-
+    console.log('response.imageUrl ', response.imageUrl);
     const body = {
       name: formData.get('name'),
-      price: formData.get('price'),
+      price: Number(formData.get('price')),
       imageUrl: response.imageUrl,
       description: formData.get('description'),
-      sellerId: formData.get('sellerId'),
-      categoryId: formData.get('categoryId'),
+      sellerId: Number(formData.get('sellerId')),
+      categoryId: Number(formData.get('categoryId')),
     };
 
     const result = newProductSchema.safeParse(body);
@@ -50,7 +50,7 @@ export async function POST(
       });
     }
     const sessionTokenCookie = await getCookie('sessionToken');
-
+    console.log('result ', result);
     const newProduct =
       sessionTokenCookie &&
       (await createProduct(sessionTokenCookie, {
@@ -68,10 +68,11 @@ export async function POST(
       return NextResponse.json({ error: 'newProduct creation failed' });
     }
 
-    return NextResponse.json({ product:newProduct });
+    return NextResponse.json({ product: newProduct });
   } catch (error) {
+    console.log('error: ', error);
     return NextResponse.json({
-      error: 'Image upload failed',
+      error: 'Image upload failed 00',
     });
   }
 }

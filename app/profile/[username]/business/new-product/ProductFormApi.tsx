@@ -9,26 +9,21 @@ type Props = { sellerId: number };
 export default function ProductFormApi(props: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState(0);
+  /* const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [description, setDescription] = useState('');
   const [sellerId, setSellerId] = useState(props.sellerId);
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState('');*/
 
   const router = useRouter();
 
-  async function productFormApiHandler() {
+  async function productFormApiHandler(formData: FormData) {
     const response = await fetch('/api/new-product', {
       method: 'POST',
 
       // Using FormData API
-      body: name,
-      price,
-      imageUrl,
-      description,
-      sellerId,
-      categoryId,
+      body: formData,
     });
 
     if (!response.ok) {
@@ -56,7 +51,8 @@ export default function ProductFormApi(props: Props) {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          productFormApiHandler();
+          const formData = new FormData(event.currentTarget);
+          productFormApiHandler(formData);
         }}
         className="flex flex-col justify-center gap-3 max-w-sm mx-auto"
       >
@@ -67,8 +63,6 @@ export default function ProductFormApi(props: Props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             name="name"
-            value={name}
-            onChange={(event) => setName(event.currentTarget.value)}
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -78,8 +72,6 @@ export default function ProductFormApi(props: Props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             name="price"
-            value={price}
-            onChange={(event) => setPrice(Number(event.currentTarget.value))}
           />
         </label>
 
@@ -90,8 +82,6 @@ export default function ProductFormApi(props: Props) {
             type="file"
             name="image"
             accept="image/*"
-            value={imageUrl}
-            onChange={(event) => setImageUrl(event.currentTarget.value)}
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -100,16 +90,13 @@ export default function ProductFormApi(props: Props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             name="description"
-            value={description}
-            onChange={(event) => setDescription(event.currentTarget.value)}
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           Category
           <select
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            value={category}
-            onChange={(event) => setCategory(Number(event.currentTarget.value))}
+            name="categoryId"
           >
             <option>Please select one...</option>
             <option value="1">female</option>

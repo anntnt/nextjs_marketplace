@@ -21,8 +21,8 @@ export type ProductWithSeller = {
   price: number;
   imageUrl: string;
   description: string;
-  size: string;
-  color: string;
+  size: string | null;
+  color: string | null;
   sellerId: number;
   storeName: string;
   categoryId: number;
@@ -47,25 +47,29 @@ export const createProduct = cache(
           image_url,
           description,
           seller_id,
-          category_id
-        ) (
-          SELECT
-            ${newProduct.name},
-            ${newProduct.price},
-            ${newProduct.imageUrl},
-            ${newProduct.description},
-            ${newProduct.sellerId},
-            ${newProduct.categoryId},
-          FROM
-            sessions
-          WHERE
-            token = ${sessionToken}
-            AND sessions.expiry_timestamp > now()
+          category_id,
+          size,
+          color
         )
+      SELECT
+        ${newProduct.name},
+        ${newProduct.price},
+        ${newProduct.imageUrl},
+        ${newProduct.description},
+        ${newProduct.sellerId},
+        ${newProduct.categoryId},
+        ${newProduct.size},
+        ${newProduct.color}
+      FROM
+        sessions
+      WHERE
+        token = ${sessionToken}
+        AND sessions.expiry_timestamp > now()
       RETURNING
         products.*
     `;
-
+    console.log('new product ', newProduct);
+    console.log('product ', product);
     return product;
   },
 );
