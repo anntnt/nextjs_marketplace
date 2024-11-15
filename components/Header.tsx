@@ -17,7 +17,6 @@ export default function Component(props: userProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  //if (props.user) console.log('props.user.roleId', props.user.roleId);
 
   return (
     <header className="sticky top-0 bg-white shadow-md z-10">

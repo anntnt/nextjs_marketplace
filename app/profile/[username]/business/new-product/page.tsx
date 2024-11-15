@@ -1,7 +1,7 @@
-import { Button } from 'flowbite-react';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { getProductCategoriesInsecure } from '../../../../../database/productCategories';
 import { getUser } from '../../../../../database/users';
 import ProductFormApi from './ProductFormApi';
 
@@ -28,10 +28,14 @@ export default async function UserProfilePage() {
   if (user.roleId !== 2) {
     redirect('/seller-area-only');
   }
+  const productCategories = await getProductCategoriesInsecure();
   return (
     <main className="flex-grow  w-full max-w-full px-20 py-12">
       <h1 className="mb-4 text-4xl text-center">New Product</h1>
-      <ProductFormApi sellerId={user.id} />
+      <ProductFormApi
+        sellerId={user.id}
+        productCategories={productCategories}
+      />
     </main>
   );
 }

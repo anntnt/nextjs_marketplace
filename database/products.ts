@@ -68,8 +68,7 @@ export const createProduct = cache(
       RETURNING
         products.*
     `;
-    console.log('new product ', newProduct);
-    console.log('product ', product);
+
     return product;
   },
 );
@@ -145,8 +144,6 @@ export const getProductsOfSeller = cache(
 );
 export const removeProduct = cache(
   async (id: number, sessionToken: Session['token']) => {
-    console.log('id2 ', id);
-    console.log('sessionToken2 ', sessionToken);
     const [product] = await sql<Product[]>`
       DELETE FROM products USING sessions
       WHERE

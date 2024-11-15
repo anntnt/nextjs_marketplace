@@ -34,12 +34,36 @@ export default async function SellerProductsPage() {
   if (!products) {
     return notFound();
   }
-  //console.log('products ', products);
 
   return (
     <main className="flex-grow  w-full max-w-full md:px-20 py-12">
       <h1 className="mb-4 text-4xl text-center">My Products</h1>
       <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+        <div className="mx-auto max-w-screen-md px-4 2xl:px-0">
+          <Link
+            href={`/profile/${user.username}/business/new-product`}
+            className="inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-green-300 rounded-lg hover:bg-gray-100 hover:text-yellow-300 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+          >
+            <svg
+              className="w-7 h-7 me-1.5 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 5v14m-8-7h2m0 0h2m-2 0v2m0-2v-2m12 1h-6m6 4h-6M4 19h16c.5523 0 1-.4477 1-1V6c0-.55228-.4477-1-1-1H4c-.55228 0-1 .44772-1 1v12c0 .5523.44772 1 1 1Z"
+              />
+            </svg>
+            Add new product
+          </Link>
+        </div>
         <div className="mx-auto max-w-screen-md px-4 2xl:px-0">
           <div className="mx-auto max-w-3xl">
             <div className="mt-6 sm:mt-8">

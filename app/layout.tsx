@@ -48,11 +48,6 @@ export default async function RootLayout({ children }: Props) {
   if (cartSumResult && cartSumResult.totalamount)
     cartSum = cartSumResult.totalamount;
 
-  // cartSum = cartSumResult ? cartSumResult.totalamount : '0';
-  /*console.log('cartSumResult', cartSumResult);
-  console.log('cartSum', cartSum);
-  console.log('user', user);*/
-
   // 3. Make decision whether to show the login and register links or not
   return (
     <html lang="en">

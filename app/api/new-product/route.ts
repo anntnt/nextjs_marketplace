@@ -30,7 +30,7 @@ export async function POST(
     const response = await cloudinaryUpload(formData, 'server-action-images');
 
     if (!response || !response.imageUrl) {
-      return NextResponse.json({ error: 'Image upload failed 0' });
+      return NextResponse.json({ error: 'Image upload failed' });
     }
     console.log('response.imageUrl ', response.imageUrl);
     const body = {
@@ -72,7 +72,7 @@ export async function POST(
   } catch (error) {
     console.log('error: ', error);
     return NextResponse.json({
-      error: 'Image upload failed 00',
+      error: 'Image upload failed',
     });
   }
 }
