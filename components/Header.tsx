@@ -72,7 +72,7 @@ export default function Component(props: userProps) {
                     </Link>
                   </li>
                 </>
-              ) : (
+              ) : props.user.roleId === 2 ? (
                 <>
                   <li>
                     <Link
@@ -85,6 +85,8 @@ export default function Component(props: userProps) {
                     </Link>
                   </li>
                 </>
+              ) : (
+                <></>
               )}
             </ul>
           </div>

@@ -37,6 +37,14 @@ export const newProductSchema = z.object({
   categoryId: z.number(),
 });
 
+export const updateProductSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  price: z.number(),
+  imageUrl: z.string(),
+  description: z.string(),
+  categoryId: z.number(),
+});
 export const createProduct = cache(
   async (sessionToken: Session['token'], newProduct: Omit<Product, 'id'>) => {
     const [product] = await sql<Product[]>`
@@ -155,6 +163,51 @@ export const removeProduct = cache(
         products.*
     `;
 
+    return product;
+  },
+);
+export const getProduct = cache(
+  async (id: number, sessionToken: Session['token']) => {
+    const [product] = await sql<Product[]>`
+      SELECT
+        *
+      FROM
+        products
+        INNER JOIN sessions ON (
+          sessions.token = ${sessionToken}
+          AND sessions.expiry_timestamp > now()
+        )
+      WHERE
+        products.id = ${id}
+    `;
+
+    return product;
+  },
+);
+export const updateProduct = cache(
+  async (
+    sessionToken: Session['token'],
+    updatedProduct: Omit<Product, 'sellerId'>,
+  ) => {
+    const [product] = await sql<Product[]>`
+      UPDATE products
+      SET
+        name = ${updatedProduct.name},
+        price = ${updatedProduct.price},
+        image_url = ${updatedProduct.imageUrl},
+        description = ${updatedProduct.description},
+        size = NULL,
+        color = NULL,
+        category_id = ${updatedProduct.categoryId}
+      FROM
+        sessions
+      WHERE
+        sessions.token = ${sessionToken}
+        AND sessions.expiry_timestamp > now()
+        AND products.id = ${updatedProduct.id}
+      RETURNING
+        products.*
+    `;
     return product;
   },
 );
