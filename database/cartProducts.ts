@@ -3,17 +3,20 @@ import { z } from 'zod';
 import type { Session } from '../migrations/0010-createTableSessions';
 import { sql } from './connect';
 
-export type ProductsFromCart = {
+//type of cart products in database
+export type ProductFromCart = {
   productId: number;
   name: string;
   price: number;
   imageUrl: string;
   quantity: number;
 };
+//type of cart products on the session, which were added to cart by users
 export type CartProduct = {
   productId: number;
   quantity: number;
 };
+//Total cart items
 export type CartSum = {
   totalamount: string;
 };
@@ -23,7 +26,7 @@ export const cartProductSchema = z.object({
 });
 
 export const getCartProducts = cache(async (sessionToken: string) => {
-  const cartProducts = await sql<ProductsFromCart[]>`
+  const cartProducts = await sql<ProductFromCart[]>`
     SELECT
       carts_products.product_id,
       products.name,
