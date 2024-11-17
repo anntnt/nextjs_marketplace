@@ -1,7 +1,7 @@
 'use client';
-
+import Image from 'next/image';
 import { redirect, useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import type { ProductCategory } from '../../../../../database/productCategories';
 import type { Product } from '../../../../../database/products';
 import ErrorMessage from '../../../../ErrorMessage';
@@ -17,12 +17,11 @@ export default function EditProductFormApi(props: Props) {
   const [successMessage, setSuccessMessage] = useState('');
   const [name, setName] = useState(props.product?.name);
   const [price, setPrice] = useState(props.product?.price);
-  const [imageUrl, setImageUrl] = useState(props.product?.imageUrl);
   const [description, setDescription] = useState(props.product?.description);
   const [categoryId, setCategoryId] = useState(props.product?.categoryId);
 
   const router = useRouter();
-  const form = useRef<HTMLFormElement>();
+
   function resetFormStates(formData: FormData) {
     formData.delete('username');
     formData.delete('price');
@@ -93,8 +92,16 @@ export default function EditProductFormApi(props: Props) {
             onChange={(event) => setPrice(Number(event.currentTarget.value))}
           />
         </label>
+        <div className="block mb-2 ">
+          <Image
+            src={props.product.imageUrl}
+            width={500}
+            height={375}
+            alt={`Product ${name}`}
+          />
+        </div>
         <label>
-          Select Image:
+          Select new image:
           <input
             className=" block w-full text-sm text-blue-1000 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             type="file"

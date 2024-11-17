@@ -41,7 +41,7 @@ export const updateProductSchema = z.object({
   id: z.number(),
   name: z.string(),
   price: z.number(),
-  imageUrl: z.string(),
+  imageUrl: z.string().optional(),
   description: z.string(),
   categoryId: z.number(),
 });
@@ -195,6 +195,33 @@ export const updateProduct = cache(
         name = ${updatedProduct.name},
         price = ${updatedProduct.price},
         image_url = ${updatedProduct.imageUrl},
+        description = ${updatedProduct.description},
+        size = NULL,
+        color = NULL,
+        category_id = ${updatedProduct.categoryId}
+      FROM
+        sessions
+      WHERE
+        sessions.token = ${sessionToken}
+        AND sessions.expiry_timestamp > now()
+        AND products.id = ${updatedProduct.id}
+      RETURNING
+        products.*
+    `;
+    return product;
+  },
+);
+
+export const updateProductWithoutImage = cache(
+  async (
+    sessionToken: Session['token'],
+    updatedProduct: Omit<Product, 'sellerId' | 'imageUrl'>,
+  ) => {
+    const [product] = await sql<Product[]>`
+      UPDATE products
+      SET
+        name = ${updatedProduct.name},
+        price = ${updatedProduct.price},
         description = ${updatedProduct.description},
         size = NULL,
         color = NULL,

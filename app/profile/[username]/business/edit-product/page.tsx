@@ -39,7 +39,7 @@ export default async function EditProductPage(props: Props) {
   if (user.roleId !== 2) {
     redirect('/seller-area-only');
   }
-  console.log('searchParams:', await props.searchParams);
+  // console.log('searchParams:', await props.searchParams);
 
   const productId = Number((await props.searchParams).productid);
 
