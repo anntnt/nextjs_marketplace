@@ -8,9 +8,12 @@ import type { NextRequest, NextResponse } from 'next/server';
 import {
   getCartProducts,
   type ProductFromCart,
-} from '../../../database/cartProducts';
-import { getProductsInsecure } from '../../../database/products';
-import { createSessionInsecure } from '../../../database/sessions';
+} from '../../../databasegraphql/cartProducts';
+import {
+  getProductsInsecure,
+  type Product,
+} from '../../../databasegraphql/products';
+import { createSessionInsecure } from '../../../databasegraphql/sessions';
 import type { Resolvers } from '../../../graphql/graphqlGeneratedTypes';
 import { secureCookieOptions } from '../../../util/cookies';
 
@@ -20,20 +23,12 @@ export type Context = {
 
 export type GraphqlResponseBody =
   | {
-      cartProduct: ProductFromCart;
+      product: Product;
     }
   | Error;
 
 const typeDefs = gql`
-  type ProductFromCart {
-    id: ID!
-    name: String!
-    price: ID!
-    imageUrl: String!
-    quantity: ID!
-  }
-
-  type Product = {
+  type Product {
     id: ID!
     name: String!
     price: ID!
@@ -41,26 +36,12 @@ const typeDefs = gql`
     description: String!
     size: String
     color: String
-    sellerId:ID!
+    sellerId: ID!
     categoryId: ID!
   }
 
   type Query {
-    productsFromCart: [ProductFromCart]
-    productFromCart(id: ID!): ProductFromCart
     products: [Product]
-  }
-
-  type Mutation {
-    deleteProductFromCart(id: ID!): ProductFromCart
-
-    updateProductFromCart(
-      id: ID!
-      name: String!
-      price: ID!
-      imageUrl: String!
-      quantity: ID!
-    ): ProductFromCart
   }
 `;
 
@@ -70,42 +51,6 @@ const resolvers: Resolvers = {
       return await getProductsInsecure();
     },
   },
-
-  /*Mutation: {
-    updateProductFromCart: async (parent, args, context) => {
-      if (!context.sessionTokenCookie) {
-        throw new GraphQLError('Unauthorized operation');
-      }
-
-      if (
-        typeof args.firstName !== 'string' ||
-        typeof args.type !== 'string' ||
-        (args.accessory && typeof args.type !== 'string') ||
-        !args.firstName ||
-        !args.type
-      ) {
-        throw new GraphQLError('Required field missing');
-      }
-
-      return await updateProductFromCart(e.value, {
-        id: Number(args.id),
-        firstName: args.firstName,
-        type: args.type,
-        accessory: args.accessory || null,
-      });
-    },
-
-    deleteProductFromCart: async (parent, args, context) => {
-      if (!context.sessionTokenCookie) {
-        throw new GraphQLError('Unauthorized operation');
-      }
-
-      return await deleteProductFromCart(
-        context.sessionTokenCookie.value,
-        Number(args.id),
-      );
-    },
-  },*/
 };
 
 const schema = makeExecutableSchema({
@@ -116,17 +61,6 @@ const schema = makeExecutableSchema({
 const apolloServer = new ApolloServer({
   schema,
 });
-
-/*const apolloServerRouteHandler = startServerAndCreateNextHandler<NextRequest>(
-  apolloServer,
-  {
-    context: async (req) => {
-      return {
-        sessionTokenCookie: await req.cookies.get('sessionToken'),
-      };
-    },
-  },
-);*/
 
 const apolloServerRouteHandler =
   startServerAndCreateNextHandler<NextRequest>(apolloServer);
