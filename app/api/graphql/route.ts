@@ -9,6 +9,7 @@ import {
   getCartProducts,
   type ProductFromCart,
 } from '../../../database/cartProducts';
+import { getProductsInsecure } from '../../../database/products';
 import { createSessionInsecure } from '../../../database/sessions';
 import type { Resolvers } from '../../../graphql/graphqlGeneratedTypes';
 import { secureCookieOptions } from '../../../util/cookies';
@@ -27,14 +28,27 @@ const typeDefs = gql`
   type ProductFromCart {
     id: ID!
     name: String!
-    price: Number!
+    price: ID!
     imageUrl: String!
-    quantity: Number!
+    quantity: ID!
+  }
+
+  type Product = {
+    id: ID!
+    name: String!
+    price: ID!
+    imageUrl: String!
+    description: String!
+    size: String
+    color: String
+    sellerId:ID!
+    categoryId: ID!
   }
 
   type Query {
     productsFromCart: [ProductFromCart]
     productFromCart(id: ID!): ProductFromCart
+    products: [Product]
   }
 
   type Mutation {
@@ -52,8 +66,8 @@ const typeDefs = gql`
 
 const resolvers: Resolvers = {
   Query: {
-    productsFromCart: async () => {
-      return await getCartProducts(context.sessionTokenCookie.value);
+    products: async () => {
+      return await getProductsInsecure();
     },
   },
 
@@ -103,7 +117,7 @@ const apolloServer = new ApolloServer({
   schema,
 });
 
-const apolloServerRouteHandler = startServerAndCreateNextHandler<NextRequest>(
+/*const apolloServerRouteHandler = startServerAndCreateNextHandler<NextRequest>(
   apolloServer,
   {
     context: async (req) => {
@@ -112,7 +126,10 @@ const apolloServerRouteHandler = startServerAndCreateNextHandler<NextRequest>(
       };
     },
   },
-);
+);*/
+
+const apolloServerRouteHandler =
+  startServerAndCreateNextHandler<NextRequest>(apolloServer);
 
 export async function GET(
   req: NextRequest,
