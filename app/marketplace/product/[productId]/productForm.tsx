@@ -3,7 +3,7 @@
 import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { User } from '../../../../migrations/0001-createTableUsers';
-import type { CreateCartProductResponseBodyPost } from '../../../api/cart/route';
+import type { CreateCartProductResponseBodyPost } from '../../../api/cart-items/route';
 import ErrorMessage from '../../../ErrorMessage';
 
 type Props = {

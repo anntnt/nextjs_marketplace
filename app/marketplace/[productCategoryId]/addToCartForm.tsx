@@ -3,7 +3,7 @@
 import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { Product } from '../../../database/products';
-import type { CreateCartProductResponseBodyPost } from '../../api/cart/route';
+import type { CreateCartProductResponseBodyPost } from '../../api/cart-items/route';
 import ErrorMessage from '../../ErrorMessage';
 
 type Props = {

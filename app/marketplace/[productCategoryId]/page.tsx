@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import React, { useState } from 'react';
 import { getCategoryNameInsecure } from '../../../database/productCategories';
 import { getCategoryProductsInsecure } from '../../../database/products';
-import type { CreateCartProductResponseBodyPost } from '../../api/cart/route';
+import type { CreateCartProductResponseBodyPost } from '../../api/cart-items/route';
 import AddToCartForm from './addToCartForm';
 
 type Props = {

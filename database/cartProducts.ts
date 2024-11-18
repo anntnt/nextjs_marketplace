@@ -5,7 +5,7 @@ import { sql } from './connect';
 
 //type of cart products in database
 export type ProductFromCart = {
-  productId: number;
+  id: number;
   name: string;
   price: number;
   imageUrl: string;
@@ -28,11 +28,11 @@ export const cartProductSchema = z.object({
 export const getCartProducts = cache(async (sessionToken: string) => {
   const cartProducts = await sql<ProductFromCart[]>`
     SELECT
-      carts_products.product_id,
+      carts_products.product_id AS id,
       products.name,
       products.price,
       products.image_url,
-      carts_products.amount
+      carts_products.amount AS quantity
     FROM
       carts_products
       INNER JOIN sessions ON sessions.token = ${sessionToken}

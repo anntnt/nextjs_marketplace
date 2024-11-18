@@ -91,8 +91,8 @@ export default async function SellerProductsPage() {
                                   className="hidden h-auto w-full max-h-full dark:block"
                                   alt={`Product ${product.name}`}
                                   src={product.imageUrl}
-                                  width={64}
-                                  height={48}
+                                  width={75}
+                                  height={56}
                                 />
                               </div>
                               {product.name}
