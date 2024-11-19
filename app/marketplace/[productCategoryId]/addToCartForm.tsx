@@ -23,7 +23,7 @@ export default function AddToCartForm(props: Props) {
           onSubmit={async (event) => {
             event.preventDefault();
 
-            const response = await fetch('/api/cart', {
+            const response = await fetch('/api/cart-items', {
               method: 'POST',
               body: JSON.stringify({
                 productId: props.product.id,

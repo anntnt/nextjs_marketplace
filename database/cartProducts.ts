@@ -39,9 +39,50 @@ export const getCartProducts = cache(async (sessionToken: string) => {
       AND sessions.user_id = carts_products.user_id
       AND sessions.expiry_timestamp > now()
       INNER JOIN products ON carts_products.product_id = products.id
+    ORDER BY
+      id;
   `;
   return cartProducts;
 });
+export const removeCartProducts = cache(
+  async (sessionToken: string, id: number) => {
+    const [cartProduct] = await sql<ProductFromCart[]>`
+      DELETE FROM carts_products USING sessions
+      WHERE
+        sessions.token = ${sessionToken}
+        AND sessions.expiry_timestamp > now()
+        AND sessions.user_id = carts_products.user_id
+        AND carts_products.product_id = ${id}
+      RETURNING
+        carts_products.*
+    `;
+    return cartProduct;
+  },
+);
+export const updateCartItem = cache(
+  async (
+    sessionToken: Session['token'],
+    productId: number,
+    quantity: number,
+  ) => {
+    const [cart_product] = await sql<CartProduct[]>`
+      UPDATE carts_products
+      SET
+        amount = ${quantity}
+      FROM
+        sessions
+      WHERE
+        token = ${sessionToken}
+        AND sessions.expiry_timestamp > now()
+        AND sessions.user_id = carts_products.user_id
+        AND carts_products.product_id = ${productId}
+      RETURNING
+        carts_products.*;
+    `;
+
+    return cart_product;
+  },
+);
 export const createOrUpdateCartItem = cache(
   async (
     sessionToken: Session['token'],

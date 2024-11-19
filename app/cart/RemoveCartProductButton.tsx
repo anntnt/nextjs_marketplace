@@ -1,24 +1,25 @@
 'use client';
 
-import Image from 'next/image';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ProductFromCart } from '../../database/cartProducts';
-import type { CartProductResponseDelete } from '../api/cart/route';
+import type { CartProductResponseDelete } from '../api/cart/[productId]/route';
 
 type Props = {
-  productId: Number;
+  productId: ProductFromCart['id'];
 };
 
 export default function RemoveCartProductButton(props: Props) {
   const [errorMessage, setErrorMessage] = useState('');
+
   const router = useRouter();
 
   return (
-    <button
-      className="bg-white"
+    <div
+      className="flex items-starbuy now
+      t gap-4 justify-end"
       onClick={async () => {
-        const response = await fetch(`/api/products/${props.productId}`, {
+        const response = await fetch(`/api/cart/${props.productId}`, {
           method: 'DELETE',
         });
 
@@ -26,6 +27,7 @@ export default function RemoveCartProductButton(props: Props) {
 
         if (!response.ok) {
           let newErrorMessage = 'Error deleting product';
+          //console.log('response ', response);
 
           const responseBody: CartProductResponseDelete = await response.json();
 
@@ -43,7 +45,6 @@ export default function RemoveCartProductButton(props: Props) {
 
         // Reset form states if deleting an
         // animal after editing it
-        //resetFormStates();
       }}
     >
       <svg
@@ -60,6 +61,6 @@ export default function RemoveCartProductButton(props: Props) {
           data-original="#000000"
         ></path>
       </svg>
-    </button>
+    </div>
   );
 }

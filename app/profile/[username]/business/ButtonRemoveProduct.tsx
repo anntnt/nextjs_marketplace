@@ -8,23 +8,13 @@ import type { ProductResponseDelete } from '../../../api/products/[productId]/ro
 type Props = { id: Product['id'] };
 
 export default function ButtonRemoveForm(props: Props) {
-  const [productId, setProductId] = useState(0);
-  const [productName, setProductName] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Reset form states to default values so that the form is
-  // cleared after an add, edit or delete action
-  function resetFormStates() {
-    setProductId(0);
-    setProductName('');
-    setImageUrl('');
-  }
   const router = useRouter();
 
   return (
-    <button
-      className="bg-white"
+    <div
+      className="bg-white cursor-pointer"
       onClick={async () => {
         const response = await fetch(`/api/products/${props.id}`, {
           method: 'DELETE',
@@ -51,7 +41,6 @@ export default function ButtonRemoveForm(props: Props) {
 
         // Reset form states if deleting an
         // animal after editing it
-        resetFormStates();
       }}
     >
       <svg
@@ -71,6 +60,6 @@ export default function ButtonRemoveForm(props: Props) {
           d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
         />
       </svg>
-    </button>
+    </div>
   );
 }

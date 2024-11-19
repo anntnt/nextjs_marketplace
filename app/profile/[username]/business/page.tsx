@@ -107,7 +107,7 @@ export default async function SellerProductsPage() {
                               prefetch={true}
                               href={{
                                 pathname: `/profile/${user.username}/business/edit-product`,
-                                query: { productid: productId }, // Ensure the ID is a string
+                                query: { productId: productId }, // Ensure the ID is a string
                               }}
                             >
                               <Tooltip content="Edit product">

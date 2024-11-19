@@ -86,6 +86,8 @@ export const getProductsInsecure = cache(async () => {
       *
     FROM
       products
+    ORDER BY
+      id;
   `;
 
   return products;
@@ -112,6 +114,8 @@ export const getCategoryProductsInsecure = cache(async (categoryId: number) => {
       products
     WHERE
       category_id = ${categoryId}
+    ORDER BY
+      id;
   `;
 
   return products;
@@ -145,6 +149,8 @@ export const getProductsOfSeller = cache(
       WHERE
         sessions.token = ${sessionToken}
         AND sessions.expiry_timestamp > now()
+      ORDER BY
+        id;
     `;
 
     return products;

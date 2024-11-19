@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { type Product, removeProduct } from '../../../../database/products';
-import { getCookie } from '../../../util/cookies';
+import {
+  type ProductFromCart,
+  removeCartProducts,
+} from '../../../../database/cartProducts';
+import { getCookie } from '../../../../util/cookies';
 
 export type CartProductResponseDelete =
   | {
-      product: Product;
+      product: ProductFromCart;
     }
   | {
       error: string;
@@ -26,8 +29,12 @@ export async function DELETE(
   // 4. Remove product
   const product =
     sessionTokenCookie &&
-    (await removeProduct(Number((await params).productId), sessionTokenCookie));
+    (await removeCartProducts(
+      sessionTokenCookie,
+      Number((await params).productId),
+    ));
 
+  console.log('product', product);
   if (!product) {
     return NextResponse.json(
       {

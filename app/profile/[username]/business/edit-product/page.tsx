@@ -13,7 +13,7 @@ import ProductFormApi from './EditProductFormApi';
 
 type Props = {
   searchParams: Promise<{
-    productid: string;
+    productId: string;
     rsc: string;
   }>;
 };
@@ -41,7 +41,7 @@ export default async function EditProductPage(props: Props) {
   }
   // console.log('searchParams:', await props.searchParams);
 
-  const productId = Number((await props.searchParams).productid);
+  const productId = Number((await props.searchParams).productId);
 
   const product = await getProductInsecure(productId);
 

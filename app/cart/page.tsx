@@ -7,7 +7,11 @@ import { getUser } from '../../database/users';
 import type { ProductQuantityInCart } from '../../util/cart';
 import { getCookie } from '../../util/cookies';
 import { parseJson } from '../../util/json';
+import EditProductQuantitiesForm from './EditProductQuantitiesForm';
+import ProductForm from './EditProductQuantitiesForm';
 import RemoveCartProductButton from './RemoveCartProductButton';
+
+const SHIPPING_PRICE = 4;
 
 export const metadata = {
   title: 'Cart',
@@ -30,11 +34,11 @@ export default async function CartPage() {
     redirect('/buyer-area-only');
   }
   const productsFromCart = await getCartProducts(sessionTokenCookie.value);
-  if (!productsFromCart) {
+  if (!productsFromCart || !productsFromCart.length) {
     return (
       <main className="flex-grow  w-full max-w-full px-20 py-12">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <h1 className="text-2xl font-extrabold text-gray-800">Your Cart</h1>
+          <h1 className="text-2xl font-extrabold text-gray-800">Your Cart </h1>
 
           <p>Your cart is empty</p>
         </div>
@@ -42,7 +46,10 @@ export default async function CartPage() {
     );
   }
   //console.log('productsFromCart ', productsFromCart);
-
+  const subTotal = productsFromCart.reduce((accumulator, product) => {
+    return (accumulator += product.price * product.quantity);
+  }, 0);
+  const total = subTotal + SHIPPING_PRICE;
   return (
     <main className="flex-grow  w-full max-w-full px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -73,49 +80,16 @@ export default async function CartPage() {
                         height={56}
                       />
                     </div>
-
                     <div className="flex flex-col gap-4">
                       <div>
                         <h3 className="text-base font-bold text-gray-800">
                           {product.name}
                         </h3>
                       </div>
-
-                      <div className="mt-2 flex items-center gap-3">
-                        <button
-                          type="button"
-                          className="flex items-center justify-center w-5 h-5 bg-gray-400 outline-none rounded-full"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-2 fill-white"
-                            viewBox="0 0 124 124"
-                          >
-                            <path
-                              d="M112 50H12C5.4 50 0 55.4 0 62s5.4 12 12 12h100c6.6 0 12-5.4 12-12s-5.4-12-12-12z"
-                              data-original="#000000"
-                            ></path>
-                          </svg>
-                        </button>
-                        <span className="font-bold text-sm leading-[18px]">
-                          {product.quantity}
-                        </span>
-                        <button
-                          type="button"
-                          className="flex items-center justify-center w-5 h-5 bg-gray-400 outline-none rounded-full"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="w-2 fill-white"
-                            viewBox="0 0 42 42"
-                          >
-                            <path
-                              d="M37.059 16H26V4.941C26 2.224 23.718 0 21 0s-5 2.224-5 4.941V16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5H16v11.059C16 39.776 18.282 42 21 42s5-2.224 5-4.941V26h11.059C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z"
-                              data-original="#000000"
-                            ></path>
-                          </svg>
-                        </button>
-                      </div>
+                      <EditProductQuantitiesForm
+                        productId={product.id}
+                        productQuantity={product.quantity}
+                      />
                     </div>
                   </div>
 
@@ -134,8 +108,8 @@ export default async function CartPage() {
 
                       <RemoveCartProductButton productId={product.id} />
                     </div>
-                    <h3 className="text-base font-bold text-gray-800 mt-5">
-                      € {product.price * product.quantity}
+                    <h3 className="text-md font-bold text-gray-800 mt-5">
+                      € {product.price}
                     </h3>
                   </div>
                 </div>
@@ -145,32 +119,34 @@ export default async function CartPage() {
 
           <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6bg-white  px-4 py-6 h-max ">
             <ul className="text-gray-800 space-y-4">
-              <li className="flex flex-wrap gap-4 text-sm">
-                Subtotal <span className="ml-auto font-bold">$200.00</span>
+              <li className="flex flex-wrap gap-4 text-md">
+                Subtotal <span className="ml-auto ">€ {subTotal}</span>
               </li>
-              <li className="flex flex-wrap gap-4 text-sm">
-                Shipping <span className="ml-auto font-bold">$2.00</span>
+              <li className="flex flex-wrap gap-4 text-md">
+                Shipping <span className="ml-auto ">€ {SHIPPING_PRICE}</span>
               </li>
 
               <hr className="border-gray-300" />
-              <li className="flex flex-wrap gap-4 text-sm font-bold">
-                Total <span className="ml-auto">$206.00</span>
+              <li className="flex flex-wrap gap-4 text-md font-bold">
+                Total <span className="ml-auto">€ {total}</span>
               </li>
             </ul>
 
             <div className="mt-8 space-y-2">
-              <button
+              <Link
+                href="/checkout"
                 type="button"
-                className="w-full text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                className="text-center w-full text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
                 Buy Now
-              </button>
-              <button
+              </Link>
+              <Link
+                href="/marketplace"
                 type="button"
-                className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-100 text-gray-800 border border-gray-300 rounded-md"
+                className="text-center text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-100 text-gray-800 border border-gray-300 rounded-md"
               >
                 Continue Shopping{' '}
-              </button>
+              </Link>
             </div>
 
             <div className="mt-4 flex flex-wrap justify-center gap-4">
