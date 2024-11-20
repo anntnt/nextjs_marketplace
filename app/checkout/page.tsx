@@ -1,3 +1,9 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionPanel,
+  AccordionTitle,
+} from 'flowbite-react';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -5,10 +11,9 @@ import { redirect } from 'next/navigation';
 import { getCartProducts } from '../../database/cartProducts';
 import { getUser } from '../../database/users';
 import type { ProductQuantityInCart } from '../../util/cart';
+import { STANDARD_DELIVERY_PRICE } from '../../util/const';
 import { getCookie } from '../../util/cookies';
 import { parseJson } from '../../util/json';
-
-const SHIPPING_PRICE = 4;
 
 export const metadata = {
   title: 'Checkout',
@@ -46,7 +51,7 @@ export default async function CheckoutPage() {
   const subTotal = productsFromCart.reduce((accumulator, product) => {
     return (accumulator += product.price * product.quantity);
   }, 0);
-  const total = subTotal + SHIPPING_PRICE;
+  const total = subTotal + STANDARD_DELIVERY_PRICE;
   return (
     <main className="flex-grow  w-full max-w-full px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -61,6 +66,36 @@ export default async function CheckoutPage() {
                 <div>Vorgartenstrasse 126/218, Wien, Wien, 1020, Austria</div>
                 <Link href="#">Edit</Link>
               </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                Payment
+              </h3>
+              <Accordion collapseAll>
+                <AccordionPanel className="border-2 border-black">
+                  <AccordionTitle>Credit Card</AccordionTitle>
+                  <AccordionContent>
+                    <p className="mb-2 text-gray-500 dark:text-gray-400"></p>
+                  </AccordionContent>
+                </AccordionPanel>
+                <AccordionPanel>
+                  <AccordionTitle>Payment on delivery</AccordionTitle>
+                  <AccordionContent>
+                    <p className="mb-2 text-gray-500 dark:text-gray-400">
+                      + €10 payment processing fee
+                    </p>
+                  </AccordionContent>
+                </AccordionPanel>
+                <AccordionPanel>
+                  <AccordionTitle>Paypal</AccordionTitle>
+                  <AccordionContent>
+                    <p className="mb-2 text-gray-500 dark:text-gray-400">
+                      Connect to your account
+                    </p>
+                  </AccordionContent>
+                </AccordionPanel>
+              </Accordion>
             </div>
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -162,7 +197,8 @@ export default async function CheckoutPage() {
                 Subtotal <span className="ml-auto ">€ {subTotal}</span>
               </li>
               <li className="flex flex-wrap gap-4 text-md">
-                Shipping <span className="ml-auto ">€ {SHIPPING_PRICE}</span>
+                Shipping{' '}
+                <span className="ml-auto ">€ {STANDARD_DELIVERY_PRICE}</span>
               </li>
 
               <hr className="border-gray-300" />

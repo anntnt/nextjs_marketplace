@@ -5,13 +5,12 @@ import { redirect } from 'next/navigation';
 import { getCartProducts } from '../../database/cartProducts';
 import { getUser } from '../../database/users';
 import type { ProductQuantityInCart } from '../../util/cart';
+import { STANDARD_DELIVERY_PRICE } from '../../util/const';
 import { getCookie } from '../../util/cookies';
 import { parseJson } from '../../util/json';
 import EditProductQuantitiesForm from './EditProductQuantitiesForm';
 import ProductForm from './EditProductQuantitiesForm';
 import RemoveCartProductButton from './RemoveCartProductButton';
-
-const SHIPPING_PRICE = 4;
 
 export const metadata = {
   title: 'Cart',
@@ -49,7 +48,7 @@ export default async function CartPage() {
   const subTotal = productsFromCart.reduce((accumulator, product) => {
     return (accumulator += product.price * product.quantity);
   }, 0);
-  const total = subTotal + SHIPPING_PRICE;
+  const total = subTotal + STANDARD_DELIVERY_PRICE;
   return (
     <main className="flex-grow  w-full max-w-full px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -123,7 +122,8 @@ export default async function CartPage() {
                 Subtotal <span className="ml-auto ">€ {subTotal}</span>
               </li>
               <li className="flex flex-wrap gap-4 text-md">
-                Shipping <span className="ml-auto ">€ {SHIPPING_PRICE}</span>
+                Shipping{' '}
+                <span className="ml-auto ">€ {STANDARD_DELIVERY_PRICE}</span>
               </li>
 
               <hr className="border-gray-300" />
@@ -138,7 +138,7 @@ export default async function CartPage() {
                 type="button"
                 className="text-center w-full text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
-                Buy Now
+                Checkout
               </Link>
               <Link
                 href="/marketplace"
