@@ -82,17 +82,6 @@ export default async function CheckoutPage() {
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Payment
               </h3>
-
-              <Elements
-                stripe={stripePromise}
-                options={{
-                  mode: 'payment',
-                  amount: convertToSubcurrency(amount),
-                  currency: 'eur',
-                }}
-              >
-                <CheckoutForm amount={amount} />
-              </Elements>
             </div>
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
