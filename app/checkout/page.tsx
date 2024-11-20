@@ -1,3 +1,5 @@
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import {
   Accordion,
   AccordionContent,
@@ -12,8 +14,10 @@ import { getCartProducts } from '../../database/cartProducts';
 import { getUser } from '../../database/users';
 import type { ProductQuantityInCart } from '../../util/cart';
 import { STANDARD_DELIVERY_PRICE } from '../../util/const';
+import convertToSubcurrency from '../../util/convertToSubcurrency';
 import { getCookie } from '../../util/cookies';
 import { parseJson } from '../../util/json';
+import { CheckoutForm } from './components/CheckoutForm';
 
 export const metadata = {
   title: 'Checkout',
@@ -35,6 +39,12 @@ export default async function CheckoutPage() {
   if (user.roleId !== 3) {
     redirect('/buyer-area-only');
   }
+  if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
+    throw new Error('NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined');
+  }
+  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+  const amount = 50;
+
   const productsFromCart = await getCartProducts(sessionTokenCookie.value);
   if (!productsFromCart || !productsFromCart.length) {
     return (
@@ -72,30 +82,17 @@ export default async function CheckoutPage() {
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Payment
               </h3>
-              <Accordion collapseAll>
-                <AccordionPanel className="border-2 border-black">
-                  <AccordionTitle>Credit Card</AccordionTitle>
-                  <AccordionContent>
-                    <p className="mb-2 text-gray-500 dark:text-gray-400"></p>
-                  </AccordionContent>
-                </AccordionPanel>
-                <AccordionPanel>
-                  <AccordionTitle>Payment on delivery</AccordionTitle>
-                  <AccordionContent>
-                    <p className="mb-2 text-gray-500 dark:text-gray-400">
-                      + €10 payment processing fee
-                    </p>
-                  </AccordionContent>
-                </AccordionPanel>
-                <AccordionPanel>
-                  <AccordionTitle>Paypal</AccordionTitle>
-                  <AccordionContent>
-                    <p className="mb-2 text-gray-500 dark:text-gray-400">
-                      Connect to your account
-                    </p>
-                  </AccordionContent>
-                </AccordionPanel>
-              </Accordion>
+
+              <Elements
+                stripe={stripePromise}
+                options={{
+                  mode: 'payment',
+                  amount: convertToSubcurrency(amount),
+                  currency: 'eur',
+                }}
+              >
+                <CheckoutForm amount={amount} />
+              </Elements>
             </div>
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">

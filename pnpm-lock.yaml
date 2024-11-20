@@ -20,6 +20,9 @@ importers:
       '@radix-ui/react-navigation-menu':
         specifier: ^1.2.1
         version: 1.2.1(@types/react-dom@18.3.0)(@types/react@18.3.11)(react-dom@19.0.0-rc-2d16326d-20240930(react@19.0.0-rc-2d16326d-20240930))(react@19.0.0-rc-2d16326d-20240930)
+      '@stripe/react-stripe-js':
+        specifier: ^3.0.0
+        version: 3.0.0(@stripe/stripe-js@5.2.0)(react-dom@19.0.0-rc-2d16326d-20240930(react@19.0.0-rc-2d16326d-20240930))(react@19.0.0-rc-2d16326d-20240930)
       '@stripe/stripe-js':
         specifier: ^5.2.0
         version: 5.2.0
@@ -74,6 +77,9 @@ importers:
       react-icons:
         specifier: ^5.3.0
         version: 5.3.0(react@19.0.0-rc-2d16326d-20240930)
+      react-stripe-js:
+        specifier: ^1.1.5
+        version: 1.1.5(react-dom@19.0.0-rc-2d16326d-20240930(react@19.0.0-rc-2d16326d-20240930))(react@19.0.0-rc-2d16326d-20240930)
       sass:
         specifier: ^1.79.4
         version: 1.79.4
@@ -1320,6 +1326,23 @@ packages:
 
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
+
+  '@stripe/react-stripe-js@1.7.2':
+    resolution: {integrity: sha512-IAVg2nPUPoSwI//XDRCO7D8mGeK4+N3Xg63fYZHmlfEWAuFVcuaqJKTT67uzIdKYZhHZ/NMdZw/ttz+GOjP/rQ==}
+    peerDependencies:
+      '@stripe/stripe-js': ^1.26.0
+      react: ^16.8.0 || ^17.0.0
+      react-dom: ^16.8.0 || ^17.0.0
+
+  '@stripe/react-stripe-js@3.0.0':
+    resolution: {integrity: sha512-Crn9t+uvfEJnFSEE8Le9Boj3+J4QdB7DrIa+VyhDgTAHC1z9fk7d/cfSrjNO2RcdRh9zN9Blk/XKccHq9kUlTw==}
+    peerDependencies:
+      '@stripe/stripe-js': ^1.44.1 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  '@stripe/stripe-js@1.29.0':
+    resolution: {integrity: sha512-OsUxk0VLlum8E2d6onlEdKuQcvLMs7qTrOXCnl/BGV3fAm65qr6h3e1IZ5AX4lgUlPRrzRcddSOA5DvkKKYLvg==}
 
   '@stripe/stripe-js@5.2.0':
     resolution: {integrity: sha512-2ZpEaezx3S0QPtnske175NDaLvUvaVKd4ePHpUN0QF/uV4BBBBRUy5BvQONDym+utbbW0QhSJoiRPnp4FS+4Vg==}
@@ -3768,6 +3791,12 @@ packages:
       '@types/react':
         optional: true
 
+  react-stripe-js@1.1.5:
+    resolution: {integrity: sha512-4lIucgf/FZj6Uxvf/TH+QQa/Qi3FXigwN/QY6H7naPyoEfw9LOuTzdgPAmm7aeSXj8nZJXVoigiGzzFZchXjew==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+
   react-style-singleton@2.2.1:
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
     engines: {node: '>=10'}
@@ -5760,6 +5789,22 @@ snapshots:
   '@sinonjs/fake-timers@10.3.0':
     dependencies:
       '@sinonjs/commons': 3.0.1
+
+  '@stripe/react-stripe-js@1.7.2(@stripe/stripe-js@1.29.0)(react-dom@19.0.0-rc-2d16326d-20240930(react@19.0.0-rc-2d16326d-20240930))(react@19.0.0-rc-2d16326d-20240930)':
+    dependencies:
+      '@stripe/stripe-js': 1.29.0
+      prop-types: 15.8.1
+      react: 19.0.0-rc-2d16326d-20240930
+      react-dom: 19.0.0-rc-2d16326d-20240930(react@19.0.0-rc-2d16326d-20240930)
+
+  '@stripe/react-stripe-js@3.0.0(@stripe/stripe-js@5.2.0)(react-dom@19.0.0-rc-2d16326d-20240930(react@19.0.0-rc-2d16326d-20240930))(react@19.0.0-rc-2d16326d-20240930)':
+    dependencies:
+      '@stripe/stripe-js': 5.2.0
+      prop-types: 15.8.1
+      react: 19.0.0-rc-2d16326d-20240930
+      react-dom: 19.0.0-rc-2d16326d-20240930(react@19.0.0-rc-2d16326d-20240930)
+
+  '@stripe/stripe-js@1.29.0': {}
 
   '@stripe/stripe-js@5.2.0': {}
 
@@ -8659,6 +8704,14 @@ snapshots:
       use-sidecar: 1.1.2(@types/react@18.3.11)(react@19.0.0-rc-2d16326d-20240930)
     optionalDependencies:
       '@types/react': 18.3.11
+
+  react-stripe-js@1.1.5(react-dom@19.0.0-rc-2d16326d-20240930(react@19.0.0-rc-2d16326d-20240930))(react@19.0.0-rc-2d16326d-20240930):
+    dependencies:
+      '@stripe/react-stripe-js': 1.7.2(@stripe/stripe-js@1.29.0)(react-dom@19.0.0-rc-2d16326d-20240930(react@19.0.0-rc-2d16326d-20240930))(react@19.0.0-rc-2d16326d-20240930)
+      '@stripe/stripe-js': 1.29.0
+      react: 19.0.0-rc-2d16326d-20240930
+    transitivePeerDependencies:
+      - react-dom
 
   react-style-singleton@2.2.1(@types/react@18.3.11)(react@19.0.0-rc-2d16326d-20240930):
     dependencies:
