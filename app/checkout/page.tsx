@@ -70,10 +70,10 @@ export default async function CheckoutPage() {
           <div className="md:col-span-2 space-y-4">
             <div className="space-y-4">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Delivering to Ngoc Thuan An Tran
+                Delivering to An Tran
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>Vorgartenstrasse 126/218, Wien, Wien, 1020, Austria</div>
+                <div>Vorgartenstrasse 12, Wien, Wien, 1020, Austria</div>
                 <Link href="#">Edit</Link>
               </div>
             </div>
