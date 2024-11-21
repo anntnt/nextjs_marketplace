@@ -4,7 +4,7 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import convertToSubcurrency from '../../../util/convertToSubcurrency';
 
 type Props = {
