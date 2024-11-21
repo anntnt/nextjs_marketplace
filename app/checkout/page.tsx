@@ -1,61 +1,63 @@
 'use client';
+import './stripe.css';
+import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import React from 'react';
+import CheckoutForm from './CheckoutForm';
+import CompletePage from './CompletePage';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
+// Make sure to call loadStripe outside of a component’s render to avoid
+// recreating the Stripe object on every render.
+// This is your test publishable API key.
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
 );
-export default function PreviewPage() {
-  React.useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get('success')) {
-      console.log('Order placed! You will receive an email confirmation.');
-    }
 
-    if (query.get('canceled')) {
-      console.log(
-        'Order canceled -- continue to shop around and checkout when you’re ready.',
-      );
-    }
+export default function CheckoutPage() {
+  const [clientSecret, setClientSecret] = React.useState('');
+  const [dpmCheckerLink, setDpmCheckerLink] = React.useState('');
+  const [confirmed, setConfirmed] = React.useState(false);
+
+  React.useEffect(() => {
+    const paymentIntentClientSecret = new URLSearchParams(
+      window.location.search,
+    ).get('payment_intent_client_secret');
+
+    // Set state to true if the value exists, otherwise false
+    setConfirmed(paymentIntentClientSecret !== null);
+  });
+
+  React.useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+    fetch('/api/stripe/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: [{ id: 'xl-tshirt' }] }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setClientSecret(data.clientSecret);
+        // [DEV] For demo purposes only
+        setDpmCheckerLink(data.dpmCheckerLink);
+      });
   }, []);
 
+  const options = {
+    clientSecret: clientSecret,
+    theme: 'stripe',
+  };
+
   return (
-    <form action="/api/stripe/checkout/route" method="POST">
-      <section>
-        <button type="submit" role="link">
-          Checkout
-        </button>
-      </section>
-      <style jsx>
-        {`
-          section {
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            width: 400px;
-            height: 112px;
-            border-radius: 6px;
-            justify-content: space-between;
-          }
-          button {
-            height: 36px;
-            background: #556cd6;
-            border-radius: 4px;
-            color: white;
-            border: 0;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
-          }
-          button:hover {
-            opacity: 0.8;
-          }
-        `}
-      </style>
-    </form>
+    <div className="App">
+      {clientSecret && (
+        <Elements options={options} stripe={stripePromise}>
+          {confirmed ? (
+            <CompletePage />
+          ) : (
+            <CheckoutForm dpmCheckerLink={dpmCheckerLink} />
+          )}
+        </Elements>
+      )}
+    </div>
   );
 }

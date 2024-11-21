@@ -28,7 +28,7 @@ export default function EditProductQuantitiesForm(props: Props) {
           } else newQuantity = quantity;
 
           setQuantity(newQuantity);
-          console.log('quantity -1', newQuantity);
+          // console.log('quantity -1', newQuantity);
           const response = await fetch('/api/cart-items', {
             method: 'PUT',
             body: JSON.stringify({
