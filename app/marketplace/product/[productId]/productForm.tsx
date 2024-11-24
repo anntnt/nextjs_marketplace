@@ -135,7 +135,7 @@ export default function ProductForm(props: Props) {
             </div>
             <div className="text-end md:order-4  flex items-center justify-between  md:justify-end">
               <button
-                className=" flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-yellow-300 rounded-lg border border-gray-200 hover:bg-yellow-200 hover:text-black focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                className=" inline-flex items-center rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300dark:bg-primary-600"
                 type="submit"
               >
                 <svg

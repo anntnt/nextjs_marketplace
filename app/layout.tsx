@@ -26,10 +26,10 @@ const geistMono = localFont({
 
 export const metadata = {
   title: {
-    default: 'Home | Vilya',
-    template: '%s | Vilya',
+    default: 'Home | eStores',
+    template: '%s | eStores',
   },
-  description: 'Vilya Marketplace',
+  description: 'eStores Marketplace',
 };
 
 type Props = {

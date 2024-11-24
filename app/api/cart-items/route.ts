@@ -1,9 +1,11 @@
 import { redirect } from 'next/navigation';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import {
+  type Cart,
   type CartProduct,
   cartProductSchema,
   createOrUpdateCartItem,
+  removeCartItems,
   updateCartItem,
 } from '../../../database/cartProducts';
 import { getCookie } from '../../../util/cookies';
@@ -22,7 +24,7 @@ export async function POST(
   // 1. Get the cart product data from the request
   const body = await request.json();
 
-  console.log('body ', body);
+  //console.log('body ', body);
 
   // 2. Validate cart product data with zod
   const result = cartProductSchema.safeParse(body);
@@ -155,4 +157,38 @@ export async function PUT(
   return NextResponse.json({
     cartProduct: { productId: cartProduct.productId },
   });
+}
+
+export type CartResponseDelete =
+  | {
+      products: Cart[];
+    }
+  | {
+      error: string;
+    };
+
+export async function DELETE(
+  request: NextRequest,
+): Promise<NextResponse<CartResponseDelete>> {
+  // 3. Get the token from the cookie
+
+  const sessionTokenCookie = await getCookie('sessionToken');
+
+  // 4. Remove product
+  const products =
+    sessionTokenCookie && (await removeCartItems(sessionTokenCookie));
+
+  //console.log('product', product);
+  if (!products) {
+    return NextResponse.json(
+      {
+        error: 'Product not found',
+      },
+      {
+        status: 400,
+      },
+    );
+  }
+
+  return NextResponse.json({ products: products });
 }

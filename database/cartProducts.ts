@@ -24,6 +24,12 @@ export const cartProductSchema = z.object({
   productId: z.number(),
   quantity: z.number(),
 });
+export type Cart = {
+  id: number;
+  productId: number;
+  quantity: number;
+  userId: number;
+};
 
 export const getCartProducts = cache(async (sessionToken: string) => {
   const cartProducts = await sql<ProductFromCart[]>`
@@ -129,4 +135,16 @@ export const getCartSum = cache(async (sessionToken: Session['token']) => {
   `;
 
   return cartSum;
+});
+export const removeCartItems = cache(async (sessionToken: string) => {
+  const cartProducts = await sql<Cart[]>`
+    DELETE FROM carts_products USING sessions
+    WHERE
+      sessions.token = ${sessionToken}
+      AND sessions.expiry_timestamp > now()
+      AND sessions.user_id = carts_products.user_id
+    RETURNING
+      carts_products.*
+  `;
+  return cartProducts;
 });

@@ -12,6 +12,7 @@ import CompletePage from './CompletePage';
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
 );
+
 export default function StripeComponent() {
   const [clientSecret, setClientSecret] = React.useState('');
   const [dpmCheckerLink, setDpmCheckerLink] = React.useState('');
@@ -45,7 +46,7 @@ export default function StripeComponent() {
     theme: 'stripe',
   };
   return (
-    <div className="App">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           {confirmed ? (

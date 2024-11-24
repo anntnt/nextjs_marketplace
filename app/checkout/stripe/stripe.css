@@ -42,7 +42,6 @@ form#payment-form {
 
 /* Buttons and links */
 button#submit {
-  background: #0055de;
   font-family: Arial, sans-serif;
   color: #ffffff;
   border-radius: 4px;
@@ -207,7 +206,7 @@ td {
 
 #retry-button {
   text-align: center;
-  background: #0055de;
+
   color: #ffffff;
   border-radius: 4px;
   border: 0;

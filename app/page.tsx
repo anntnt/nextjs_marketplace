@@ -12,7 +12,7 @@ export default function Home() {
     <main className="flex-grow  w-full max-w-full px-20 py-12">
       <div className="max-w-screen-xl mx-auto p-4">
         <h1 className="mb-4 text-4xl text-center">
-          Welcome to Vilya – Your Marketplace for Everything!
+          Welcome to eStores – Your Marketplace for Everything!
         </h1>
         <br />
         <p className="text-red-600">

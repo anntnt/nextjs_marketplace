@@ -26,10 +26,10 @@ export default function Component(props: userProps) {
           <div className="flex items-center space-x-8">
             <Link href="/" className="text-xl font-semibold dark:text-white ">
               <Image
-                src="/images/vilya_logo.png"
-                width={132}
-                height={43}
-                alt="Vilya logo"
+                src="/images/estores_logo.png"
+                width={158}
+                height={29}
+                alt="eStores logo"
               />
             </Link>
             <ul className="hidden md:flex space-x-8">

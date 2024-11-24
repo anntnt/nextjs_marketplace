@@ -5,15 +5,17 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
-//export default function CheckoutForm({ dpmCheckerLink }) {
 const CheckoutForm = ({ dpmCheckerLink }) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +32,7 @@ const CheckoutForm = ({ dpmCheckerLink }) => {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000',
+        return_url: 'http://www.localhost:3000/thank-you',
       },
     });
 
@@ -42,7 +44,7 @@ const CheckoutForm = ({ dpmCheckerLink }) => {
     if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error.message);
     } else {
-      setMessage('An unexpected error occurred.');
+      setMessage(`An unexpected error occurred. ${error.type}`);
     }
 
     setIsLoading(false);
@@ -56,7 +58,36 @@ const CheckoutForm = ({ dpmCheckerLink }) => {
     <>
       <form id="payment-form" onSubmit={handleSubmit}>
         <PaymentElement id="payment-element" options={paymentElementOptions} />
-        <button disabled={isLoading || !stripe || !elements} id="submit">
+        <button
+          className="space-x-4 text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          disabled={isLoading || !stripe || !elements}
+          id="submit"
+          onClick={async () => {
+            const response = await fetch(`/api/cart-items`, {
+              method: 'DELETE',
+            });
+
+            setMessage('');
+
+            if (!response.ok) {
+              let newErrorMessage = 'Error deleting product';
+              //console.log('response ', response);
+
+              const responseBody = await response.json();
+
+              if ('error' in responseBody) {
+                newErrorMessage = responseBody.error;
+              }
+
+              // TODO: Use toast instead of showing
+              // this below creation / update form
+              setMessage(newErrorMessage);
+              return;
+            }
+
+            router.refresh();
+          }}
+        >
           <span id="button-text">
             {isLoading ? (
               <div className="spinner" id="spinner"></div>
@@ -71,8 +102,6 @@ const CheckoutForm = ({ dpmCheckerLink }) => {
       {/* [DEV]: For demo purposes only, display dynamic payment methods annotation and integration checker */}
       <div id="dpm-annotation">
         <p>
-          Payment methods are dynamically displayed based on customer location,
-          order amount, and currency.&nbsp;
           <a
             href={dpmCheckerLink}
             target="_blank"
