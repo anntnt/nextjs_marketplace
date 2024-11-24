@@ -1,23 +1,33 @@
 'use client';
 import './stripe.css';
 import {
+  Elements,
   PaymentElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 
-const CheckoutForm = ({ dpmCheckerLink }) => {
+type Props = {
+  dpmCheckerLink: string;
+};
+type StripeError = {
+  type: string;
+  message: string;
+};
+
+export default function CheckoutForm(props: Props) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [message, setMessage] = useState('');
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -32,7 +42,7 @@ const CheckoutForm = ({ dpmCheckerLink }) => {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'http://www.localhost:3000/thank-you',
+        return_url: '${process.env.NEXT_PUBLIC_BASE_URL}/thank-you',
       },
     });
 
@@ -42,22 +52,24 @@ const CheckoutForm = ({ dpmCheckerLink }) => {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message);
-    } else {
+      setMessage(error.message ?? 'An error occurred with the payment.');
+    } else if (error) {
       setMessage(`An unexpected error occurred. ${error.type}`);
+    } else {
+      setMessage('An unknown error occurred.');
     }
 
     setIsLoading(false);
   };
 
   const paymentElementOptions = {
-    layout: 'accordion',
+    layout: 'accordion' as 'accordion' | 'auto' | 'tab', // Explicitly define the allowed values
   };
 
   return (
     <>
       <form id="payment-form" onSubmit={handleSubmit}>
-        <PaymentElement id="payment-element" options={paymentElementOptions} />
+        <PaymentElement id="payment-element" />
         <button
           className="space-x-4 text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           disabled={isLoading || !stripe || !elements}
@@ -67,7 +79,7 @@ const CheckoutForm = ({ dpmCheckerLink }) => {
               method: 'DELETE',
             });
 
-            setMessage('');
+            //setMessage('');
 
             if (!response.ok) {
               let newErrorMessage = 'Error deleting product';
@@ -103,7 +115,7 @@ const CheckoutForm = ({ dpmCheckerLink }) => {
       <div id="dpm-annotation">
         <p>
           <a
-            href={dpmCheckerLink}
+            href={props.dpmCheckerLink}
             target="_blank"
             rel="noopener noreferrer"
             id="dpm-integration-checker"
@@ -114,5 +126,4 @@ const CheckoutForm = ({ dpmCheckerLink }) => {
       </div>
     </>
   );
-};
-export default CheckoutForm;
+}

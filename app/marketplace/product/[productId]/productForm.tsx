@@ -1,10 +1,8 @@
 'use client';
 
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import type { User } from '../../../../migrations/0001-createTableUsers';
 import type { CreateCartProductResponseBodyPost } from '../../../api/cart-items/route';
-import ErrorMessage from '../../../ErrorMessage';
 
 type Props = {
   productId: number;
@@ -71,8 +69,6 @@ export default function ProductForm(props: Props) {
                 return;
               }
             }
-
-            router.refresh();
           }}
         >
           <div className="flex items-center justify-between md:order-3 md:justify-end flex-wrap gap-4">
