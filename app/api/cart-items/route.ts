@@ -1,5 +1,4 @@
-import { redirect } from 'next/navigation';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import {
   type Cart,
   type CartProduct,
@@ -24,13 +23,11 @@ export async function POST(
   // 1. Get the cart product data from the request
   const body = await request.json();
 
-  //console.log('body ', body);
-
   // 2. Validate cart product data with zod
   const result = cartProductSchema.safeParse(body);
   if (!result.success) {
     let errorMessage = '';
-    if (result.error) console.log('result' + result.error.issues);
+
     result.error.issues.forEach((issue) => {
       errorMessage = errorMessage + issue.path[0] + ':' + issue.message + '. ';
     });
@@ -47,7 +44,7 @@ export async function POST(
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
 
-  /*if (!sessionTokenCookie) {
+  /* if (!sessionTokenCookie) {
     redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
     return NextResponse.json(
       { error: '307' },
@@ -98,13 +95,11 @@ export async function PUT(
   // 1. Get the cart product data from the request
   const body = await request.json();
 
-  console.log('body ', body);
-
   // 2. Validate cart product data with zod
   const result = cartProductSchema.safeParse(body);
   if (!result.success) {
     let errorMessage = '';
-    if (result.error) console.log('result' + result.error.issues);
+
     result.error.issues.forEach((issue) => {
       errorMessage = errorMessage + issue.path[0] + ':' + issue.message + '. ';
     });
@@ -121,7 +116,7 @@ export async function PUT(
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
 
-  /*if (!sessionTokenCookie) {
+  /* if (!sessionTokenCookie) {
     redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
     return NextResponse.json(
       { error: '307' },
@@ -167,9 +162,7 @@ export type CartResponseDelete =
       error: string;
     };
 
-export async function DELETE(
-  request: NextRequest,
-): Promise<NextResponse<CartResponseDelete>> {
+export async function DELETE(): Promise<NextResponse<CartResponseDelete>> {
   // 3. Get the token from the cookie
 
   const sessionTokenCookie = await getCookie('sessionToken');
@@ -178,7 +171,6 @@ export async function DELETE(
   const products =
     sessionTokenCookie && (await removeCartItems(sessionTokenCookie));
 
-  //console.log('product', product);
   if (!products) {
     return NextResponse.json(
       {

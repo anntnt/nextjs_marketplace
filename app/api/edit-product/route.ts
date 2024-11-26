@@ -16,7 +16,6 @@ export type ProductEditPost =
       error: string;
     };
 
-//const productId = Number((await searchParams).productid);
 export async function PUT(
   request: NextRequest,
 ): Promise<NextResponse<ProductEditPost>> {
@@ -24,21 +23,15 @@ export async function PUT(
 
   try {
     const formData = await request.formData();
-    // const productId = Number(await searchParams);
 
-    if (!formData) {
-      return NextResponse.json({ error: 'Missing required Data' });
-    }
     const file = formData.get('image') as File;
 
     let imageUrl;
     if (file.name) {
-      const response =
-        file && (await cloudinaryUpload(formData, 'server-action-images'));
+      const response = await cloudinaryUpload(formData, 'server-action-images');
 
-      if (!response || !response.imageUrl) {
-        return NextResponse.json({ error: 'Image upload failed 1' });
-        //console.log('response.imageUrl ', response.imageUrl);
+      if (!response.imageUrl) {
+        return NextResponse.json({ error: 'Image upload failed' });
       }
       imageUrl = response.imageUrl;
     }
@@ -59,7 +52,6 @@ export async function PUT(
       });
     }
     const sessionTokenCookie = await getCookie('sessionToken');
-    //console.log('result ', result);
 
     const updatedProduct =
       sessionTokenCookie &&

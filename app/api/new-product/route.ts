@@ -23,13 +23,9 @@ export async function POST(
   try {
     const formData = await request.formData();
 
-    if (!formData) {
-      return NextResponse.json({ error: 'Missing required Data' });
-    }
-
     const response = await cloudinaryUpload(formData, 'server-action-images');
 
-    if (!response || !response.imageUrl) {
+    if (!response.imageUrl) {
       return NextResponse.json({ error: 'Image upload failed' });
     }
     console.log('response.imageUrl ', response.imageUrl);
@@ -50,7 +46,6 @@ export async function POST(
       });
     }
     const sessionTokenCookie = await getCookie('sessionToken');
-    console.log('result ', result);
     const newProduct =
       sessionTokenCookie &&
       (await createProduct(sessionTokenCookie, {

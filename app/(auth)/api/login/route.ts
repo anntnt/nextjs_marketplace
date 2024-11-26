@@ -25,7 +25,6 @@ export async function POST(
 
   // 1. Get the user data from the request
   const requestBody = await request.json();
-  //console.log('requestBody' + requestBody);
 
   // 2. Validate the user data with zod
   const result = userLoginSchema.safeParse(requestBody);

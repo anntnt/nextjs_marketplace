@@ -42,7 +42,6 @@ export async function POST(
   }
 
   // 3. Check if user already exist in the database
-  //console.log('result.data.username ' + result.data.username);
   const user = await getUserInsecure(result.data.username);
 
   if (user) {
@@ -97,10 +96,9 @@ export async function POST(
   // 6. Create a token
   const token = crypto.randomBytes(100).toString('base64');
 
-  //console.log('token1 ' + token);
   // 7. Create the session record
   const session = await createSessionInsecure(newUser.id, token);
-  //console.log('token2 ' + token);
+
   if (!session) {
     return NextResponse.json(
       {

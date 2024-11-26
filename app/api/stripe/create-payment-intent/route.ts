@@ -1,21 +1,22 @@
 import { type NextRequest, NextResponse } from 'next/server';
-
 // This is your test secret API key.
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+import Stripe from 'stripe';
 
-const calculateOrderAmount = (items: number) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  //let price = 20;
-  //const amount:number = items * price;
-  return 1400;
-  //return amount;
-};
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-export async function POST(request: NextRequest) {
+export type CreatePaymentResponseBodyPost =
+  | {
+      clientSecret: string | null;
+      dpmCheckerLink: string;
+    }
+  | {
+      error: string;
+    };
+export async function POST(
+  request: NextRequest,
+): Promise<NextResponse<CreatePaymentResponseBodyPost>> {
   try {
-    const { items } = await request.json();
+    await request.json();
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 450,
@@ -35,7 +36,7 @@ export async function POST(request: NextRequest) {
     console.error('Internal Error:', error);
     // Handle other errors (e.g., network issues, parsing errors)
     return NextResponse.json(
-      { error: `Internal Server Error: ${error}` },
+      { error: `Internal Server Error` },
       { status: 500 },
     );
   }

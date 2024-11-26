@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import type { date } from 'zod';
 import { getSafeReturnToPath } from '../../../util/validation';
 import ErrorMessage from '../../ErrorMessage';
 import type { RegisterResponseBody } from '../api/register/route';
@@ -52,14 +51,6 @@ export default function RegisterForm(props: Props) {
       return;
     }
 
-    // router.push(`/profile/${data.user.username}`);
-
-    // This is not a secure returnTo
-    // if (props.returnTo) {
-    //   console.log('Checks Return to: ', props.returnTo);
-    //   router.push(props.returnTo || `/profile/${data.user.username}`);
-    // }
-
     router.push(
       getSafeReturnToPath(props.returnTo) || `/profile/${data.user.username}`,
     );
@@ -67,24 +58,27 @@ export default function RegisterForm(props: Props) {
     router.refresh();
   }
 
-  const handleCheckboxChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsSellerChecked(event.target.checked);
     if (event.target.checked) {
       setRoleId(2);
-    } else setRoleId(3);
+    } else {
+      setRoleId(3);
+    }
   };
 
   return (
     <div className="max-w-sm mx-auto">
       <form onSubmit={async (event) => await handleRegister(event)}>
         <div className="mb-5">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label
+            htmlFor="username"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
             Username*
           </label>
           <input
-            type="text"
+            id="username"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
             required
             value={username}
@@ -168,11 +162,15 @@ export default function RegisterForm(props: Props) {
         <div className="mb-5">
           <div className="flex items-center">
             <input
+              id="applyToSell"
               type="checkbox"
               onChange={handleCheckboxChange}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
-            <label className="ms-2 text-sm font-medium text-blue-600 ">
+            <label
+              htmlFor="applyToSell"
+              className="ms-2 text-sm font-medium text-blue-600 "
+            >
               <strong>Apply to Sell on eStores</strong>
             </label>
           </div>
@@ -203,11 +201,15 @@ export default function RegisterForm(props: Props) {
         <div className="mb-5">
           <div className="flex items-center">
             <input
+              id="privacyAgreement"
               type="checkbox"
               required
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
-            <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            <label
+              htmlFor="privacyAgreement"
+              className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
               I agree to the Privacy Policy*
             </label>
           </div>
@@ -217,14 +219,13 @@ export default function RegisterForm(props: Props) {
             Register
           </button>
         </div>
-
-        {errors.map((error) => (
-          <div className="mb-5">
+        <div className="mb-5">
+          {errors.map((error) => (
             <div className="error" key={`error-${error.message}`}>
               <ErrorMessage>{error.message}</ErrorMessage>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </form>
     </div>
   );
