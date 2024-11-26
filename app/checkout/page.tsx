@@ -1,25 +1,11 @@
-import { Elements } from '@stripe/react-stripe-js';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionPanel,
-  AccordionTitle,
-} from 'flowbite-react';
 import { cookies } from 'next/headers';
-import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import { getCartProducts } from '../../database/cartProducts';
 import { getUser } from '../../database/users';
-import type { ProductQuantityInCart } from '../../util/cart';
 import { STANDARD_DELIVERY_PRICE } from '../../util/const';
-import convertToSubcurrency from '../../util/convertToSubcurrency';
-import { getCookie } from '../../util/cookies';
-import { parseJson } from '../../util/json';
 import PaymentCheckComponent from './PaymentCheckComponent';
-import CheckoutForm from './stripe/CheckoutForm';
-import CompletePage from './stripe/CompletePage';
 
 export const metadata = {
   title: 'Checkout',

@@ -1,7 +1,6 @@
 'use client';
 import './stripe.css';
 import {
-  Elements,
   PaymentElement,
   useElements,
   useStripe,
