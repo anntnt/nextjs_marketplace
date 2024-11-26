@@ -11,7 +11,8 @@ type Props = {
 };
 export default function EditProductQuantitiesForm(props: Props) {
   const [quantity, setQuantity] = useState(props.productQuantity);
-  const [productId, setProductId] = useState(props.productId);
+
+  const productId = props.productId;
 
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
@@ -25,10 +26,12 @@ export default function EditProductQuantitiesForm(props: Props) {
           let newQuantity;
           if (quantity > 1) {
             newQuantity = quantity - 1;
-          } else newQuantity = quantity;
+          } else {
+            newQuantity = quantity;
+          }
 
           setQuantity(newQuantity);
-          // console.log('quantity -1', newQuantity);
+
           const response = await fetch('/api/cart-items', {
             method: 'PUT',
             body: JSON.stringify({
@@ -73,7 +76,6 @@ export default function EditProductQuantitiesForm(props: Props) {
         </svg>
       </button>
       <input
-        type="text"
         id="counter-input"
         data-input-counter
         className="w-12 shrink-0 border-0 bg-transparent text-center text-sm  text-gray-900 focus:outline-none focus:ring-0 dark:text-white "
@@ -104,8 +106,6 @@ export default function EditProductQuantitiesForm(props: Props) {
               await response.json();
 
             if ('error' in responseBody) {
-              // TODO: Use toast instead of showing
-              // this below creation / update form
               setErrorMessage(responseBody.error);
               return;
             }
@@ -132,6 +132,7 @@ export default function EditProductQuantitiesForm(props: Props) {
           />
         </svg>
       </button>
+      <ErrorMessage>{errorMessage}</ErrorMessage>
     </div>
   );
 }

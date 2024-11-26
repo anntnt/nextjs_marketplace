@@ -7,14 +7,15 @@ import {
 } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import type { CreatePaymentResponseBodyPost } from '../../api/stripe/create-payment-intent/route';
 
 type Props = {
   dpmCheckerLink: string;
 };
-type StripeError = {
+/* type StripeError = {
   type: string;
   message: string;
-};
+}; */
 
 export default function CheckoutForm(props: Props) {
   const stripe = useStripe();
@@ -41,7 +42,7 @@ export default function CheckoutForm(props: Props) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: '${process.env.NEXT_PUBLIC_BASE_URL}/thank-you',
+        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/thank-you`,
       },
     });
 
@@ -52,18 +53,16 @@ export default function CheckoutForm(props: Props) {
     // redirected to the `return_url`.
     if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error.message ?? 'An error occurred with the payment.');
-    } else if (error) {
-      setMessage(`An unexpected error occurred. ${error.type}`);
     } else {
-      setMessage('An unknown error occurred.');
+      setMessage(`An unexpected error occurred. ${error.type}`);
     }
 
     setIsLoading(false);
   };
 
-  const paymentElementOptions = {
+  /* const paymentElementOptions = {
     layout: 'accordion' as 'accordion' | 'auto' | 'tab', // Explicitly define the allowed values
-  };
+  }; */
 
   return (
     <>
@@ -78,20 +77,16 @@ export default function CheckoutForm(props: Props) {
               method: 'DELETE',
             });
 
-            //setMessage('');
-
             if (!response.ok) {
               let newErrorMessage = 'Error deleting product';
-              //console.log('response ', response);
 
-              const responseBody = await response.json();
+              const responseBody: CreatePaymentResponseBodyPost =
+                await response.json();
 
               if ('error' in responseBody) {
                 newErrorMessage = responseBody.error;
               }
 
-              // TODO: Use toast instead of showing
-              // this below creation / update form
               setMessage(newErrorMessage);
               return;
             }
@@ -100,11 +95,7 @@ export default function CheckoutForm(props: Props) {
           }}
         >
           <span id="button-text">
-            {isLoading ? (
-              <div className="spinner" id="spinner"></div>
-            ) : (
-              'Pay now'
-            )}
+            {isLoading ? <div className="spinner" id="spinner" /> : 'Pay now'}
           </span>
         </button>
         {/* Show any error or success messages */}

@@ -70,7 +70,7 @@ export default function EditProductQuantitiesForm() {
                 <p
                   id="pay-on-delivery-text"
                   className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400"
-                ></p>
+                />
               </div>
             </div>
           </div>

@@ -4,12 +4,8 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getCartProducts } from '../../database/cartProducts';
 import { getUser } from '../../database/users';
-import type { ProductQuantityInCart } from '../../util/cart';
 import { STANDARD_DELIVERY_PRICE } from '../../util/const';
-import { getCookie } from '../../util/cookies';
-import { parseJson } from '../../util/json';
 import EditProductQuantitiesForm from './EditProductQuantitiesForm';
-import ProductForm from './EditProductQuantitiesForm';
 import RemoveCartProductButton from './RemoveCartProductButton';
 
 export const metadata = {
@@ -33,7 +29,7 @@ export default async function CartPage() {
     redirect('/buyer-area-only');
   }
   const productsFromCart = await getCartProducts(sessionTokenCookie.value);
-  if (!productsFromCart || !productsFromCart.length) {
+  if (!productsFromCart.length) {
     return (
       <main className="flex-grow  w-full max-w-full px-20 py-12">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -44,7 +40,7 @@ export default async function CartPage() {
       </main>
     );
   }
-  //console.log('productsFromCart ', productsFromCart);
+
   const subTotal = productsFromCart.reduce((accumulator, product) => {
     return (accumulator += product.price * product.quantity);
   }, 0);
@@ -102,7 +98,7 @@ export default async function CartPage() {
                         <path
                           d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z"
                           data-original="#000000"
-                        ></path>
+                        />
                       </svg>
 
                       <RemoveCartProductButton productId={product.id} />
@@ -125,8 +121,9 @@ export default async function CartPage() {
                 Shipping{' '}
                 <span className="ml-auto ">€ {STANDARD_DELIVERY_PRICE}</span>
               </li>
-
-              <hr className="border-gray-300" />
+              <li>
+                <hr className="border-gray-300" />
+              </li>
               <li className="flex flex-wrap gap-4 text-md font-bold">
                 Total <span className="ml-auto">€ {total}</span>
               </li>

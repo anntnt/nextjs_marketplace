@@ -45,7 +45,7 @@ export default async function CheckoutPage() {
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>Donau Insel, 1020, Austria</div>
-                <Link href="#">Edit</Link>
+                <Link href="/">Edit</Link>
               </div>
             </div>
             <br />
@@ -62,8 +62,10 @@ export default async function CheckoutPage() {
                 Shipping{' '}
                 <span className="ml-auto ">€ {STANDARD_DELIVERY_PRICE}</span>
               </li>
+              <li>
+                <hr className="border-gray-300" />
+              </li>
 
-              <hr className="border-gray-300" />
               <li className="flex flex-wrap gap-4 text-md font-bold">
                 Total <span className="ml-auto">€ {total}</span>
               </li>
