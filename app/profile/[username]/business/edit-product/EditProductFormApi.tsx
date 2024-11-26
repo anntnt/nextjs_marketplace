@@ -4,10 +4,11 @@ import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ProductCategory } from '../../../../../database/productCategories';
 import type { Product } from '../../../../../database/products';
+import type { ProductEditPut } from '../../../../api/edit-product/route';
 import ErrorMessage from '../../../../ErrorMessage';
 
 type Props = {
-  username: String;
+  username: string;
   product: Product;
   productCategories: ProductCategory[];
 };
@@ -15,20 +16,13 @@ type Props = {
 export default function EditProductFormApi(props: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [name, setName] = useState(props.product?.name);
-  const [price, setPrice] = useState(props.product?.price);
-  const [description, setDescription] = useState(props.product?.description);
-  const [categoryId, setCategoryId] = useState(props.product?.categoryId);
+  const [name, setName] = useState(props.product.name);
+  const [price, setPrice] = useState(props.product.price);
+  const [description, setDescription] = useState(props.product.description);
+  const [categoryId, setCategoryId] = useState(props.product.categoryId);
 
   const router = useRouter();
 
-  function resetFormStates(formData: FormData) {
-    formData.delete('username');
-    formData.delete('price');
-    formData.delete('imageUrl');
-    formData.delete('description');
-    formData.delete('categoryId');
-  }
   async function updateProductFormApiHandler(formData: FormData) {
     const response = await fetch('/api/edit-product', {
       method: 'PUT',
@@ -38,22 +32,19 @@ export default function EditProductFormApi(props: Props) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      setErrorMessage(errorData.error);
-      return;
-    }
-
-    const data = await response.json();
-
-    if (data.error) {
-      setErrorMessage(data.error);
+      let newErrorMessage = 'Error updating product';
+      const errorData: ProductEditPut = await response.json();
+      if ('error' in errorData) {
+        newErrorMessage = errorData.error;
+      }
+      setErrorMessage(newErrorMessage);
       return;
     }
 
     router.refresh();
 
     setSuccessMessage('Product updated successfully');
-    //resetFormStates;
+
     redirect(`/profile/${props.username}/business/`);
   }
 
@@ -62,10 +53,10 @@ export default function EditProductFormApi(props: Props) {
       {successMessage && <p className="text-green-600">{successMessage}</p>}
 
       <form
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
           const formData = new FormData(event.currentTarget);
-          updateProductFormApiHandler(formData);
+          await updateProductFormApiHandler(formData);
         }}
         className="flex flex-col justify-center gap-3 max-w-sm mx-auto"
       >
@@ -132,17 +123,17 @@ export default function EditProductFormApi(props: Props) {
             <option>Please select one...</option>
             {props.productCategories.map((productCategory) => {
               return (
-                <option value={`${productCategory.id}`}>
+                <option
+                  key={`key-${productCategory.id}`}
+                  value={`${productCategory.id}`}
+                >
                   {productCategory.categoryName}
                 </option>
               );
             })}
           </select>
         </label>
-        <button
-          type="submit"
-          className=" space-x-4 text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "
-        >
+        <button className=" space-x-4 text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">
           Update product
         </button>
       </form>

@@ -2,7 +2,7 @@ import { Tooltip } from 'flowbite-react';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { getProductsOfSeller } from '../../../../database/products';
 import { getUser } from '../../../../database/users';
 import ButtonRemoveProduct from './ButtonRemoveProduct';
@@ -31,9 +31,6 @@ export default async function SellerProductsPage() {
   }
 
   const products = await getProductsOfSeller(sessionTokenCookie.value);
-  if (!products) {
-    return notFound();
-  }
 
   return (
     <main className="flex-grow  w-full max-w-full md:px-20 py-12">

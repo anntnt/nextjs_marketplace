@@ -1,12 +1,8 @@
-import { Card } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
-import { getCategoryNameInsecure } from '../../../../database/productCategories';
 import { getCategoryProductWithSellerInsecure } from '../../../../database/products';
-import { getUser } from '../../../../database/users';
-import { getCookie } from '../../../../util/cookies';
 import ProductForm from './productForm';
 
 type Props = {
@@ -25,7 +21,6 @@ export default async function SingleProductPage(props: Props) {
 
   return (
     <main className="flex-grow  w-full max-w-full px-20 py-12">
-      <h1 className="mb-4 text-4xl text-center"></h1>
       <section className="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div
@@ -116,12 +111,12 @@ export default async function SingleProductPage(props: Props) {
                   <p className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
                     (5.0)
                   </p>
-                  <a
-                    href="#"
+                  <Link
+                    href="/"
                     className="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white"
                   >
                     345 Reviews
-                  </a>
+                  </Link>
                 </div>
               </div>
 

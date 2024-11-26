@@ -8,7 +8,7 @@ import {
 import { cloudinaryUpload } from '../../../util/cloudinaryUpload';
 import { getCookie } from '../../../util/cookies';
 
-export type ProductEditPost =
+export type ProductEditPut =
   | {
       product: Omit<Product, 'sellerId'>;
     }
@@ -18,7 +18,7 @@ export type ProductEditPost =
 
 export async function PUT(
   request: NextRequest,
-): Promise<NextResponse<ProductEditPost>> {
+): Promise<NextResponse<ProductEditPut>> {
   // 3. Get the token from the cookie
 
   try {

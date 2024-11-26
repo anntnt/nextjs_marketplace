@@ -28,7 +28,7 @@ export async function POST(
     if (!response.imageUrl) {
       return NextResponse.json({ error: 'Image upload failed' });
     }
-    console.log('response.imageUrl ', response.imageUrl);
+
     const body = {
       name: formData.get('name'),
       price: Number(formData.get('price')),

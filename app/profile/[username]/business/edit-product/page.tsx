@@ -1,15 +1,9 @@
 import { cookies } from 'next/headers';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { useState } from 'react';
 import { getProductCategoriesInsecure } from '../../../../../database/productCategories';
-import {
-  getProduct,
-  getProductInsecure,
-} from '../../../../../database/products';
+import { getProductInsecure } from '../../../../../database/products';
 import { getUser } from '../../../../../database/users';
 import EditProductFormApi from './EditProductFormApi';
-import ProductFormApi from './EditProductFormApi';
 
 type Props = {
   searchParams: Promise<{
@@ -39,15 +33,13 @@ export default async function EditProductPage(props: Props) {
   if (user.roleId !== 2) {
     redirect('/seller-area-only');
   }
-  // console.log('searchParams:', await props.searchParams);
 
   const productId = Number((await props.searchParams).productId);
 
   const product = await getProductInsecure(productId);
 
-  // console.log('product ', product);
   const productCategories = await getProductCategoriesInsecure();
-  //console.log('productCategories ', productCategories);
+
   return (
     <main className="flex-grow  w-full max-w-full px-20 py-12">
       <h1 className="mb-4 text-4xl text-center">Edit Product</h1>

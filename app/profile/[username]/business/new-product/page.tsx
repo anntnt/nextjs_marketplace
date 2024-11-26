@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getProductCategoriesInsecure } from '../../../../../database/productCategories';
 import { getUser } from '../../../../../database/users';

@@ -1,8 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import type { ProductCategory } from '../../../../../database/productCategories';
+import type { ProductCreatePost } from '../../../../api/new-product/route';
 import ErrorMessage from '../../../../ErrorMessage';
 
 type Props = {
@@ -15,7 +16,7 @@ export default function ProductFormApi(props: Props) {
   const [successMessage, setSuccessMessage] = useState('');
 
   const router = useRouter();
-  const form = useRef<HTMLFormElement>();
+
   function resetFormStates(formData: FormData) {
     formData.delete('username');
     formData.delete('price');
@@ -32,22 +33,19 @@ export default function ProductFormApi(props: Props) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      setErrorMessage(errorData.error);
-      return;
-    }
-
-    const data = await response.json();
-
-    if (data.error) {
-      setErrorMessage(data.error);
+      let newErrorMessage = 'Error creating product';
+      const errorData: ProductCreatePost = await response.json();
+      if ('error' in errorData) {
+        newErrorMessage = errorData.error;
+      }
+      setErrorMessage(newErrorMessage);
       return;
     }
 
     router.refresh();
 
     setSuccessMessage('Product created successfully');
-    resetFormStates;
+    resetFormStates(formData);
   }
 
   return (
@@ -55,10 +53,10 @@ export default function ProductFormApi(props: Props) {
       {successMessage && <p className="text-green-600">{successMessage}</p>}
 
       <form
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
           const formData = new FormData(event.currentTarget);
-          productFormApiHandler(formData);
+          await productFormApiHandler(formData);
         }}
         className="flex flex-col justify-center gap-3 max-w-sm mx-auto"
       >
@@ -107,17 +105,17 @@ export default function ProductFormApi(props: Props) {
             <option>Please select one...</option>
             {props.productCategories.map((productCategory) => {
               return (
-                <option value={`${productCategory.id}`}>
+                <option
+                  key={`key-${productCategory.id}`}
+                  value={`${productCategory.id}`}
+                >
                   {productCategory.categoryName}
                 </option>
               );
             })}
           </select>
         </label>
-        <button
-          type="submit"
-          className=" space-x-4 text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "
-        >
+        <button className=" space-x-4 text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">
           Create product
         </button>
       </form>
