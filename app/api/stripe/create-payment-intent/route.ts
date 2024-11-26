@@ -10,7 +10,7 @@ export type CreatePaymentResponseBodyPost =
       dpmCheckerLink: string;
     }
   | {
-      error: string;
+      errors: { message: string }[];
     };
 export async function POST(
   request: NextRequest,
@@ -36,8 +36,16 @@ export async function POST(
     console.error('Internal Error:', error);
     // Handle other errors (e.g., network issues, parsing errors)
     return NextResponse.json(
-      { error: `Internal Server Error` },
-      { status: 500 },
+      {
+        errors: [
+          {
+            message: 'Username or Password is invalid',
+          },
+        ],
+      },
+      {
+        status: 400,
+      },
     );
   }
 }

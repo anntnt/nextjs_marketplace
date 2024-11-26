@@ -1,24 +1,23 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useState } from 'react';
 import type { CreateCartProductResponseBodyPost } from '../../../api/cart-items/route';
+import ErrorMessage from '../../../ErrorMessage';
 
 type Props = {
   productId: number;
 };
 export default function ProductForm(props: Props) {
   const [quantity, setQuantity] = useState(1);
-  const [productId, setProductId] = useState(props.productId);
-
   const [errorMessage, setErrorMessage] = useState('');
-  const router = useRouter();
+  const productId = props.productId;
 
   return (
     <div>
       <div className="mt-4 sm:items-center  sm:flex">
-        <a
-          href="#"
+        <Link
+          href="/"
           title=""
           className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900  bg-white rounded-lg   dark:bg-gray-800 dark:text-gray-400 "
           role="button"
@@ -41,7 +40,7 @@ export default function ProductForm(props: Props) {
             />
           </svg>
           Add to favorites
-        </a>
+        </Link>
       </div>
       <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
         <form
@@ -97,7 +96,6 @@ export default function ProductForm(props: Props) {
                 </svg>
               </button>
               <input
-                type="text"
                 id="counter-input"
                 data-input-counter
                 className="w-10 shrink-0 border-0 bg-transparent text-center text-xl  text-gray-900 focus:outline-none focus:ring-0 dark:text-white font-bold"
@@ -130,10 +128,7 @@ export default function ProductForm(props: Props) {
               </button>
             </div>
             <div className="text-end md:order-4  flex items-center justify-between  md:justify-end">
-              <button
-                className=" inline-flex items-center rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300dark:bg-primary-600"
-                type="submit"
-              >
+              <button className=" inline-flex items-center rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300dark:bg-primary-600">
                 <svg
                   className="w-5 h-5 -ms-2 me-2"
                   aria-hidden="true"
@@ -156,6 +151,10 @@ export default function ProductForm(props: Props) {
             </div>
           </div>
         </form>
+      </div>
+
+      <div className="mb-5">
+        <ErrorMessage>{errorMessage}</ErrorMessage>
       </div>
     </div>
   );

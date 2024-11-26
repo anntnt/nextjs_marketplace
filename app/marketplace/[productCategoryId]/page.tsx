@@ -1,8 +1,6 @@
-import { Card } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import React, { useState } from 'react';
 import { getCategoryNameInsecure } from '../../../database/productCategories';
 import { getCategoryProductsInsecure } from '../../../database/products';
 import AddToCartForm from './addToCartForm';
@@ -17,7 +15,8 @@ export default async function SingleCategoryPage(props: Props) {
   const categoryId = Number((await props.params).productCategoryId);
   const categoryNameObj = await getCategoryNameInsecure(categoryId);
   const products = await getCategoryProductsInsecure(categoryId);
-  if (!products || !categoryNameObj) {
+
+  if (!categoryNameObj) {
     return notFound();
   }
 
@@ -32,38 +31,9 @@ export default async function SingleCategoryPage(props: Props) {
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
               Shop by category
             </h2>
-
-            <a
-              href="#"
-              title=""
-              className="flex items-center text-base font-medium text-primary-700 hover:underline dark:text-primary-500"
-            >
-              See more categories
-              <svg
-                className="ms-1 h-5 w-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 12H5m14 0-4 4m4-4-4-4"
-                />
-              </svg>
-            </a>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {products.map((product) => {
-              function setErrorMessage(arg0: string) {
-                throw new Error('Function not implemented.');
-              }
-
               return (
                 <div
                   className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
@@ -118,10 +88,7 @@ export default async function SingleCategoryPage(props: Props) {
                           data-popper-placement="top"
                         >
                           Add to favorites
-                          <div
-                            className="tooltip-arrow"
-                            data-popper-arrow=""
-                          ></div>
+                          <div className="tooltip-arrow" data-popper-arrow="" />
                         </div>
                       </div>
                     </div>

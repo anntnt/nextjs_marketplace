@@ -1,6 +1,6 @@
 'use client';
 
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { Product } from '../../../database/products';
 import type { CreateCartProductResponseBodyPost } from '../../api/cart-items/route';
@@ -69,6 +69,9 @@ export default function AddToCartForm(props: Props) {
             Add to cart
           </button>
         </form>
+      </div>
+      <div className="mb-5">
+        <ErrorMessage>{errorMessage}</ErrorMessage>
       </div>
     </div>
   );

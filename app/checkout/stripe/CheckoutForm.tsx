@@ -8,20 +8,19 @@ import {
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import type { CreatePaymentResponseBodyPost } from '../../api/stripe/create-payment-intent/route';
+import ErrorMessage from '../../ErrorMessage';
 
-type Props = {
-  dpmCheckerLink: string;
-};
 /* type StripeError = {
   type: string;
   message: string;
 }; */
 
-export default function CheckoutForm(props: Props) {
+export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
   const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState<{ message: string }[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,10 +59,6 @@ export default function CheckoutForm(props: Props) {
     setIsLoading(false);
   };
 
-  /* const paymentElementOptions = {
-    layout: 'accordion' as 'accordion' | 'auto' | 'tab', // Explicitly define the allowed values
-  }; */
-
   return (
     <>
       <form id="payment-form" onSubmit={handleSubmit}>
@@ -78,16 +73,14 @@ export default function CheckoutForm(props: Props) {
             });
 
             if (!response.ok) {
-              let newErrorMessage = 'Error deleting product';
-
               const responseBody: CreatePaymentResponseBodyPost =
                 await response.json();
 
-              if ('error' in responseBody) {
-                newErrorMessage = responseBody.error;
+              if ('errors' in responseBody) {
+                setErrors(responseBody.errors);
+                return;
               }
 
-              setMessage(newErrorMessage);
               return;
             }
 
@@ -103,16 +96,13 @@ export default function CheckoutForm(props: Props) {
       </form>
       {/* [DEV]: For demo purposes only, display dynamic payment methods annotation and integration checker */}
       <div id="dpm-annotation">
-        <p>
-          <a
-            href={props.dpmCheckerLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            id="dpm-integration-checker"
-          >
-            Preview payment methods by transaction
-          </a>
-        </p>
+        <div className="mb-5">
+          {errors.map((error) => (
+            <div className="error" key={`error-${error.message}`}>
+              <ErrorMessage>{error.message}</ErrorMessage>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

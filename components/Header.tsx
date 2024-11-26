@@ -1,19 +1,17 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
-import { type CartSum, getCartSum } from '../database/cartProducts';
 import type { User } from '../migrations/0001-createTableUsers';
 import Cart from './Cart';
 
-type userProps = {
+type UserProps = {
   user?: User;
-  cartSum?: String;
+  cartSum?: string;
 };
 
-export default function Component(props: userProps) {
+export default function Component(props: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -60,31 +58,27 @@ export default function Component(props: userProps) {
               </li>
 
               {!props.user || props.user.roleId === 3 ? (
-                <>
-                  <li>
-                    <Link
-                      href="/become-a-seller"
-                      className="text-black dark:text-white hover:text-blue-1000"
-                    >
-                      <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
-                        Become a Seller
-                      </span>
-                    </Link>
-                  </li>
-                </>
+                <li>
+                  <Link
+                    href="/become-a-seller"
+                    className="text-black dark:text-white hover:text-blue-1000"
+                  >
+                    <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                      Become a Seller
+                    </span>
+                  </Link>
+                </li>
               ) : props.user.roleId === 2 ? (
-                <>
-                  <li>
-                    <Link
-                      href={`/profile/${props.user.username}/business`}
-                      className="text-black dark:text-white hover:text-blue-1000"
-                    >
-                      <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
-                        My Business
-                      </span>
-                    </Link>
-                  </li>
-                </>
+                <li>
+                  <Link
+                    href={`/profile/${props.user.username}/business`}
+                    className="text-black dark:text-white hover:text-blue-1000"
+                  >
+                    <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                      My Business
+                    </span>
+                  </Link>
+                </li>
               ) : (
                 <></>
               )}
@@ -96,32 +90,27 @@ export default function Component(props: userProps) {
             {/* Search Box */}
             <div className="relative">
               <input
-                type="text"
                 className="px-4 py-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-white dark:border-gray-600"
                 placeholder="Search..."
               />
             </div>
             {/* only display cart icon when user role is buyer */}
             {props.user && props.user.roleId === 3 ? (
-              <>
-                <Cart cartSum={props.cartSum} />
-              </>
+              <Cart cartSum={props.cartSum} />
             ) : (
-              <></>
+              <div />
             )}
 
             {props.user ? (
-              <>
-                <div className="hidden md:flex  items-center relative  space-x-2">
-                  <Link
-                    href={`/profile/${props.user.username}`}
-                    className=" text-black dark:text-white hover:text-blue-1000 font-bold"
-                  >
-                    {props.user.username}
-                  </Link>
-                  <LogoutButton />
-                </div>
-              </>
+              <div className="hidden md:flex  items-center relative  space-x-2">
+                <Link
+                  href={`/profile/${props.user.username}`}
+                  className=" text-black dark:text-white hover:text-blue-1000 font-bold"
+                >
+                  {props.user.username}
+                </Link>
+                <LogoutButton />
+              </div>
             ) : (
               <>
                 {/* Login/Register */}
@@ -163,7 +152,7 @@ export default function Component(props: userProps) {
                 fillRule="evenodd"
                 d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
                 clipRule="evenodd"
-              ></path>
+              />
             </svg>
           </button>
 
@@ -197,42 +186,36 @@ export default function Component(props: userProps) {
                   </Link>
                 </li>
                 {!props.user || props.user.roleId === 3 ? (
-                  <>
-                    <li className="w-full">
-                      <Link
-                        href="/become-a-seller"
-                        className="block w-full py-2 text-black dark:text-white"
-                      >
-                        <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
-                          Become a Seller
-                        </span>
-                      </Link>
-                    </li>
-                  </>
+                  <li className="w-full">
+                    <Link
+                      href="/become-a-seller"
+                      className="block w-full py-2 text-black dark:text-white"
+                    >
+                      <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                        Become a Seller
+                      </span>
+                    </Link>
+                  </li>
                 ) : (
-                  <>
-                    <li className="w-full">
-                      <Link
-                        href={`/profile/${props.user.username}/business`}
-                        className="block w-full py-2 text-black dark:text-white "
-                      >
-                        <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
-                          My Business
-                        </span>
-                      </Link>
-                    </li>
-                  </>
+                  <li className="w-full">
+                    <Link
+                      href={`/profile/${props.user.username}/business`}
+                      className="block w-full py-2 text-black dark:text-white "
+                    >
+                      <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                        My Business
+                      </span>
+                    </Link>
+                  </li>
                 )}
 
                 {props.user ? (
-                  <>
-                    <li className="w-full font-bold">
-                      <Link href={`/profile/${props.user.username}`}>
-                        {props.user.username}
-                      </Link>
-                      <LogoutButton />
-                    </li>
-                  </>
+                  <li className="w-full font-bold">
+                    <Link href={`/profile/${props.user.username}`}>
+                      {props.user.username}
+                    </Link>
+                    <LogoutButton />
+                  </li>
                 ) : (
                   <>
                     {/* Login/Register */}
