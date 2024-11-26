@@ -3,7 +3,7 @@ import { z } from 'zod';
 import type { Session } from '../migrations/0010-createTableSessions';
 import { sql } from './connect';
 
-//type of cart products in database
+// ype of cart products in database
 export type ProductFromCart = {
   id: number;
   name: string;
@@ -11,14 +11,20 @@ export type ProductFromCart = {
   imageUrl: string;
   quantity: number;
 };
-//type of cart products on the session, which were added to cart by users
+export type CartProductWithAllFields = {
+  id: number;
+  productId: number;
+  amount: number;
+  userId: number;
+};
+// Type of cart products on the session, which were added to cart by users
 export type CartProduct = {
   productId: number;
   quantity: number;
 };
-//Total cart items
+// Total cart items
 export type CartSum = {
-  totalamount: string;
+  totalamount: string | null;
 };
 export const cartProductSchema = z.object({
   productId: z.number(),
@@ -27,7 +33,7 @@ export const cartProductSchema = z.object({
 export type Cart = {
   id: number;
   productId: number;
-  quantity: number;
+  amount: number;
   userId: number;
 };
 
@@ -52,7 +58,7 @@ export const getCartProducts = cache(async (sessionToken: string) => {
 });
 export const removeCartProducts = cache(
   async (sessionToken: string, id: number) => {
-    const [cartProduct] = await sql<ProductFromCart[]>`
+    const [cartProduct] = await sql<CartProductWithAllFields[]>`
       DELETE FROM carts_products USING sessions
       WHERE
         sessions.token = ${sessionToken}
@@ -71,7 +77,7 @@ export const updateCartItem = cache(
     productId: number,
     quantity: number,
   ) => {
-    const [cart_product] = await sql<CartProduct[]>`
+    const [cartProduct] = await sql<CartProductWithAllFields[]>`
       UPDATE carts_products
       SET
         amount = ${quantity}
@@ -86,7 +92,7 @@ export const updateCartItem = cache(
         carts_products.*;
     `;
 
-    return cart_product;
+    return cartProduct;
   },
 );
 export const createOrUpdateCartItem = cache(
@@ -95,7 +101,7 @@ export const createOrUpdateCartItem = cache(
     productId: number,
     quantity: number,
   ) => {
-    const [cart_product] = await sql<CartProduct[]>`
+    const [cartProduct] = await sql<CartProductWithAllFields[]>`
       INSERT INTO
         carts_products (product_id, amount, user_id) (
           SELECT
@@ -116,7 +122,7 @@ export const createOrUpdateCartItem = cache(
         carts_products.*;
     `;
 
-    return cart_product;
+    return cartProduct;
   },
 );
 

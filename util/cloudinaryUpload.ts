@@ -13,15 +13,12 @@ cloudinary.config({
 export async function cloudinaryUpload(formData: FormData, folder: string) {
   try {
     const file = formData.get('image') as File;
-    if (!file) {
-      return { error: 'No image selected' };
-    }
 
     if (!file.name) {
       return { error: 'Please select an image' };
     }
 
-    if (!file.type?.startsWith('image/')) {
+    if (!file.type.startsWith('image/')) {
       return { error: 'File is not an image' };
     }
 

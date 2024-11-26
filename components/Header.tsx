@@ -80,7 +80,7 @@ export default function Component(props: UserProps) {
                   </Link>
                 </li>
               ) : (
-                <></>
+                <div />
               )}
             </ul>
           </div>

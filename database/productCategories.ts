@@ -3,10 +3,11 @@ import { sql } from './connect';
 
 export type ProductCategory = {
   id: number;
-  categoryName: string;
   imageUrl: string;
-  parentCategoryId: number;
+  categoryName: string;
+  parentCategoryId: number | null;
 };
+
 export type ProductCategoryName = {
   categoryName: string;
 };

@@ -1,18 +1,15 @@
-import { cookies } from 'next/headers';
 import Link from 'next/link';
-import type { ReactNode } from 'react';
 import { BsCart4 } from 'react-icons/bs';
-import type { User } from '../migrations/0001-createTableUsers';
 
-type itemsProps = { cartSum?: String };
+type ItemsProps = { cartSum?: string };
 
-export default function Component(props: itemsProps) {
+export default function Component(props: ItemsProps) {
   const cartItems = props.cartSum;
   return (
     <div>
       <div className="text-white text-center rounded-full bg-red-500">
         <strong>
-          <span data-test-id="cart-count"></span>
+          <span data-test-id="cart-count" />
         </strong>
       </div>
       <Link

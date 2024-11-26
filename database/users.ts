@@ -6,9 +6,15 @@ import { sql } from './connect';
 export type UserWithPasswordHash = User & {
   passwordHash: string;
 };
-
+export type UserWithUsername = {
+  id: number;
+  username: string;
+};
+export type UserWithUsernameAndRole = UserWithUsername & {
+  roleId: number;
+};
 export const getUser = cache(async (sessionToken: Session['token']) => {
-  const [user] = await sql<User[]>`
+  const [user] = await sql<UserWithUsernameAndRole[]>`
     SELECT
       users.id,
       users.username,
@@ -27,7 +33,7 @@ export const getUser = cache(async (sessionToken: Session['token']) => {
 });
 
 export const getUserInsecure = cache(async (username: User['username']) => {
-  const [user] = await sql<User[]>`
+  const [user] = await sql<UserWithUsername[]>`
     SELECT
       id,
       username
@@ -44,16 +50,16 @@ export const createUserInsecure = cache(
   async (
     username: User['username'],
     passwordHash: UserWithPasswordHash['passwordHash'],
-    firstName: User['firstName'],
-    lastName: User['lastName'],
+    firstName: User['firstname'],
+    lastName: User['lastname'],
     emailAddress: User['emailAddress'],
     birthday: User['birthday'],
     gender: User['gender'],
     storeName: User['storeName'],
-    uAddress: User['uAddress'],
+    uAddress: User['address'],
     roleId: User['roleId'],
   ) => {
-    const [user] = await sql<User[]>`
+    const [user] = await sql<UserWithUsername[]>`
       INSERT INTO
         users (
           username,

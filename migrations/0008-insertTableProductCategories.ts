@@ -1,6 +1,6 @@
 import type { Sql } from 'postgres';
 
-const product_categories = [
+const productCategories = [
   {
     id: 1,
     image_url:
@@ -184,25 +184,25 @@ const product_categories = [
 ];
 
 export async function up(sql: Sql) {
-  for (const product_category of product_categories) {
+  for (const productCategory of productCategories) {
     await sql`
       INSERT INTO
         product_categories (category_name, image_url)
       VALUES
         (
-          ${product_category.name},
-          ${product_category.image_url}
+          ${productCategory.name},
+          ${productCategory.image_url}
         )
     `;
   }
 }
 
 export async function down(sql: Sql) {
-  for (const product_category of product_categories) {
+  for (const productCategory of productCategories) {
     await sql`
       DELETE FROM product_categories
       WHERE
-        id = ${product_category.id}
+        id = ${productCategory.id}
     `;
   }
 }

@@ -27,13 +27,13 @@ export const userSchema = z.object({
 export type User = {
   id: number;
   username: string;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   emailAddress: string;
   birthday: Date;
   gender: string | null;
   storeName: string | null;
-  uAddress: string | null;
+  address: string | null;
   roleId: number;
 };
 export async function up(sql: Sql) {

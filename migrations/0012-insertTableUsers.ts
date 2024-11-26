@@ -9,7 +9,7 @@ const users = [
     email_address: 'anpjure@gmail.com',
     password_hash:
       '$2b$12$k2OUXYqqGveofPsgefyQi.p6S8.v7688hg7pQ076rav60vzNtx9j.',
-    birthday: '2000-11-11',
+    birthday: new Date('2000-11-11'),
     gender: '',
     store_name: '',
     address: '',
@@ -23,7 +23,7 @@ const users = [
     email_address: 'anpjure@gmail.com',
     password_hash:
       '$2b$12$k2OUXYqqGveofPsgefyQi.p6S8.v7688hg7pQ076rav60vzNtx9j.',
-    birthday: '2000-11-11',
+    birthday: new Date('2000-11-11'),
     gender: 'male',
     store_name: 'Oberlaa House',
     address: 'Oberlaa Park, 1100 Vienna, Austria',
@@ -37,7 +37,7 @@ const users = [
     email_address: 'ann.tran.vie@gmail.com',
     password_hash:
       '$2b$12$k2OUXYqqGveofPsgefyQi.p6S8.v7688hg7pQ076rav60vzNtx9j.',
-    birthday: '2000-11-11',
+    birthday: new Date('2000-11-11'),
     gender: 'female',
     store_name: 'Donau Store',
     address: 'Donau Park, 1220 Vienna, Austria',

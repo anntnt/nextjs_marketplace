@@ -12,7 +12,7 @@ export type Product = {
   size: string | null;
   color: string | null;
   sellerId: number;
-  categoryId: number;
+  categoryId: number | null;
 };
 
 export type ProductWithSeller = {
@@ -24,8 +24,8 @@ export type ProductWithSeller = {
   size: string | null;
   color: string | null;
   sellerId: number;
-  storeName: string;
-  categoryId: number;
+  storeName: string | null;
+  categoryId: number | null;
 };
 
 export const newProductSchema = z.object({
@@ -157,7 +157,7 @@ export const getProductsOfSeller = cache(
   },
 );
 export const removeProduct = cache(
-  async (id: number, sessionToken: Session['token']) => {
+  async (sessionToken: Session['token'], id: number) => {
     const [product] = await sql<Product[]>`
       DELETE FROM products USING sessions
       WHERE
@@ -172,24 +172,7 @@ export const removeProduct = cache(
     return product;
   },
 );
-export const getProduct = cache(
-  async (id: number, sessionToken: Session['token']) => {
-    const [product] = await sql<Product[]>`
-      SELECT
-        *
-      FROM
-        products
-        INNER JOIN sessions ON (
-          sessions.token = ${sessionToken}
-          AND sessions.expiry_timestamp > now()
-        )
-      WHERE
-        products.id = ${id}
-    `;
 
-    return product;
-  },
-);
 export const updateProduct = cache(
   async (
     sessionToken: Session['token'],
