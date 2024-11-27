@@ -31,7 +31,7 @@ export async function PUT(
       const response = await cloudinaryUpload(formData, 'server-action-images');
 
       if (!response.imageUrl) {
-        return NextResponse.json({ error: 'Image upload failed' });
+        return NextResponse.json({ error: 'Image upload failed 1' });
       }
       imageUrl = response.imageUrl;
     }

@@ -55,7 +55,7 @@ export async function cloudinaryUpload(formData: FormData, folder: string) {
       Array.isArray(response) ||
       !response.secure_url
     ) {
-      return { error: 'Image upload failed 2' };
+      return { error: 'Image upload failed 3' };
     }
 
     return {
