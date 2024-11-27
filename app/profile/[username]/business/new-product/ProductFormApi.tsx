@@ -32,6 +32,8 @@ export default function ProductFormApi(props: Props) {
       body: formData,
     });
 
+    console.log('response.ok ', response.ok);
+
     if (!response.ok) {
       let newErrorMessage = 'Error creating product';
       const errorData: ProductCreatePost = await response.json();
