@@ -37,7 +37,12 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
     const host = window.location.host;
-    const baseUrl = `https://${host}`;
+    let baseUrl;
+    if (host.includes('localhost')) {
+      baseUrl = `http://${host}`;
+    } else {
+      baseUrl = `https://${host}`;
+    }
 
     const { error } = await stripe.confirmPayment({
       elements,
