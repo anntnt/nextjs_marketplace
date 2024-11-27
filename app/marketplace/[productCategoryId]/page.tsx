@@ -21,18 +21,18 @@ export default async function SingleCategoryPage(props: Props) {
   }
 
   return (
-    <main className="flex-grow  w-full max-w-full px-20 py-12">
+    <main className="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
       <h1 className="mb-4 text-4xl text-center">
         {categoryNameObj.categoryName}
       </h1>
-      <section className="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
+      <section className=" py-8 antialiased dark:bg-gray-900 md:py-12">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div className="mb-4 flex items-center justify-between gap-4 md:mb-8">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
               Shop by category
             </h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => {
               return (
                 <div
@@ -47,116 +47,18 @@ export default async function SingleCategoryPage(props: Props) {
                         alt={`Product ${product.name}`}
                         src={product.imageUrl}
                         width={500}
-                        height={375}
+                        height={0}
+                        style={{ height: '224px', width: 'auto' }}
                       />
                     </Link>
                   </div>
-                  <div className="pt-6">
-                    <div className="mb-4 flex items-center justify-between gap-4">
-                      <span className="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-                        {' '}
-                        Up to 35% off{' '}
-                      </span>
-
-                      <div className="flex items-center justify-end gap-1">
-                        <button
-                          type="button"
-                          data-tooltip-target="tooltip-add-to-favorites"
-                          className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                        >
-                          <span className="sr-only"> Add to Favorites </span>
-                          <svg
-                            className="h-5 w-5"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                            />
-                          </svg>
-                        </button>
-                        <div
-                          id="tooltip-add-to-favorites"
-                          role="tooltip"
-                          className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-                          data-popper-placement="top"
-                        >
-                          Add to favorites
-                          <div className="tooltip-arrow" data-popper-arrow="" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <Link
-                    href={`/marketplace/product/${product.id}`}
-                    className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
-                  >
-                    {product.name}
-                  </Link>
-                  <div className="mt-2 flex items-center gap-2">
-                    <div className="flex items-center">
-                      <svg
-                        className="h-4 w-4 text-yellow-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-                      </svg>
-
-                      <svg
-                        className="h-4 w-4 text-yellow-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-                      </svg>
-
-                      <svg
-                        className="h-4 w-4 text-yellow-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-                      </svg>
-
-                      <svg
-                        className="h-4 w-4 text-yellow-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-                      </svg>
-
-                      <svg
-                        className="h-4 w-4 text-yellow-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-                      </svg>
-                    </div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
-                      5.0
-                    </p>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      (455)
-                    </p>
+                  <div className="pt-10 mt-5">
+                    <Link
+                      href={`/marketplace/product/${product.id}`}
+                      className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
+                    >
+                      {product.name}
+                    </Link>
                   </div>
 
                   <AddToCartForm product={product} />
