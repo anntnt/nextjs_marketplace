@@ -1,4 +1,4 @@
-app = "nextjs-ecommercestore"
+app = "estores"
 primary_region = "otp"
 
 [mounts]

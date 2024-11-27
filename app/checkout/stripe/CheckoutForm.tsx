@@ -36,12 +36,14 @@ export default function CheckoutForm() {
     }
 
     setIsLoading(true);
+    const host = window.location.host;
+    const baseUrl = `https://${host}`;
 
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/thank-you`,
+        return_url: `${baseUrl}/thank-you`,
       },
     });
 
