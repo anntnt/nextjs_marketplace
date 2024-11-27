@@ -70,7 +70,7 @@ export default function AddToCartForm(props: Props) {
           </button>
         </form>
       </div>
-      <div className="mb-5">
+      <div>
         <ErrorMessage>{errorMessage}</ErrorMessage>
       </div>
     </div>

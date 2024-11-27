@@ -52,7 +52,7 @@ export default async function SingleCategoryPage(props: Props) {
                       />
                     </Link>
                   </div>
-                  <div className="pt-10 mt-5">
+                  <div className="pt-6">
                     <Link
                       href={`/marketplace/product/${product.id}`}
                       className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
