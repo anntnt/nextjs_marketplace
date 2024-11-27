@@ -24,9 +24,10 @@ export async function DELETE(
   const sessionTokenCookie = await getCookie('sessionToken');
 
   // 4. Remove product
+
   const product =
     sessionTokenCookie &&
-    (await removeProduct(Number((await params).productId), sessionTokenCookie));
+    (await removeProduct(sessionTokenCookie, Number((await params).productId)));
 
   if (!product) {
     return NextResponse.json(

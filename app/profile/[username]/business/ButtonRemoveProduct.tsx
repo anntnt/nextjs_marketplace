@@ -34,8 +34,6 @@ export default function ButtonRemoveForm(props: Props) {
             newErrorMessage = responseBody.error;
           }
 
-          // TODO: Use toast instead of showing
-          // this below creation / update form
           setErrorMessage(newErrorMessage);
           return;
         }
