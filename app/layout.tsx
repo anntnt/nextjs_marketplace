@@ -38,7 +38,7 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-screen bg-gray-50  antialiased dark:bg-gray-900">
           <Header user={user} cartSum={cartSum} />
           {/* flex flex-col min-h-screen on the outer div makes the layout stretch to fill the viewport. */}
 

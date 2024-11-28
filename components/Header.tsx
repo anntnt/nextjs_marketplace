@@ -99,20 +99,15 @@ export default function Component(props: UserProps) {
                 placeholder="Search..."
               />
             </div>
-            {/* only display cart icon when user role is buyer */}
-            {props.user && props.user.roleId === 3 ? (
-              <Cart cartSum={props.cartSum} />
-            ) : (
-              <div />
-            )}
 
             {props.user ? (
-              <div className="hidden md:flex  items-center relative  space-x-2">
+              <div className="font-semi bold hidden md:flex  items-center relative  space-x-2">
+                Hi, <span> </span>
                 <Link
                   href={`/profile/${props.user.username}`}
-                  className=" text-black dark:text-white hover:text-blue-1000 font-bold"
+                  className=" text-black dark:text-white hover:text-blue-1000 "
                 >
-                  {props.user.username}
+                  {props.user.firstname}
                 </Link>
                 <LogoutButton />
               </div>
@@ -135,6 +130,12 @@ export default function Component(props: UserProps) {
                   Register
                 </Link>
               </>
+            )}
+            {/* only display cart icon when user role is buyer */}
+            {props.user && props.user.roleId === 3 ? (
+              <Cart cartSum={props.cartSum} />
+            ) : (
+              <div />
             )}
           </div>
 
@@ -215,9 +216,10 @@ export default function Component(props: UserProps) {
                 )}
 
                 {props.user ? (
-                  <li className="w-full font-bold">
+                  <li className="w-full font-semibold">
+                    Hi, <span> </span>
                     <Link href={`/profile/${props.user.username}`}>
-                      {props.user.username}
+                      {props.user.firstname}
                     </Link>
                     <LogoutButton />
                   </li>

@@ -17,12 +17,12 @@ export default function Component(props: ItemsProps) {
         className="text-black dark:text-white hover:text-blue-1000"
       >
         <div className="flex ">
-          <div className=" flex h-7 w-7 items-center justify-center rounded-full bg-red-600 text-white ">
+          <div className=" flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-white ">
             <span data-test-id="cart-count">{cartItems}</span>
           </div>
         </div>
 
-        <BsCart4 size={30} />
+        <BsCart4 size={28} />
       </Link>
     </div>
   );
