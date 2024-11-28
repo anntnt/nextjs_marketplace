@@ -136,7 +136,7 @@ export default function Component(props: UserProps) {
           {/* Mobile Menu Toggle */}
           <button
             onClick={toggleMenu}
-            className="bg-blue-1000  border-blue-1000 inline-flex items-center p-2 ml-3 text-black rounded-lg md:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
+            className="bg-blue-1000  border-blue-1000 inline-flex items-center p-2 ml-3 text-white rounded-lg md:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
             aria-controls="navbar-menu"
             aria-expanded={isOpen}
           >

@@ -46,13 +46,14 @@ export default async function SingleCategoryPage(props: Props) {
                         className="mx-auto "
                         alt={`Product ${product.name}`}
                         src={product.imageUrl}
+                        layout="responsive"
                         width={500}
                         height={0}
                         style={{ height: '224px', width: 'auto' }}
                       />
                     </Link>
                   </div>
-                  <div className="pt-6">
+                  <div className="pt-6 sm:pt-16 md:pt-6 ">
                     <Link
                       href={`/marketplace/product/${product.id}`}
                       className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
