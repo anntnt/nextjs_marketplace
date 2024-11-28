@@ -23,10 +23,10 @@ export default function Component(props: UserProps) {
 
   return (
     <header className="top-0 bg-white shadow-md z-10">
-      <nav className="font-semibold bg-yellow-100 border-gray-200  py-3.5 sm:py-3 dark:bg-gray-900 flex justify-between items-center px-6 sm:px-8 xl:px-6 2xl:px-20  mx-auto">
+      <nav className=" bg-yellow-100 border-gray-200  py-3.5 sm:py-3 dark:bg-gray-900 flex justify-between items-center px-4 sm:px-8 xl:px-6 2xl:px-20  mx-auto">
         <div className="flex flex-wrap items-center justify-between w-full max-w-full 2xl:px-20  mx-auto">
           {/* Left Side - Links */}
-          <div className="flex items-center flex-shrink-0 justify-center space-x-4  ">
+          <div className="flex items-center flex-shrink-0 justify-center space-x-4  font-semibold">
             <Link
               href="/"
               className="text-xl font-semibold dark:text-white w-full md:w-auto md:flex md:justify-center "
@@ -40,7 +40,7 @@ export default function Component(props: UserProps) {
                 alt="eStores logo"
               />
             </Link>
-            <ul className="hidden md:flex space-x-8 xl:space-x-2 2xl:space-x-8">
+            <ul className="hidden md:flex space-x-8 xl:space-x-4 2xl:space-x-8">
               <li>
                 <Link
                   href="/marketplace"
@@ -94,11 +94,11 @@ export default function Component(props: UserProps) {
           </div>
 
           {/* Right Side - Search Box, Cart, Login/Register */}
-          <div className="flex items-center space-x-5 sm:space-x-10">
+          <div className="flex items-center space-x-5 sm:space-x-4 xl:space-x-4 2xl:space-x-10 ">
             {/* Search Box */}
             <div className="relative">
               <input
-                className="px-2 py-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                className="px-2 sm:px-4 py-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-white dark:border-gray-600 "
                 placeholder="Search..."
               />
             </div>
