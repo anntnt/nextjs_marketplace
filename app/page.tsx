@@ -9,7 +9,7 @@ export default function Home() {
   // const productsLink = usePathname();
 
   return (
-    <main className="flex-grow  w-full max-w-full px-20 py-12">
+    <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-20 py-12">
       <div className="max-w-screen-xl mx-auto p-4">
         <h1 className="mb-4 text-4xl text-center">
           Welcome to eStores – Your Marketplace for Everything!

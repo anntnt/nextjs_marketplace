@@ -6,8 +6,13 @@ import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
 import Cart from './Cart';
 
+type UserWithUsernameAndRole = User & {
+  username: string;
+  role: string;
+};
+
 type UserProps = {
-  user?: User;
+  user: User | UserWithUsernameAndRole | undefined;
   cartSum?: string;
 };
 

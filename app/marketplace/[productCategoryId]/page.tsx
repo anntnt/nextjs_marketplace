@@ -22,7 +22,7 @@ export default async function SingleCategoryPage(props: Props) {
   }
 
   return (
-    <main className="bg-gray-50 py-8 antialiased dark:bg-gray-900 md:py-12">
+    <main className="bg-gray-50  antialiased dark:bg-gray-900 py-12">
       <h1 className="mb-4 text-4xl text-center">
         {categoryNameObj.categoryName}
       </h1>

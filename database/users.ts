@@ -14,10 +14,17 @@ export type UserWithUsernameAndRole = UserWithUsername & {
   roleId: number;
 };
 export const getUser = cache(async (sessionToken: Session['token']) => {
-  const [user] = await sql<UserWithUsernameAndRole[]>`
+  const [user] = await sql<User[]>`
     SELECT
       users.id,
       users.username,
+      users.firstname,
+      users.lastname,
+      users.email_address,
+      users.birthday,
+      users.gender,
+      users.store_name,
+      users.address,
       users.role_id
     FROM
       users

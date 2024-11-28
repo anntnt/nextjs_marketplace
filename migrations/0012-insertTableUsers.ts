@@ -18,7 +18,7 @@ const users = [
   {
     id: 2,
     username: 'johnny',
-    firstname: 'Johny',
+    firstname: 'Johnny',
     lastname: 'Smith',
     email_address: 'jny.smith@gmail.com',
     password_hash:
