@@ -154,16 +154,6 @@ const products = [
   },
   {
     id: 16,
-    name: 'Christmas decoration',
-    price: 6,
-    image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732740976/xmas_decor_23_2_knxwgg.jpg',
-    description: 'Christmas decoration',
-    seller_id: 1,
-    category_id: 1,
-  },
-  {
-    id: 17,
     name: 'Mini Santa',
     price: 17,
     image_url:
@@ -173,7 +163,7 @@ const products = [
     category_id: 1,
   },
   {
-    id: 18,
+    id: 17,
     name: 'Cupcakes',
     price: 21,
     image_url:
@@ -183,7 +173,7 @@ const products = [
     category_id: 8,
   },
   {
-    id: 19,
+    id: 18,
     name: 'Smartphone',
     price: 449,
     image_url:
@@ -193,7 +183,7 @@ const products = [
     category_id: 4,
   },
   {
-    id: 20,
+    id: 19,
     name: 'Wireless Power Bank',
     price: 21,
     image_url:
@@ -203,7 +193,7 @@ const products = [
     category_id: 16,
   },
   {
-    id: 21,
+    id: 20,
     name: 'Christmas wreath',
     price: 36,
     image_url:
@@ -213,7 +203,7 @@ const products = [
     category_id: 1,
   },
   {
-    id: 22,
+    id: 21,
     name: 'Bluetooth speaker',
     price: 52,
     image_url:
@@ -223,7 +213,7 @@ const products = [
     category_id: 16,
   },
   {
-    id: 23,
+    id: 22,
     name: 'Lipstick',
     price: 22,
     image_url:
@@ -233,7 +223,7 @@ const products = [
     category_id: 16,
   },
   {
-    id: 24,
+    id: 23,
     name: 'Doll ​house',
     price: 49,
     image_url:

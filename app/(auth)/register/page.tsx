@@ -31,7 +31,7 @@ export default async function RegisterPage(props: Props) {
   // 4. If the sessionToken cookie is invalid or doesn't exist, show the register form
 
   return (
-    <main className="flex-grow  w-full max-w-full px-20 py-12">
+    <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <h1 className="mb-4 text-4xl text-center">Register</h1>
       <RegisterForm returnTo={returnTo} />
     </main>

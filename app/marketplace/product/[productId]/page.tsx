@@ -19,7 +19,7 @@ export default async function SingleProductPage(props: Props) {
   }
 
   return (
-    <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-20 py-12">
+    <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <section className="py-12  md:py-16 dark:bg-gray-900 antialiased">
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div

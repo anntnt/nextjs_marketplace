@@ -22,7 +22,7 @@ export default async function AboutPage() {
     redirect('/buyer-area-only');
   }
   return (
-    <main className="flex-grow  w-full max-w-full px-20 py-12">
+    <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <br />
       <h1 className="mb-4 text-4xl text-center">Thank you for your order</h1>
     </main>

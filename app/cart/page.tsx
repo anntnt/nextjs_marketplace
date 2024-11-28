@@ -46,7 +46,7 @@ export default async function CartPage() {
   }, 0);
   const total = subTotal + STANDARD_DELIVERY_PRICE;
   return (
-    <main className="flex-grow  w-full max-w-full px-20 py-12">
+    <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <h1 className="text-2xl font-extrabold text-gray-800">Your Cart</h1>
         <div className="grid sm:grid-cols-2 gap-4 mt-8">

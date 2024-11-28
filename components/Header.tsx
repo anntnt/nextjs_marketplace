@@ -23,21 +23,24 @@ export default function Component(props: UserProps) {
 
   return (
     <header className="top-0 bg-white shadow-md z-10">
-      <nav className="bg-yellow-100 border-gray-200  py-3 sm:py-2.5 dark:bg-gray-900 flex justify-between items-center p-4  mx-auto">
-        <div className="flex flex-wrap items-center justify-between w-full max-w-full xl:px-20  mx-auto">
+      <nav className="font-semibold bg-yellow-100 border-gray-200  py-3.5 sm:py-3 dark:bg-gray-900 flex justify-between items-center px-6 sm:px-8 xl:px-6 2xl:px-20  mx-auto">
+        <div className="flex flex-wrap items-center justify-between w-full max-w-full 2xl:px-20  mx-auto">
           {/* Left Side - Links */}
-          <div className="flex items-center space-x-8 ">
-            <Link href="/" className="text-xl font-semibold dark:text-white ">
+          <div className="flex items-center flex-shrink-0 justify-center space-x-4  ">
+            <Link
+              href="/"
+              className="text-xl font-semibold dark:text-white w-full md:w-auto md:flex md:justify-center "
+            >
               <Image
                 src="/images/estores_logo.png"
                 objectFit="contain"
                 width={559}
                 height={102}
-                className="w-28 md:w-36  lg:w-40   h-auto pb-2"
+                className="w-28 md:w-36  lg:w-40   h-auto pb-3 sm:pb-2"
                 alt="eStores logo"
               />
             </Link>
-            <ul className="hidden md:flex space-x-8">
+            <ul className="hidden md:flex space-x-8 xl:space-x-2 2xl:space-x-8">
               <li>
                 <Link
                   href="/marketplace"
@@ -55,14 +58,6 @@ export default function Component(props: UserProps) {
                   About
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/support"
-                  className="text-black dark:text-white hover:text-blue-1000"
-                >
-                  Support
-                </Link>
-              </li>
 
               {!props.user || props.user.roleId === 3 ? (
                 <li>
@@ -70,9 +65,7 @@ export default function Component(props: UserProps) {
                     href="/become-a-seller"
                     className="text-black dark:text-white hover:text-blue-1000"
                   >
-                    <span className=" underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000">
-                      Become a Seller
-                    </span>
+                    Become a Seller
                   </Link>
                 </li>
               ) : props.user.roleId === 2 ? (
@@ -89,6 +82,14 @@ export default function Component(props: UserProps) {
               ) : (
                 <div />
               )}
+              <li>
+                <Link
+                  href="/support"
+                  className="text-black dark:text-white hover:text-blue-1000"
+                >
+                  Support
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -126,9 +127,7 @@ export default function Component(props: UserProps) {
                 >
                   Login&nbsp; &nbsp;
                 </Link>
-                <span style={{ margin: 0 }} className="hidden md:flex">
-                  /
-                </span>
+
                 <Link
                   href="/register"
                   className=" hidden md:flex text-black dark:text-white hover:text-blue-1000"
@@ -197,9 +196,7 @@ export default function Component(props: UserProps) {
                       href="/become-a-seller"
                       className="block w-full py-2 text-black dark:text-white"
                     >
-                      <span className=" underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000 ">
-                        Become a Seller
-                      </span>
+                      Become a Seller
                     </Link>
                   </li>
                 ) : (

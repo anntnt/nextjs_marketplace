@@ -10,7 +10,7 @@ export const metadata = {
 export default async function Page() {
   const productCategories = await getProductCategoriesInsecure();
   return (
-    <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-20 py-12">
+    <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <h1 className="mb-4 text-4xl text-center">Marketplace</h1>
       <section className="py-8 antialiased  md:py-16">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
