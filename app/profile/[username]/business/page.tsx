@@ -1,4 +1,4 @@
-import { Tooltip } from 'flowbite-react';
+import { Avatar, Tooltip } from 'flowbite-react';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -39,7 +39,7 @@ export default async function SellerProductsPage() {
         <div className="mx-auto max-w-screen-md px-4 2xl:px-0">
           <Link
             href={`/profile/${user.username}/business/new-product`}
-            className="inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-green-300 rounded-lg hover:bg-gray-100 hover:text-yellow-300 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+            className="inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-bue-1000 rounded-lg hover:bg-gray-100 hover:text-yellow-300 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
           >
             <svg
               className="w-7 h-7 me-1.5 text-gray-800 dark:text-white"
@@ -76,14 +76,15 @@ export default async function SellerProductsPage() {
                         >
                           <td className="whitespace-nowrap py-2 md:w-[384px]">
                             <div className="flex items-center gap-4">
-                              <div className="flex items-center aspect-square w-75 h-56 shrink-0">
+                              <div className="flex items-center aspect-square w-75 h-32 shrink-0">
                                 <Image
-                                  className="h-auto w-full max-h-full dark:hidden"
+                                  className="h-auto w-4/5 sm:w-full max-h-full dark:hidden"
                                   alt={`Product ${product.name}`}
                                   src={product.imageUrl}
                                   width={75}
                                   height={56}
                                 />
+
                                 <Image
                                   className="hidden h-auto w-full max-h-full dark:block"
                                   alt={`Product ${product.name}`}

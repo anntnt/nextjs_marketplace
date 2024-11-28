@@ -74,7 +74,7 @@ export default function Component(props: UserProps) {
                     href={`/profile/${props.user.username}/business`}
                     className="text-black dark:text-white hover:text-blue-1000"
                   >
-                    <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                    <span className=" underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000 ">
                       My Business
                     </span>
                   </Link>
@@ -205,7 +205,7 @@ export default function Component(props: UserProps) {
                       href={`/profile/${props.user.username}/business`}
                       className="block w-full py-2 text-black dark:text-white "
                     >
-                      <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                      <span className="font-semibold underline  decoration-4 decoration-blue-1000 dark:decoration-bue-1000 ">
                         My Business
                       </span>
                     </Link>
