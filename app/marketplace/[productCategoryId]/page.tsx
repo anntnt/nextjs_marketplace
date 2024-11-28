@@ -1,3 +1,4 @@
+import { Card } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -32,38 +33,30 @@ export default async function SingleCategoryPage(props: Props) {
               Shop by category
             </h2>
           </div>
-          <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mb-4 grid gap-8 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => {
               return (
-                <div
-                  className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                <Card
                   key={`products-${product.id}`}
                   data-test-id={`product-id-${product.id}`}
-                >
-                  <div className="h-56 w-full">
+                  className="max-w-sm"
+                  renderImage={() => (
                     <Link href={`/marketplace/product/${product.id}`}>
                       <Image
-                        className="mx-auto "
-                        alt={`Product ${product.name}`}
-                        src={product.imageUrl}
-                        layout="responsive"
                         width={500}
-                        height={0}
-                        style={{ height: '224px', width: 'auto' }}
+                        height={500}
+                        src={product.imageUrl}
+                        alt={`Product ${product.name}`}
                       />
                     </Link>
-                  </div>
-                  <div className="pt-6 sm:pt-16 md:pt-6 ">
-                    <Link
-                      href={`/marketplace/product/${product.id}`}
-                      className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
-                    >
-                      {product.name}
-                    </Link>
-                  </div>
+                  )}
+                >
+                  <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                    {product.name}
+                  </h5>
 
                   <AddToCartForm product={product} />
-                </div>
+                </Card>
               );
             })}
           </div>
