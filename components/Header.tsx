@@ -23,7 +23,7 @@ export default function Component(props: UserProps) {
 
   return (
     <header className="top-0 bg-white shadow-md z-10">
-      <nav className=" bg-yellow-100 border-gray-200  py-3.5 sm:py-3 dark:bg-gray-900 flex justify-between items-center px-4 sm:px-8 xl:px-6 2xl:px-20  mx-auto">
+      <nav className=" bg-yellow-100 border-gray-200  py-3.5 sm:py-3 dark:bg-gray-900 flex justify-between items-center px-4 sm:px-10 xl:px-6 2xl:px-20  mx-auto">
         <div className="flex flex-wrap items-center justify-between w-full max-w-full 2xl:px-20  mx-auto">
           {/* Left Side - Links */}
           <div className="flex items-center flex-shrink-0 justify-center space-x-4  font-semibold">

@@ -24,10 +24,10 @@ export default async function UserProfilePage() {
   }
 
   return (
-    <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
-      <h1 className="mb-4 text-4xl text-center">{user.username}'s Profile</h1>
-      <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-8">
-        <div className="mx-auto max-w-screen-lg px-4 2xl:px-0">
+    <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-10 py-12">
+      <h1 className="mb-4 text-4xl text-center">{user.firstname}'s Profile</h1>
+      <section className="mb-4  py-8 antialiased dark:bg-gray-900 md:py-12">
+        <div className="mx-auto max-w-screen-xl px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-20">
           <nav className="mb-4 flex" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
               <li className="inline-flex items-center">
@@ -82,30 +82,6 @@ export default async function UserProfilePage() {
                   </Link>
                 </div>
               </li>
-              <li aria-current="page">
-                <div className="flex items-center">
-                  <svg
-                    className="mx-1 h-4 w-4 text-gray-400 rtl:rotate-180"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m9 5 7 7-7 7"
-                    />
-                  </svg>
-                  <span className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ms-2">
-                    Account
-                  </span>
-                </div>
-              </li>
             </ol>
           </nav>
           <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6">
@@ -117,10 +93,10 @@ export default async function UserProfilePage() {
               {user.roleId === 2 ? (
                 <Link
                   href={`/profile/${user.username}/business`}
-                  className="inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-green-300 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                  className="inline-flex items-center px-5 py-2 text-md font-medium text-gray-900 bg-white border border-blue-1000 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
                 >
                   <svg
-                    className="w-7 h-7 me-1.5 text-gray-800 dark:text-white"
+                    className="w-6 h-6 me-1.5 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -143,10 +119,10 @@ export default async function UserProfilePage() {
                   {' '}
                   <Link
                     href="/"
-                    className="inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-green-300 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                    className="inline-flex items-center px-5 py-2 text-md font-medium text-gray-900 bg-white border border-blue-1000 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
                   >
                     <svg
-                      className="w-7 h-7 me-1.5 text-gray-800 dark:text-white"
+                      className="w-6 h-6 me-1.5 text-gray-800 dark:text-white"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -172,10 +148,10 @@ export default async function UserProfilePage() {
             <div>
               <Link
                 href={`/profile/${user.username}/messages-inbox`}
-                className="inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-green-300 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                className="inline-flex items-center px-5 py-2 text-md font-medium text-gray-900 bg-white border border-blue-1000 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
               >
                 <svg
-                  className="w-7 h-7 me-1.5 text-gray-800 dark:text-white"
+                  className="w-6 h-6 me-1.5 text-gray-800 dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -197,10 +173,10 @@ export default async function UserProfilePage() {
             <div>
               <Link
                 href="/support"
-                className="inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-green-300 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                className="inline-flex items-center px-5 py-2 text-md font-medium text-gray-900 bg-white border border-blue-1000 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
               >
                 <svg
-                  className="w-7 h-7 me-1.5 text-gray-800 dark:text-white"
+                  className="w-6 h-6 me-1.5 text-gray-800 dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -221,7 +197,7 @@ export default async function UserProfilePage() {
             </div>
           </div>
           <div className="py-4 md:py-8">
-            <div className="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
+            <div className="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 md:gap-10 lg:gap-16">
               <div className="space-y-4">
                 <div className="flex space-x-4">
                   <h2 className="flex items-center text-xl font-bold leading-none text-gray-900 dark:text-white sm:text-2xl">
@@ -341,7 +317,7 @@ export default async function UserProfilePage() {
               className="inline-flex  items-center justify-center rounded-lg bg-blue-1000 px-5 py-2.5 text-md font-medium text-white hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-auto"
             >
               <svg
-                className="-ms-0.5 me-1.5 h-7 w-7"
+                className="-ms-0.5 me-1.5 h-6 w-6"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
