@@ -22,16 +22,18 @@ export default function Component(props: UserProps) {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="sticky top-0 bg-white shadow-md z-10">
-      <nav className="bg-yellow-100 border-gray-200  py-2.5 dark:bg-gray-900 flex justify-between items-center p-4  mx-auto">
+    <header className="top-0 bg-white shadow-md z-10">
+      <nav className="bg-yellow-100 border-gray-200  py-3 sm:py-2.5 dark:bg-gray-900 flex justify-between items-center p-4  mx-auto">
         <div className="flex flex-wrap items-center justify-between w-full max-w-full xl:px-20  mx-auto">
           {/* Left Side - Links */}
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-8 ">
             <Link href="/" className="text-xl font-semibold dark:text-white ">
               <Image
                 src="/images/estores_logo.png"
-                width={158}
-                height={29}
+                objectFit="contain"
+                width={559}
+                height={102}
+                className="w-28 md:w-36  lg:w-40   h-auto pb-2"
                 alt="eStores logo"
               />
             </Link>
@@ -68,7 +70,7 @@ export default function Component(props: UserProps) {
                     href="/become-a-seller"
                     className="text-black dark:text-white hover:text-blue-1000"
                   >
-                    <span className=" underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                    <span className=" underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000">
                       Become a Seller
                     </span>
                   </Link>
@@ -91,23 +93,27 @@ export default function Component(props: UserProps) {
           </div>
 
           {/* Right Side - Search Box, Cart, Login/Register */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-5 sm:space-x-10">
             {/* Search Box */}
             <div className="relative">
               <input
-                className="px-4 py-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                className="px-2 py-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-white dark:border-gray-600"
                 placeholder="Search..."
               />
             </div>
-
+            {/* only display cart icon when user role is buyer */}
+            {props.user && props.user.roleId === 3 ? (
+              <Cart cartSum={props.cartSum} />
+            ) : (
+              <div />
+            )}
             {props.user ? (
-              <div className="font-semi bold hidden md:flex  items-center relative  space-x-2">
-                Hi, <span> </span>
+              <div className=" hidden md:flex  me-5 items-center relative  space-x-2">
                 <Link
                   href={`/profile/${props.user.username}`}
-                  className=" text-black dark:text-white hover:text-blue-1000 "
+                  className="font-semibold text-black dark:text-white hover:text-blue-1000 "
                 >
-                  {props.user.firstname}
+                  {props.user.firstname}'s Profile
                 </Link>
                 <LogoutButton />
               </div>
@@ -130,12 +136,6 @@ export default function Component(props: UserProps) {
                   Register
                 </Link>
               </>
-            )}
-            {/* only display cart icon when user role is buyer */}
-            {props.user && props.user.roleId === 3 ? (
-              <Cart cartSum={props.cartSum} />
-            ) : (
-              <div />
             )}
           </div>
 
@@ -165,7 +165,7 @@ export default function Component(props: UserProps) {
           {/* Mobile Menu */}
           {isOpen && (
             <div className="w-full md:hidden" id="navbar-menu">
-              <ul className="flex flex-col items-start p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800">
+              <ul className="flex flex-col items-start p-4 mt-4  dark:bg-gray-800">
                 <li className="w-full">
                   <Link
                     href="/marketplace"
@@ -197,7 +197,7 @@ export default function Component(props: UserProps) {
                       href="/become-a-seller"
                       className="block w-full py-2 text-black dark:text-white"
                     >
-                      <span className="font-semibold underline  decoration-8 decoration-green-400 dark:decoration-green-300 ">
+                      <span className=" underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000 ">
                         Become a Seller
                       </span>
                     </Link>
@@ -216,13 +216,19 @@ export default function Component(props: UserProps) {
                 )}
 
                 {props.user ? (
-                  <li className="w-full font-semibold">
-                    Hi, <span> </span>
-                    <Link href={`/profile/${props.user.username}`}>
-                      {props.user.firstname}
-                    </Link>
-                    <LogoutButton />
-                  </li>
+                  <>
+                    <li className="w-full ">
+                      <Link
+                        href={`/profile/${props.user.username}`}
+                        className="font-semibold"
+                      >
+                        {props.user.firstname}'s Profile
+                      </Link>
+                    </li>
+                    <li className="w-full ">
+                      <LogoutButton />
+                    </li>
+                  </>
                 ) : (
                   <>
                     {/* Login/Register */}

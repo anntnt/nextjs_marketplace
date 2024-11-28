@@ -6,7 +6,7 @@ type ItemsProps = { cartSum?: string };
 export default function Component(props: ItemsProps) {
   const cartItems = props.cartSum;
   return (
-    <div>
+    <div className="sm:me-5">
       <div className="text-white text-center rounded-full bg-red-500">
         <strong>
           <span data-test-id="cart-count" />

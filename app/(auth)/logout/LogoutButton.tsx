@@ -12,7 +12,7 @@ export default function LogoutButton() {
         role="button"
         aria-label="Logout"
         tabIndex={0}
-        className=" cursor-pointer border-none space-x-4 text-black hover:text-blue-1000 bg-yellow-100 hover:bg-yellow-100   focus:yellow-100     px-3 py-2.5 me-2  dark:bg-yellow-100 dark:hover:bg-yellow-100 focus:outline-none dark:focus:bg-yellow-100 dark:text-white text-sm"
+        className=" cursor-pointer border-none space-x-4 text-black hover:text-blue-1000 bg-yellow-100 hover:bg-yellow-100   focus:yellow-100     sm:px-2  dark:bg-yellow-100 dark:hover:bg-yellow-100 focus:outline-none dark:focus:bg-yellow-100 dark:text-white "
         onClick={async () => {
           await logout();
           router.refresh();
