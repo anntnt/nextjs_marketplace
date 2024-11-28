@@ -1,4 +1,5 @@
 import { Card } from 'flowbite-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { getProductCategoriesInsecure } from '../../database/productCategories';
 
@@ -18,28 +19,28 @@ export default async function Page() {
               Shop by category
             </h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {productCategories.map((productCategory) => {
               return (
-                <div
-                  key={`productCategories-${productCategory.id}`}
-                  data-test-id={`productCategory-id-${productCategory.id}`}
+                <Card
+                  key={`products-${productCategory.id}`}
+                  data-test-id={`product-id-${productCategory.id}`}
+                  className="max-w-sm"
+                  renderImage={() => (
+                    <Link href={`/marketplace/${productCategory.id}`}>
+                      <Image
+                        width={500}
+                        height={500}
+                        src={productCategory.imageUrl}
+                        alt={`Product ${productCategory.categoryName}`}
+                      />
+                    </Link>
+                  )}
                 >
-                  <Link
-                    href={`/marketplace/${productCategory.id}`}
-                    className="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-                  >
-                    <Card
-                      className="max-w-sm"
-                      imgAlt={`Category ${productCategory.categoryName}`}
-                      imgSrc={productCategory.imageUrl}
-                    >
-                      <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white self-center">
-                        {productCategory.categoryName}
-                      </h5>
-                    </Card>
-                  </Link>
-                </div>
+                  <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                    {productCategory.categoryName}
+                  </h5>
+                </Card>
               );
             })}
           </div>

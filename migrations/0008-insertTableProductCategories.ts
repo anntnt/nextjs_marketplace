@@ -10,7 +10,7 @@ const productCategories = [
   {
     id: 2,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/v1732739731/category_fashion_sj9pbp.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732739731/category_fashion_sj9pbp.jpg',
     name: 'Fashion',
   },
   {

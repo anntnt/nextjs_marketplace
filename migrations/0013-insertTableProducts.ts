@@ -94,22 +94,22 @@ const products = [
   },
   {
     id: 10,
-    name: 'macarons',
+    name: 'Macarons',
     price: 12,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742164/macarons_13_trtxy2.jpg',
-    description: 'macarons',
+    description: 'Macarons',
     seller_id: 1,
     category_id: 8,
   },
   {
     id: 11,
-    name: 'Tarta creme brulee',
-    price: 7,
+    name: 'Berry Mix',
+    price: 14,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/v1732742154/tarta_creme_brulee_7_juzdkb.jpg',
-    description: 'Tarta creme brulee',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742160/berries_14_eoj7dj.jpg',
     seller_id: 1,
+    description: 'Berry Mix',
     category_id: 8,
   },
   {
