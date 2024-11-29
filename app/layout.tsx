@@ -1,4 +1,6 @@
 import './globals.css';
+// import 'flowbite/dist/flowbite.min.js';
+import 'flowbite/dist/flowbite.css';
 import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
 import type { ReactNode } from 'react';

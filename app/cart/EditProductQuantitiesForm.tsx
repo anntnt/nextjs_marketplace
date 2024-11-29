@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { CreateCartProductResponseBodyPost } from '../api/cart-items/route';
 import ErrorMessage from '../ErrorMessage';
-import RemoveCartProductButton from './RemoveCartProductButton';
 
 type Props = {
   productId: number;
@@ -21,47 +20,13 @@ export default function EditProductQuantitiesForm(props: Props) {
   const router = useRouter();
 
   return (
-    <div>
-      <div className=" flex items-center gap-3">
+    <div className="flex items-center justify-between md:order-3 md:justify-end">
+      <div className="flex items-center">
         <button
-          onClick={async (event) => {
-            event.preventDefault();
-
-            let newQuantity;
-            if (quantity > 1) {
-              newQuantity = quantity - 1;
-            } else {
-              newQuantity = quantity;
-            }
-
-            setQuantity(newQuantity);
-
-            const response = await fetch('/api/cart-items', {
-              method: 'PUT',
-              body: JSON.stringify({
-                productId,
-                quantity: newQuantity,
-              }),
-            });
-
-            setErrorMessage('');
-
-            if (!response.ok) {
-              const responseBody: CreateCartProductResponseBodyPost =
-                await response.json();
-
-              if ('error' in responseBody) {
-                // TODO: Use toast instead of showing
-                // this below creation / update form
-                setErrorMessage(responseBody.error);
-                return;
-              }
-            }
-
-            router.refresh();
-          }}
           type="button"
-          className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 font-bold text-xl"
+          id="decrement-button"
+          data-input-counter-decrement="counter-input"
+          className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
         >
           <svg
             className="h-2.5 w-2.5 text-gray-900 dark:text-white"
@@ -82,43 +47,16 @@ export default function EditProductQuantitiesForm(props: Props) {
         <input
           id="counter-input"
           data-input-counter
-          className="w-12 shrink-0 border-0 bg-transparent text-center text-sm  text-gray-900 focus:outline-none focus:ring-0 dark:text-white "
-          value={quantity}
-          disabled
-          data-test-id="product-quantity"
+          className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
+          placeholder=""
+          value="2"
           required
         />
         <button
-          onClick={async (event) => {
-            event.preventDefault();
-
-            const newQuantity = quantity + 1;
-            setQuantity(newQuantity);
-            console.log('quantity + 1:', newQuantity);
-            const response = await fetch('/api/cart-items', {
-              method: 'PUT',
-              body: JSON.stringify({
-                productId,
-                quantity: newQuantity,
-              }),
-            });
-
-            setErrorMessage('');
-
-            if (!response.ok) {
-              const responseBody: CreateCartProductResponseBodyPost =
-                await response.json();
-
-              if ('error' in responseBody) {
-                setErrorMessage(responseBody.error);
-                return;
-              }
-            }
-
-            router.refresh();
-          }}
           type="button"
-          className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 font-bold text-xl"
+          id="increment-button"
+          data-input-counter-increment="counter-input"
+          className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
         >
           <svg
             className="h-2.5 w-2.5 text-gray-900 dark:text-white"
@@ -136,15 +74,12 @@ export default function EditProductQuantitiesForm(props: Props) {
             />
           </svg>
         </button>
-        <div className="inline-flex  shrink-0 items-center justify-center ">
-          <h3 className="text-md font-bold text-gray-800 mt-5">
-            € {productPrice}
-          </h3>
-        </div>
-        <ErrorMessage>{errorMessage}</ErrorMessage>
       </div>
-      <div className=" flex items-center gap-3">
-        <RemoveCartProductButton productId={productId} />
+
+      <div className="text-end md:order-4 md:w-32">
+        <p className="text-base font-bold text-gray-900 dark:text-white">
+          ${productPrice}
+        </p>
       </div>
     </div>
   );

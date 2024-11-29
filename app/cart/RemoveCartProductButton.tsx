@@ -16,52 +16,54 @@ export default function RemoveCartProductButton(props: Props) {
   const router = useRouter();
 
   return (
-    <div>
-      <div
-        role="button"
-        tabIndex={0}
-        className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md   focus:outline-none  text-sm pl-5 pt-3
-        "
-        onClick={async () => {
-          const response = await fetch(`/api/cart/${props.productId}`, {
-            method: 'DELETE',
-          });
-
-          setErrorMessage('');
-
-          if (!response.ok) {
-            let newErrorMessage = 'Error deleting product';
-
-            const responseBody: CartProductResponseDelete =
-              await response.json();
-
-            if ('error' in responseBody) {
-              newErrorMessage = responseBody.error;
-            }
-
-            // TODO: Use toast instead of showing
-            // this below creation / update form
-            setErrorMessage(newErrorMessage);
-            return;
-          }
-
-          router.refresh();
-
-          // Reset form states if deleting an
-          // animal after editing it
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            // Trigger the same action on Enter or Space key press
-            e.preventDefault(); // Prevent scrolling when pressing space
-            // Trigger the click handler
-            e.currentTarget.click();
-          }
-        }}
-        aria-label="Delete cart product"
+    <div className="flex items-center gap-4">
+      <button
+        type="button"
+        className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
       >
-        Delete
-      </div>
+        <svg
+          className="me-1.5 h-5 w-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+          />
+        </svg>
+        Add to Favorites
+      </button>
+
+      <button
+        type="button"
+        className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
+      >
+        <svg
+          className="me-1.5 h-5 w-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18 17.94 6M18 18 6.06 6"
+          />
+        </svg>
+        Remove
+      </button>
       <ErrorMessage>{errorMessage}</ErrorMessage>
     </div>
   );
