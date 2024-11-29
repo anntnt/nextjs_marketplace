@@ -29,7 +29,7 @@ export default function Component(props: UserProps) {
           <div className="flex items-center flex-shrink-0 justify-center space-x-4  font-semibold">
             <Link
               href="/"
-              className="text-xl font-semibold dark:text-white w-full md:w-auto md:flex md:justify-center "
+              className="text-xl active:text-blue-1000 focus:text-blue-1000 font-semibold dark:text-white w-full md:w-auto md:flex md:justify-center "
             >
               <Image
                 src="/images/estores_logo.png"
@@ -40,13 +40,16 @@ export default function Component(props: UserProps) {
                 alt="eStores logo"
               />
             </Link>
-            <ul className="hidden md:flex space-x-8 xl:space-x-4 2xl:space-x-8">
-              <li>
+            <ul className="hidden md:flex space-x-8 xl:space-x-4 2xl:space-x-8 active:text-blue-1000 focus:text-blue-1000">
+              <li className="active:text-blue-1000 focus:text-blue-1000">
                 <Link
                   href="/marketplace"
                   className="text-black dark:text-white hover:text-blue-1000  active:text-blue-1000 active:font-semibold focus:text-blue-1000 focus:font-semibold"
                 >
-                  Marketplace
+                  {' '}
+                  <span className="active:text-blue-1000 focus:text-blue-1000">
+                    Marketplace
+                  </span>
                 </Link>
               </li>
 
@@ -55,7 +58,9 @@ export default function Component(props: UserProps) {
                   href="/about"
                   className="text-black dark:text-white hover:text-blue-1000"
                 >
-                  About
+                  <span className="active:text-blue-1000 focus:text-blue-1000">
+                    About
+                  </span>
                 </Link>
               </li>
 
@@ -72,9 +77,9 @@ export default function Component(props: UserProps) {
                 <li>
                   <Link
                     href={`/profile/${props.user.username}/business`}
-                    className="text-black dark:text-white hover:text-blue-1000"
+                    className="active:text-blue-1000 focus:text-blue-1000 text-black dark:text-white hover:text-blue-1000"
                   >
-                    <span className=" underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000 ">
+                    <span className=" underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000  active:text-blue-1000 focus:text-blue-1000">
                       My Business
                     </span>
                   </Link>
@@ -112,9 +117,12 @@ export default function Component(props: UserProps) {
               <div className=" hidden md:flex  me-5 items-center relative  space-x-2">
                 <Link
                   href={`/profile/${props.user.username}`}
-                  className="font-semibold text-black dark:text-white hover:text-blue-1000 "
+                  className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 "
                 >
-                  {props.user.firstname}'s Profile
+                  <span className="active:text-blue-1000 focus:text-blue-1000">
+                    {' '}
+                    {props.user.firstname}'s Profile
+                  </span>
                 </Link>
                 <LogoutButton />
               </div>
@@ -123,16 +131,21 @@ export default function Component(props: UserProps) {
                 {/* Login/Register */}
                 <Link
                   href="/login"
-                  className="font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000"
+                  className="active:text-blue-1000 focus:text-blue-1000 font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000"
                 >
-                  Login&nbsp; &nbsp;
+                  <span className="active:text-blue-1000 focus:text-blue-1000">
+                    Login
+                  </span>
+                  &nbsp; &nbsp;
                 </Link>
 
                 <Link
                   href="/register"
-                  className=" font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000"
+                  className=" active:text-blue-1000 focus:text-blue-1000 font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000"
                 >
-                  Register
+                  <span className="active:text-blue-1000 focus:text-blue-1000">
+                    Register
+                  </span>
                 </Link>
               </>
             )}
@@ -203,7 +216,7 @@ export default function Component(props: UserProps) {
                   <li className="w-full">
                     <Link
                       href={`/profile/${props.user.username}/business`}
-                      className="block w-full py-2 text-black dark:text-white "
+                      className="active:text-blue-1000 focus:text-blue-1000 block w-full py-2 text-black dark:text-white "
                     >
                       <span className="font-semibold underline  decoration-4 decoration-blue-1000 dark:decoration-bue-1000 ">
                         My Business
