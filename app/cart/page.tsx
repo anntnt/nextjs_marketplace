@@ -32,7 +32,7 @@ export default async function CartPage() {
   if (!productsFromCart.length) {
     return (
       <main className="flex-grow  w-full max-w-full px-20 py-12">
-        <div className="mx-auto max-w-screen-xl sm:px-4 2xl:px-0">
+        <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <h1 className="text-2xl font-extrabold text-gray-800">Your Cart </h1>
 
           <p>Your cart is empty</p>
@@ -46,182 +46,126 @@ export default async function CartPage() {
   }, 0);
   const total = subTotal + STANDARD_DELIVERY_PRICE;
   return (
-    <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+    <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
-          Shopping Cart
-        </h2>
-
-        <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
-          <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
-            <div className="space-y-6">
-              {productsFromCart.map((product) => {
-                return (
-                  <div
-                    key={`product-${product.id}`}
-                    data-test-id={`product-id-${product.id}`}
-                    className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6"
-                  >
-                    <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                      <Link href="/" className="shrink-0 md:order-1">
-                        <Image
-                          className="h-20 w-20 dark:hidden"
-                          src={product.imageUrl}
-                          alt={`Product ${product.name}`}
-                          width={112}
-                          height={84}
-                        />
-                        <Image
-                          className="hidden h-20 w-20 dark:block"
-                          src={product.imageUrl}
-                          alt={`Product ${product.name}`}
-                          width={75}
-                          height={56}
-                        />
-                      </Link>
-
-                      <label htmlFor="counter-input" className="sr-only">
-                        Choose quantity:
-                      </label>
+        <h1 className="text-2xl font-extrabold text-gray-800">Your Cart</h1>
+        <div className="grid sm:grid-cols-2 gap-4 mt-8">
+          <div className="md:col-span-2 space-y-4">
+            {productsFromCart.map((product) => {
+              return (
+                <div
+                  key={`product-${product.id}`}
+                  data-test-id={`product-id-${product.id}`}
+                  className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6 flex gap-4  px-4 py-6 "
+                >
+                  <div className="flex gap-4">
+                    <div className="w-28 h-auto max-sm:w-24 max-sm:h-24 shrink-0">
+                      <Image
+                        className="h-auto w-full max-h-full dark:hidden"
+                        alt={`Product ${product.name}`}
+                        src={product.imageUrl}
+                        width={75}
+                        height={56}
+                      />
+                      <Image
+                        className="hidden h-auto w-full max-h-full dark:block"
+                        alt={`Product ${product.name}`}
+                        src={product.imageUrl}
+                        width={75}
+                        height={56}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <div>
+                        <h3 className="text-base font-bold text-gray-800">
+                          {product.name}
+                        </h3>
+                      </div>
                       <EditProductQuantitiesForm
                         productId={product.id}
                         productQuantity={product.quantity}
-                        productPrice={product.price}
                       />
-
-                      <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                        <Link
-                          href="/"
-                          className="text-base font-medium text-gray-900 hover:underline dark:text-white"
-                        >
-                          {product.name}
-                        </Link>
-                        <RemoveCartProductButton productId={product.id} />
-                      </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+
+                  <div className="ml-auto flex flex-col">
+                    <div className="flex items-start gap-4 justify-end">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-4 cursor-pointer fill-gray-400 inline-block"
+                        viewBox="0 0 64 64"
+                      >
+                        <path
+                          d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z"
+                          data-original="#000000"
+                        />
+                      </svg>
+
+                      <RemoveCartProductButton productId={product.id} />
+                    </div>
+                    <h3 className="text-md font-bold text-gray-800 mt-5">
+                      € {product.price}
+                    </h3>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
-            <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-              <p className="text-xl font-semibold text-gray-900 dark:text-white">
-                Order summary
-              </p>
+          <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6bg-white  px-4 py-6 h-max ">
+            <ul className="text-gray-800 space-y-4">
+              <li className="flex flex-wrap gap-4 text-md">
+                Subtotal <span className="ml-auto ">€ {subTotal}</span>
+              </li>
+              <li className="flex flex-wrap gap-4 text-md">
+                Shipping{' '}
+                <span className="ml-auto ">€ {STANDARD_DELIVERY_PRICE}</span>
+              </li>
+              <li>
+                <hr className="border-gray-300" />
+              </li>
+              <li className="flex flex-wrap gap-4 text-md font-bold">
+                Total <span className="ml-auto">€ {total}</span>
+              </li>
+            </ul>
 
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Original price
-                    </dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      $7,592.00
-                    </dd>
-                  </dl>
-
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Savings
-                    </dt>
-                    <dd className="text-base font-medium text-green-600">
-                      -$299.00
-                    </dd>
-                  </dl>
-
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Store Pickup
-                    </dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      $99
-                    </dd>
-                  </dl>
-
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Tax
-                    </dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      $799
-                    </dd>
-                  </dl>
-                </div>
-
-                <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
-                  <dt className="text-base font-bold text-gray-900 dark:text-white">
-                    Total
-                  </dt>
-                  <dd className="text-base font-bold text-gray-900 dark:text-white">
-                    $8,191.00
-                  </dd>
-                </dl>
-              </div>
-
+            <div className="mt-8 space-y-2">
               <Link
-                href="/"
-                className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                href="/checkout"
+                type="button"
+                className="text-center w-full text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
-                Proceed to Checkout
+                Checkout
               </Link>
-
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  {' '}
-                  or{' '}
-                </span>
-                <Link
-                  href="/"
-                  title=""
-                  className="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500"
-                >
-                  Continue Shopping
-                  <svg
-                    className="h-5 w-5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 12H5m14 0-4 4m4-4-4-4"
-                    />
-                  </svg>
-                </Link>
-              </div>
+              <Link
+                href="/marketplace"
+                type="button"
+                className="text-center text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-100 text-gray-800 border border-gray-300 rounded-md"
+              >
+                Continue Shopping{' '}
+              </Link>
             </div>
 
-            <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-              <form className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="voucher"
-                    className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    {' '}
-                    Do you have a voucher or gift card?{' '}
-                  </label>
-                  <input
-                    id="voucher"
-                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                    placeholder=""
-                    required
-                  />
-                </div>
-                <button className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                  Apply Code
-                </button>
-              </form>
+            <div className="mt-4 flex flex-wrap justify-center gap-4">
+              <img
+                src="https://readymadeui.com/images/master.webp"
+                alt="card1"
+                className="w-10 object-contain"
+              />
+              <img
+                src="https://readymadeui.com/images/visa.webp"
+                alt="card2"
+                className="w-10 object-contain"
+              />
+              <img
+                src="https://readymadeui.com/images/american-express.webp"
+                alt="card3"
+                className="w-10 object-contain"
+              />
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </main>
   );
 }

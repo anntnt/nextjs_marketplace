@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -16,54 +17,62 @@ export default function RemoveCartProductButton(props: Props) {
   const router = useRouter();
 
   return (
-    <div className="flex items-center gap-4">
-      <button
-        type="button"
-        className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
-      >
-        <svg
-          className="me-1.5 h-5 w-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
-          />
-        </svg>
-        Add to Favorites
-      </button>
+    <div
+      role="button"
+      tabIndex={0}
+      className="flex items-starbuy now
+      t gap-4 justify-end"
+      onClick={async () => {
+        const response = await fetch(`/api/cart/${props.productId}`, {
+          method: 'DELETE',
+        });
 
-      <button
-        type="button"
-        className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
+        setErrorMessage('');
+
+        if (!response.ok) {
+          let newErrorMessage = 'Error deleting product';
+
+          const responseBody: CartProductResponseDelete = await response.json();
+
+          if ('error' in responseBody) {
+            newErrorMessage = responseBody.error;
+          }
+
+          // TODO: Use toast instead of showing
+          // this below creation / update form
+          setErrorMessage(newErrorMessage);
+          return;
+        }
+
+        router.refresh();
+
+        // Reset form states if deleting an
+        // animal after editing it
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          // Trigger the same action on Enter or Space key press
+          e.preventDefault(); // Prevent scrolling when pressing space
+          // Trigger the click handler
+          e.currentTarget.click();
+        }
+      }}
+      aria-label="Delete cart product"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-4 cursor-pointer fill-gray-400 inline-block"
+        viewBox="0 0 24 24"
       >
-        <svg
-          className="me-1.5 h-5 w-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18 17.94 6M18 18 6.06 6"
-          />
-        </svg>
-        Remove
-      </button>
+        <path
+          d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
+          data-original="#000000"
+        />
+        <path
+          d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
+          data-original="#000000"
+        />
+      </svg>
       <ErrorMessage>{errorMessage}</ErrorMessage>
     </div>
   );
