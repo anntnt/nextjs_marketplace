@@ -2,7 +2,7 @@
 import { type SetStateAction, useState } from 'react';
 import StripeForm from './stripe/StripeForm';
 
-export default function EditProductQuantitiesForm() {
+export default function PaymentForm() {
   const [paymentType, setPaymentType] = useState('credit-card');
   const handlePaymentTypeChange = (event: {
     target: { value: SetStateAction<string> };
