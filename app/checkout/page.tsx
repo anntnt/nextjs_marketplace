@@ -39,13 +39,12 @@ export default async function CheckoutPage() {
         <h1 className="text-2xl font-extrabold text-gray-800">Checkout</h1>
         <div className="grid sm:grid-cols-2 gap-4 mt-8">
           <div className="md:col-span-2 space-y-4">
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Delivering to {user.username}
-              </h2>
+            <div className="space-y-4 grid grid-cols-1 gap-4">
+              <div className="text-xl font-semibold text-gray-900 dark:text-white">
+                Delivering to {user.firstname} {user.lastname}
+              </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>Donau Insel, 1020, Austria</div>
-                <Link href="/">Edit</Link>
+                <div>{user.address}</div>
               </div>
             </div>
             <br />

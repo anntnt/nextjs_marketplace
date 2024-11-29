@@ -50,7 +50,11 @@ export default function EditProductFormApi(props: Props) {
 
   return (
     <div>
-      {successMessage && <p className="text-green-600">{successMessage}</p>}
+      {successMessage && (
+        <p className="py-8 text-green-600 text-md font-semibold flex flex-col justify-center gap-3 max-w-sm mx-auto">
+          {successMessage}
+        </p>
+      )}
 
       <form
         onSubmit={async (event) => {
@@ -58,7 +62,7 @@ export default function EditProductFormApi(props: Props) {
           const formData = new FormData(event.currentTarget);
           await updateProductFormApiHandler(formData);
         }}
-        className="flex flex-col justify-center gap-3 max-w-sm mx-auto"
+        className="py-8 flex flex-col justify-center gap-3 max-w-sm mx-auto"
       >
         {' '}
         <input name="productId" type="hidden" value={props.product.id} />

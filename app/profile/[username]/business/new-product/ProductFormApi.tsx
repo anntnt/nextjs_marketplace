@@ -14,15 +14,21 @@ type Props = {
 export default function ProductFormApi(props: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [name, setName] = useState('');
+
+  const [price, setPrice] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [description, setDescription] = useState('');
+  const [categoryId, setCategoryId] = useState('');
 
   const router = useRouter();
 
-  function resetFormStates(formData: FormData) {
-    formData.delete('username');
-    formData.delete('price');
-    formData.delete('imageUrl');
-    formData.delete('description');
-    formData.delete('categoryId');
+  function resetFormStates() {
+    setName('');
+    setPrice('');
+    setImageUrl('');
+    setDescription('');
+    setCategoryId('');
   }
   async function productFormApiHandler(formData: FormData) {
     const response = await fetch('/api/new-product', {
@@ -44,15 +50,18 @@ export default function ProductFormApi(props: Props) {
       return;
     }
 
-    router.refresh();
-
     setSuccessMessage('Product created successfully');
-    resetFormStates(formData);
+    resetFormStates();
+    router.refresh();
   }
 
   return (
     <div>
-      {successMessage && <p className="text-green-600">{successMessage}</p>}
+      {successMessage && (
+        <p className=" py-8 text-green-600 text-md font-semibold flex flex-col justify-center gap-3 max-w-sm mx-auto">
+          {successMessage}
+        </p>
+      )}
 
       <form
         onSubmit={async (event) => {
@@ -60,7 +69,7 @@ export default function ProductFormApi(props: Props) {
           const formData = new FormData(event.currentTarget);
           await productFormApiHandler(formData);
         }}
-        className="flex flex-col justify-center gap-3 max-w-sm mx-auto"
+        className="py-8 flex flex-col justify-center gap-3 max-w-sm mx-auto"
       >
         <input name="sellerId" type="hidden" value={props.sellerId} />
         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -69,40 +78,50 @@ export default function ProductFormApi(props: Props) {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             name="name"
+            value={name}
+            onChange={(event) => setName(event.currentTarget.value)}
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           Price €
           <input
+            value={price}
             type="number"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             name="price"
+            onChange={(event) => setPrice(event.currentTarget.value)}
           />
         </label>
 
         <label>
           Select Image:
           <input
+            value={imageUrl}
             className=" block w-full text-sm text-blue-1000 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             type="file"
             name="image"
             accept="image/*"
+            onChange={(event) => setImageUrl(event.currentTarget.value)}
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           Description
           <textarea
+            value={description}
             className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             name="description"
+            onChange={(event) => setDescription(event.currentTarget.value)}
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           Category
           <select
+            value={categoryId}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="categoryId"
+            onChange={(event) => setCategoryId(event.currentTarget.value)}
           >
             <option>Please select one...</option>
             {props.productCategories.map((productCategory) => {

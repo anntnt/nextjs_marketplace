@@ -25,7 +25,7 @@ export default async function UserProfilePage() {
 
   return (
     <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-10 py-12">
-      <h1 className="mb-4 text-4xl text-center">{user.firstname}'s Profile</h1>
+      <h1 className="mb-4 text-4xl text-center">{user.username}'s Profile</h1>
       <section className="mb-4  py-8 antialiased dark:bg-gray-900 md:py-12">
         <div className="mx-auto max-w-screen-xl px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-20">
           <nav className="mb-4 flex" aria-label="Breadcrumb">
@@ -201,16 +201,13 @@ export default async function UserProfilePage() {
               <div className="space-y-4">
                 <div className="flex space-x-4">
                   <h2 className="flex items-center text-xl font-bold leading-none text-gray-900 dark:text-white sm:text-2xl">
-                    Helene Engels
+                    {user.firstname} {user.lastname}
                   </h2>
                 </div>
                 <dl className="">
                   <dt className="font-semibold text-gray-900 dark:text-white">
-                    Email Address
+                    {user.emailAddress}
                   </dt>
-                  <dd className="text-gray-500 dark:text-gray-400">
-                    helene@example.com
-                  </dd>
                 </dl>
                 <dl>
                   <dt className="font-semibold text-gray-900 dark:text-white">
@@ -234,53 +231,20 @@ export default async function UserProfilePage() {
                         d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
                       />
                     </svg>
-                    2 Miles Drive, NJ 071, New York, United States of America
-                  </dd>
-                </dl>
-                <dl>
-                  <dt className="font-semibold text-gray-900 dark:text-white">
-                    Delivery Address
-                  </dt>
-                  <dd className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                    <svg
-                      className="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
-                      />
-                    </svg>
-                    9th St. PATH Station, New York, United States of America
+                    {user.address}
                   </dd>
                 </dl>
               </div>
               <div className="space-y-4">
                 <dl>
                   <dt className="font-semibold text-gray-900 dark:text-white">
-                    Phone Number
+                    Birth date
                   </dt>
                   <dd className="text-gray-500 dark:text-gray-400">
-                    +1234 567 890 / +12 345 678
+                    {user.birthday.toLocaleDateString()}
                   </dd>
                 </dl>
 
-                <dl>
-                  <dt className="font-semibold text-gray-900 dark:text-white">
-                    My Companies
-                  </dt>
-                  <dd className="text-gray-500 dark:text-gray-400">
-                    FLOWBITE LLC, Fiscal code: 18673557
-                  </dd>
-                </dl>
                 <dl>
                   <dt className="mb-1 font-semibold text-gray-900 dark:text-white">
                     Payment Methods
@@ -304,7 +268,7 @@ export default async function UserProfilePage() {
                           Visa ending in 7658
                         </p>
                         <p className="font-normal text-gray-500 dark:text-gray-400">
-                          Expiry 10/2024
+                          Expiry 10/2028
                         </p>
                       </div>
                     </div>

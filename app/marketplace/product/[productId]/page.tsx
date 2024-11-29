@@ -38,12 +38,13 @@ export default async function SingleProductPage(props: Props) {
             </div>
 
             <div className="mt-6 sm:mt-8 lg:mt-0">
-              <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+              <h1 className="text-2xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
                 {product.name}
               </h1>
-              <h2 className="text-sm  text-green sm:text-2xl dark:text-white">
-                Visit {product.storeName}
-              </h2>
+              <div className="py-4 text-sm font-semibold   sm:text-md dark:text-white">
+                Visit{' '}
+                <span className="text-green-600">{product.storeName}</span>
+              </div>
               <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
                 <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
                   € {product.price}

@@ -39,7 +39,7 @@ export default async function SellerProductsPage() {
         <div className="mx-auto max-w-screen-md px-4 2xl:px-0">
           <Link
             href={`/profile/${user.username}/business/new-product`}
-            className="inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-bue-1000 rounded-lg hover:bg-gray-100 hover:text-yellow-300 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+            className=" border-blue-1000 inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-bue-1000 rounded-lg hover:bg-gray-100 hover:text-yellow-300 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
           >
             <svg
               className="w-7 h-7 me-1.5 text-gray-800 dark:text-white"
