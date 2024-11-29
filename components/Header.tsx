@@ -123,14 +123,14 @@ export default function Component(props: UserProps) {
                 {/* Login/Register */}
                 <Link
                   href="/login"
-                  className="hidden md:flex text-black dark:text-white hover:text-blue-1000"
+                  className="font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000"
                 >
                   Login&nbsp; &nbsp;
                 </Link>
 
                 <Link
                   href="/register"
-                  className=" hidden md:flex text-black dark:text-white hover:text-blue-1000"
+                  className=" font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000"
                 >
                   Register
                 </Link>
@@ -233,7 +233,7 @@ export default function Component(props: UserProps) {
                     <li className="w-full">
                       <Link
                         href="/login"
-                        className="block w-full py-2 text-black dark:text-white"
+                        className="font-semibold block w-full py-2 text-black dark:text-white"
                       >
                         Login
                       </Link>
@@ -242,7 +242,7 @@ export default function Component(props: UserProps) {
                     <li className="w-full">
                       <Link
                         href="/register"
-                        className="block w-full py-2 text-black dark:text-white"
+                        className="font-semibold block w-full py-2 text-black dark:text-white"
                       >
                         Register
                       </Link>

@@ -1,4 +1,4 @@
-import { Avatar, Tooltip } from 'flowbite-react';
+import { Tooltip } from 'flowbite-react';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';

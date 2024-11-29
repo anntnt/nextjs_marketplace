@@ -100,7 +100,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742164/macarons_13_trtxy2.jpg',
     description: 'Macarons',
     seller_id: 1,
-    category_id: 8,
+    category_id: 9,
   },
   {
     id: 11,
@@ -110,7 +110,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742160/berries_14_eoj7dj.jpg',
     seller_id: 1,
     description: 'Berry Mix',
-    category_id: 8,
+    category_id: 9,
   },
   {
     id: 12,
@@ -120,7 +120,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742158/donuts_11_2_bfsohy.jpg',
     description: 'Donuts',
     seller_id: 1,
-    category_id: 8,
+    category_id: 9,
   },
   {
     id: 13,
@@ -130,7 +130,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742161/pancakes_9_pq7no0.jpg',
     description: 'Pancakes',
     seller_id: 1,
-    category_id: 8,
+    category_id: 9,
   },
   {
     id: 14,
@@ -170,7 +170,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742156/cupcakes_21_n2ijnf.jpg',
     description: 'Cupcakes',
     seller_id: 1,
-    category_id: 8,
+    category_id: 9,
   },
   {
     id: 18,
@@ -180,7 +180,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732788294/mobile-phone_v586rg.png',
     description: 'Smartphone',
     seller_id: 1,
-    category_id: 4,
+    category_id: 5,
   },
   {
     id: 19,
@@ -190,7 +190,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732735928/Power_Bank_Wireless_21_v5mgda.jpg',
     description: 'Wireless Power Bank',
     seller_id: 1,
-    category_id: 16,
+    category_id: 2,
   },
   {
     id: 20,
@@ -210,7 +210,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732789132/Bluetooth_speaker-52_o3r58r.jpg',
     description: 'Bluetooth speaker',
     seller_id: 1,
-    category_id: 16,
+    category_id: 2,
   },
   {
     id: 22,
@@ -220,7 +220,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732788294/lipsticks-5893481_1280_wzq6qk.jpg',
     description: 'Lipstick',
     seller_id: 1,
-    category_id: 16,
+    category_id: 2,
   },
   {
     id: 23,
@@ -230,7 +230,7 @@ const products = [
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732788294/toy_hk5kt9.jpg',
     description: 'Doll ​house',
     seller_id: 1,
-    category_id: 16,
+    category_id: 2,
   },
 ];
 
