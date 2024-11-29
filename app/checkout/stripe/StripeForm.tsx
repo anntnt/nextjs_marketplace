@@ -62,7 +62,7 @@ export default function StripeComponent() {
     theme: 'stripe',
   };
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div className="grid py-6">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
           {confirmed ? <CompletePage /> : <CheckoutForm />}

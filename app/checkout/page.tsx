@@ -52,8 +52,8 @@ export default async function CheckoutPage() {
             <PaymentCheckComponent />
           </div>
 
-          <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6bg-white  px-4 py-6 h-max ">
-            <ul className="text-gray-800 space-y-4">
+          <div>
+            <ul className="text-gray-800 space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6bg-white  px-4 py-6  ">
               <li className="flex flex-wrap gap-4 text-md">
                 Subtotal <span className="ml-auto ">€ {subTotal}</span>
               </li>
