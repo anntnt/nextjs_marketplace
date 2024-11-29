@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import { getCartProducts } from '../../database/cartProducts';
@@ -36,8 +35,8 @@ export default async function CheckoutPage() {
   return (
     <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h1 className="text-2xl font-extrabold text-gray-800">Checkout</h1>
-        <div className="grid sm:grid-cols-2 gap-4 mt-8">
+        <h1 className="mb-4 text-3xl text-center">Checkout</h1>
+        <div className="grid sm:grid-cols-2 gap-4 mt-8 py-8">
           <div className="md:col-span-2 space-y-4">
             <div className="space-y-4 grid grid-cols-1 gap-4">
               <div className="text-xl font-semibold text-gray-900 dark:text-white">

@@ -33,7 +33,7 @@ export default async function CartPage() {
     return (
       <main className="flex-grow  w-full max-w-full px-20 py-12">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <h1 className="text-2xl font-extrabold text-gray-800">Your Cart </h1>
+          <h1 className="mb-4 text-3xl text-center">Your Cart </h1>
 
           <p>Your cart is empty</p>
         </div>
@@ -48,8 +48,8 @@ export default async function CartPage() {
   return (
     <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h1 className="text-2xl font-extrabold text-gray-800">Your Cart</h1>
-        <div className="grid sm:grid-cols-2 gap-4 mt-8">
+        <h1 className="mb-4 text-3xl text-center">Your Cart</h1>
+        <div className="grid sm:grid-cols-2 gap-4 mt-8 py-8">
           <div className="md:col-span-2 space-y-4">
             {productsFromCart.map((product) => {
               return (

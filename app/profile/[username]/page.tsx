@@ -84,9 +84,9 @@ export default async function UserProfilePage() {
               </li>
             </ol>
           </nav>
-          <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6">
+          <div className="mb-4 text-3xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6">
             General overview
-          </h2>
+          </div>
 
           <div className="grid grid-cols-2 gap-6 border-b border-t border-gray-200 py-4 dark:border-gray-700 md:py-8 lg:grid-cols-4 xl:gap-16">
             <div>
