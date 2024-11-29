@@ -209,66 +209,26 @@ export default async function UserProfilePage() {
                     {user.emailAddress}
                   </dt>
                 </dl>
-                <dl>
-                  <dt className="font-semibold text-gray-900 dark:text-white">
-                    Home Address
-                  </dt>
-                  <dd className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                    <svg
-                      className="hidden h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500 lg:inline"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
-                      />
-                    </svg>
-                    {user.address}
-                  </dd>
-                </dl>
               </div>
               <div className="space-y-4">
                 <dl>
                   <dt className="font-semibold text-gray-900 dark:text-white">
                     Birth date
                   </dt>
-                  <dd className="text-gray-500 dark:text-gray-400">
+                  <dd className="text-gray-900 dark:text-gray-400">
                     {user.birthday.toLocaleDateString()}
                   </dd>
                 </dl>
 
                 <dl>
                   <dt className="mb-1 font-semibold text-gray-900 dark:text-white">
-                    Payment Methods
+                    Address
                   </dt>
                   <dd className="flex items-center space-x-4 text-gray-500 dark:text-gray-400">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700">
-                      <img
-                        className="h-4 w-auto dark:hidden"
-                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg"
-                        alt=""
-                      />
-                      <img
-                        className="hidden h-4 w-auto dark:flex"
-                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa-dark.svg"
-                        alt=""
-                      />
-                    </div>
                     <div>
-                      <div className="text-sm">
-                        <p className="mb-0.5 font-medium text-gray-900 dark:text-white">
-                          Visa ending in 7658
-                        </p>
-                        <p className="font-normal text-gray-500 dark:text-gray-400">
-                          Expiry 10/2028
+                      <div>
+                        <p className="mb-0.5  text-gray-900 dark:text-white">
+                          {user.address}
                         </p>
                       </div>
                     </div>
