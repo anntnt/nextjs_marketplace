@@ -27,9 +27,9 @@ export default async function SingleProductPage(props: Props) {
             key={`products-${product.id}`}
             data-test-id={`product-id-${product.id}`}
           >
-            <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
+            <div className="shrink-0 max-w-md lg:max-w-lg mx-auto ">
               <Image
-                className="w-full dark:hidden "
+                className="w-full dark:hidden max-w-2xl rounded-lg border hover:border-black hover:shadow-lg border-gray-200  bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800"
                 alt={`Product ${product.name}`}
                 src={product.imageUrl}
                 width={500}
