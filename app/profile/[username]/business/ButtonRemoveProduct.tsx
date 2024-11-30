@@ -17,7 +17,7 @@ export default function ButtonRemoveForm(props: Props) {
     <div
       role="button"
       tabIndex={0}
-      className="bg-white cursor-pointer"
+      className="bg-gray-50  antialiased dark:bg-gray-900 cursor-pointer"
       onClick={async () => {
         const response = await fetch(`/api/products/${props.id}`, {
           method: 'DELETE',

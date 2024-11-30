@@ -26,7 +26,7 @@ export default function Component(props: UserProps) {
       <nav className=" bg-yellow-100 border-gray-200  py-3.5 sm:py-3 dark:bg-gray-900 flex justify-between items-center px-4 sm:px-10 xl:px-6 2xl:px-20  mx-auto">
         <div className="flex flex-wrap items-center justify-between w-full max-w-full 2xl:px-20  mx-auto">
           {/* Left Side - Links */}
-          <div className="flex items-center flex-shrink-0 justify-center space-x-4  font-semibold">
+          <div className="flex items-center flex-shrink-0 justify-center space-x-4  font-semibold max-sm:mx-auto">
             <Link
               href="/"
               className="text-xl active:text-blue-1000 focus:text-blue-1000 font-semibold dark:text-white w-full md:w-auto md:flex md:justify-center "
@@ -36,7 +36,7 @@ export default function Component(props: UserProps) {
                 objectFit="contain"
                 width={559}
                 height={102}
-                className="w-28 md:w-36  lg:w-40   h-auto pb-3 sm:pb-2"
+                className="w-32 md:w-36  lg:w-40   h-auto pb-3 sm:pb-2"
                 alt="eStores logo"
               />
             </Link>

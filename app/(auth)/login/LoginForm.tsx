@@ -42,7 +42,10 @@ export default function LoginForm(props: Props) {
 
   return (
     <div className="max-w-sm mx-auto">
-      <form onSubmit={async (event) => await handleLogin(event)}>
+      <form
+        className="py-8"
+        onSubmit={async (event) => await handleLogin(event)}
+      >
         <div className="mb-5">
           <label
             htmlFor="username"

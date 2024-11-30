@@ -94,7 +94,7 @@ export default function ProductFormApi(props: Props) {
           />
         </label>
 
-        <label>
+        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
           Select Image:
           <input
             value={imageUrl}

@@ -35,7 +35,7 @@ export default async function SellerProductsPage() {
   return (
     <main className="flex-grow  w-full max-w-full md:px-20 py-12">
       <h1 className="mb-4 text-4xl text-center">My Products</h1>
-      <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+      <section className=" py-8 antialiased dark:bg-gray-900 md:py-16">
         <div className="mx-auto max-w-screen-md px-4 2xl:px-0">
           <Link
             href={`/profile/${user.username}/business/new-product`}

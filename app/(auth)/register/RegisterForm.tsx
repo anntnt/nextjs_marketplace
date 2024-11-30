@@ -69,7 +69,10 @@ export default function RegisterForm(props: Props) {
 
   return (
     <div className="max-w-sm mx-auto">
-      <form onSubmit={async (event) => await handleRegister(event)}>
+      <form
+        onSubmit={async (event) => await handleRegister(event)}
+        className="py-8"
+      >
         <div className="mb-5">
           <label
             htmlFor="username"
