@@ -2,7 +2,7 @@
 
 The marketplace eStores is a project which I used Next.js to build a full-stack web application.
 
-![alt text](/images/eStores.jpg)
+![alt text](./public/images/eStores.jpg)
 
 ## Technologies
 
