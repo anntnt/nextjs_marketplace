@@ -195,7 +195,7 @@ const products = [
   {
     id: 20,
     name: 'Christmas wreath',
-    price: 36,
+    price: 39,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/t_category/v1732740976/xmas_wreath_36_xa98c5.jpg',
     description: 'Christmas wreath',

@@ -1,15 +1,20 @@
 # Next.js Ecommerce Store
 
-The Ecommerce Store Tropical Snacks is a project which I used Next.js to build a full-stack web application.
+The marketplace eStores is a project which I used Next.js to build a full-stack web application.
 
 ![alt text](./public/products.jpg)
 
 ## Technologies
 
 - Next.js
+- Typescript
+- DrawSQL
 - Postgres.js
-- Jest
-- Playwright
+- REST API
+- Zod authentication
+- Tailwind CSS & Flowbite UI
+- Cloudinary
+- Stripe
 
 ## Database Setup
 
@@ -79,20 +84,6 @@ psql -U <user name> <database name>
 
 ```bash
 sudo -u <user name> psql -U <user name> <database name>
-```
-
-## Run Tests
-
-### Jest
-
-```bash
-pnpm jest
-```
-
-### Playwright
-
-```bash
-pnpm playwright test
 ```
 
 ## Deployment
