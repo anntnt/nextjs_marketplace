@@ -68,7 +68,7 @@ export async function POST(
   if (!newCartProduct) {
     return NextResponse.json(
       {
-        error: 'cartProduct not created or access denied creating cart product',
+        error: 'Please log in to your account',
       },
       {
         status: 400,
