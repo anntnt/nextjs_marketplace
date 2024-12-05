@@ -20,8 +20,8 @@ export default function Page() {
           </p>
           <p className="py-8   text-red-600   ">
             <i>
-              Note: This website is a project created solely for study and
-              educational purposes. It is not an actual marketplace.
+              Note: This website is a project created solely for study purposes.
+              It is not an actual marketplace.
             </i>
           </p>
           <p className=" ">

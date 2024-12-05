@@ -118,7 +118,7 @@ export default async function UserProfilePage() {
                 <>
                   {' '}
                   <Link
-                    href="/"
+                    href={`/profile/${user.username}/orders`}
                     className="inline-flex items-center px-5 py-2 text-md font-medium text-gray-900 bg-white border border-blue-1000 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
                   >
                     <svg
