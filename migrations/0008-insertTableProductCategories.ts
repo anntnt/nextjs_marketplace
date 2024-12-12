@@ -4,98 +4,98 @@ const productCategories = [
   {
     id: 1,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732739733/xmas_decoration_category_nkfqwq.png',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_wreath_36_xa98c5_c_fill_w_710_h_448_g_auto_ssoz4b.jpg',
     name: 'Christmas Decorations',
   },
 
   {
     id: 2,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732789133/santa-claus-2927962_1280_glsv8g.png',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017899/category_xmas_gift_muekuz.png',
     name: 'Christmas Gifts Ideas',
   },
   {
     id: 3,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732739731/category_fashion_sj9pbp.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017905/category_fashion_sj9pbp_c_fill_w_710_h_448_g_auto_cmcp0m.jpg',
     name: 'Fashion',
   },
   {
     id: 4,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732739727/cetegory_cosmetic_tg6v6p.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017897/cetegory_cosmetic_tg6v6p_ktjbhk.jpg',
     name: 'Cosmetics',
   },
   {
     id: 5,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732739728/category_electronics_ler1s4.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017918/category_electronics_ler1s4_zpkabm.jpg',
     name: 'Electronics',
   },
   {
     id: 6,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732739733/category_tv_obnljr.webp',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017908/category_tv_obnljr_c_fill_w_710_h_448_g_auto_l08ue7.webp',
     name: 'TV & Cameras',
   },
   {
     id: 7,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732739729/category_Clocks_Jewelry_n86kn9.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017900/category_Clocks_Jewelry_n86kn9_tm04wt.jpg',
     name: 'Clocks & Jewelry',
   },
   {
     id: 8,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732739730/category_Sport_Sports_equipment_fasc9n.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017906/category_Sport_Sports_equipment_fasc9n_c_fill_w_710_h_448_g_auto_zcfdl5.jpg',
     name: 'Sports Equipment',
   },
   {
     id: 9,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732739733/category_snack_ko9frd.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017904/category_snack_ko9frd_c_fill_w_710_h_448_g_auto_qt1zkx.jpg',
     name: 'Snacks',
   },
   {
     id: 10,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732739728/category_home_kitchen_yddutj.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017910/category_home_kitchen_yddutj_mpgd34.jpg',
     name: 'Home & Kitchen',
   },
   {
     id: 11,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732739730/category_pets_pet_supplies_y1lpea.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017902/category_pets_pet_supplies_y1lpea_adhkpq.jpg',
     name: 'Pets & Pet Supplies',
   },
   {
     id: 12,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732739728/category_wellness_ig2oox.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017912/category_wellness_jw5rge.jpg',
     name: 'Wellness',
   },
   {
     id: 13,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732739733/category_dandicraft_hpyyah.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017907/category_handicraft_hpyyah_kyyfct.jpg',
     name: 'Handicrafts',
   },
   {
     id: 14,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732739728/category_books_pftzhr.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017898/category_books_pftzhr_c_fill_w_710_h_448_g_auto_abuzji.jpg',
     name: 'Books',
   },
   {
     id: 15,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732739729/category_art_mbzekw.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017915/category_art_mbzekw_c_fill_w_710_h_448_g_auto_hwqzge.jpg',
     name: 'Art',
   },
   {
     id: 16,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732739729/category_garden_equipment_iynk1z.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017901/category_garden_equipment_iynk1z_e7l85s.jpg',
     name: 'Garden Equipments',
   },
 ];

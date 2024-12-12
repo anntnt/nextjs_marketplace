@@ -7,6 +7,7 @@ const products = [
     price: 13,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_balls_13_wc6vaz_c_fill_w_710_h_448_dxz0qd.jpg',
+    description: 'Christmas tree hanging ornaments',
     seller_id: 3,
     category_id: 1,
   },
@@ -96,7 +97,7 @@ const products = [
     name: 'Macarons',
     price: 12,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742164/macarons_13_trtxy2.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016818/macarons_13_trtxy2_yhjsja.jpg',
     description: 'Macarons',
     seller_id: 1,
     category_id: 9,
@@ -106,7 +107,7 @@ const products = [
     name: 'Berry Mix',
     price: 14,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742160/berries_14_eoj7dj.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016817/berries_14_eoj7dj_xw16b6.jpg',
     seller_id: 1,
     description: 'Berry Mix',
     category_id: 9,
@@ -116,7 +117,7 @@ const products = [
     name: 'Donuts',
     price: 11,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742158/donuts_11_2_bfsohy.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016817/donuts_11_2_bfsohy_yhjfir.jpg',
     description: 'Donuts',
     seller_id: 1,
     category_id: 9,
@@ -126,7 +127,7 @@ const products = [
     name: 'Pancakes',
     price: 9,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742161/pancakes_9_pq7no0.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016818/pancakes_9_pq7no0_rxftu1.jpg',
     description: 'Pancakes',
     seller_id: 1,
     category_id: 9,
@@ -136,7 +137,7 @@ const products = [
     name: 'Christmas tree',
     price: 29,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732740970/xmas_tree_29_tzfayw.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016912/xmas_tree_29_tzfayw_ilngud.jpg',
     description: 'Christmas tree',
     seller_id: 3,
     category_id: 1,
@@ -146,7 +147,7 @@ const products = [
     name: 'Christmas decoration set',
     price: 36,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/t_category/v1732740976/xmas_wreath_36_xa98c5.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_wreath_36_xa98c5_c_fill_w_710_h_448_g_auto_ssoz4b.jpg',
     description: 'Christmas decoration set',
     seller_id: 3,
     category_id: 1,
@@ -156,7 +157,7 @@ const products = [
     name: 'Mini Santa',
     price: 17,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732740973/santa_27_ocxhfb.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/santa_27_ocxhfb_c_fill_w_710_h_448_jc4inf.jpg',
     description: 'Mini Santa',
     seller_id: 1,
     category_id: 1,
@@ -166,7 +167,7 @@ const products = [
     name: 'Cupcakes',
     price: 21,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732742156/cupcakes_21_n2ijnf.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017033/cupcakes_21_n2ijnf_npygpa.jpg',
     description: 'Cupcakes',
     seller_id: 1,
     category_id: 9,
@@ -176,7 +177,7 @@ const products = [
     name: 'Smartphone',
     price: 449,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732788294/mobile-phone_v586rg.png',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017095/mobile-phone_v586rg_xc7fgo.png',
     description: 'Smartphone',
     seller_id: 1,
     category_id: 5,
@@ -186,7 +187,7 @@ const products = [
     name: 'Wireless Power Bank',
     price: 21,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732735928/Power_Bank_Wireless_21_v5mgda.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017111/Power_Bank_Wireless_21_v5mgda_ytjjdi.jpg',
     description: 'Wireless Power Bank',
     seller_id: 1,
     category_id: 2,
@@ -196,7 +197,7 @@ const products = [
     name: 'Christmas wreath',
     price: 39,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/t_category/v1732740976/xmas_wreath_36_xa98c5.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017148/xmas_wreath_31_fwuc4d_vjaws7.jpg',
     description: 'Christmas wreath',
     seller_id: 3,
     category_id: 1,
@@ -206,7 +207,7 @@ const products = [
     name: 'Bluetooth speaker',
     price: 52,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732789132/Bluetooth_speaker-52_o3r58r.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017095/mobile-phone_v586rg_xc7fgo.png',
     description: 'Bluetooth speaker',
     seller_id: 1,
     category_id: 2,
@@ -216,7 +217,7 @@ const products = [
     name: 'Lipstick',
     price: 22,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732788294/lipsticks-5893481_1280_wzq6qk.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017233/lipsticks-5893481_1280_wzq6qk_sc8oi6.jpg',
     description: 'Lipstick',
     seller_id: 1,
     category_id: 2,
@@ -226,7 +227,7 @@ const products = [
     name: 'Doll ​house',
     price: 49,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732788294/toy_hk5kt9.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017262/toy_hk5kt9_hymzz0.jpg',
     description: 'Doll ​house',
     seller_id: 1,
     category_id: 2,
