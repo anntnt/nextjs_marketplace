@@ -9,11 +9,32 @@ export default function Home() {
           <h1 className="text-center mb-4 text-4xl font-semibold tracking-tight leading-none text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
             Welcome to eStores!
           </h1>
-          <div className="py-8  text-2xl font-semibold text-red-600  sm:px-16 xl:px-48 dark:text-gray-400">
-            We’re fixing an issue with images on the site. Please check back
-            soon.
-            <br />
-            Thank you for your patience!
+
+          <div className="py-4   text-xl text-center font-normal   sm:px-16 xl:px-48 dark:text-gray-400">
+            <Link href="/marketplace">
+              <span className="py-8 text-blue-1000 hover:text-blue-1000">
+                Start shopping now and find your next favorite item!
+              </span>
+            </Link>{' '}
+          </div>
+          <div
+            className="py-8
+           flex justify-center mb-4  font-semibold tracking-tight leading-none text-gray-900 dark:text-white"
+          >
+            <figure className="max-w-2xl rounded-lg border hover:border-black hover:shadow-lg border-gray-200  bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+              <Link
+                href="/marketplace"
+                className="hover:border-black hover:shadow-lg"
+              >
+                <Image
+                  className="h-auto max-w-full rounded-lg hover:border-black hover:shadow-lg"
+                  src="/images/ecommerce.jpg"
+                  alt="e-commerce"
+                  width={1023}
+                  height={682}
+                />
+              </Link>
+            </figure>
           </div>
 
           <div className="py-8  text-xl font-normal text-red-600  sm:px-16 xl:px-48 dark:text-gray-400">
