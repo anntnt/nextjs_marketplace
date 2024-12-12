@@ -6,8 +6,7 @@ const products = [
     name: 'Christmas tree hanging ornaments',
     price: 13,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732740978/Christmas_Tree_Hanging_Ornaments_13_dzzntk.jpg',
-    description: 'Christmas tree hanging ornaments',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_balls_13_wc6vaz_c_fill_w_710_h_448_dxz0qd.jpg',
     seller_id: 3,
     category_id: 1,
   },
@@ -16,18 +15,18 @@ const products = [
     name: 'Christmas tree hanging ornaments',
     price: 15,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732740969/Christmas_Tree_Hanging_Ornaments_15_f20qa5.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_balls_9_ze7l6a_c_fill_w_710_h_448_g_auto_psiaph.jpg',
     description: 'Christmas tree hanging ornaments',
     seller_id: 3,
     category_id: 1,
   },
   {
     id: 3,
-    name: 'Christmas balls',
+    name: 'Christmas decoration',
     price: 9,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732740968/xmas_balls_9_ze7l6a.jpg',
-    description: 'Christmas balls',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_decor_14_mlrtnx_z61afa.jpg',
+    description: 'Christmas decoration',
     seller_id: 3,
     category_id: 1,
   },
@@ -36,7 +35,7 @@ const products = [
     name: 'Christmas House',
     price: 27,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732740967/xmas_house_27_uvfekj.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005663/xmas_house_27_uvfekj_zhhzx8.jpg',
     description:
       'This cozy Christmas house features a welcoming porch adorned with festive lights and holiday decorations, creating a warm, inviting atmosphere. Perfect for adding a touch of holiday cheer to any space, this charming scene embodies the spirit of Christmas and is ideal for gift-giving or seasonal decor.',
     seller_id: 3,
@@ -44,11 +43,11 @@ const products = [
   },
   {
     id: 5,
-    name: 'Christmas balls',
-    price: 6,
+    name: 'Christmas decoration',
+    price: 16,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732740969/xmas_balls_6_p5pesj.jpg',
-    description: 'Christmas balls',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/santa_27_ocxhfb_c_fill_w_710_h_448_jc4inf.jpg',
+    description: 'Christmas decoration',
     seller_id: 3,
     category_id: 1,
   },
@@ -57,7 +56,7 @@ const products = [
     name: 'Snow globe',
     price: 12,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732740969/xmas_snow_globe_zpqoaw.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_snow_globe_zpqoaw_c_fill_w_710_h_448_wml1hs.jpg',
     description: 'Snow globe',
     seller_id: 3,
     category_id: 1,
@@ -67,7 +66,7 @@ const products = [
     name: 'Jingle Bells',
     price: 25,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_pad,b_gen_fill,w_710,h_448/v1732740969/junlebells_25_aatiuc.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/junlebells_25_aatiuc_awm8ft.jpg',
     description: 'Jingle Bells',
     seller_id: 3,
     category_id: 1,
@@ -77,7 +76,7 @@ const products = [
     name: 'Christmas decoration',
     price: 24,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448,g_auto/v1732740975/xmas_decor_23_ltteve.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005663/xmas_decor_23_2_knxwgg_c_fill_w_710_h_448_g_auto_haupzv.jpg',
     description: 'Christmas decoration',
     seller_id: 3,
     category_id: 1,
@@ -87,7 +86,7 @@ const products = [
     name: 'Christmas tree',
     price: 219,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_710,h_448/v1732740973/xmas_tree_210_bl8six.jpg',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_tree_210_bl8six_c_fill_w_710_h_448_g_auto_t91ca5.jpg',
     description: 'Christmas tree',
     seller_id: 3,
     category_id: 1,
