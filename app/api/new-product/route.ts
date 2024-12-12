@@ -69,7 +69,7 @@ export async function POST(
   } catch (error) {
     console.log('error: ', error);
     return NextResponse.json({
-      error: 'Image upload failed 4',
+      error: 'Image upload failed',
     });
   }
 }

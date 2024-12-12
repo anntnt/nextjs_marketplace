@@ -90,7 +90,6 @@ export default function EditProductQuantitiesForm(props: Props) {
 
           const newQuantity = quantity + 1;
           setQuantity(newQuantity);
-          console.log('quantity + 1:', newQuantity);
           const response = await fetch('/api/cart-items', {
             method: 'PUT',
             body: JSON.stringify({

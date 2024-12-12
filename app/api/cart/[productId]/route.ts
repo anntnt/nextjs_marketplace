@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  type ProductFromCart,
+  type CartProductWithAllFields,
   removeCartProducts,
 } from '../../../../database/cartProducts';
 import { getCookie } from '../../../../util/cookies';
 
 export type CartProductResponseDelete =
   | {
-      product: ProductFromCart;
+      product: CartProductWithAllFields;
     }
   | {
       error: string;
@@ -34,7 +34,6 @@ export async function DELETE(
       Number((await params).productId),
     ));
 
-  console.log('product', product);
   if (!product) {
     return NextResponse.json(
       {
@@ -45,6 +44,5 @@ export async function DELETE(
       },
     );
   }
-
   return NextResponse.json({ product: product });
 }

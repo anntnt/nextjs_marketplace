@@ -116,7 +116,6 @@ export default function CompletePage() {
 
         setStatus(paymentIntent.status);
         setIntentId(paymentIntent.id);
-        console.log(paymentIntent.id);
       } catch (error) {
         console.error('Error retrieving payment intent:', error);
       }
