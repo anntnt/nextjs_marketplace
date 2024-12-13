@@ -7,6 +7,7 @@ import {
   removeCartItems,
   updateCartItem,
 } from '../../../database/cartProducts';
+import { getUser } from '../../../database/users';
 import { getCookie } from '../../../util/cookies';
 
 export type CreateCartProductResponseBodyPost =
@@ -64,6 +65,8 @@ export async function POST(
       result.data.quantity,
     ));
 
+  const user = sessionTokenCookie && (await getUser(sessionTokenCookie));
+
   // 5. If the new CartProduct creation fails, return an error
   if (!newCartProduct) {
     return NextResponse.json(
@@ -74,8 +77,16 @@ export async function POST(
         status: 400,
       },
     );
+  } else if (user && user.roleId === 2) {
+    return NextResponse.json(
+      {
+        error: 'Please log in to your buyer account',
+      },
+      {
+        status: 400,
+      },
+    );
   }
-
   // 6. Return the content of the cart product
   return NextResponse.json({
     cartProduct: { productId: newCartProduct.productId },
