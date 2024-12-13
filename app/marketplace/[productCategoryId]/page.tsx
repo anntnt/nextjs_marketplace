@@ -33,9 +33,16 @@ export default async function SingleCategoryPage(props: Props) {
               Shop by category
             </h2>
           </div>
-          <div className="mb-4 grid gap-8 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-            {products.map((product) => {
-              return (
+
+          {products.length === 0 ? (
+            <div className="mb-4 grid gap-8  md:mb-8 ">
+              <div className="mt-6 text-2xl text-center text-gray-900 dark:text-white">
+                Our products are coming soon!
+              </div>
+            </div>
+          ) : (
+            <div className="mb-4 grid gap-8 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
+              {products.map((product) => (
                 <Card
                   key={`products-${product.id}`}
                   data-test-id={`product-id-${product.id}`}
@@ -51,15 +58,17 @@ export default async function SingleCategoryPage(props: Props) {
                     </Link>
                   )}
                 >
-                  <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                    {product.name}
-                  </h5>
+                  <Link href={`/marketplace/product/${product.id}`}>
+                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                      {product.name}
+                    </h5>
+                  </Link>
 
                   <AddToCartForm product={product} />
                 </Card>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </main>

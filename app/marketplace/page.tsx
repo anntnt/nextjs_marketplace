@@ -22,25 +22,27 @@ export default async function Page() {
           <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {productCategories.map((productCategory) => {
               return (
-                <Card
+                <Link
                   key={`products-${productCategory.id}`}
-                  data-test-id={`product-id-${productCategory.id}`}
-                  className="max-w-sm"
-                  renderImage={() => (
-                    <Link href={`/marketplace/${productCategory.id}`}>
+                  href={`/marketplace/${productCategory.id}`}
+                >
+                  <Card
+                    data-test-id={`product-id-${productCategory.id}`}
+                    className="max-w-sm"
+                    renderImage={() => (
                       <Image
                         width={500}
                         height={500}
                         src={productCategory.imageUrl}
                         alt={`Product ${productCategory.categoryName}`}
                       />
-                    </Link>
-                  )}
-                >
-                  <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                    {productCategory.categoryName}
-                  </h5>
-                </Card>
+                    )}
+                  >
+                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                      {productCategory.categoryName}
+                    </h5>
+                  </Card>
+                </Link>
               );
             })}
           </div>

@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for estores-vienna on 2024-12-12T17:48:41+01:00
+# fly.toml app configuration file generated for estores on 2024-12-12T17:48:41+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'estores-vienna'
-primary_region = 'ams'
+app = 'estores'
+primary_region = 'otp'
 
 [build]
 
@@ -16,9 +16,9 @@ primary_region = 'ams'
   destination = '/postgres-volume'
 
 [http_service]
-  internal_port = 3000
+  internal_port = 8080
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = true
   auto_start_machines = true
 
 [[vm]]
