@@ -62,19 +62,27 @@ export default function StripeComponent() {
     theme: 'stripe',
   };
   return (
-    <div className="grid py-6">
-      {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
-          {confirmed ? <CompletePage /> : <CheckoutForm />}
-        </Elements>
-      )}
-      <div className="mb-5">
-        {errors.map((error) => (
-          <div className="error" key={`error-${error.message}`}>
-            <ErrorMessage>{error.message}</ErrorMessage>
-          </div>
-        ))}
+    <>
+      <div className="font-normal text-center grid py-4 text-red-600 dark:text-gray-400">
+        <i>
+          Use card number <strong>4242 4242 4242 4242</strong> for testing
+        </i>
       </div>
-    </div>
+
+      <div className="grid">
+        {clientSecret && (
+          <Elements options={options} stripe={stripePromise}>
+            {confirmed ? <CompletePage /> : <CheckoutForm />}
+          </Elements>
+        )}
+        <div className="mb-5">
+          {errors.map((error) => (
+            <div className="error" key={`error-${error.message}`}>
+              <ErrorMessage>{error.message}</ErrorMessage>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

@@ -79,7 +79,7 @@ export default function PaymentForm() {
             <div className="flex items-start">
               <div className="flex h-5 items-center">
                 <input
-                  id="paypal-2"
+                  id="paypal"
                   aria-describedby="paypal-text"
                   type="radio"
                   name="payment-method"
@@ -106,8 +106,21 @@ export default function PaymentForm() {
           </div>
         </div>
       </div>
+
       <div className="space-y-4">
         {paymentType === 'credit-card' && <StripeForm />}
+        {paymentType === 'pay-on-delivery' && (
+          <div className="font-normal text-center grid py-4  dark:text-gray-400">
+            {' '}
+            <i>In progress</i>{' '}
+          </div>
+        )}
+        {paymentType === 'paypal' && (
+          <div className="font-normal text-center grid py-4  dark:text-gray-400">
+            {' '}
+            <i>In progress</i>{' '}
+          </div>
+        )}
       </div>
     </div>
   );
