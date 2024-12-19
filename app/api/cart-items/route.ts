@@ -62,7 +62,7 @@ export async function POST(
   if (!newCartProduct) {
     return NextResponse.json(
       {
-        error: 'Please log in to your account',
+        error: 'Please log in to your buyer account',
       },
       {
         status: 400,
