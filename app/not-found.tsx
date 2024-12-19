@@ -5,15 +5,14 @@ export const metadata = {
   description: 'This page was not found',
 };
 export default function RootNotFound() {
-  // You can add any UI inside RootNotFound, including Animations.
   return (
     <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-20 py-12">
-    <div>
-      Sorry this page was not found make sure you visit a page that exists
       <div>
-        <Link href="/">Return Home</Link>
+        Sorry this page was not found make sure you visit a page that exists
+        <div>
+          <Link href="/">Return Home</Link>
+        </div>
       </div>
-    </div>
     </main>
   );
 }

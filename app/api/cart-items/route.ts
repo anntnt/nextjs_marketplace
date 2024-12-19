@@ -45,15 +45,6 @@ export async function POST(
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
 
-  /* if (!sessionTokenCookie) {
-    redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
-    return NextResponse.json(
-      { error: '307' },
-      {
-        status: 307,
-      },
-    );
-  }*/
   /* Assume that user logged in and click the button 'Add to cart' */
 
   // 4. Create the new cart product
@@ -127,15 +118,6 @@ export async function PUT(
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
 
-  /* if (!sessionTokenCookie) {
-    redirect(`/login?returnTo=/marketplace/product/${result.data.productId}`);
-    return NextResponse.json(
-      { error: '307' },
-      {
-        status: 307,
-      },
-    );
-  }*/
   /* Assume that user logged in and click the button 'Add to cart' */
 
   // 4. Create the new cart product

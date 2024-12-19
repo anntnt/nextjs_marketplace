@@ -21,7 +21,7 @@ type Props = {
   children: ReactNode;
 };
 export default async function RootLayout({ children }: Props) {
-  // Task: Display the logged in user's username in the navigation bar and hide the login and register links depending on whether the user is logged in or not
+  // Display the logged in user's username in the navigation bar and hide the login and register links depending on whether the user is logged in or not
   // 1. Checking if the sessionToken cookie exists
   const sessionTokenCookie = (await cookies()).get('sessionToken');
 
@@ -40,12 +40,7 @@ export default async function RootLayout({ children }: Props) {
       <body className={inter.className}>
         <div className="flex flex-col h-screen bg-gray-50  antialiased dark:bg-gray-900">
           <Header user={user} cartSum={cartSum} />
-          {/* flex flex-col min-h-screen on the outer div makes the layout stretch to fill the viewport. */}
 
-          {/* Main Content */}
-          {/* flex-grow allows it to expand and take up any available space between the header */}
-
-          {/* Page content goes here */}
           {children}
 
           <Footer />

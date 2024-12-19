@@ -47,8 +47,6 @@ export default function EditProductQuantitiesForm(props: Props) {
               await response.json();
 
             if ('error' in responseBody) {
-              // TODO: Use toast instead of showing
-              // this below creation / update form
               setErrorMessage(responseBody.error);
               return;
             }

@@ -101,24 +101,13 @@ export async function POST(
     );
   }
 
-  // 7. Send the new cookie in the headers
-  // (await cookies()).set({
-  //   name: 'sessionToken',
-  //   value: session.token,
-  //   httpOnly: true,
-  //   path: '/',
-  //   sameSite: 'lax',
-  //   secure: process.env.NODE_ENV === 'production',
-  //   maxAge: 60 * 60 * 24, // This expires in 24 hours
-  // });
-
   (await cookies()).set({
     name: 'sessionToken',
     value: session.token,
     ...secureCookieOptions,
   });
 
-  // 8. Return the new user information without the password hash
+  // 7. Return the new user information without the password hash
 
   return NextResponse.json({
     user: {

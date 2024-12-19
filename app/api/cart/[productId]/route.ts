@@ -22,11 +22,11 @@ export async function DELETE(
   request: NextRequest,
   { params }: CartProductParams,
 ): Promise<NextResponse<CartProductResponseDelete>> {
-  // 3. Get the token from the cookie
+  // Get the token from the cookie
 
   const sessionTokenCookie = await getCookie('sessionToken');
 
-  // 4. Remove product
+  // Remove product
   const product =
     sessionTokenCookie &&
     (await removeCartProducts(

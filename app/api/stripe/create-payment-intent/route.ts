@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
-// This is your test secret API key.
+// This is test secret API key.
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);

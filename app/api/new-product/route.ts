@@ -18,8 +18,6 @@ export type ProductCreatePost =
 export async function POST(
   request: NextRequest,
 ): Promise<NextResponse<ProductCreatePost>> {
-  // 3. Get the token from the cookie
-
   try {
     const formData = await request.formData();
 

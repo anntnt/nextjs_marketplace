@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -38,16 +37,11 @@ export default function RemoveCartProductButton(props: Props) {
             newErrorMessage = responseBody.error;
           }
 
-          // TODO: Use toast instead of showing
-          // this below creation / update form
           setErrorMessage(newErrorMessage);
           return;
         }
 
         router.refresh();
-
-        // Reset form states if deleting an
-        // animal after editing it
       }}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {

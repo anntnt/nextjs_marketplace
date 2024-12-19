@@ -19,8 +19,6 @@ export type ProductEditPut =
 export async function PUT(
   request: NextRequest,
 ): Promise<NextResponse<ProductEditPut>> {
-  // 3. Get the token from the cookie
-
   try {
     const formData = await request.formData();
 

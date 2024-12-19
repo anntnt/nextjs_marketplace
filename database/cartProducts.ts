@@ -3,7 +3,7 @@ import { z } from 'zod';
 import type { Session } from '../migrations/0010-createTableSessions';
 import { sql } from './connect';
 
-// ype of cart products in database
+// Type of cart products in database
 export type ProductFromCart = {
   id: number;
   name: string;

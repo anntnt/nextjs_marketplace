@@ -7,8 +7,9 @@ The marketplace eStores is a project which I used Next.js to build a full-stack 
 ## Technologies
 
 - Next.js
+- React
 - Typescript
-- DrawSQL
+- Node.js
 - PostgreSQL
 - REST API
 - Zod authentication

@@ -39,9 +39,6 @@ export default function ButtonRemoveForm(props: Props) {
         }
 
         router.refresh();
-
-        // Reset form states if deleting an
-        // animal after editing it
       }}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {

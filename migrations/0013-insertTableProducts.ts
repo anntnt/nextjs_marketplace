@@ -207,7 +207,7 @@ const products = [
     name: 'Bluetooth speaker',
     price: 52,
     image_url:
-      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017095/mobile-phone_v586rg_xc7fgo.png',
+      'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017196/Bluetooth_speaker-52_o3r58r_c_pad_b_gen_fill_w_710_h_448_pyffk8.jpg',
     description: 'Bluetooth speaker',
     seller_id: 1,
     category_id: 2,

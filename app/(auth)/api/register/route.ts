@@ -8,14 +8,14 @@ import {
   getUserInsecure,
 } from '../../../../database/users';
 import {
-  type User,
+  type UserLogin,
   userSchema,
 } from '../../../../migrations/0001-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 
 export type RegisterResponseBody =
   | {
-      user: User;
+      user: { username: UserLogin['username'] };
     }
   | {
       errors: { message: string }[];
@@ -114,23 +114,16 @@ export async function POST(
     );
   }
 
-  // 8. Send the new cookie in the headers
-  // (await cookies()).set({
-  //   name: 'sessionToken',
-  //   value: session.token,
-  //   httpOnly: true,
-  //   path: '/',
-  //   sameSite: 'lax',
-  //   secure: process.env.NODE_ENV === 'production',
-  //   maxAge: 60 * 60 * 24, // This expires in 24 hours
-  // });
-
   (await cookies()).set({
     name: 'sessionToken',
     value: session.token,
     ...secureCookieOptions,
   });
 
-  // 9. Return the new user information
-  return NextResponse.json({ user: newUser });
+  // 8. Return the new user information
+  return NextResponse.json({
+    user: {
+      username: newUser.username,
+    },
+  });
 }

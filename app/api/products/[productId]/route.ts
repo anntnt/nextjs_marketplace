@@ -19,12 +19,10 @@ export async function DELETE(
   request: NextRequest,
   { params }: ProductParams,
 ): Promise<NextResponse<ProductResponseDelete>> {
-  // 3. Get the token from the cookie
-
+  // Get the token from the cookie
   const sessionTokenCookie = await getCookie('sessionToken');
 
-  // 4. Remove product
-
+  // Remove product
   const product =
     sessionTokenCookie &&
     (await removeProduct(sessionTokenCookie, Number((await params).productId)));
