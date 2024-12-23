@@ -59,16 +59,7 @@ export async function POST(
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie));
 
   // 5. If the new CartProduct creation fails, return an error
-  if (!newCartProduct) {
-    return NextResponse.json(
-      {
-        error: 'Please log in to your buyer account',
-      },
-      {
-        status: 400,
-      },
-    );
-  } else if (user && user.roleId === 2) {
+  if (!newCartProduct || (user && user.roleId === 2)) {
     return NextResponse.json(
       {
         error: 'Please log in to your buyer account',
@@ -80,7 +71,7 @@ export async function POST(
   }
   // 6. Return the content of the cart product
   return NextResponse.json({
-    cartProduct: { productId: newCartProduct.productId },
+    cartProduct: { productId: newCartProduct?.productId },
   });
 }
 export type CreateCartProductResponseBodyPut =
