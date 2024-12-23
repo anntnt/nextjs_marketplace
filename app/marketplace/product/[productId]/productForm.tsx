@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { BsCart4 } from 'react-icons/bs';
 import type { CreateCartProductResponseBodyPost } from '../../../api/cart-items/route';
@@ -13,6 +14,7 @@ export default function ProductForm(props: Props) {
   const [quantity, setQuantity] = useState(1);
   const [errorMessage, setErrorMessage] = useState('');
   const productId = props.productId;
+  const router = useRouter();
 
   return (
     <div>
@@ -67,6 +69,7 @@ export default function ProductForm(props: Props) {
                 return;
               }
             }
+            router.refresh();
           }}
         >
           <div className="flex items-center justify-between md:order-3 md:justify-end flex-wrap gap-4">
