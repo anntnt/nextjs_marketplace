@@ -1,7 +1,9 @@
+import { cookies } from 'next/headers';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { getCategoryProductWithSellerInsecure } from '../../../../database/products';
+import { getUser } from '../../../../database/users';
 import ProductForm from './productForm';
 
 type Props = {
@@ -12,6 +14,11 @@ type Props = {
 
 export default async function SingleProductPage(props: Props) {
   const productId = Number((await props.params).productId);
+  // 1. Check if the sessionToken cookie exists
+  const sessionTokenCookie = (await cookies()).get('sessionToken');
+
+  // 2. Query the current user with the sessionToken
+  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
 
   const product = await getCategoryProductWithSellerInsecure(productId);
   if (!product) {
@@ -50,8 +57,9 @@ export default async function SingleProductPage(props: Props) {
                   € {product.price}
                 </p>
               </div>
-
-              <ProductForm productId={productId} />
+              {!user || ( user.roleId !== 2) ? (
+                <ProductForm productId={productId} />
+              ) : null}
 
               <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 

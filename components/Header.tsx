@@ -5,6 +5,7 @@ import { useState } from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
 import Cart from './Cart';
+import Search from './Search';
 
 type UserWithUsernameAndRole = User & {
   username: string;
@@ -101,12 +102,7 @@ export default function Component(props: UserProps) {
           {/* Right Side - Search Box, Cart, Login/Register */}
           <div className="flex items-center space-x-5 sm:space-x-4 xl:space-x-4 2xl:space-x-10 ">
             {/* Search Box */}
-            <div className="relative">
-              <input
-                className="px-2 sm:px-4 py-2 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-white dark:border-gray-600 "
-                placeholder="Search..."
-              />
-            </div>
+            <Search placeholder="Search..." />
             {/* only display cart icon when user role is buyer */}
             {props.user && props.user.roleId === 3 ? (
               <Cart cartSum={props.cartSum} />

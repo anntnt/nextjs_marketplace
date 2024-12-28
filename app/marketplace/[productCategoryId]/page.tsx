@@ -1,9 +1,11 @@
 import { Card } from 'flowbite-react';
+import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getCategoryNameInsecure } from '../../../database/productCategories';
 import { getCategoryProductsInsecure } from '../../../database/products';
+import { getUser } from '../../../database/users';
 import AddToCartForm from './addToCartForm';
 
 type Props = {
@@ -16,6 +18,12 @@ export default async function SingleCategoryPage(props: Props) {
   const categoryId = Number((await props.params).productCategoryId);
   const categoryNameObj = await getCategoryNameInsecure(categoryId);
   const products = await getCategoryProductsInsecure(categoryId);
+
+  // 1. Check if the sessionToken cookie exists
+  const sessionTokenCookie = (await cookies()).get('sessionToken');
+
+  // 2. Query the current user with the sessionToken
+  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
 
   if (!categoryNameObj) {
     return notFound();
@@ -64,7 +72,9 @@ export default async function SingleCategoryPage(props: Props) {
                     </h5>
                   </Link>
 
-                  <AddToCartForm product={product} />
+                  {!user || user.roleId !== 2 ? (
+                    <AddToCartForm product={product} />
+                  ) : null}
                 </Card>
               ))}
             </div>
