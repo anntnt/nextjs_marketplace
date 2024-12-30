@@ -15,7 +15,6 @@ type Props = {
 
 export default async function Page(props: Props) {
   const query = String((await props.searchParams).query);
-  console.log('query:', query);
 
   const products =
     query && query !== 'undefined' && (await getSearchProductsInsecure(query));

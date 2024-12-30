@@ -1,23 +1,18 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
+import { getSafeReturnToPath } from '../util/validation';
 
 export default function Search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const router = useRouter();
 
   const handleSearch = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(searchParams);
-    // params.set('page', '1');
-    if (term) {
-      params.set('query', term);
-    } else {
-      params.delete('query');
-    }
+    router.push(`/search?query=${term}`);
 
-    // Use 'as any' to bypass TypeScript's strict check
-    replace(`${pathname}?${params.toString()}` as any);
+    router.refresh();
   }, 300);
 
   return (
