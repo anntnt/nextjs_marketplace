@@ -12,7 +12,12 @@ export const getSearchProductsInsecure = cache(async (query: string) => {
     FROM
       products
     WHERE
-      name LIKE ${searchString}
+      lower(name) LIKE lower(
+        ${searchString}
+      )
+      OR lower(description) LIKE lower(
+        ${searchString}
+      )
   `;
   return products;
 });
