@@ -9,12 +9,19 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
+    // params.set('page', '1');
     if (term) {
       params.set('query', term);
     } else {
       params.delete('query');
     }
-    replace(`${pathname}?${params.toString()}`);
+    // Use the URL constructor to safely construct the full URL
+    // const newUrl = new URL(pathname, window.location.origin);
+    // newUrl.search = params.toString();
+
+    // replace(newUrl.toString() as any); // Use 'as any' to bypass TypeScript's strict check
+    replace(`${pathname}?${params.toString()}` as any);
+    // console.log('newUrl:', newUrl);
   }, 300);
 
   return (
@@ -25,6 +32,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
+        defaultValue={searchParams.get('query')?.toString()}
       />
     </div>
   );
