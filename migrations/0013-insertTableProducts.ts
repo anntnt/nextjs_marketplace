@@ -224,11 +224,11 @@ const products = [
   },
   {
     id: 23,
-    name: 'Doll ​house',
+    name: 'Doll house',
     price: 49,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017262/toy_hk5kt9_hymzz0.jpg',
-    description: 'Doll ​house',
+    description: 'Doll house',
     seller_id: 1,
     category_id: 2,
   },

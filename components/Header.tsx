@@ -102,7 +102,7 @@ export default function Component(props: UserProps) {
           {/* Right Side - Search Box, Cart, Login/Register */}
           <div className="flex items-center space-x-5 sm:space-x-4 xl:space-x-4 2xl:space-x-10 ">
             {/* Search Box */}
-            <Search placeholder="Search..." />
+            <Search placeholder="Search products" />
             {/* only display cart icon when user role is buyer */}
             {props.user && props.user.roleId === 3 ? (
               <Cart cartSum={props.cartSum} />
