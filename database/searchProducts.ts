@@ -5,10 +5,10 @@ import { sql } from './connect';
 import type { Product } from './products';
 
 export const getSearchProductsInsecure = cache(async (query: string) => {
-  const searchString1 = `% ${query.toLowerCase()} %`;
-  const searchString2 = `${query.toLowerCase()} %`;
-  const searchString3 = `% ${query.toLowerCase()}`;
-  const searchString4 = `${query.toLowerCase()}`;
+  const searchString1 = `% ${query} %`;
+  const searchString2 = `${query} %`;
+  const searchString3 = `% ${query}`;
+  const searchString4 = `${query}`;
 
   const products = await sql<Product[]>`
     SELECT
@@ -16,14 +16,14 @@ export const getSearchProductsInsecure = cache(async (query: string) => {
     FROM
       products
     WHERE
-      lower(name) LIKE ${searchString1}
-      OR lower(name) LIKE ${searchString2}
-      OR lower(name) LIKE ${searchString3}
-      OR lower(name) LIKE ${searchString4}
-      OR lower(description) LIKE ${searchString1}
-      OR lower(description) LIKE ${searchString2}
-      OR lower(description) LIKE ${searchString3}
-      OR lower(description) LIKE ${searchString4}
+      name ILIKE ${searchString1}
+      OR name ILIKE ${searchString2}
+      OR name ILIKE ${searchString3}
+      OR name ILIKE ${searchString4}
+      OR description ILIKE ${searchString1}
+      OR description ILIKE ${searchString2}
+      OR description ILIKE ${searchString3}
+      OR description ILIKE ${searchString4}
   `;
   return products;
 });

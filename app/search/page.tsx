@@ -25,10 +25,6 @@ export default async function Page(props: Props) {
   // 2. Query the current user with the sessionToken
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
 
-  if (!products) {
-    return notFound();
-  }
-
   return (
     <>
       {query && query !== 'undefined' && products.length === 0 ? (
@@ -40,7 +36,7 @@ export default async function Page(props: Props) {
             <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
               <div className="mb-4 grid gap-8  md:mb-8 ">
                 <div className="mt-6 text-2xl text-center text-gray-900 dark:text-white">
-                  Unfortunately, your search for "{query}" didn’t return any
+                  Unfortunately, your search for "{query}" didn't return any
                   results. Try again with a different term
                 </div>
               </div>
