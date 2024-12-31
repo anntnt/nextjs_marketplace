@@ -1,6 +1,6 @@
 # Next.js Ecommerce Store
 
-The marketplace eStores is a project which I used Next.js to build a full-stack web application.
+The Marketplace eStores is a project where I used Next.js to build a full-stack web application.
 
 ![alt text](./public/images/eStores.jpg)
 
@@ -21,7 +21,7 @@ The marketplace eStores is a project which I used Next.js to build a full-stack 
 
 _The instructions will be updated. Please check back later!_
 
-## Database Setup
+### Database Setup
 
 If you don't have PostgreSQL installed yet, follow the instructions from the PostgreSQL step in [UpLeveled's System Setup Instructions](https://github.com/upleveled/system-setup/blob/master/readme.md).
 
@@ -29,7 +29,7 @@ Copy the `.env.example` file to a new file called `.env` (ignored from Git) and 
 
 Then, connect to the built-in `postgres` database as administrator in order to create the database:
 
-### Windows
+#### Windows
 
 If it asks for a password, use `postgres`.
 
@@ -37,13 +37,13 @@ If it asks for a password, use `postgres`.
 psql -U postgres
 ```
 
-### macOS
+#### macOS
 
 ```bash
 psql postgres
 ```
 
-### Linux
+#### Linux
 
 ```bash
 sudo -u postgres psql
