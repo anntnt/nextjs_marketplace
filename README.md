@@ -17,6 +17,10 @@ The marketplace eStores is a project which I used Next.js to build a full-stack 
 - Cloudinary
 - Stripe
 
+## Project Setup
+
+_The instructions will be updated. Please check back later!_
+
 ## Database Setup
 
 If you don't have PostgreSQL installed yet, follow the instructions from the PostgreSQL step in [UpLeveled's System Setup Instructions](https://github.com/upleveled/system-setup/blob/master/readme.md).
