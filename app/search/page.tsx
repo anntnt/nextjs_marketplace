@@ -16,8 +16,7 @@ type Props = {
 export default async function Page(props: Props) {
   const query = String((await props.searchParams).query);
 
-  const products =
-    query && query !== 'undefined' && (await getSearchProductsInsecure(query));
+  const products = await getSearchProductsInsecure(query);
 
   // 1. Check if the sessionToken cookie exists
   const sessionTokenCookie = (await cookies()).get('sessionToken');
@@ -27,7 +26,7 @@ export default async function Page(props: Props) {
 
   return (
     <>
-      {products.length === 0 ? (
+      {!products || products.length === 0 ? (
         <main className="bg-gray-50  antialiased dark:bg-gray-900 px-5 sm:px-20 py-12">
           <h1 className="mb-4 text-4xl text-center">
             Your search for: "{query}"

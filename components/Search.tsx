@@ -13,7 +13,6 @@ export default function Search({ placeholder }: { placeholder: string }) {
     term = term.trim();
     if (term.length > 0) {
       router.push(`/search?query=${term}`);
-
       router.refresh();
     }
   }, 300);
