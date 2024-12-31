@@ -113,7 +113,7 @@ export default function PaymentForm() {
           <div className="font-normal text-center grid py-4  dark:text-gray-400">
             {' '}
             <i>
-              This page is currently in progress. Please check back later.
+              This payment is currently in progress. Please check back later.
             </i>{' '}
           </div>
         )}
@@ -121,7 +121,7 @@ export default function PaymentForm() {
           <div className="font-normal text-center grid py-4  dark:text-gray-400">
             {' '}
             <i>
-              This page is currently in progress. Please check back later.
+              This payment is currently in progress. Please check back later.
             </i>{' '}
           </div>
         )}
