@@ -112,13 +112,17 @@ export default function PaymentForm() {
         {paymentType === 'pay-on-delivery' && (
           <div className="font-normal text-center grid py-4  dark:text-gray-400">
             {' '}
-            <i>In progress</i>{' '}
+            <i>
+              This page is currently in progress. Please check back later.
+            </i>{' '}
           </div>
         )}
         {paymentType === 'paypal' && (
           <div className="font-normal text-center grid py-4  dark:text-gray-400">
             {' '}
-            <i>In progress</i>{' '}
+            <i>
+              This page is currently in progress. Please check back later.
+            </i>{' '}
           </div>
         )}
       </div>

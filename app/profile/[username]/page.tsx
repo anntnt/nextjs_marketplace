@@ -228,8 +228,8 @@ export default async function UserProfilePage() {
                 </dl>
               </div>
             </div>
-            <button
-              type="button"
+            <Link
+              href="/edit-your-data"
               className="inline-flex  items-center justify-center rounded-lg bg-blue-1000 px-5 py-2.5 text-md font-medium text-white hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-auto"
             >
               <svg
@@ -250,7 +250,7 @@ export default async function UserProfilePage() {
                 />
               </svg>
               Edit your data
-            </button>
+            </Link>
           </div>
         </div>
       </section>

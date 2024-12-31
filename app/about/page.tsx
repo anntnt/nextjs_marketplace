@@ -5,18 +5,13 @@ export const metadata = {
 export default function Page() {
   return (
     <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-5 xl:px-48 sm:px-20 py-12">
-      <h1 className="mb-4 text-4xl text-center">About Us</h1>
+      <h1 className="mb-4 text-4xl text-center">About </h1>
       <section className="py-8 antialiased  md:py-16     text-xl  font-normal   sm:px-16 xl:px-48 dark:text-gray-400">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <p>
             Welcome to eStores, a dynamic online marketplace where buyers and
             sellers connect to exchange a wide variety of products. We aim to
-            provide an easy-to-use platform with secure transactions,
-            user-friendly interfaces, and reliable customer support. Whether
-            you're looking to buy or sell, eStores offers a seamless experience
-            with diverse product listings and tailored features to enhance your
-            shopping journey. Join us today to discover and create new
-            opportunities in the world of e-commerce!
+            provide an easy-to-use platform user-friendly interfaces.
           </p>
           <p className="py-8   text-red-600   ">
             <i>
