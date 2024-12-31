@@ -10,9 +10,12 @@ export default function Search({ placeholder }: { placeholder: string }) {
   const router = useRouter();
 
   const handleSearch = useDebouncedCallback((term: string) => {
-    router.push(`/search?query=${term}`);
+    term = term.trim();
+    if (term.length > 0) {
+      router.push(`/search?query=${term}`);
 
-    router.refresh();
+      router.refresh();
+    }
   }, 300);
 
   return (

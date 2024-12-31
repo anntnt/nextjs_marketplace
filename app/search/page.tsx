@@ -27,7 +27,7 @@ export default async function Page(props: Props) {
 
   return (
     <>
-      {query && query !== 'undefined' && products.length === 0 ? (
+      {products.length === 0 ? (
         <main className="bg-gray-50  antialiased dark:bg-gray-900 px-5 sm:px-20 py-12">
           <h1 className="mb-4 text-4xl text-center">
             Your search for: "{query}"
