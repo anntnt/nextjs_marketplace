@@ -13,6 +13,7 @@ The Marketplace eStores is a project where I used Next.js to build a full-stack 
 - PostgreSQL
 - REST API
 - Zod authentication
+- Cookies
 - Tailwind CSS & Flowbite UI
 - Cloudinary
 - Stripe
