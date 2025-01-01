@@ -1,6 +1,6 @@
 # Next.js Ecommerce Store
 
-The Marketplace eStores is a project where I used Next.js to build a full-stack web application.
+The Marketplace eStores is a project where I used Next.js to build a full-stack web application. The project is still in progress.
 
 ![alt text](./public/images/eStores.jpg)
 
