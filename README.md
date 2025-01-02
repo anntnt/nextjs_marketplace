@@ -2,6 +2,14 @@
 
 The Marketplace eStores is a project where I used Next.js to build a full-stack web application. This project is still in progress and being continuously improved.
 
+- A full-stack marketplace for buying and selling products.
+- Features user authentication and user authorization, product and category listings, product search, shopping cart, checkout, payment gateway, and separate buyer/seller areas.
+- Uses a database to store information and relationships between users, products, categories, sessions, carts, orders, etc., including user-generated content.
+- A REST API for frontend-backend communication.
+- Zod server-side validation of data entered by the user.
+- Cloudinary API for image processing and hosting.
+- Frontend and backend validations for security and data integrity.
+
 ![alt text](./public/images/eStores.jpg)
 
 ## Technologies
