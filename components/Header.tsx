@@ -45,7 +45,7 @@ export default function Component(props: UserProps) {
               <li className="active:text-blue-1000 focus:text-blue-1000">
                 <Link
                   href="/marketplace"
-                  className="text-black dark:text-white hover:text-blue-1000  active:text-blue-1000 active:font-semibold focus:text-blue-1000 focus:font-semibold"
+                  className="font-semibold text-black dark:text-white hover:text-blue-1000  active:text-blue-1000   "
                 >
                   {' '}
                   <span className="active:text-blue-1000 focus:text-blue-1000">
@@ -57,7 +57,7 @@ export default function Component(props: UserProps) {
               <li>
                 <Link
                   href="/about"
-                  className="text-black dark:text-white hover:text-blue-1000"
+                  className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
                 >
                   <span className="active:text-blue-1000 focus:text-blue-1000">
                     About
@@ -69,7 +69,7 @@ export default function Component(props: UserProps) {
                 <li>
                   <Link
                     href="/become-a-seller"
-                    className="text-black dark:text-white hover:text-blue-1000"
+                    className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
                   >
                     Become a Seller
                   </Link>
@@ -78,7 +78,7 @@ export default function Component(props: UserProps) {
                 <li>
                   <Link
                     href={`/profile/${props.user.username}/business`}
-                    className="active:text-blue-1000 focus:text-blue-1000 text-black dark:text-white hover:text-blue-1000"
+                    className="font-semibold active:text-blue-1000 focus:text-blue-1000 text-black dark:text-white hover:text-blue-1000"
                   >
                     <span className=" underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000  active:text-blue-1000 focus:text-blue-1000">
                       My Business
@@ -91,7 +91,7 @@ export default function Component(props: UserProps) {
               <li>
                 <Link
                   href="/support"
-                  className="text-black dark:text-white hover:text-blue-1000"
+                  className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
                 >
                   Support
                 </Link>
@@ -177,7 +177,7 @@ export default function Component(props: UserProps) {
                 <li className="w-full">
                   <Link
                     href="/marketplace"
-                    className="block w-full py-2 text-black dark:text-white"
+                    className="block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000 font-semibold  hover:text-blue-1000  "
                   >
                     Marketplace
                   </Link>
@@ -186,7 +186,7 @@ export default function Component(props: UserProps) {
                 <li className="w-full">
                   <Link
                     href="/about"
-                    className="block w-full py-2 text-black dark:text-white"
+                    className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                   >
                     About
                   </Link>
@@ -194,7 +194,7 @@ export default function Component(props: UserProps) {
                 <li className="w-full">
                   <Link
                     href="/support"
-                    className="block w-full py-2 text-black dark:text-white"
+                    className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                   >
                     Support
                   </Link>
@@ -203,7 +203,7 @@ export default function Component(props: UserProps) {
                   <li className="w-full">
                     <Link
                       href="/become-a-seller"
-                      className="block w-full py-2 text-black dark:text-white"
+                      className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                     >
                       Become a Seller
                     </Link>
@@ -226,7 +226,7 @@ export default function Component(props: UserProps) {
                     <li className="w-full ">
                       <Link
                         href={`/profile/${props.user.username}`}
-                        className="font-semibold"
+                        className="font-semibold text-black dark:text-white hover:text-blue-1000  active:text-blue-1000  focus:text-blue-1000 "
                       >
                         {props.user.firstname}'s Profile
                       </Link>
@@ -242,7 +242,7 @@ export default function Component(props: UserProps) {
                     <li className="w-full">
                       <Link
                         href="/login"
-                        className="font-semibold block w-full py-2 text-black dark:text-white"
+                        className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                       >
                         Login
                       </Link>
@@ -251,7 +251,7 @@ export default function Component(props: UserProps) {
                     <li className="w-full">
                       <Link
                         href="/register"
-                        className="font-semibold block w-full py-2 text-black dark:text-white"
+                        className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                       >
                         Register
                       </Link>
