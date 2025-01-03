@@ -37,6 +37,9 @@ const config = {
         200: '#F1D140',
         300: '#EFB724',
       },
+      orange: {
+        1000: '#f98047',
+      },
     },
   },
   plugins: [flowbitePlugin],

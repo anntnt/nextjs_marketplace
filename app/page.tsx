@@ -21,13 +21,10 @@ export default function Home() {
             className="py-8
            flex justify-center mb-4  font-semibold tracking-tight leading-none text-gray-900 dark:text-white"
           >
-            <figure className="max-w-2xl rounded-lg border hover:border-black hover:shadow-lg border-gray-200  bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-              <Link
-                href="/marketplace"
-                className="hover:border-black hover:shadow-lg"
-              >
+            <figure className="max-w-2xl rounded-lg   bg-white p-4  dark:border-gray-700 dark:bg-gray-800 shadow-xl dark:shadow-gray-800 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800  shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 ">
+              <Link href="/marketplace">
                 <Image
-                  className="h-auto max-w-full rounded-lg hover:border-black hover:shadow-lg"
+                  className="h-auto max-w-full rounded-lg cursor-pointer "
                   src="/images/ecommerce.jpg"
                   alt="e-commerce"
                   width={1023}
