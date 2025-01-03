@@ -49,15 +49,14 @@ export default async function SingleProductPage(props: Props) {
                 {product.name}
               </h1>
               <div className="py-4 text-sm font-semibold   sm:text-md dark:text-white">
-                Visit{' '}
-                <span className="text-green-600">{product.storeName}</span>
+                <span className="text-green-500">{product.storeName}</span>
               </div>
               <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
                 <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
                   € {product.price}
                 </p>
               </div>
-              {!user || ( user.roleId !== 2) ? (
+              {!user || user.roleId !== 2 ? (
                 <ProductForm productId={productId} />
               ) : null}
 
