@@ -45,12 +45,10 @@ export default function Component(props: UserProps) {
               <li className="active:text-blue-1000 focus:text-blue-1000">
                 <Link
                   href="/marketplace"
-                  className="font-semibold text-black dark:text-white hover:text-blue-1000  active:text-blue-1000   "
+                  className="font-semibold text-black dark:text-white hover:text-blue-1000  active:text-blue-1000    focus:text-blue-1000"
                 >
                   {' '}
-                  <span className="active:text-blue-1000 focus:text-blue-1000">
-                    Marketplace
-                  </span>
+                  Marketplace
                 </Link>
               </li>
 
@@ -59,9 +57,7 @@ export default function Component(props: UserProps) {
                   href="/about"
                   className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
                 >
-                  <span className="active:text-blue-1000 focus:text-blue-1000">
-                    About
-                  </span>
+                  About
                 </Link>
               </li>
 
@@ -78,11 +74,9 @@ export default function Component(props: UserProps) {
                 <li>
                   <Link
                     href={`/profile/${props.user.username}/business`}
-                    className="font-semibold active:text-blue-1000 focus:text-blue-1000 text-black dark:text-white hover:text-blue-1000"
+                    className="font-semibold active:text-blue-1000 focus:text-blue-1000 text-black dark:text-white hover:text-blue-1000 underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000   "
                   >
-                    <span className=" underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000  active:text-blue-1000 focus:text-blue-1000">
-                      My Business
-                    </span>
+                    My Business
                   </Link>
                 </li>
               ) : (
@@ -115,10 +109,7 @@ export default function Component(props: UserProps) {
                   href={`/profile/${props.user.username}`}
                   className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 "
                 >
-                  <span className="active:text-blue-1000 focus:text-blue-1000">
-                    {' '}
-                    {props.user.firstname}'s Profile
-                  </span>
+                  {props.user.firstname}'s Profile
                 </Link>
                 <LogoutButton />
               </div>
@@ -127,21 +118,16 @@ export default function Component(props: UserProps) {
                 {/* Login/Register */}
                 <Link
                   href="/login"
-                  className="active:text-blue-1000 focus:text-blue-1000 font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000"
+                  className="active:text-blue-1000 focus:text-blue-1000 font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000 "
                 >
-                  <span className="active:text-blue-1000 focus:text-blue-1000">
-                    Login
-                  </span>
-                  &nbsp; &nbsp;
+                  Login &nbsp; &nbsp;
                 </Link>
 
                 <Link
                   href="/register"
                   className=" active:text-blue-1000 focus:text-blue-1000 font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000"
                 >
-                  <span className="active:text-blue-1000 focus:text-blue-1000">
-                    Register
-                  </span>
+                  Register
                 </Link>
               </>
             )}
