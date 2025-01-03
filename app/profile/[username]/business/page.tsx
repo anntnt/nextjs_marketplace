@@ -67,7 +67,10 @@ export default async function SellerProductsPage() {
                           data-test-id={`seller-product-id-${product.id}`}
                         >
                           <td className="whitespace-nowrap py-2 md:w-[384px]">
-                            <Link href={`/marketplace/product/${product.id}`}>
+                            <Link
+                              href={`/marketplace/product/${product.id}`}
+                              className="hover:underline"
+                            >
                               <div className="flex items-center gap-4">
                                 <div className="flex items-center aspect-square w-75 h-32 shrink-0">
                                   <Image
