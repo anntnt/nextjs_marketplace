@@ -54,7 +54,7 @@ export default async function SingleCategoryPage(props: Props) {
                 <Card
                   key={`products-${product.id}`}
                   data-test-id={`product-id-${product.id}`}
-                  className="max-w-sm"
+                  className="max-w-sm "
                   renderImage={() => (
                     <Link href={`/marketplace/product/${product.id}`}>
                       <Image
@@ -66,7 +66,10 @@ export default async function SingleCategoryPage(props: Props) {
                     </Link>
                   )}
                 >
-                  <Link href={`/marketplace/product/${product.id}`}>
+                  <Link
+                    href={`/marketplace/product/${product.id}`}
+                    className="hover:underline "
+                  >
                     <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                       {product.name}
                     </h5>

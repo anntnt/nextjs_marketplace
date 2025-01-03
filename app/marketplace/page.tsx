@@ -25,6 +25,7 @@ export default async function Page() {
                 <Link
                   key={`products-${productCategory.id}`}
                   href={`/marketplace/${productCategory.id}`}
+                  className="hover:underline "
                 >
                   <Card
                     data-test-id={`product-id-${productCategory.id}`}
