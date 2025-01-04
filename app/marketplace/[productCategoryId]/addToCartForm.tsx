@@ -9,6 +9,7 @@ import ErrorMessage from '../../ErrorMessage';
 
 type Props = {
   product: Product;
+  roleId: number | undefined;
 };
 export default function AddToCartForm(props: Props) {
   const [errorMessage, setErrorMessage] = useState('');
@@ -47,10 +48,12 @@ export default function AddToCartForm(props: Props) {
             router.refresh();
           }}
         >
-          <button className="inline-flex items-center rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300dark:bg-primary-600 ">
-            <BsCart4 size={20} className="mr-3 mb-1" />
-            Add to cart
-          </button>
+          {!props.roleId || props.roleId !== 2 ? (
+            <button className="inline-flex items-center rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300dark:bg-primary-600 ">
+              <BsCart4 size={20} className="mr-3 mb-1" />
+              Add to cart
+            </button>
+          ) : null}
         </form>
       </div>
       <div>

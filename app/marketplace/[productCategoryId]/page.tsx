@@ -75,9 +75,7 @@ export default async function SingleCategoryPage(props: Props) {
                     </h5>
                   </Link>
 
-                  {!user || user.roleId !== 2 ? (
-                    <AddToCartForm product={product} />
-                  ) : null}
+                  <AddToCartForm product={product} roleId={user?.roleId} />
                 </Card>
               ))}
             </div>
