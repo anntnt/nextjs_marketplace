@@ -10,7 +10,17 @@ The Marketplace eStores is a project where I used Next.js to build a full-stack 
 - Cloudinary API for image processing and hosting.
 - Frontend and backend validations for security and data integrity.
 
+### [The marketplace eStores](https://estores.fly.dev/)
+
 ![alt text](./public/images/eStores.jpg)
+
+### [Category listings](https://estores.fly.dev/marketplace)
+
+![alt text](./public/images/marketplace.jpg)
+
+### [Database diagram](https://drawsql.app/teams/myteam-1161/diagrams/estores)
+
+![alt text](./public/images/drawSQl_2.jpg)
 
 ## Technologies
 
