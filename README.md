@@ -47,11 +47,6 @@ cd nextjs_finalproject_marketplace
 pnpm install
 ```
 
-```bash
-! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-9.11.0.tgz
-? Do you want to continue? [Y/n] Y
-```
-
 ### Database Setup
 
 If you don't have PostgreSQL installed yet, follow the instructions from the PostgreSQL step in [UpLeveled's System Setup Instructions](https://github.com/upleveled/system-setup/blob/master/readme.md).
@@ -136,6 +131,10 @@ sudo -u <user name> psql -U <user name> <database name>
 pnpm migrate up
 ```
 
+### Cloudinary and Stripe
+
+You can create an account on Cloudinary and Stripe to obtain the API keys, then set them in the .env file to test the APIs locally.
+
 ### Run the project locally
 
 ```bash
@@ -146,5 +145,3 @@ pnpm run dev
 
 - Fly.io
 - Docker
-
-## Troubleshooting
