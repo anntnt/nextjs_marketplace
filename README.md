@@ -1,14 +1,14 @@
 # Next.js E-Commerce Marketplace
 
-The Marketplace eStores is a project where I used Next.js to build a full-stack web application. This project is still in progress and being continuously improved.
+Marketplace eStores is an ongoing full-stack web application built with Next.js, continuously evolving and improving.
 
-- A full-stack marketplace for buying and selling products.
-- Features user authentication and user authorization, product and category listings, product search, shopping cart, checkout, payment gateway, and separate buyer/seller areas.
-- Uses a database to store information and relationships between users, products, categories, sessions, carts, orders, etc., including user-generated content.
-- A REST API for frontend-backend communication.
-- Zod server-side validation of data entered by the user.
-- Cloudinary API for image processing and hosting.
-- Frontend and backend validations for security and data integrity.
+- A marketplace for buying and selling products.
+- Includes user registration, authentication/authorization, product listings, category management, product search, shopping cart, checkout, payment gateway, and separate buyer/seller dashboards.
+- Utilizes a database to manage user, product, category, session, cart, and order data, including user-generated content.
+- Implements a REST API for seamless frontend-backend communication.
+- Server-side data validation using Zod to ensure input integrity.
+- Integrates Cloudinary for image processing and hosting.
+- Frontend and backend validations for security and data consistency.
 
 ### [The marketplace eStores](https://estores.fly.dev/)
 
@@ -38,15 +38,31 @@ The Marketplace eStores is a project where I used Next.js to build a full-stack 
 
 ## Project Setup
 
-_The instructions will be updated. Please check back later!_
+```bash
+git clone https://github.com/anntnt/nextjs_finalproject_marketplace.git
+cd nextjs_finalproject_marketplace
+pnpm install
+```
+
+```bash
+! Corepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-9.11.0.tgz
+? Do you want to continue? [Y/n] Y
+```
 
 ### Database Setup
 
 If you don't have PostgreSQL installed yet, follow the instructions from the PostgreSQL step in [UpLeveled's System Setup Instructions](https://github.com/upleveled/system-setup/blob/master/readme.md).
 
-Copy the `.env.example` file to a new file called `.env` (ignored from Git) and fill in the necessary information.
+Copy the .env.example file to a new .env file (ignored by Git) and update it with your database information, replacing 'xxxxxx' with your own details:
 
-Then, connect to the built-in `postgres` database as administrator in order to create the database:
+```bash
+PGHOST=localhost
+PGDATABASE=xxxxxx
+PGUSERNAME=xxxxxx
+PGPASSWORD=xxxxxx
+```
+
+Next, connect to the built-in postgres database as an administrator to create the database:
 
 #### Windows
 
@@ -68,7 +84,7 @@ psql postgres
 sudo -u postgres psql
 ```
 
-Once you have connected, run the following to create the database:
+After connecting, run the following command to create the local database using the information from the .env file:
 
 ```sql
 CREATE DATABASE <database name>;
@@ -114,3 +130,24 @@ sudo -u <user name> psql -U <user name> <database name>
 
 - Fly.io
 - Docker
+
+## Troubleshooting
+
+- Error:
+  │ Failed to execute 'C:\Program Files\nodejs\node.exe C:\Users\Admin\AppData\Local\node\corepack\v1\pnpm\9.15.9\dist\node_modules\node-gyp\bin\node-gyp.js build --fallback-to-build --module=C:\Users\Admin\Documents\AnD…
+  │ node-pre-gyp ERR! stack at maybeClose (node:internal/child_process:1101:16)
+  │ node-pre-gyp ERR! stack at ChildProcess.\_handle.onexit (node:internal/child_process:304:5)
+  │ node-pre-gyp ERR! System Windows_NT 10.0.26100
+  │ node-pre-gyp ERR! command "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\Admin\\Documents\\AnDocuments\\projects\\nextjs_finalproject_marketplace\\node_modules\\.pnpm\\@mapbox+node-pre-gyp@1.0.11_encoding@0.1.13\\…  
+  │ node-pre-gyp ERR! cwd C:\Users\Admin\Documents\AnDocuments\projects\nextjs_finalproject_marketplace\node_modules\.pnpm\libpg-query@16.2.0_encoding@0.1.13\node_modules\libpg-query
+  │ node-pre-gyp ERR! node -v v22.14.0
+  │ node-pre-gyp ERR! node-pre-gyp -v v1.0.11
+  │ node-pre-gyp ERR! not ok
+  Failed in 6.2s at \nextjs_finalproject_marketplace\node_modules\.pnpm\libpg-query@16.2.0_encoding@0.1.13\node_modules\libpg-query
+
+Check node.js version:
+node -v
+
+If it's not 20.x, install and switch using nvm:
+nvm install 20
+nvm use 20
