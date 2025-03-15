@@ -38,6 +38,9 @@ Marketplace eStores is an ongoing full-stack web application built with Next.js,
 
 ## Project Setup
 
+> **Hint:** This project was built with **Node v20.17.0** and **Next.js 15.0.0-canary.171**.  
+> Using different versions may cause compatibility issues.
+
 ```bash
 git clone https://github.com/anntnt/nextjs_finalproject_marketplace.git
 cd nextjs_finalproject_marketplace
@@ -126,28 +129,22 @@ psql -U <user name> <database name>
 sudo -u <user name> psql -U <user name> <database name>
 ```
 
+### PostgreSQL Migrations with Ley
+
+```bash
+# Apply all migrations
+pnpm migrate up
+```
+
+### Run the project locally
+
+```bash
+pnpm run dev
+```
+
 ## Deployment
 
 - Fly.io
 - Docker
 
 ## Troubleshooting
-
-- Error:
-  │ Failed to execute 'C:\Program Files\nodejs\node.exe C:\Users\Admin\AppData\Local\node\corepack\v1\pnpm\9.15.9\dist\node_modules\node-gyp\bin\node-gyp.js build --fallback-to-build --module=C:\Users\Admin\Documents\AnD…
-  │ node-pre-gyp ERR! stack at maybeClose (node:internal/child_process:1101:16)
-  │ node-pre-gyp ERR! stack at ChildProcess.\_handle.onexit (node:internal/child_process:304:5)
-  │ node-pre-gyp ERR! System Windows_NT 10.0.26100
-  │ node-pre-gyp ERR! command "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\Admin\\Documents\\AnDocuments\\projects\\nextjs_finalproject_marketplace\\node_modules\\.pnpm\\@mapbox+node-pre-gyp@1.0.11_encoding@0.1.13\\…  
-  │ node-pre-gyp ERR! cwd C:\Users\Admin\Documents\AnDocuments\projects\nextjs_finalproject_marketplace\node_modules\.pnpm\libpg-query@16.2.0_encoding@0.1.13\node_modules\libpg-query
-  │ node-pre-gyp ERR! node -v v22.14.0
-  │ node-pre-gyp ERR! node-pre-gyp -v v1.0.11
-  │ node-pre-gyp ERR! not ok
-  Failed in 6.2s at \nextjs_finalproject_marketplace\node_modules\.pnpm\libpg-query@16.2.0_encoding@0.1.13\node_modules\libpg-query
-
-Check node.js version:
-node -v
-
-If it's not 20.x, install and switch using nvm:
-nvm install 20
-nvm use 20
