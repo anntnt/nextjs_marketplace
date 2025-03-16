@@ -1,3 +1,5 @@
+import SupportTopics from '../../components/SupportTopics';
+
 export const metadata = {
   title: 'Support',
   description: 'Support',
@@ -8,10 +10,8 @@ export default function Page() {
       <h1 className="mb-4 text-4xl text-center">Support</h1>
 
       <section className="py-8 antialiased  md:py-16     text-xl  font-normal   sm:px-16 xl:px-48 dark:text-gray-400">
-        <div className="mx-auto text-center max-w-screen-xl px-4 2xl:px-0">
-          <p className="">
-            <i>This page is currently in progress. Please check back later.</i>
-          </p>
+        <div className="mx-auto  max-w-screen-xl px-4 2xl:px-0">
+          <SupportTopics />
         </div>
       </section>
     </main>

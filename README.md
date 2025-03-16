@@ -62,6 +62,12 @@ PGPASSWORD=xxxxxx
 
 Next, connect to the built-in postgres database as an administrator to create the database:
 
+Run Postgres database
+
+```bash
+postgres
+```
+
 #### Windows
 
 If it asks for a password, use `postgres`.
