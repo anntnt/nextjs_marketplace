@@ -11,8 +11,8 @@ export default function Page() {
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <p className="py-8   text-red-600   ">
             <i>
-              Note: This website is a project created solely for study purposes.
-              It is not an actual marketplace.
+              Note: This website is a project created solely for study purposes
+              and is not a real marketplace.
             </i>
           </p>
         </div>

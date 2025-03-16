@@ -36,8 +36,8 @@ export default function Home() {
 
           <div className="py-8  text-xl font-normal text-red-600  sm:px-16 xl:px-48 dark:text-gray-400">
             <i>
-              Note: This website is a project created solely for study purposes.
-              It is not an actual marketplace.
+              Note: This website is a project created solely for study purposes
+              and is not a real marketplace.
             </i>
           </div>
         </div>
