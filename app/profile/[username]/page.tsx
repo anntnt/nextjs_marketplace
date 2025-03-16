@@ -18,8 +18,32 @@ export default async function UserProfilePage() {
   return (
     <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-10 py-12">
       <h1 className="mb-4 text-4xl text-center">{user.username}'s Dashboard</h1>
+
       <section className="mb-4  py-8 antialiased dark:bg-gray-900 md:py-12">
         <div className="mx-auto max-w-screen-xl px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-20">
+          {user.roleId === 2 && (
+            <div className="text-lg text-center">
+              Manage and showcase{' '}
+              <Link href={`/profile/${user.username}/business`}>
+                <span className="py-8 hover:text-blue-1000 font-bold">
+                  my products
+                </span>
+              </Link>{' '}
+              on eStores.
+            </div>
+          )}
+          {user.roleId === 3 && (
+            <div className="text-lg text-center">
+              Visit our{' '}
+              <Link href="/marketplace">
+                <span className="py-8 hover:text-blue-1000 font-bold">
+                  Marketplace
+                </span>
+              </Link>{' '}
+              and discover amazing products!
+            </div>
+          )}
+          <hr className="my-4" />
           <nav className="mb-4 flex" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
               <li className="inline-flex items-center">
