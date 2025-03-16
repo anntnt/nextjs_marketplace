@@ -26,7 +26,7 @@ As a **buyer**, you can browse and shop in the [marketplace](https://estores.fly
 
 As a **seller**, you can list your products on eStores and manage your inventory by clicking My Products.
 
-![alt text](./public/images/myproducts.png)
+![alt text](./public/images/myproducts.jpg)
 
 ## Technologies
 
