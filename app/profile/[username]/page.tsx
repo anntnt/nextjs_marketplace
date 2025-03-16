@@ -17,7 +17,7 @@ export default async function UserProfilePage() {
 
   return (
     <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-10 py-12">
-      <h1 className="mb-4 text-4xl text-center">{user.username}'s Profile</h1>
+      <h1 className="mb-4 text-4xl text-center">{user.username}'s Dashboard</h1>
       <section className="mb-4  py-8 antialiased dark:bg-gray-900 md:py-12">
         <div className="mx-auto max-w-screen-xl px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-20">
           <nav className="mb-4 flex" aria-label="Breadcrumb">

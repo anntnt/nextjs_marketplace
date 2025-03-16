@@ -63,16 +63,7 @@ export default function Component(props: UserProps) {
                 </Link>
               </li>
 
-              {!props.user || props.user.roleId === 3 ? (
-                <li>
-                  <Link
-                    href="/become-a-seller"
-                    className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
-                  >
-                    Become a Seller
-                  </Link>
-                </li>
-              ) : props.user.roleId === 2 ? (
+              {props.user && props.user.roleId === 2 && (
                 <li>
                   <Link
                     href={`/profile/${props.user.username}/business`}
@@ -81,8 +72,6 @@ export default function Component(props: UserProps) {
                     My Business
                   </Link>
                 </li>
-              ) : (
-                <div />
               )}
               <li>
                 <Link
@@ -167,16 +156,7 @@ export default function Component(props: UserProps) {
                     Support
                   </Link>
                 </li>
-                {!props.user || props.user.roleId === 3 ? (
-                  <li className="w-full">
-                    <Link
-                      href="/become-a-seller"
-                      className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
-                    >
-                      Become a Seller
-                    </Link>
-                  </li>
-                ) : (
+                {props.user && props.user.roleId === 2 && (
                   <li className="w-full">
                     <Link
                       href={`/profile/${props.user.username}/business`}
@@ -217,15 +197,18 @@ export default function Component(props: UserProps) {
                     </li>
 
                     <li className="w-full">
+                      <hr className="mb-4" />
                       <div className=" text-black dark:text-white">
                         New to eStores?
                       </div>
                       <Link
                         href="/register"
-                        className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
+                        className="underline text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 font-semibold dark:hover:bg-gray-600 dark:hover:text-white text-center"
                       >
                         Register
-                      </Link>
+                      </Link>{' '}
+                      as a <strong>customer</strong> or <strong>seller</strong>{' '}
+                      and start exploring!
                     </li>
                   </>
                 )}

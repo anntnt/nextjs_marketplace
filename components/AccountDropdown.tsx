@@ -43,15 +43,19 @@ export default function Component() {
                 Login
               </Link>
             </li>
-            <li>
-              <div className=" text-black dark:text-white">New to eStores?</div>
+            <li className="text-md text-center">
+              <hr className="mb-4" />
+              <div className=" text-black dark:text-white text-center ">
+                New to eStores?
+              </div>
               <Link
                 href="/register"
                 className="underline text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 font-semibold dark:hover:bg-gray-600 dark:hover:text-white text-center"
               >
-                Sign up
+                Register
               </Link>{' '}
-              today as a customer or seller and start exploring!
+              as a <strong>customer</strong> or <strong>seller</strong> and
+              start exploring!
             </li>
           </ul>
         </div>
