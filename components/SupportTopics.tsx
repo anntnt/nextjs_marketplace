@@ -1,7 +1,5 @@
 'use client';
 
-import { Footer } from 'flowbite-react';
-
 export default function Component() {
   const topics = [
     {

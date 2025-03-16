@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
+import AccountDropdown from './AccountDropdown';
 import Cart from './Cart';
+import ProfileDropdown from './ProfileDropdown';
 import Search from './Search';
 
 type UserWithUsernameAndRole = User & {
@@ -104,31 +106,11 @@ export default function Component(props: UserProps) {
               <div />
             )}
             {props.user ? (
-              <div className=" hidden md:flex  me-5 items-center relative  space-x-2">
-                <Link
-                  href={`/profile/${props.user.username}`}
-                  className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 "
-                >
-                  {props.user.firstname}'s Profile
-                </Link>
-                <LogoutButton />
-              </div>
+              <ProfileDropdown user={props.user} />
             ) : (
               <>
                 {/* Login/Register */}
-                <Link
-                  href="/login"
-                  className="active:text-blue-1000 focus:text-blue-1000 font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000 "
-                >
-                  Login &nbsp; &nbsp;
-                </Link>
-
-                <Link
-                  href="/register"
-                  className=" active:text-blue-1000 focus:text-blue-1000 font-semibold hidden md:flex text-black dark:text-white hover:text-blue-1000"
-                >
-                  Register
-                </Link>
+                <AccountDropdown />
               </>
             )}
           </div>
@@ -214,7 +196,7 @@ export default function Component(props: UserProps) {
                         href={`/profile/${props.user.username}`}
                         className="font-semibold text-black dark:text-white hover:text-blue-1000  active:text-blue-1000  focus:text-blue-1000 "
                       >
-                        {props.user.firstname}'s Profile
+                        {props.user.firstname}'s Dashboard
                       </Link>
                     </li>
                     <li className="w-full ">
@@ -235,6 +217,9 @@ export default function Component(props: UserProps) {
                     </li>
 
                     <li className="w-full">
+                      <div className=" text-black dark:text-white">
+                        New to eStores?
+                      </div>
                       <Link
                         href="/register"
                         className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"

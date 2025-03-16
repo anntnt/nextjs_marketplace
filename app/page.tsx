@@ -12,7 +12,7 @@ export default function Home() {
 
           <div className="py-4   text-xl text-center font-normal   sm:px-16 xl:px-48 dark:text-gray-400">
             <Link href="/marketplace">
-              <span className="py-8 text-blue-1000 hover:text-blue-1000">
+              <span className="py-8 hover:text-blue-1000">
                 Start shopping now and find your next favorite item!
               </span>
             </Link>{' '}
