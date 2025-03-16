@@ -10,6 +10,16 @@ Marketplace eStores is an ongoing full-stack web application built with Next.js,
 - Integrates Cloudinary for image processing and hosting.
 - Frontend and backend validations for security and data consistency.
 
+## Quick Start:
+
+[Register](https://estores.fly.dev/register) on eStores as a buyer or seller to start exploring the marketplace.
+
+![alt text](./public/images/register.jpg)
+
+As a buyer, you can browse and shop in the [marketplace](https://estores.fly.dev/marketplace)(https://estores.fly.dev/marketplace) now.
+
+![alt text](./public/images/marketplace.jpg)
+
 ### [The marketplace eStores](https://estores.fly.dev/)
 
 ![alt text](./public/images/eStores.jpg)
