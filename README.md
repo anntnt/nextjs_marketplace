@@ -12,25 +12,21 @@ Marketplace eStores is an ongoing full-stack web application built with Next.js,
 
 ## Quick Start:
 
-[Register](https://estores.fly.dev/register) on eStores as a buyer or seller to start exploring the marketplace.
-
-![alt text](./public/images/register.jpg)
-
-As a buyer, you can browse and shop in the [marketplace](https://estores.fly.dev/marketplace)(https://estores.fly.dev/marketplace) now.
-
-![alt text](./public/images/marketplace.jpg)
-
 ### [The marketplace eStores](https://estores.fly.dev/)
 
 ![alt text](./public/images/eStores.jpg)
 
-### [Category listings](https://estores.fly.dev/marketplace)
+[Register](https://estores.fly.dev/register) on eStores as a buyer or seller to start exploring the marketplace.
+
+![alt text](./public/images/register.jpg)
+
+As a buyer, you can browse and shop in the [marketplace](https://estores.fly.dev/marketplace).
 
 ![alt text](./public/images/marketplace.jpg)
 
-### [Database diagram](https://drawsql.app/teams/myteam-1161/diagrams/estores)
+As a seller, you can list your products on eStores and manage your inventory by clicking My Products.
 
-![alt text](./public/images/drawsql_2.jpg)
+![alt text](./public/images/myproducts.jpg)
 
 ## Technologies
 
@@ -46,7 +42,11 @@ As a buyer, you can browse and shop in the [marketplace](https://estores.fly.dev
 - Cloudinary
 - Stripe
 
-## Project Setup
+### [Database diagram](https://drawsql.app/teams/myteam-1161/diagrams/estores)
+
+![alt text](./public/images/drawsql_2.jpg)
+
+## Project Setup locally
 
 > **Hint:** This project was built with **Node v20.17.0** and **Next.js 15.0.0-canary.171**.  
 > Using different versions may cause compatibility issues.
