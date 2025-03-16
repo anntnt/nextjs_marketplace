@@ -54,8 +54,8 @@ export default function Component() {
               >
                 Register
               </Link>{' '}
-              as a <strong>customer</strong> or <strong>seller</strong> and
-              start exploring!
+              as a <strong>buyer</strong> or <strong>seller</strong> and start
+              exploring!
             </li>
           </ul>
         </div>

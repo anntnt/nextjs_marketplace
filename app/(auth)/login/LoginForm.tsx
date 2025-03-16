@@ -104,7 +104,7 @@ export default function LoginForm(props: Props) {
         >
           Sign up
         </Link>{' '}
-        as a <strong>customer</strong> or <strong>seller</strong>&nbsp; and
+        as a <strong>buyer</strong> or <strong>seller</strong>&nbsp; and
         start exploring!
       </div>
     </>

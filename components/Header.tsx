@@ -69,7 +69,7 @@ export default function Component(props: UserProps) {
                     href={`/profile/${props.user.username}/business`}
                     className="font-semibold active:text-blue-1000 focus:text-blue-1000 text-black dark:text-white hover:text-blue-1000 underline  decoration-4 decoration-blue-1000 dark:decoration-blue-1000   "
                   >
-                    My Business
+                    My Products
                   </Link>
                 </li>
               )}
@@ -163,7 +163,7 @@ export default function Component(props: UserProps) {
                       className="active:text-blue-1000 focus:text-blue-1000 block w-full py-2 text-black dark:text-white "
                     >
                       <span className="font-semibold underline  decoration-4 decoration-blue-1000 dark:decoration-bue-1000 ">
-                        My Business
+                        My Products
                       </span>
                     </Link>
                   </li>
@@ -207,8 +207,8 @@ export default function Component(props: UserProps) {
                       >
                         Register
                       </Link>{' '}
-                      as a <strong>customer</strong> or <strong>seller</strong>{' '}
-                      and start exploring!
+                      as a <strong>buyer</strong> or <strong>seller</strong> and
+                      start exploring!
                     </li>
                   </>
                 )}

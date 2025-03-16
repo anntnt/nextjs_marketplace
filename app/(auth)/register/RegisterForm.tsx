@@ -17,7 +17,7 @@ export default function RegisterForm(props: Props) {
   const [emailAddress, setEmailAddress] = useState('');
   const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
-  const [isSellerChecked, setIsSellerChecked] = useState(false);
+
   const [roleId, setRoleId] = useState(3);
   const [storeName, setStoreName] = useState('');
   const [uAddress, setUAddress] = useState('');
@@ -59,22 +59,48 @@ export default function RegisterForm(props: Props) {
     router.refresh();
   }
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsSellerChecked(event.target.checked);
-    if (event.target.checked) {
-      setRoleId(2);
-    } else {
-      setRoleId(3);
-    }
+  const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRoleId(Number(event.target.value));
   };
-
   return (
     <>
       <div className="max-w-sm mx-auto">
+        <hr className="mb-4" />
+        <h2 className="mb-4 text-md text-center">Be part of eStores! </h2>
+        <div className="text-sm">
+          Sign up as a <strong>buyer</strong> to explore and shop for amazing
+          products, or join as a <strong>seller</strong> to showcase your items
+          and reach more customers.
+        </div>
         <form
           onSubmit={async (event) => await handleRegister(event)}
           className="py-8"
         >
+          <div className="mb-5 flex items-center gap-4">
+            <span>Start</span>
+            <input
+              type="radio"
+              id="buyer"
+              name="roleId"
+              value="3"
+              checked={roleId === 3}
+              onChange={handleRoleChange}
+              required
+            />
+            <label htmlFor="buyer">Shopping</label>
+            <span>or</span>
+            <input
+              type="radio"
+              id="seller"
+              name="roleId"
+              value="2"
+              checked={roleId === 2}
+              onChange={handleRoleChange}
+            />
+            <label htmlFor="seller">Selling</label>
+          </div>
+          <hr className="mb-4" />
+
           <div className="mb-5">
             <label
               htmlFor="username"
@@ -163,23 +189,8 @@ export default function RegisterForm(props: Props) {
               </select>
             </label>
           </div>
-          <div className="mb-5">
-            <div className="flex items-center">
-              <input
-                id="applyToSell"
-                type="checkbox"
-                onChange={handleCheckboxChange}
-                className="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label
-                htmlFor="applyToSell"
-                className="ms-2 text-sm font-medium text-blue-600 "
-              >
-                <strong>Apply to Sell on eStores</strong>
-              </label>
-            </div>
-          </div>
-          {isSellerChecked && (
+
+          {roleId === 2 && (
             <div className="mb-5">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Store name
