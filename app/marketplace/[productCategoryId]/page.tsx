@@ -32,7 +32,7 @@ async function SingleCategoryClientPage(props: Props) {
             <VirtuosoProductGrid
               categoryId={categoryId}
               userRoleId={user?.roleId}
-              pageSize={20}
+              pageSize={21}
             />
           </div>
         </div>

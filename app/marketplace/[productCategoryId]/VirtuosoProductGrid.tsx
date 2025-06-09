@@ -15,7 +15,7 @@ const VirtuosoGridList = React.forwardRef<
   <div
     ref={ref}
     style={style}
-    className={`grid gap-8 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 ${
+    className={`grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${
       className ?? ''
     }`}
     {...rest}
@@ -28,7 +28,7 @@ VirtuosoGridList.displayName = 'VirtuosoGridList';
 export default function VirtuosoProductGrid({
   categoryId,
   userRoleId,
-  pageSize = 20,
+  pageSize,
 }: {
   categoryId: number;
   userRoleId?: number;
@@ -39,24 +39,26 @@ export default function VirtuosoProductGrid({
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const effectivePageSize = pageSize ?? 21; // Default page size if not provided
+
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
-      const offset = (currentPage - 1) * pageSize;
+      const offset = (currentPage - 1) * effectivePageSize;
       const res = await fetch(
-        `/api/products?categoryId=${categoryId}&limit=${pageSize}&offset=${offset}`,
+        `/api/products?categoryId=${categoryId}&limit=${effectivePageSize}&offset=${offset}`,
       );
       if (!res.ok) throw new Error('Failed to fetch products');
       const newProducts: Product[] = await res.json();
 
       setProducts(newProducts);
-      setTotalPages(Math.ceil(100 / pageSize)); // Assume 100 for now or return total count from backend
+      setTotalPages(Math.ceil(100 / effectivePageSize)); // Assume 100 for now or return total count from backend
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }, [categoryId, pageSize, currentPage]);
+  }, [categoryId, effectivePageSize, currentPage]);
 
   useEffect(() => {
     fetchProducts();

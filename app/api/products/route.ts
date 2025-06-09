@@ -5,7 +5,7 @@ import { getCategoryProductsInsecure } from '../../../database/products';
 export async function GET(request: NextRequest): Promise<NextResponse<any>> {
   const url = new URL(request.url);
   const categoryId = Number(url.searchParams.get('categoryId'));
-  const limit = Number(url.searchParams.get('limit')) || 20;
+  const limit = Number(url.searchParams.get('limit')) || 21;
   const offset = Number(url.searchParams.get('offset')) || 0;
 
   if (!categoryId) {
