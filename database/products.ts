@@ -13,6 +13,7 @@ export type Product = {
   color: string | null;
   sellerId: number;
   categoryId: number | null;
+  brand: string | null;
 };
 
 export type ProductWithSeller = {
@@ -26,6 +27,7 @@ export type ProductWithSeller = {
   sellerId: number;
   storeName: string | null;
   categoryId: number | null;
+  brand: string | null;
 };
 
 export const newProductSchema = z.object({
@@ -35,6 +37,9 @@ export const newProductSchema = z.object({
   description: z.string(),
   sellerId: z.number(),
   categoryId: z.number(),
+  size: z.string().nullable().optional(),
+  color: z.string().nullable().optional(),
+  brand: z.string().nullable().optional(),
 });
 
 export const updateProductSchema = z.object({
@@ -47,7 +52,20 @@ export const updateProductSchema = z.object({
 });
 export const createProduct = cache(
   async (sessionToken: Session['token'], newProduct: Omit<Product, 'id'>) => {
-    const [product] = await sql<Product[]>`
+    const [productRaw] = await sql<
+      {
+        id: number;
+        name: string;
+        price: string;
+        imageUrl: string;
+        description: string;
+        size: string | null;
+        color: string | null;
+        sellerId: number;
+        categoryId: number | null;
+        brand: string | null;
+      }[]
+    >`
       INSERT INTO
         products (
           name,
@@ -57,7 +75,8 @@ export const createProduct = cache(
           seller_id,
           category_id,
           size,
-          color
+          color,
+          brand
         )
       SELECT
         ${newProduct.name},
@@ -67,7 +86,8 @@ export const createProduct = cache(
         ${newProduct.sellerId},
         ${newProduct.categoryId},
         ${newProduct.size},
-        ${newProduct.color}
+        ${newProduct.color},
+        ${newProduct.brand}
       FROM
         sessions
       WHERE
@@ -77,11 +97,31 @@ export const createProduct = cache(
         products.*
     `;
 
+    if (!productRaw) return undefined;
+
+    const product: Product = {
+      ...productRaw,
+      price: Number(productRaw.price),
+    };
+
     return product;
   },
 );
 export const getProductsInsecure = cache(async () => {
-  const products = await sql<Product[]>`
+  const productsRaw = await sql<
+    {
+      id: number;
+      name: string;
+      price: string;
+      imageUrl: string;
+      description: string;
+      size: string | null;
+      color: string | null;
+      sellerId: number;
+      categoryId: number | null;
+      brand: string | null;
+    }[]
+  >`
     SELECT
       *
     FROM
@@ -90,11 +130,29 @@ export const getProductsInsecure = cache(async () => {
       id;
   `;
 
+  const products: Product[] = productsRaw.map((productRaw) => ({
+    ...productRaw,
+    price: Number(productRaw.price),
+  }));
+
   return products;
 });
 
 export const getProductInsecure = cache(async (id: number) => {
-  const [product] = await sql<Product[]>`
+  const [productRaw] = await sql<
+    {
+      id: number;
+      name: string;
+      price: string;
+      imageUrl: string;
+      description: string;
+      size: string | null;
+      color: string | null;
+      sellerId: number;
+      categoryId: number | null;
+      brand: string | null;
+    }[]
+  >`
     SELECT
       *
     FROM
@@ -103,11 +161,31 @@ export const getProductInsecure = cache(async (id: number) => {
       id = ${id}
   `;
 
+  if (!productRaw) return undefined;
+
+  const product: Product = {
+    ...productRaw,
+    price: Number(productRaw.price), // 🔥 convert string to number
+  };
+
   return product;
 });
 
 export const getCategoryProductsInsecure = cache(async (categoryId: number) => {
-  const products = await sql<Product[]>`
+  const productsRaw = await sql<
+    {
+      id: number;
+      name: string;
+      price: string;
+      imageUrl: string;
+      description: string;
+      size: string | null;
+      color: string | null;
+      sellerId: number;
+      categoryId: number | null;
+      brand: string | null;
+    }[]
+  >`
     SELECT
       *
     FROM
@@ -118,12 +196,19 @@ export const getCategoryProductsInsecure = cache(async (categoryId: number) => {
       id;
   `;
 
+  const products: Product[] = productsRaw.map((productRaw) => ({
+    ...productRaw,
+    price: Number(productRaw.price),
+  }));
+
   return products;
 });
 
 export const getCategoryProductWithSellerInsecure = cache(
   async (productId: number) => {
-    const [product] = await sql<ProductWithSeller[]>`
+    const [productRaw] = await sql<
+      (Omit<ProductWithSeller, 'price'> & { price: string })[]
+    >`
       SELECT
         products.*,
         users.store_name
@@ -134,13 +219,33 @@ export const getCategoryProductWithSellerInsecure = cache(
         products.id = ${productId}
     `;
 
+    if (!productRaw) return undefined;
+
+    const product: ProductWithSeller = {
+      ...productRaw,
+      price: Number(productRaw.price),
+    };
+
     return product;
   },
 );
 
 export const getProductsOfSeller = cache(
   async (sessionToken: Session['token']) => {
-    const products = await sql<Product[]>`
+    const productsRaw = await sql<
+      {
+        id: number;
+        name: string;
+        price: string;
+        imageUrl: string;
+        description: string;
+        size: string | null;
+        color: string | null;
+        sellerId: number;
+        categoryId: number | null;
+        brand: string | null;
+      }[]
+    >`
       SELECT
         products.*
       FROM
@@ -153,12 +258,30 @@ export const getProductsOfSeller = cache(
         id;
     `;
 
+    const products: Product[] = productsRaw.map((productRaw) => ({
+      ...productRaw,
+      price: Number(productRaw.price),
+    }));
+
     return products;
   },
 );
 export const removeProduct = cache(
   async (sessionToken: Session['token'], id: number) => {
-    const [product] = await sql<Product[]>`
+    const [productRaw] = await sql<
+      {
+        id: number;
+        name: string;
+        price: string;
+        imageUrl: string;
+        description: string;
+        size: string | null;
+        color: string | null;
+        sellerId: number;
+        categoryId: number | null;
+        brand: string | null;
+      }[]
+    >`
       DELETE FROM products USING sessions
       WHERE
         sessions.token = ${sessionToken}
@@ -169,6 +292,11 @@ export const removeProduct = cache(
         products.*
     `;
 
+    if (!productRaw) return undefined;
+    const product: Product = {
+      ...productRaw,
+      price: Number(productRaw.price),
+    };
     return product;
   },
 );
@@ -178,7 +306,20 @@ export const updateProduct = cache(
     sessionToken: Session['token'],
     updatedProduct: Omit<Product, 'sellerId'>,
   ) => {
-    const [product] = await sql<Product[]>`
+    const [productRaw] = await sql<
+      {
+        id: number;
+        name: string;
+        price: string;
+        imageUrl: string;
+        description: string;
+        size: string | null;
+        color: string | null;
+        sellerId: number;
+        categoryId: number | null;
+        brand: string | null;
+      }[]
+    >`
       UPDATE products
       SET
         name = ${updatedProduct.name},
@@ -197,6 +338,11 @@ export const updateProduct = cache(
       RETURNING
         products.*
     `;
+    if (!productRaw) return undefined;
+    const product: Product = {
+      ...productRaw,
+      price: Number(productRaw.price),
+    };
     return product;
   },
 );
@@ -206,7 +352,20 @@ export const updateProductWithoutImage = cache(
     sessionToken: Session['token'],
     updatedProduct: Omit<Product, 'sellerId' | 'imageUrl'>,
   ) => {
-    const [product] = await sql<Product[]>`
+    const [productRaw] = await sql<
+      {
+        id: number;
+        name: string;
+        price: string;
+        imageUrl: string;
+        description: string;
+        size: string | null;
+        color: string | null;
+        sellerId: number;
+        categoryId: number | null;
+        brand: string | null;
+      }[]
+    >`
       UPDATE products
       SET
         name = ${updatedProduct.name},
@@ -224,6 +383,11 @@ export const updateProductWithoutImage = cache(
       RETURNING
         products.*
     `;
+    if (!productRaw) return undefined;
+    const product: Product = {
+      ...productRaw,
+      price: Number(productRaw.price),
+    };
     return product;
   },
 );

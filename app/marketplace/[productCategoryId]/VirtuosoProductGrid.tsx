@@ -1,17 +1,20 @@
+'use client';
+
 import { Card } from 'flowbite-react';
-import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import React from 'react';
-import { getCategoryNameInsecure } from '../../../database/productCategories';
+import { VirtuosoGrid } from 'react-virtuoso';
+// Update the import path below if the Product type is located elsewhere
 import type { Product } from '../../../database/products';
-import { getCategoryProductsInsecure } from '../../../database/products';
-import { getUser } from '../../../database/users';
 import AddToCartForm from './addToCartForm';
-import VirtuosoProductGrid from './VirtuosoProductGrid';
 
-// ✅ Define a properly styled List component for VirtuosoGrid
+type Props = {
+  products: Product[];
+  userRoleId?: number;
+};
+
+// List component for grid layout
 const VirtuosoGridList = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -29,10 +32,12 @@ const VirtuosoGridList = React.forwardRef<
 ));
 VirtuosoGridList.displayName = 'VirtuosoGridList';
 
+// Render each item
 const renderItemContent =
   (products: Product[], userRoleId?: number) => (index: number) => {
     const product = products[index];
     if (!product) return null;
+
     return (
       <div className="p-2">
         <Card
@@ -63,33 +68,16 @@ const renderItemContent =
       </div>
     );
   };
-type Props = {
-  params: Promise<{
-    productCategoryId: string;
-  }>;
-};
-async function SingleCategoryClientPage(props: Props) {
-  const categoryId = Number((await props.params).productCategoryId);
-  const categoryNameObj = await getCategoryNameInsecure(categoryId);
-  const products = await getCategoryProductsInsecure(categoryId);
 
-  const sessionTokenCookie = (await cookies()).get('sessionToken');
-  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
-
-  if (!categoryNameObj) {
-    return notFound();
-  }
-
+export default function VirtuosoProductGrid({ products, userRoleId }: Props) {
   return (
-    <main className="p-4">
-      <section>
-        <h1 className="text-2xl font-bold mb-4">
-          {categoryNameObj.categoryName}
-        </h1>
-        <VirtuosoProductGrid products={products} userRoleId={user?.roleId} />
-      </section>
-    </main>
+    <VirtuosoGrid
+      useWindowScroll
+      totalCount={products.length}
+      itemContent={renderItemContent(products, userRoleId)}
+      components={{
+        List: VirtuosoGridList,
+      }}
+    />
   );
 }
-
-export default SingleCategoryClientPage;
