@@ -1,77 +1,18 @@
-import { Card } from 'flowbite-react';
 import { cookies } from 'next/headers';
-import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import React from 'react';
 import { getCategoryNameInsecure } from '../../../database/productCategories';
-import type { Product } from '../../../database/products';
-import { getCategoryProductsInsecure } from '../../../database/products';
 import { getUser } from '../../../database/users';
-import AddToCartForm from './addToCartForm';
 import VirtuosoProductGrid from './VirtuosoProductGrid';
 
-// ✅ Define a properly styled List component for VirtuosoGrid
-const VirtuosoGridList = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ style, className, children, ...rest }, ref) => (
-  <div
-    ref={ref}
-    style={style}
-    className={`grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${
-      className ?? ''
-    }`}
-    {...rest}
-  >
-    {children}
-  </div>
-));
-VirtuosoGridList.displayName = 'VirtuosoGridList';
-
-const renderItemContent =
-  (products: Product[], userRoleId?: number) => (index: number) => {
-    const product = products[index];
-    if (!product) return null;
-    return (
-      <div className="p-2">
-        <Card
-          data-test-id={`product-id-${product.id}`}
-          className="max-w-sm"
-          renderImage={() => (
-            <Link href={`/marketplace/product/${product.id}`}>
-              <Image
-                width={500}
-                height={500}
-                src={product.imageUrl}
-                alt={`Product ${product.name}`}
-              />
-            </Link>
-          )}
-        >
-          <Link
-            href={`/marketplace/product/${product.id}`}
-            className="hover:underline"
-          >
-            <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-              {product.name}
-            </h5>
-          </Link>
-
-          <AddToCartForm product={product} roleId={userRoleId} />
-        </Card>
-      </div>
-    );
-  };
 type Props = {
   params: Promise<{
     productCategoryId: string;
   }>;
 };
+
 async function SingleCategoryClientPage(props: Props) {
   const categoryId = Number((await props.params).productCategoryId);
   const categoryNameObj = await getCategoryNameInsecure(categoryId);
-  const products = await getCategoryProductsInsecure(categoryId);
 
   const sessionTokenCookie = (await cookies()).get('sessionToken');
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
@@ -81,12 +22,20 @@ async function SingleCategoryClientPage(props: Props) {
   }
 
   return (
-    <main className="p-4">
-      <section>
-        <h1 className="text-2xl font-bold mb-4">
-          {categoryNameObj.categoryName}
-        </h1>
-        <VirtuosoProductGrid products={products} userRoleId={user?.roleId} />
+    <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
+      <h1 className="mb-4 text-4xl text-center">
+        {categoryNameObj.categoryName}
+      </h1>
+      <section className="py-8 antialiased  md:py-16">
+        <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+          <div className="mb-4 md:mb-8">
+            <VirtuosoProductGrid
+              categoryId={categoryId}
+              userRoleId={user?.roleId}
+              pageSize={20}
+            />
+          </div>
+        </div>
       </section>
     </main>
   );

@@ -171,38 +171,48 @@ export const getProductInsecure = cache(async (id: number) => {
   return product;
 });
 
-export const getCategoryProductsInsecure = cache(async (categoryId: number) => {
-  const productsRaw = await sql<
-    {
-      id: number;
-      name: string;
-      price: string;
-      imageUrl: string;
-      description: string;
-      size: string | null;
-      color: string | null;
-      sellerId: number;
-      categoryId: number | null;
-      brand: string | null;
-    }[]
-  >`
-    SELECT
-      *
-    FROM
-      products
-    WHERE
-      category_id = ${categoryId}
-    ORDER BY
-      id;
-  `;
+export const getCategoryProductsInsecure = cache(
+  async (
+    categoryId: number,
+    limit = 20, // default limit
+    offset = 0, // default offset
+  ): Promise<Product[]> => {
+    const productsRaw = await sql<
+      {
+        id: number;
+        name: string;
+        price: string;
+        imageUrl: string;
+        description: string;
+        size: string | null;
+        color: string | null;
+        sellerId: number;
+        categoryId: number | null;
+        brand: string | null;
+      }[]
+    >`
+      SELECT
+        *
+      FROM
+        products
+      WHERE
+        category_id = ${categoryId}
+      ORDER BY
+        id
+      LIMIT
+        ${limit}
+      OFFSET
+        ${offset};
+    `;
 
-  const products: Product[] = productsRaw.map((productRaw) => ({
-    ...productRaw,
-    price: Number(productRaw.price),
-  }));
+    const products: Product[] = productsRaw.map((productRaw) => ({
+      ...productRaw,
+      price: Number(productRaw.price),
+    }));
 
-  return products;
-});
+    return products;
+  },
+);
 
 export const getCategoryProductWithSellerInsecure = cache(
   async (productId: number) => {
