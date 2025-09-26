@@ -4,6 +4,7 @@ const products = [
   {
     id: 1,
     name: 'Christmas tree hanging ornaments',
+    brand: 'Holiday Co',
     price: 13,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_balls_13_wc6vaz_c_fill_w_710_h_448_dxz0qd.jpg',
@@ -14,6 +15,7 @@ const products = [
   {
     id: 2,
     name: 'Christmas tree hanging ornaments',
+    brand: 'Festive Decor',
     price: 15,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_balls_9_ze7l6a_c_fill_w_710_h_448_g_auto_psiaph.jpg',
@@ -24,6 +26,7 @@ const products = [
   {
     id: 3,
     name: 'Christmas decoration',
+    brand: 'WinterCraft',
     price: 9,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_decor_14_mlrtnx_z61afa.jpg',
@@ -34,17 +37,19 @@ const products = [
   {
     id: 4,
     name: 'Christmas House',
+    brand: 'Snowy Homes',
     price: 27,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005663/xmas_house_27_uvfekj_zhhzx8.jpg',
     description:
-      'This cozy Christmas house features a welcoming porch adorned with festive lights and holiday decorations, creating a warm, inviting atmosphere. Perfect for adding a touch of holiday cheer to any space, this charming scene embodies the spirit of Christmas and is ideal for gift-giving or seasonal decor.',
+      'This cozy Christmas house features a welcoming porch adorned with festive lights and holiday decorations...',
     seller_id: 3,
     category_id: 1,
   },
   {
     id: 5,
     name: 'Christmas decoration',
+    brand: 'Festive World',
     price: 16,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/santa_27_ocxhfb_c_fill_w_710_h_448_jc4inf.jpg',
@@ -55,6 +60,7 @@ const products = [
   {
     id: 6,
     name: 'Snow globe',
+    brand: 'Snowy Magic',
     price: 12,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_snow_globe_zpqoaw_c_fill_w_710_h_448_wml1hs.jpg',
@@ -65,6 +71,7 @@ const products = [
   {
     id: 7,
     name: 'Jingle Bells',
+    brand: 'BellTone',
     price: 25,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/junlebells_25_aatiuc_awm8ft.jpg',
@@ -75,6 +82,7 @@ const products = [
   {
     id: 8,
     name: 'Christmas decoration',
+    brand: 'Holiday Makers',
     price: 24,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005663/xmas_decor_23_2_knxwgg_c_fill_w_710_h_448_g_auto_haupzv.jpg',
@@ -85,6 +93,7 @@ const products = [
   {
     id: 9,
     name: 'Christmas tree',
+    brand: 'GreenTree Co',
     price: 219,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_tree_210_bl8six_c_fill_w_710_h_448_g_auto_t91ca5.jpg',
@@ -95,6 +104,7 @@ const products = [
   {
     id: 10,
     name: 'Macarons',
+    brand: 'Sweet Bites',
     price: 12,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016818/macarons_13_trtxy2_yhjsja.jpg',
@@ -105,16 +115,18 @@ const products = [
   {
     id: 11,
     name: 'Berry Mix',
+    brand: 'FreshFarm',
     price: 14,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016817/berries_14_eoj7dj_xw16b6.jpg',
-    seller_id: 1,
     description: 'Berry Mix',
+    seller_id: 1,
     category_id: 9,
   },
   {
     id: 12,
     name: 'Donuts',
+    brand: 'Donutland',
     price: 11,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016817/donuts_11_2_bfsohy_yhjfir.jpg',
@@ -125,6 +137,7 @@ const products = [
   {
     id: 13,
     name: 'Pancakes',
+    brand: 'Fluffy Foods',
     price: 9,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016818/pancakes_9_pq7no0_rxftu1.jpg',
@@ -135,6 +148,7 @@ const products = [
   {
     id: 14,
     name: 'Christmas tree',
+    brand: 'Festive Green',
     price: 29,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016912/xmas_tree_29_tzfayw_ilngud.jpg',
@@ -145,6 +159,7 @@ const products = [
   {
     id: 15,
     name: 'Christmas decoration set',
+    brand: 'Holiday Pack',
     price: 36,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_wreath_36_xa98c5_c_fill_w_710_h_448_g_auto_ssoz4b.jpg',
@@ -155,6 +170,7 @@ const products = [
   {
     id: 16,
     name: 'Mini Santa',
+    brand: 'SantaWorks',
     price: 17,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/santa_27_ocxhfb_c_fill_w_710_h_448_jc4inf.jpg',
@@ -165,6 +181,7 @@ const products = [
   {
     id: 17,
     name: 'Cupcakes',
+    brand: 'BakeHouse',
     price: 21,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017033/cupcakes_21_n2ijnf_npygpa.jpg',
@@ -175,6 +192,7 @@ const products = [
   {
     id: 18,
     name: 'Smartphone',
+    brand: 'TechBrand',
     price: 449,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017095/mobile-phone_v586rg_xc7fgo.png',
@@ -185,6 +203,7 @@ const products = [
   {
     id: 19,
     name: 'Wireless Power Bank',
+    brand: 'PowerPlus',
     price: 21,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017111/Power_Bank_Wireless_21_v5mgda_ytjjdi.jpg',
@@ -195,6 +214,7 @@ const products = [
   {
     id: 20,
     name: 'Christmas wreath',
+    brand: 'Evergreen',
     price: 39,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017148/xmas_wreath_31_fwuc4d_vjaws7.jpg',
@@ -205,6 +225,7 @@ const products = [
   {
     id: 21,
     name: 'Bluetooth speaker',
+    brand: 'SoundMax',
     price: 52,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017196/Bluetooth_speaker-52_o3r58r_c_pad_b_gen_fill_w_710_h_448_pyffk8.jpg',
@@ -215,6 +236,7 @@ const products = [
   {
     id: 22,
     name: 'Lipstick',
+    brand: 'BeautyLine',
     price: 22,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017233/lipsticks-5893481_1280_wzq6qk_sc8oi6.jpg',
@@ -225,6 +247,7 @@ const products = [
   {
     id: 23,
     name: 'Doll house',
+    brand: 'ToyWorld',
     price: 49,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017262/toy_hk5kt9_hymzz0.jpg',
@@ -240,6 +263,7 @@ export async function up(sql: Sql) {
       INSERT INTO
         products (
           name,
+          brand,
           price,
           image_url,
           description,
@@ -249,6 +273,7 @@ export async function up(sql: Sql) {
       VALUES
         (
           ${product.name},
+          ${product.brand},
           ${product.price},
           ${product.image_url},
           ${product.description},
@@ -264,7 +289,8 @@ export async function down(sql: Sql) {
     await sql`
       DELETE FROM products
       WHERE
-        id = ${product.id}
+        name = ${product.name}
+        AND brand = ${product.brand}
     `;
   }
 }

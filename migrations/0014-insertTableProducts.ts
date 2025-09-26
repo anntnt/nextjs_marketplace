@@ -1,44 +1,57 @@
 import type { Sql } from 'postgres';
 
 export async function up(sql: Sql) {
-  // Get category IDs
   const categories = await sql<{ id: number }[]>`
-    SELECT
-      id
-    FROM
-      product_categories
+    SELECT id FROM product_categories
   `;
   const categoryIds = categories.map((row) => row.id);
 
+  // Dummy-Marken-Liste
+  const brands = [
+    'Acme Corp',
+    'Global Goods',
+    'Holiday Co',
+    'TechBrand',
+    'Everyday Essentials',
+    'Generic Supplies',
+    'EcoLine',
+    'Festive World',
+    'ValueMart',
+    'SuperStore',
+  ];
+
   const products = [];
-  const now = new Date();
 
   for (let i = 1; i <= 1000; i++) {
     const name = `Dummy Product ${i}`;
     const description = `Description for dummy product ${i}`;
-    const price = (Math.random() * 100).toFixed(2);
+
+    const price = Math.floor(Math.random() * 20000) + 100; 
+
     const image_url =
       'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_640,h_404/v1749471355/placeholder_yab9lx.jpg';
     const seller_id = Math.random() < 0.5 ? 1 : 3;
     const category_id =
       categoryIds[Math.floor(Math.random() * categoryIds.length)];
+    const brand = brands[Math.floor(Math.random() * brands.length)];
 
     products.push({
       name,
+      brand,
+      description,
       price,
       image_url,
-      description,
       seller_id,
       category_id,
     });
   }
 
-  // Bulk insert (batched for performance and size limit reasons)
   const chunkSize = 100;
   for (let i = 0; i < products.length; i += chunkSize) {
     const chunk = products.slice(i, i + chunkSize);
     const values = chunk.flatMap((p) => [
       p.name ?? '',
+      p.brand ?? 'Generic',
       p.description ?? '',
       p.price ?? 0,
       p.image_url ?? '',
@@ -49,7 +62,7 @@ export async function up(sql: Sql) {
     const valuePlaceholders = chunk
       .map(
         (_, i) =>
-          `($${i * 6 + 1}, $${i * 6 + 2}, $${i * 6 + 3}, $${i * 6 + 4}, $${i * 6 + 5}, $${i * 6 + 6})`,
+          `($${i * 7 + 1}, $${i * 7 + 2}, $${i * 7 + 3}, $${i * 7 + 4}, $${i * 7 + 5}, $${i * 7 + 6}, $${i * 7 + 7})`,
       )
       .join(', ');
 
@@ -57,6 +70,7 @@ export async function up(sql: Sql) {
       `
       INSERT INTO products (
         name,
+        brand,
         description,
         price,
         image_url,
@@ -72,7 +86,6 @@ export async function up(sql: Sql) {
 export async function down(sql: Sql) {
   await sql`
     DELETE FROM products
-    WHERE
-      name LIKE 'Dummy Product %'
+    WHERE name LIKE 'Dummy Product %'
   `;
 }
