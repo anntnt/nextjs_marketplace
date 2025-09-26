@@ -6,6 +6,7 @@ import { BsCart4 } from 'react-icons/bs';
 import type { Product } from '../../../database/products';
 import type { CreateCartProductResponseBodyPost } from '../../api/cart-items/route';
 import ErrorMessage from '../../ErrorMessage';
+import { formatEuroFromCents } from '../../../util/price';
 
 type Props = {
   product: Product;
@@ -19,7 +20,7 @@ export default function AddToCartForm(props: Props) {
     <div>
       <div className="mt-4 flex items-center justify-between gap-4">
         <p className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
-          € {props.product.price}
+          {formatEuroFromCents(props.product.price)}
         </p>
         <form
           onSubmit={async (event) => {

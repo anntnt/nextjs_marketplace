@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getProductsOfSeller } from '../../../../database/products';
 import { getUser } from '../../../../database/users';
+import { formatEuroFromCents } from '../../../../util/price';
 import ButtonRemoveProduct from './ButtonRemoveProduct';
 
 export default async function SellerProductsPage() {
@@ -95,7 +96,7 @@ export default async function SellerProductsPage() {
                           </td>
 
                           <td className="p-2 text-base font-normal text-gray-900 dark:text-white">
-                            € {product.price}
+                            {formatEuroFromCents(product.price)}
                           </td>
                           <td className="p-2 text-base font-normal text-gray-900 dark:text-white">
                             <Link

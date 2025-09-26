@@ -274,7 +274,7 @@ export async function up(sql: Sql) {
         (
           ${product.name},
           ${product.brand},
-          ${product.price},
+          ${product.price * 100},
           ${product.image_url},
           ${product.description},
           ${product.seller_id},

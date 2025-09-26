@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import { getCategoryProductWithSellerInsecure } from '../../../../database/products';
 import { getUser } from '../../../../database/users';
+import { formatEuroFromCents } from '../../../../util/price';
 import ProductForm from './productForm';
 
 type Props = {
@@ -53,7 +54,7 @@ export default async function SingleProductPage(props: Props) {
               </div>
               <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
                 <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
-                  € {product.price}
+                  {formatEuroFromCents(product.price)}
                 </p>
               </div>
               {!user || user.roleId !== 2 ? (

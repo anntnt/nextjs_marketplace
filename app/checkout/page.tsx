@@ -4,6 +4,7 @@ import React from 'react';
 import { getCartProducts } from '../../database/cartProducts';
 import { getUser } from '../../database/users';
 import { STANDARD_DELIVERY_PRICE } from '../../util/const';
+import { formatEuroFromCents } from '../../util/price';
 import PaymentCheckComponent from './PaymentCheckComponent';
 
 export const metadata = {
@@ -54,18 +55,22 @@ export default async function CheckoutPage() {
           <div>
             <ul className="text-gray-800 space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6bg-white  px-4 py-6  ">
               <li className="flex flex-wrap gap-4 text-md">
-                Subtotal <span className="ml-auto ">€ {subTotal}</span>
+                Subtotal
+                <span className="ml-auto ">{formatEuroFromCents(subTotal)}</span>
               </li>
               <li className="flex flex-wrap gap-4 text-md">
                 Shipping{' '}
-                <span className="ml-auto ">€ {STANDARD_DELIVERY_PRICE}</span>
+                <span className="ml-auto ">
+                  {formatEuroFromCents(STANDARD_DELIVERY_PRICE)}
+                </span>
               </li>
               <li>
                 <hr className="border-gray-300" />
               </li>
 
               <li className="flex flex-wrap gap-4 text-md font-bold">
-                Total <span className="ml-auto">€ {total}</span>
+                Total
+                <span className="ml-auto ">{formatEuroFromCents(total)}</span>
               </li>
             </ul>
           </div>

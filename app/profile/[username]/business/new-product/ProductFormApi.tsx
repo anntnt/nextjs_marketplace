@@ -65,6 +65,15 @@ export default function ProductFormApi(props: Props) {
         onSubmit={async (event) => {
           event.preventDefault();
           const formData = new FormData(event.currentTarget);
+          const priceValue = formData.get('price');
+          if (priceValue) {
+            const priceNumber = Number(priceValue);
+            const cents = Number.isNaN(priceNumber)
+              ? 0
+              : Math.round(priceNumber * 100);
+            formData.set('price', String(cents));
+          }
+
           await productFormApiHandler(formData);
         }}
         className="py-8 flex flex-col justify-center gap-3 max-w-sm mx-auto"
@@ -85,6 +94,7 @@ export default function ProductFormApi(props: Props) {
           <input
             value={price}
             type="number"
+            step="0.01"
             className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             name="price"
