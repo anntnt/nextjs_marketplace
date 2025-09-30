@@ -78,9 +78,9 @@ export default async function CartPage() {
                     </div>
                     <div className="flex flex-col gap-4">
                       <div>
-                        <h3 className="text-base font-bold text-gray-800">
+                        <h2 className="text-base font-bold text-gray-800">
                           {product.name}
-                        </h3>
+                        </h2>
                       </div>
                       <EditProductQuantitiesForm
                         productId={product.id}
@@ -104,9 +104,9 @@ export default async function CartPage() {
 
                       <RemoveCartProductButton productId={product.id} />
                     </div>
-                    <h3 className="text-md font-bold text-gray-800 mt-5">
+                    <p className="text-md font-bold text-gray-800 mt-5">
                       {formatEuroFromCents(product.price)}
-                    </h3>
+                    </p>
                   </div>
                 </div>
               );
@@ -143,11 +143,11 @@ export default async function CartPage() {
                 Checkout
               </Link>
               <Link
-                href="/marketplace"
+                href="/#categories"
                 type="button"
                 className="text-center text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-100 text-gray-800 border border-gray-300 rounded-md"
               >
-                Continue Shopping{' '}
+                Continue shopping
               </Link>
             </div>
 

@@ -12,9 +12,9 @@ export default function PaymentForm() {
   return (
     <div>
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
           Payment
-        </h3>
+        </h2>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">

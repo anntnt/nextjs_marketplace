@@ -89,9 +89,9 @@ export default function VirtuosoProductGrid({
               href={`/marketplace/product/${product.id}`}
               className="hover:underline"
             >
-              <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+              <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                 {product.name}
-              </h5>
+              </h2>
             </Link>
             <AddToCartForm product={product} roleId={userRoleId} />
           </Card>

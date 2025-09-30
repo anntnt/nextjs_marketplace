@@ -36,21 +36,21 @@ export default function Component(props: UserProps) {
             >
               <Image
                 src="/images/estores_logo.png"
-                objectFit="contain"
                 width={559}
                 height={102}
                 className="w-32 md:w-36  lg:w-40   h-auto pb-3 sm:pb-2"
                 alt="eStores logo"
+                style={{ objectFit: 'contain' }}
+                priority
               />
             </Link>
             <ul className="hidden md:flex space-x-8 xl:space-x-4 2xl:space-x-8 active:text-blue-1000 focus:text-blue-1000">
               <li className="active:text-blue-1000 focus:text-blue-1000">
                 <Link
-                  href="/marketplace"
+                  href="/#categories"
                   className="font-semibold text-black dark:text-white hover:text-blue-1000  active:text-blue-1000    focus:text-blue-1000"
                 >
-                  {' '}
-                  Marketplace
+                  Categories
                 </Link>
               </li>
 
@@ -60,6 +60,15 @@ export default function Component(props: UserProps) {
                   className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
                 >
                   About
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/become-a-seller"
+                  className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
+                >
+                  Become a seller
                 </Link>
               </li>
 
@@ -133,10 +142,10 @@ export default function Component(props: UserProps) {
               <ul className="flex flex-col items-start p-4 mt-4  dark:bg-gray-800">
                 <li className="w-full">
                   <Link
-                    href="/marketplace"
+                    href="/#categories"
                     className="block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000 font-semibold  hover:text-blue-1000  "
                   >
-                    Marketplace
+                    Categories
                   </Link>
                 </li>
 
@@ -146,6 +155,14 @@ export default function Component(props: UserProps) {
                     className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                   >
                     About
+                  </Link>
+                </li>
+                <li className="w-full">
+                  <Link
+                    href="/become-a-seller"
+                    className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
+                  >
+                    Become a seller
                   </Link>
                 </li>
                 <li className="w-full">

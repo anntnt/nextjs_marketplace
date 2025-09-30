@@ -1,45 +1,98 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { FaLeaf, FaRocket, FaShieldHalved } from 'react-icons/fa6';
+import { FaShippingFast } from 'react-icons/fa';
+import CategoriesVirtuoso from '../components/CategoriesVirtuoso';
+
+const categoryHighlights = [
+  {
+    title: 'Handpicked Brands',
+    description: 'Curated collections from passionate sellers and boutique makers.',
+    href: '/#categories',
+    icon: <FaRocket className="h-6 w-6 text-blue-600" />,
+  },
+  {
+    title: 'Eco-Friendly Picks',
+    description: 'Discover sustainable alternatives for mindful shoppers.',
+    href: '/#categories',
+    icon: <FaLeaf className="h-6 w-6 text-emerald-600" />,
+  },
+  {
+    title: 'Buyer Protection',
+    description: 'Safe payments, verified sellers, and dedicated support.',
+    href: '/support',
+    icon: <FaShieldHalved className="h-6 w-6 text-purple-600" />,
+  },
+  {
+    title: 'Fast Shipping',
+    description: 'Express delivery options across the EU with live tracking.',
+    href: '/#categories',
+    icon: <FaShippingFast className="h-6 w-6 text-amber-500" />,
+  },
+];
 
 export default function Home() {
   return (
-    <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-6 sm:py-10 md:py-12">
-      <section className=" dark:bg-gray-900">
-        <div className="py-7 mt-8 px-4 mx-auto max-w-screen-xl  lg:py-10 lg:px-12">
-          <h1 className="text-center mb-4 text-4xl font-semibold tracking-tight leading-none text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
-            Welcome to eStores!
-          </h1>
+    <main className="bg-gray-50 dark:bg-gray-900 flex-grow w-full max-w-full">
+      {/* Categories */}
+      <section
+        id="categories"
+        className="mb-16 pb-8 bg-gray-50 py-16 dark:bg-gray-900"
+      >
+        <div className="mx-auto max-w-screen-xl px-6 sm:px-12">
+          <div className="mx-auto mt-8 mb-8 max-w-2xl text-center">
+            <h1 className="text-3xl font-semibold text-gray-900 dark:text-white">
+              Discover by category
+            </h1>
+            <p className="mt-3 text-gray-600 dark:text-gray-400">
+              Everything in one place – shop collections that suit your lifestyle.
+            </p>
+          </div>
+          <CategoriesVirtuoso />
+        </div>
+      </section>
 
-          <div className="py-4   text-xl text-center font-normal   sm:px-16 xl:px-48 dark:text-gray-400">
-            <Link href="/marketplace">
-              <span className="py-8 hover:text-blue-1000">
-                Start shopping now and find your next favorite item!
-              </span>
-            </Link>{' '}
-          </div>
-          <div
-            className="py-8
-           flex justify-center mb-4  font-semibold tracking-tight leading-none text-gray-900 dark:text-white"
-          >
-            <figure className="max-w-2xl rounded-lg   bg-white p-4  dark:border-gray-700 dark:bg-gray-800 shadow-xl dark:shadow-gray-800 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800  shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 ">
-              <Link href="/marketplace">
-                <Image
-                  className="h-auto max-w-full rounded-lg cursor-pointer "
-                  src="/images/ecommerce.jpg"
-                  alt="e-commerce"
-                  width={1023}
-                  height={682}
-                />
-              </Link>
-            </figure>
-          </div>
 
-          <div className="py-8  text-xl font-normal text-red-600  sm:px-16 xl:px-48 dark:text-gray-400">
-            <i>
-              Note: This website is a project created solely for study purposes
-              and is not a real marketplace.
-            </i>
+      {/* Call to action */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-amber-200 via-white to-blue-200 dark:from-amber-900/60 dark:via-slate-900 dark:to-blue-900/60" />
+        <div className="mx-auto max-w-screen-xl px-6 py-16 sm:px-12">
+          <div className="grid gap-10 rounded-3xl bg-white/80 p-10 shadow-2xl shadow-amber-200/60 ring-white/60 backdrop-blur dark:bg-white/10 dark:shadow-blue-900/40 dark:ring-white/10 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="space-y-4">
+              <h2 className="text-3xl font-semibold text-gray-900 dark:text-white">
+                Ready to grow with eStores?
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Launch your storefront in minutes, access EU-wide shipping, and connect with shoppers who value quality.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href="/become-a-seller"
+                  className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-blue-500 dark:shadow-blue-900/60 dark:hover:bg-blue-400"
+                >
+                  Launch your shop
+                </Link>
+                <Link
+                  href="/support"
+                  className="inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-semibold text-blue-700 transition hover:-translate-y-0.5 hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-200 dark:hover:bg-blue-900/30"
+                >
+                  Contact support
+                </Link>
+              </div>
+            </div>
+            <div className="relative hidden h-full min-h-[260px] w-full overflow-hidden rounded-3xl lg:block">
+              <Image
+                src="/images/myproducts.jpg"
+                alt="Seller dashboard preview"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/60 via-gray-900/20 to-transparent" />
+            </div>
           </div>
+          <p className="mt-6 text-center text-sm text-red-600 dark:text-red-400">
+            *eStores is a learning project and not a live marketplace.
+          </p>
         </div>
       </section>
     </main>
