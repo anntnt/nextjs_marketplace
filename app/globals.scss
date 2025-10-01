@@ -87,3 +87,13 @@ footer {
   flex-direction: column;
   justify-content: center;
 }
+
+.virtuoso-grid-item {
+  display: flex;
+  height: 100%;
+}
+
+.virtuoso-grid-item > * {
+  display: flex;
+  flex: 1 1 auto;
+}

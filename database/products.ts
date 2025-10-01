@@ -176,7 +176,13 @@ export const getCategoryProductsInsecure = cache(
     categoryId: number,
     limit = 20, // default limit
     offset = 0, // default offset
-  ): Promise<Product[]> => {
+  ): Promise<{ products: Product[]; totalCount: number }> => {
+    const [{ count }] = await sql<{ count: number }[]>`
+      SELECT COUNT(*)::int AS count
+      FROM products
+      WHERE category_id = ${categoryId}
+    `;
+
     const productsRaw = await sql<
       {
         id: number;
@@ -210,7 +216,7 @@ export const getCategoryProductsInsecure = cache(
       price: Number(productRaw.price),
     }));
 
-    return products;
+    return { products, totalCount: count ?? 0 };
   },
 );
 

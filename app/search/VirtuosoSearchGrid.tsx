@@ -21,7 +21,7 @@ const VirtuosoGridList = React.forwardRef<
   <div
     ref={ref}
     style={style}
-    className={`grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${
+    className={`grid gap--y-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 ${
       className ?? ''
     }`}
     {...rest}
@@ -34,12 +34,43 @@ VirtuosoGridList.displayName = 'VirtuosoGridList';
 export default function VirtuosoSearchGrid({
   query,
   userRoleId,
-  pageSize = 21, // Default page size
+  pageSize = 30, // Default page size
 }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+
+  const smoothScrollTo = useCallback((targetY: number, duration = 900) => {
+    if (typeof window === 'undefined') return;
+
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    if (distance === 0) return;
+
+    const startTime = performance.now();
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      window.scrollTo(0, startY + distance * eased);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  }, []);
+
+  const scrollToTop = useCallback(() => {
+    if (typeof window === 'undefined') return;
+
+    const target = document.getElementById('search-results');
+    const top = target?.getBoundingClientRect().top ?? 0;
+    const scrollTarget = window.scrollY + top - 120;
+
+    smoothScrollTo(Math.max(0, scrollTarget));
+  }, [smoothScrollTo]);
 
   // Fetch products for current page
   const fetchProducts = useCallback(async () => {
@@ -74,10 +105,13 @@ export default function VirtuosoSearchGrid({
       if (!product) return null;
 
       return (
-        <div className="p-2" key={product.id}>
+        <div
+          className="mx-auto flex w-full max-w-sm p-2 sm:mx-0 sm:w-auto"
+          key={product.id}
+        >
           <Card
             data-test-id={`product-id-${product.id}`}
-            className="max-w-sm"
+            className="flex h-[390px] w-full flex-col !rounded-sm"
             renderImage={() => (
               <Link href={`/marketplace/product/${product.id}`}>
                 <Image
@@ -89,16 +123,18 @@ export default function VirtuosoSearchGrid({
               </Link>
             )}
           >
-            <Link
-              href={`/marketplace/product/${product.id}`}
-              className="hover:underline"
-            >
-              <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                {product.name}
-              </h2>
-            </Link>
+            <div className="flex flex-1 flex-col gap-4">
+              <Link
+                href={`/marketplace/product/${product.id}`}
+                className="hover:underline"
+              >
+                <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  {product.name}
+                </h2>
+              </Link>
 
-            <AddToCartForm product={product} />
+              <AddToCartForm product={product} />
+            </div>
           </Card>
         </div>
       );
@@ -126,9 +162,45 @@ export default function VirtuosoSearchGrid({
   }
 
   const pageNumbers = getPageNumbers(page, totalPages);
+  const shouldShowPagination = totalPages > 1 && totalCount > 0;
+
+  const changePage = useCallback(
+    (newPage: number) => {
+      setPage(newPage);
+      requestAnimationFrame(scrollToTop);
+    },
+    [scrollToTop],
+  );
 
   return (
     <>
+      {loading && (
+        <div className="mb-6 flex w-full items-center justify-center">
+          <div className="flex items-center gap-3 rounded-full border border-blue-200/70 bg-white px-4 py-2 text-sm text-blue-700 shadow-sm dark:border-blue-800/70 dark:bg-gray-900 dark:text-blue-200">
+            <svg
+              className="h-4 w-4 animate-spin"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              />
+            </svg>
+            Loading results…
+          </div>
+        </div>
+      )}
       <VirtuosoGrid
         useWindowScroll
         totalCount={products.length}
@@ -136,50 +208,54 @@ export default function VirtuosoSearchGrid({
         components={{ List: VirtuosoGridList }}
       />
       {/* Pagination */}
-      <nav
-        className="flex justify-center items-center gap-2 mt-6 text-gray-700 dark:text-gray-300"
-        aria-label="Pagination"
-      >
-        <button
-          className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
+      {shouldShowPagination && (
+        <nav
+          className="flex justify-center items-center gap-2 mt-6 text-gray-700 dark:text-gray-300"
+          aria-label="Pagination"
+        >
+          <button
+            className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
           disabled={page === 1 || loading}
-          onClick={() => setPage((p) => Math.max(1, p - 1))}
-        >
-          Previous
-        </button>
+          onClick={() => changePage(1)}
+          >
+            First
+          </button>
 
-        {pageNumbers.map((p, i) =>
-          p === '...' ? (
-            <span
-              key={`dots-${p}-${pageNumbers.slice(0, i).filter((x) => x === '...').length}`}
-              className="px-2"
-            >
-              ...
-            </span>
-          ) : (
-            <button
-              key={p}
-              onClick={() => setPage(Number(p))}
-              className={`px-3 py-1 rounded border ${
-                p === page
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'
-              }`}
-              disabled={loading}
-            >
-              {p}
-            </button>
-          ),
-        )}
+          {pageNumbers.map((p, i) =>
+            p === '...' ? (
+              <span
+                key={`dots-${p}-${pageNumbers
+                  .slice(0, i)
+                  .filter((x) => x === '...').length}`}
+                className="px-2"
+              >
+                ...
+              </span>
+            ) : (
+              <button
+                key={p}
+                onClick={() => changePage(Number(p))}
+                className={`px-3 py-1 rounded border disabled:opacity-50 ${
+                  p === page
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+                disabled={loading || p === page}
+              >
+                {p}
+              </button>
+            ),
+          )}
 
-        <button
-          className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
-          disabled={page === totalPages || loading}
-          onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-        >
-          Next
-        </button>
-      </nav>
+          <button
+            className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
+            disabled={page === totalPages || loading}
+            onClick={() => changePage(totalPages)}
+          >
+            Last
+          </button>
+        </nav>
+      )}
     </>
   );
 }

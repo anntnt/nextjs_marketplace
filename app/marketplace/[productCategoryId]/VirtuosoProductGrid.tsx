@@ -15,7 +15,7 @@ const VirtuosoGridList = React.forwardRef<
   <div
     ref={ref}
     style={style}
-    className={`grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${
+    className={`grid gap-y-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 ${
       className ?? ''
     }`}
     {...rest}
@@ -39,7 +39,46 @@ export default function VirtuosoProductGrid({
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const effectivePageSize = pageSize ?? 21; // Default page size if not provided
+  const smoothScrollTo = useCallback((targetY: number, duration = 1100) => {
+    if (typeof window === 'undefined') return;
+
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    if (distance === 0) return;
+
+    const startTime = performance.now();
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      window.scrollTo(0, startY + distance * eased);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  }, []);
+
+  const scrollToTop = useCallback(() => {
+    if (typeof window === 'undefined') return;
+
+    const target = document.getElementById('category-products');
+    const top = target?.getBoundingClientRect().top ?? 0;
+    const scrollTarget = window.scrollY + top - 120;
+
+    smoothScrollTo(Math.max(0, scrollTarget));
+  }, [smoothScrollTo]);
+
+  const changePage = useCallback(
+    (newPage: number) => {
+      setCurrentPage(newPage);
+      requestAnimationFrame(scrollToTop);
+    },
+    [scrollToTop],
+  );
+
+  const effectivePageSize = pageSize ?? 30; // Default page size if not provided
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
@@ -49,10 +88,10 @@ export default function VirtuosoProductGrid({
         `/api/products?categoryId=${categoryId}&limit=${effectivePageSize}&offset=${offset}`,
       );
       if (!res.ok) throw new Error('Failed to fetch products');
-      const newProducts: Product[] = await res.json();
+      const data: { products: Product[]; totalCount: number } = await res.json();
 
-      setProducts(newProducts);
-      setTotalPages(Math.ceil(100 / effectivePageSize)); // Assume 100 for now or return total count from backend
+      setProducts(data.products);
+      setTotalPages(Math.max(1, Math.ceil(data.totalCount / effectivePageSize)));
     } catch (error) {
       console.error(error);
     } finally {
@@ -70,10 +109,13 @@ export default function VirtuosoProductGrid({
       if (!product) return null;
 
       return (
-        <div className="p-2" key={product.id}>
+        <div
+          className="p-2"
+          key={product.id}
+        >
           <Card
             data-test-id={`product-id-${product.id}`}
-            className="max-w-sm"
+            className="flex h-full w-full flex-col !rounded-sm"
             renderImage={() => (
               <Link href={`/marketplace/product/${product.id}`}>
                 <Image
@@ -85,15 +127,17 @@ export default function VirtuosoProductGrid({
               </Link>
             )}
           >
-            <Link
-              href={`/marketplace/product/${product.id}`}
-              className="hover:underline"
-            >
-              <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                {product.name}
-              </h2>
-            </Link>
-            <AddToCartForm product={product} roleId={userRoleId} />
+            <div className="flex flex-1 flex-col gap-4">
+              <Link
+                href={`/marketplace/product/${product.id}`}
+                className="hover:underline"
+              >
+                <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                  {product.name}
+                </h2>
+              </Link>
+              <AddToCartForm product={product} roleId={userRoleId} />
+            </div>
           </Card>
         </div>
       );
@@ -102,18 +146,22 @@ export default function VirtuosoProductGrid({
   );
 
   const renderPagination = () => {
-    const pageLinks = [];
+    if (products.length === 0 || totalPages <= 1) {
+      return null;
+    }
+
     const start = Math.max(1, currentPage - 1);
     const end = Math.min(totalPages, currentPage + 1);
+    const buttons = [];
 
     for (let i = start; i <= end; i++) {
-      pageLinks.push(
+      buttons.push(
         <button
-          key={i}
+          key={`product-page-${i}`}
           className={`px-3 py-1 border rounded-md mx-1 ${
             i === currentPage ? 'bg-blue-600 text-white' : 'bg-white text-black'
           }`}
-          onClick={() => setCurrentPage(i)}
+          onClick={() => changePage(i)}
         >
           {i}
         </button>,
@@ -125,19 +173,19 @@ export default function VirtuosoProductGrid({
         <button
           disabled={currentPage === 1}
           className="px-3 py-1 border rounded-md"
-          onClick={() => setCurrentPage(currentPage - 1)}
+          onClick={() => changePage(1)}
         >
-          Previous
+          First
         </button>
-        {start > 1 && <span>...</span>}
-        {pageLinks}
-        {end < totalPages && <span>...</span>}
+        {start > 1 && <span>…</span>}
+        {buttons}
+        {end < totalPages && <span>…</span>}
         <button
           disabled={currentPage === totalPages}
           className="px-3 py-1 border rounded-md"
-          onClick={() => setCurrentPage(currentPage + 1)}
+          onClick={() => changePage(totalPages)}
         >
-          Next
+          Last
         </button>
       </div>
     );
@@ -152,6 +200,8 @@ export default function VirtuosoProductGrid({
         components={{
           List: VirtuosoGridList,
         }}
+        style={{ height: "390px" }}
+        // Hier Höhe definieren:
       />
       {renderPagination()}
     </>

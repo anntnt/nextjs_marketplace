@@ -13,7 +13,7 @@ const users = [
     gender: 'female',
     store_name: 'Wonder Shop',
     address: 'Wonder Insel, 1020 Vienna, Austria',
-    role_id: 2,
+    roleName: 'Seller',
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const users = [
     gender: 'male',
     store_name: '',
     address: 'Reumannplatz 11A, 1100 Vienna, Austria',
-    role_id: 3,
+    roleName: 'Buyer',
   },
 
   {
@@ -42,12 +42,30 @@ const users = [
     gender: 'female',
     store_name: 'Cool Decor Ideas',
     address: 'Wonder Insel, 1020 Vienna, Austria',
-    role_id: 2,
+    roleName: 'Seller',
   },
 ];
 
 export async function up(sql: Sql) {
+  const roles = await sql<{ id: number; name: string }[]>`
+    SELECT id, name FROM roles
+  `;
+
+  const roleIdByName = new Map(roles.map((role) => [role.name, role.id]));
+
   for (const user of users) {
+    let roleId = roleIdByName.get(user.roleName);
+
+    if (!roleId) {
+      const [newRole] = await sql<{ id: number }[]>`
+        INSERT INTO roles (name)
+        VALUES (${user.roleName})
+        RETURNING id
+      `;
+      roleId = newRole.id;
+      roleIdByName.set(user.roleName, roleId);
+    }
+
     await sql`
       INSERT INTO
         users (
@@ -73,7 +91,7 @@ export async function up(sql: Sql) {
           ${user.gender},
           ${user.store_name},
           ${user.address},
-          ${user.role_id}
+          ${roleId}
         )
     `;
   }
@@ -82,9 +100,9 @@ export async function up(sql: Sql) {
 export async function down(sql: Sql) {
   for (const user of users) {
     await sql`
-      DELETE FROM roles
+      DELETE FROM users
       WHERE
-        id = ${user.id}
+        username = ${user.username}
     `;
   }
 }

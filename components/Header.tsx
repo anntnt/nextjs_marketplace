@@ -26,10 +26,10 @@ export default function Component(props: UserProps) {
 
   return (
     <header className="top-0 bg-white shadow-md z-10">
-      <nav className=" bg-yellow-100 border-gray-200  py-3.5 sm:py-3 dark:bg-gray-900 flex justify-between items-center px-4 sm:px-10 xl:px-6 2xl:px-20  mx-auto">
-        <div className="flex flex-wrap items-center justify-between w-full max-w-full 2xl:px-20  mx-auto">
+      <nav className="bg-yellow-100 border-gray-200 py-3.5 sm:py-3 dark:bg-gray-900">
+        <div className="mx-auto flex w-full max-w-screen-3xl flex-wrap items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           {/* Left Side - Links */}
-          <div className="flex items-center flex-shrink-0 justify-center space-x-4  font-semibold max-sm:mx-auto">
+          <div className="flex items-center gap-6 font-semibold">
             <Link
               href="/"
               className="text-xl active:text-blue-1000 focus:text-blue-1000 font-semibold dark:text-white w-full md:w-auto md:flex md:justify-center "
@@ -44,7 +44,7 @@ export default function Component(props: UserProps) {
                 priority
               />
             </Link>
-            <ul className="hidden md:flex space-x-8 xl:space-x-4 2xl:space-x-8 active:text-blue-1000 focus:text-blue-1000">
+            <ul className="hidden md:flex flex-wrap items-center gap-6 xl:gap-8 active:text-blue-1000 focus:text-blue-1000">
               <li className="active:text-blue-1000 focus:text-blue-1000">
                 <Link
                   href="/#categories"
@@ -94,47 +94,46 @@ export default function Component(props: UserProps) {
           </div>
 
           {/* Right Side - Search Box, Cart, Login/Register */}
-          <div className="flex items-center space-x-5 sm:space-x-4 xl:space-x-4 2xl:space-x-10 ">
-            {/* Search Box */}
-            <Search placeholder="Search products" />
-            {/* only display cart icon when user role is buyer */}
-            {props.user && props.user.roleId === 3 ? (
-              <Cart cartSum={props.cartSum} />
-            ) : (
-              <div />
-            )}
-            {props.user ? (
-              <ProfileDropdown user={props.user} />
-            ) : (
-              <>
-                {/* Login/Register */}
+          <div className="flex flex-1 flex-wrap items-center justify-end gap-4">
+            <div className="hidden w-full flex-1 md:block">
+              <Search placeholder="Search products" className="max-w-3xl" />
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="w-full md:hidden">
+                <Search placeholder="Search products" />
+              </div>
+              {props.user && props.user.roleId === 3 ? (
+                <Cart cartSum={props.cartSum} />
+              ) : null}
+              {props.user ? (
+                <ProfileDropdown user={props.user} />
+              ) : (
                 <AccountDropdown />
-              </>
-            )}
+              )}
+              {/* Mobile Menu Toggle */}
+              <button
+                onClick={toggleMenu}
+                className="bg-blue-1000 border-blue-1000 inline-flex items-center p-2 text-white rounded-lg md:hidden hover:bg-blue-900 focus:outline-none"
+                aria-controls="navbar-menu"
+                aria-expanded={isOpen}
+              >
+                <span className="sr-only">Open main menu</span>
+                <svg
+                  className="w-6 h-6"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={toggleMenu}
-            className="bg-blue-1000  border-blue-1000 inline-flex items-center p-2 ml-3 text-white rounded-lg md:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
-            aria-controls="navbar-menu"
-            aria-expanded={isOpen}
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
 
           {/* Mobile Menu */}
           {isOpen && (

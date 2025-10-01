@@ -19,7 +19,7 @@ const CategoriesGridList = React.forwardRef<
   <div
     ref={ref}
     style={style}
-    className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${
+    className={`grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 ${
       className ?? ''
     }`}
     {...rest}
@@ -30,13 +30,52 @@ const CategoriesGridList = React.forwardRef<
 
 CategoriesGridList.displayName = 'CategoriesGridList';
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 30;
 
 export default function CategoriesVirtuoso() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  const smoothScrollTo = useCallback((targetY: number, duration = 1100) => {
+    if (typeof window === 'undefined') return;
+
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    if (distance === 0) return;
+
+    const startTime = performance.now();
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      window.scrollTo(0, startY + distance * eased);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  }, []);
+
+  const scrollToTop = useCallback(() => {
+    if (typeof window === 'undefined') return;
+
+    const target = document.getElementById('categories');
+    const top = target?.getBoundingClientRect().top ?? 0;
+    const scrollTarget = window.scrollY + top - 120;
+
+    smoothScrollTo(Math.max(0, scrollTarget));
+  }, [smoothScrollTo]);
+
+  const changePage = useCallback(
+    (newPage: number) => {
+      setPage(newPage);
+      requestAnimationFrame(scrollToTop);
+    },
+    [scrollToTop],
+  );
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
@@ -76,7 +115,7 @@ export default function CategoriesVirtuoso() {
     return (
       <div className="p-2" key={category.id}>
         <Card
-          className="max-w-sm"
+          className="h-[320px] !rounded-sm flex flex-col"
           renderImage={() => (
             <Link href={`/marketplace/${category.id}`}>
               <Image
@@ -102,7 +141,7 @@ export default function CategoriesVirtuoso() {
   };
 
   const renderPagination = () => {
-    if (total === 0) {
+    if (total === 0 || total <= PAGE_SIZE) {
       return null;
     }
 
@@ -117,8 +156,8 @@ export default function CategoriesVirtuoso() {
           className={`px-3 py-1 border rounded-md mx-1 ${
             i === page ? 'bg-blue-600 text-white' : 'bg-white text-black'
           }`}
-          onClick={() => setPage(i)}
-          disabled={loading}
+          onClick={() => changePage(i)}
+          disabled={loading || i === page}
         >
           {i}
         </button>,
@@ -128,39 +167,53 @@ export default function CategoriesVirtuoso() {
     return (
       <div className="mt-8 flex items-center justify-center gap-2">
         <button
-          className="px-3 py-1 border rounded-md"
-          onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+          className="px-3 py-1 border rounded-md disabled:opacity-40"
+          onClick={() => changePage(1)}
           disabled={page === 1 || loading}
         >
-          Previous
+          First
         </button>
         {start > 1 && <span>…</span>}
         {buttons}
         {end < totalPages && <span>…</span>}
         <button
-          className="px-3 py-1 border rounded-md"
-          onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+          className="px-3 py-1 border rounded-md disabled:opacity-40"
+          onClick={() => changePage(totalPages)}
           disabled={page === totalPages || loading}
         >
-          Next
+          Last
         </button>
       </div>
     );
   };
 
-  if (!loading && categories.length === 0) {
-    return (
-      <div className="text-center text-gray-600 dark:text-gray-300">
-        No categories available right now.
-      </div>
-    );
-  }
-
   return (
     <div className="relative">
-      {loading && (
-        <div className="mb-4 text-center text-sm text-gray-500 dark:text-gray-400">
-          Loading categories…
+      {(loading || categories.length === 0) && (
+        <div className="mb-6 flex w-full items-center justify-center">
+          <div className="flex items-center gap-3 rounded-full border border-blue-200/70 bg-white px-4 py-2 text-sm text-blue-700 shadow-sm dark:border-blue-800/70 dark:bg-gray-900 dark:text-blue-200">
+            <svg
+              className="h-4 w-4 animate-spin"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              />
+            </svg>
+            Loading categories…
+          </div>
         </div>
       )}
       <VirtuosoGrid

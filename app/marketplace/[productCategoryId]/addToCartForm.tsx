@@ -17,8 +17,8 @@ export default function AddToCartForm(props: Props) {
   const router = useRouter();
 
   return (
-    <div>
-      <div className="mt-4 flex items-center justify-between gap-4">
+    <div className="mt-auto">
+      <div className="mt-4 flex flex-col gap-3">
         <p className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
           {formatEuroFromCents(props.product.price)}
         </p>
@@ -50,8 +50,8 @@ export default function AddToCartForm(props: Props) {
           }}
         >
           {!props.roleId || props.roleId !== 2 ? (
-            <button className="inline-flex items-center rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300dark:bg-primary-600 ">
-              <BsCart4 size={20} className="mr-3 mb-1" />
+            <button className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:bg-primary-600">
+              <BsCart4 size={20} />
               Add to cart
             </button>
           ) : null}

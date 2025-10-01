@@ -19,6 +19,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/dnglmyclj/image/upload/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

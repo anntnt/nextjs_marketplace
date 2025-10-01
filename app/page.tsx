@@ -39,7 +39,7 @@ export default function Home() {
         id="categories"
         className="mb-16 pb-8 bg-gray-50 py-16 dark:bg-gray-900"
       >
-        <div className="mx-auto max-w-screen-xl px-6 sm:px-12">
+        <div className="mx-auto w-full max-w-screen-3xl px-4 sm:px-8">
           <div className="mx-auto mt-8 mb-8 max-w-2xl text-center">
             <h1 className="text-3xl font-semibold text-gray-900 dark:text-white">
               Discover by category
@@ -56,7 +56,7 @@ export default function Home() {
       {/* Call to action */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-gradient-to-br from-amber-200 via-white to-blue-200 dark:from-amber-900/60 dark:via-slate-900 dark:to-blue-900/60" />
-        <div className="mx-auto max-w-screen-xl px-6 py-16 sm:px-12">
+        <div className="mx-auto w-full max-w-screen-3xl px-4 py-16 sm:px-8">
           <div className="grid gap-10 rounded-3xl bg-white/80 p-10 shadow-2xl shadow-amber-200/60 ring-white/60 backdrop-blur dark:bg-white/10 dark:shadow-blue-900/40 dark:ring-white/10 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="space-y-4">
               <h2 className="text-3xl font-semibold text-gray-900 dark:text-white">

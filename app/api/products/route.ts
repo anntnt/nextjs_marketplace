@@ -12,7 +12,11 @@ export async function GET(request: NextRequest): Promise<NextResponse<any>> {
     return NextResponse.json({ error: 'Missing categoryId' }, { status: 400 });
   }
 
-  const products = await getCategoryProductsInsecure(categoryId, limit, offset);
+  const { products, totalCount } = await getCategoryProductsInsecure(
+    categoryId,
+    limit,
+    offset,
+  );
 
-  return NextResponse.json(products);
+  return NextResponse.json({ products, totalCount });
 }
