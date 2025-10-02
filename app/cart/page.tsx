@@ -21,7 +21,7 @@ export const metadata = {
 };
 
 export default async function CartPage() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const sessionTokenCookie = cookieStore.get('sessionToken');
   let guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
 

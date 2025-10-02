@@ -177,11 +177,12 @@ export const getCategoryProductsInsecure = cache(
     limit = 20, // default limit
     offset = 0, // default offset
   ): Promise<{ products: Product[]; totalCount: number }> => {
-    const [{ count }] = await sql<{ count: number }[]>`
+    const result = await sql<{ count: number }[]>`
       SELECT COUNT(*)::int AS count
       FROM products
       WHERE category_id = ${categoryId}
     `;
+    const count = result?.[0]?.count ?? 0;
 
     const productsRaw = await sql<
       {
@@ -256,13 +257,14 @@ export const getProductsOfSeller = cache(
     const limit = Number.isFinite(pageSize) && pageSize > 0 ? Math.floor(pageSize) : 25;
     const offset = (currentPage - 1) * limit;
 
-    const [{ count }] = await sql<{ count: number }[]>`
+    const result = await sql<{ count: number }[]>`
       SELECT COUNT(*)::int AS count
       FROM products
       INNER JOIN sessions ON products.seller_id = sessions.user_id
       WHERE sessions.token = ${sessionToken}
-        AND sessions.expiry_timestamp > now()
+        AND sessions.expiry_timestamp > now();
     `;
+    const count = result?.[0]?.count ?? 0;
 
     const productsRaw = await sql<
       {

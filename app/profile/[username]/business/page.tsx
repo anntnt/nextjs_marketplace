@@ -53,7 +53,7 @@ export default async function SellerProductsPage({ searchParams }: Props) {
 
   const baseHref = `/profile/${user.username}/business`;
   const makePageHref = (targetPage: number) =>
-    targetPage <= 1 ? baseHref : `${baseHref}?page=${targetPage}`;
+    targetPage <= 1 ? { pathname: baseHref } : { pathname: baseHref, query: { page: targetPage } };
 
   const hasPrevious = page > 1;
   const hasNext = page < totalPages;
