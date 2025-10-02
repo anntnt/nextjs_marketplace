@@ -115,7 +115,7 @@ export default function CategoriesVirtuoso() {
     return (
       <div className="p-2" key={category.id}>
         <Card
-          className="h-[320px] !rounded-sm flex flex-col"
+          className="flex flex-col"
           renderImage={() => (
             <Link href={`/marketplace/${category.id}`}>
               <Image
