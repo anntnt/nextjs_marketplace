@@ -1,10 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useMemo, useState } from 'react';
 
 export default function Component() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const currentPath = pathname && pathname !== '/login' && pathname !== '/register' ? pathname : '/';
+  const loginHref = useMemo(() => {
+    if (!pathname || pathname === '/login') {
+      return '/login';
+    }
+    return `/login?returnTo=${encodeURIComponent(pathname)}`;
+  }, [pathname]);
+
+  const registerHref = useMemo(() => {
+    if (!pathname || pathname === '/register') {
+      return '/register';
+    }
+    return `/register?returnTo=${encodeURIComponent(currentPath)}`;
+  }, [currentPath, pathname]);
   return (
     <div
       className="relative"
@@ -37,7 +53,7 @@ export default function Component() {
           <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
             <li>
               <Link
-                href="/login"
+                href={loginHref}
                 className="rounded-lg block px-4 py-2 bg-yellow-100  dark:hover:bg-gray-600 dark:hover:text-white font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 text-center"
               >
                 Login
@@ -49,7 +65,7 @@ export default function Component() {
                 New to eStores?
               </div>
               <Link
-                href="/register"
+                href={registerHref}
                 className="underline text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 font-semibold dark:hover:bg-gray-600 dark:hover:text-white text-center"
               >
                 Register

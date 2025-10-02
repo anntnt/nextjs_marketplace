@@ -82,14 +82,6 @@ export default async function CartPage() {
 
           <p>Your cart is empty</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-            {!isGuest ? null : (
-              <Link
-                href="/login?returnTo=%2Fcheckout"
-                className="text-center sm:w-auto rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
-              >
-                Sign in to checkout
-              </Link>
-            )}
             <Link
               href="/#categories"
               className="text-center sm:w-auto rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-semibold text-gray-800 hover:bg-gray-100"

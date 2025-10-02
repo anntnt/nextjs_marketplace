@@ -14,7 +14,7 @@ import { parseGuestCartCookie } from '../../../../util/guestCart';
 
 export type LoginResponseBody =
   | {
-      user: { username: UserLogin['username'] };
+      user: { username: UserLogin['username']; roleId: number };
     }
   | {
       errors: { message: string }[];
@@ -130,6 +130,7 @@ export async function POST(
   return NextResponse.json({
     user: {
       username: userWithPasswordHash.username,
+      roleId: userWithPasswordHash.roleId,
     },
   });
 }

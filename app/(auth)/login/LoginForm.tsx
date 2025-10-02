@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { getSafeReturnToPath } from '../../../util/validation';
 import ErrorMessage from '../../ErrorMessage';
@@ -15,6 +15,7 @@ export default function LoginForm(props: Props) {
   const [errors, setErrors] = useState<{ message: string }[]>([]);
 
   const router = useRouter();
+  const pathname = usePathname();
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -34,9 +35,14 @@ export default function LoginForm(props: Props) {
       return;
     }
 
-    router.push(
-      getSafeReturnToPath(props.returnTo) || `/profile/${data.user.username}`,
-    );
+    if (data.user.roleId === 3) {
+      const safeReturnTo = getSafeReturnToPath(props.returnTo);
+      const fallbackPath = pathname && pathname !== '/login' ? pathname : '/';
+      const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : fallbackPath;
+      router.push(target);
+    } else {
+      router.push(`/profile/${data.user.username}`);
+    }
 
     router.refresh();
   }
