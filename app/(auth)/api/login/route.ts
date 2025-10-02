@@ -3,12 +3,14 @@ import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { createSessionInsecure } from '../../../../database/sessions';
+import { createOrUpdateCartItem } from '../../../../database/cartProducts';
 import { getUserWithPasswordHashInsecure } from '../../../../database/users';
 import {
   type UserLogin,
   userLoginSchema,
 } from '../../../../migrations/0001-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
+import { parseGuestCartCookie } from '../../../../util/guestCart';
 
 export type LoginResponseBody =
   | {
@@ -101,11 +103,27 @@ export async function POST(
     );
   }
 
-  (await cookies()).set({
+  const cookieStore = await cookies();
+  const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+
+  cookieStore.set({
     name: 'sessionToken',
     value: session.token,
     ...secureCookieOptions,
   });
+
+  if (guestCartItems.length > 0) {
+    for (const item of guestCartItems) {
+      await createOrUpdateCartItem(session.token, item.productId, item.quantity);
+    }
+
+    cookieStore.set({
+      name: 'guestCart',
+      value: '',
+      path: '/',
+      maxAge: 0,
+    });
+  }
 
   // 7. Return the new user information without the password hash
 

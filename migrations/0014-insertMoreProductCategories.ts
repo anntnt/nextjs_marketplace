@@ -49,7 +49,9 @@ const nouns = [
 const CATEGORY_IMAGE_PLACEHOLDER =
   'https://res.cloudinary.com/dnglmyclj/image/upload/c_fill,w_640,h_404/v1749471355/placeholder_yab9lx.jpg';
 
-const extraCategories = Array.from({ length: 100 }, (_, index) => {
+const EXTRA_CATEGORY_COUNT = 60;
+
+const extraCategories = Array.from({ length: EXTRA_CATEGORY_COUNT }, (_, index) => {
   const adjective = adjectives[index % adjectives.length];
   const noun = nouns[Math.floor(index / adjectives.length) % nouns.length];
   const name = `${adjective} ${noun}`.slice(0, 30);

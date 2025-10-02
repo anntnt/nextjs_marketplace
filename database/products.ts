@@ -407,3 +407,31 @@ export const updateProductWithoutImage = cache(
     return product;
   },
 );
+
+export async function getProductsByIds(ids: number[]): Promise<Product[]> {
+  if (ids.length === 0) return [];
+
+  const productsRaw = await sql<
+    {
+      id: number;
+      name: string;
+      price: string;
+      imageUrl: string;
+      description: string;
+      size: string | null;
+      color: string | null;
+      sellerId: number;
+      categoryId: number | null;
+      brand: string | null;
+    }[]
+  >`
+    SELECT *
+    FROM products
+    WHERE id = ANY(${ids})
+  `;
+
+  return productsRaw.map((productRaw) => ({
+    ...productRaw,
+    price: Number(productRaw.price),
+  }));
+}

@@ -18,5 +18,13 @@ export async function logout() {
     cookieStore.delete(token.name);
   }
 
+  cookieStore.set({
+    name: 'flashMessage',
+    value: 'You are logged out.',
+    path: '/',
+    sameSite: 'lax',
+    maxAge: 5,
+  });
+
   return;
 }

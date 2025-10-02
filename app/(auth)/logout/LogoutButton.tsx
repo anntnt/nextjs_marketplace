@@ -15,6 +15,7 @@ export default function LogoutButton() {
         className=" underline block sm:px-4 py-1  dark:hover:bg-gray-600 dark:hover:text-white font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 sm:text-center"
         onClick={async () => {
           await logout();
+          router.push('/');
           router.refresh();
         }}
         onKeyDown={async (e) => {
@@ -22,6 +23,7 @@ export default function LogoutButton() {
             e.preventDefault();
             // Simulate button click on Enter or Space
             await logout();
+            router.push('/');
             router.refresh();
           }
         }}

@@ -127,7 +127,7 @@ export async function up(sql: Sql) {
     const price = Math.floor(Math.random() * 145 * 100 + 500); // store as cents (€5.00 - €149.99)
 
     const image_url = CATEGORY_IMAGE_PLACEHOLDER;
-    const brand = brands[Math.floor(Math.random() * brands.length)];
+    const brand = brands[Math.floor(Math.random() * brands.length)] ?? 'Generic';
 
     return {
       name,
@@ -140,29 +140,30 @@ export async function up(sql: Sql) {
     };
   };
 
-  const products = [];
+  interface Product {
+    name: string;
+    brand: string;
+    description: string;
+    price: number;
+    image_url: string;
+    seller_id: number;
+    category_id: number;
+  }
 
-  // Ensure every category receives at least 90 products
+  const products: Product[] = [];
+
+  const PRODUCTS_PER_CATEGORY = 100;
+
+  // Seed a limited number of products per category to keep the dataset lightweight
   categoryIds.forEach((categoryId, index) => {
     const sellerId = sellerIds[index % sellerIds.length];
-    for (let count = 0; count < 90; count++) {
+    for (let count = 0; count < PRODUCTS_PER_CATEGORY; count++) {
       const seed = index * 1000 + count;
       if (categoryId !== undefined && sellerId !== undefined) {
         products.push(generateProduct(seed, categoryId, sellerId));
       }
     }
   });
-
-  // Generate additional products to reach at least 90 per category even if there are few categories
-  const minimumTotal = categoryIds.length * 90;
-  const targetTotal = Math.max(minimumTotal, 1200);
-  for (let i = products.length; i < targetTotal; i++) {
-    const categoryId = categoryIds[i % categoryIds.length];
-    const sellerId = sellerIds[i % sellerIds.length];
-    if (categoryId !== undefined && sellerId !== undefined) {
-      products.push(generateProduct(i + 12345, categoryId, sellerId));
-    }
-  }
 
   const chunkSize = 100;
   for (let i = 0; i < products.length; i += chunkSize) {

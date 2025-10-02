@@ -2,9 +2,15 @@ import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { getCartProducts } from '../../database/cartProducts';
+import {
+  createOrUpdateCartItem,
+  getCartProducts,
+  type ProductFromCart,
+} from '../../database/cartProducts';
+import { getProductsByIds } from '../../database/products';
 import { getUser } from '../../database/users';
 import { STANDARD_DELIVERY_PRICE } from '../../util/const';
+import { parseGuestCartCookie } from '../../util/guestCart';
 import { formatEuroFromCents } from '../../util/price';
 import EditProductQuantitiesForm from './EditProductQuantitiesForm';
 import RemoveCartProductButton from './RemoveCartProductButton';
@@ -15,37 +21,95 @@ export const metadata = {
 };
 
 export default async function CartPage() {
-  // 1. Check if the sessionToken cookie exists
-  const sessionTokenCookie = (await cookies()).get('sessionToken');
+  const cookieStore = cookies();
+  const sessionTokenCookie = cookieStore.get('sessionToken');
+  let guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
 
-  // 2. Query the current user with the sessionToken
-  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
+  const sessionToken = sessionTokenCookie?.value;
+  const user = sessionToken ? await getUser(sessionToken) : undefined;
 
-  // 3. If user doesn't exist, redirect to login page
-  if (!user) {
-    redirect('/login');
-  }
-
-  if (user.roleId !== 3) {
+  if (user && user.roleId !== 3) {
     redirect('/buyer-area-only');
   }
-  const productsFromCart = await getCartProducts(sessionTokenCookie.value);
+
+  if (user?.roleId === 3 && sessionToken && guestCartItems.length > 0) {
+    for (const item of guestCartItems) {
+      await createOrUpdateCartItem(sessionToken, item.productId, item.quantity);
+    }
+
+    cookieStore.delete('guestCart');
+    guestCartItems = [];
+  }
+
+  let productsFromCart: ProductFromCart[] = [];
+  const isGuest = !user;
+
+  if (!isGuest && sessionToken) {
+    const productsRaw = await getCartProducts(sessionToken);
+    productsFromCart = productsRaw.map((product) => ({
+      ...product,
+      price: Number(product.price),
+    }));
+  } else {
+    const quantityById = new Map(
+      guestCartItems.map((item) => [item.productId, item.quantity]),
+    );
+    const orderById = new Map(
+      guestCartItems.map((item, index) => [item.productId, index]),
+    );
+
+    const products = await getProductsByIds([...quantityById.keys()]);
+
+    productsFromCart = products
+      .map((product) => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        quantity: quantityById.get(product.id) ?? 0,
+      }))
+      .filter((product) => product.quantity > 0)
+      .sort(
+        (a, b) => (orderById.get(a.id) ?? 0) - (orderById.get(b.id) ?? 0),
+      );
+  }
+
   if (!productsFromCart.length) {
     return (
-      <main className="flex-grow  w-full max-w-full px-20 py-12">
+      <main className="flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <h1 className="mb-4 text-3xl text-center">Your Cart </h1>
+          <h1 className="mb-4 text-3xl text-center">Your Cart</h1>
 
           <p>Your cart is empty</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+            {!isGuest ? null : (
+              <Link
+                href="/login?returnTo=%2Fcheckout"
+                className="text-center sm:w-auto rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
+              >
+                Sign in to checkout
+              </Link>
+            )}
+            <Link
+              href="/#categories"
+              className="text-center sm:w-auto rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-semibold text-gray-800 hover:bg-gray-100"
+            >
+              Continue shopping
+            </Link>
+          </div>
         </div>
       </main>
     );
   }
 
   const subTotal = productsFromCart.reduce((accumulator, product) => {
-    return (accumulator += product.price * product.quantity);
+    return accumulator + product.price * product.quantity;
   }, 0);
   const total = subTotal + STANDARD_DELIVERY_PRICE;
+  const checkoutHref = !isGuest
+    ? '/checkout'
+    : '/login?returnTo=%2Fcheckout';
+
   return (
     <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -136,7 +200,7 @@ export default async function CartPage() {
 
             <div className="mt-8 space-y-2">
               <Link
-                href="/checkout"
+                href={checkoutHref}
                 type="button"
                 className="text-center w-full text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
@@ -150,6 +214,13 @@ export default async function CartPage() {
                 Continue shopping
               </Link>
             </div>
+
+            {isGuest ? (
+              <p className="mt-4 text-sm text-gray-500">
+                You can add products without signing in. We will ask you to log in
+                or create an account before checkout so we can save your order.
+              </p>
+            ) : null}
 
             <div className="mt-4 flex flex-wrap justify-center gap-4">
               <img

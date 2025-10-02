@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import {
   type Cart,
@@ -9,6 +10,12 @@ import {
 } from '../../../database/cartProducts';
 import { getUser } from '../../../database/users';
 import { getCookie } from '../../../util/cookies';
+import {
+  parseGuestCartCookie,
+  replaceGuestCartItemQuantity,
+  serializeGuestCart,
+  upsertGuestCartItem,
+} from '../../../util/guestCart';
 
 export type CreateCartProductResponseBodyPost =
   | {
@@ -44,19 +51,40 @@ export async function POST(
   // 3. Get the token from the cookie
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
+  const cookieStore = cookies();
+  const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
 
   /* Assume that user logged in and click the button 'Add to cart' */
 
   // 4. Create the new cart product
-  const newCartProduct =
-    sessionTokenCookie &&
-    (await createOrUpdateCartItem(
-      sessionTokenCookie,
+  if (!sessionTokenCookie) {
+    const updatedGuestCart = upsertGuestCartItem(
+      guestCartItems,
       result.data.productId,
       result.data.quantity,
-    ));
+    );
 
-  const user = sessionTokenCookie && (await getUser(sessionTokenCookie));
+    const response = NextResponse.json({
+      cartProduct: { productId: result.data.productId },
+    });
+    response.cookies.set({
+      name: 'guestCart',
+      value: serializeGuestCart(updatedGuestCart),
+      path: '/',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 30,
+    });
+
+    return response;
+  }
+
+  const newCartProduct = await createOrUpdateCartItem(
+    sessionTokenCookie,
+    result.data.productId,
+    result.data.quantity,
+  );
+
+  const user = await getUser(sessionTokenCookie);
 
   // 5. If the new CartProduct creation fails, return an error
   if (!newCartProduct || (user && user.roleId === 2)) {
@@ -108,17 +136,43 @@ export async function PUT(
   // 3. Get the token from the cookie
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
+  const cookieStore = cookies();
+  const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
 
   /* Assume that user logged in and click the button 'Add to cart' */
 
   // 4. Create the new cart product
-  const cartProduct =
-    sessionTokenCookie &&
-    (await updateCartItem(
-      sessionTokenCookie,
+  if (!sessionTokenCookie) {
+    const updatedGuestCart = replaceGuestCartItemQuantity(
+      guestCartItems,
       result.data.productId,
       result.data.quantity,
-    ));
+    );
+
+    const response = NextResponse.json({
+      cartProduct: { productId: result.data.productId },
+    });
+
+    if (updatedGuestCart.length === 0) {
+      response.cookies.set({ name: 'guestCart', value: '', path: '/', maxAge: 0 });
+    } else {
+      response.cookies.set({
+        name: 'guestCart',
+        value: serializeGuestCart(updatedGuestCart),
+        path: '/',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 30,
+      });
+    }
+
+    return response;
+  }
+
+  const cartProduct = await updateCartItem(
+    sessionTokenCookie,
+    result.data.productId,
+    result.data.quantity,
+  );
 
   // 5. If the new CartProduct creation fails, return an error
   if (!cartProduct) {
@@ -150,10 +204,19 @@ export async function DELETE(): Promise<NextResponse<CartResponseDelete>> {
   // 3. Get the token from the cookie
 
   const sessionTokenCookie = await getCookie('sessionToken');
+  const cookieStore = cookies();
 
   // 4. Remove product
-  const products =
-    sessionTokenCookie && (await removeCartItems(sessionTokenCookie));
+  if (!sessionTokenCookie) {
+    const response = NextResponse.json({ products: [] });
+    const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+    if (guestCartItems.length > 0) {
+      response.cookies.set({ name: 'guestCart', value: '', path: '/', maxAge: 0 });
+    }
+    return response;
+  }
+
+  const products = await removeCartItems(sessionTokenCookie);
 
   if (!products) {
     return NextResponse.json(

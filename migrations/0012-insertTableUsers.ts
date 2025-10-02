@@ -62,6 +62,9 @@ export async function up(sql: Sql) {
         VALUES (${user.roleName})
         RETURNING id
       `;
+      if (!newRole) {
+        throw new Error(`Failed to insert role: ${user.roleName}`);
+      }
       roleId = newRole.id;
       roleIdByName.set(user.roleName, roleId);
     }

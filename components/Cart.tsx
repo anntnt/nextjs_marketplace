@@ -4,7 +4,7 @@ import { BsCart4 } from 'react-icons/bs';
 type ItemsProps = { cartSum?: string };
 
 export default function Component(props: ItemsProps) {
-  const cartItems = props.cartSum;
+  const cartItems = props.cartSum ?? '0';
   return (
     <div className="sm:me-5">
       <div className="text-white text-center rounded-full bg-red-500">

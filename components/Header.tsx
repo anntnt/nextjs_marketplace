@@ -1,13 +1,10 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
-import AccountDropdown from './AccountDropdown';
-import Cart from './Cart';
-import ProfileDropdown from './ProfileDropdown';
-import Search from './Search';
 
 type UserWithUsernameAndRole = User & {
   username: string;
@@ -19,10 +16,38 @@ type UserProps = {
   cartSum?: string;
 };
 
+const Search = dynamic<{ placeholder: string; className?: string }>(
+  () => import('./Search'),
+  {
+    ssr: false,
+    loading: () => null,
+  },
+);
+
+const Cart = dynamic<{ cartSum?: string }>(() => import('./Cart'), {
+  ssr: false,
+  loading: () => null,
+});
+
+const ProfileDropdown = dynamic<{ user: User | UserWithUsernameAndRole | undefined }>(
+  () => import('./ProfileDropdown'),
+  {
+    ssr: false,
+    loading: () => null,
+  },
+);
+
+const AccountDropdown = dynamic(() => import('./AccountDropdown'), {
+  ssr: false,
+  loading: () => null,
+});
+
 export default function Component(props: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const showCart = !props.user || props.user.roleId === 3;
 
   return (
     <header className="top-0 bg-white shadow-md z-10">
@@ -102,14 +127,12 @@ export default function Component(props: UserProps) {
               <div className="w-full md:hidden">
                 <Search placeholder="Search products" />
               </div>
-              {props.user && props.user.roleId === 3 ? (
-                <Cart cartSum={props.cartSum} />
-              ) : null}
-              {props.user ? (
-                <ProfileDropdown user={props.user} />
-              ) : (
-                <AccountDropdown />
-              )}
+              {showCart ? <Cart cartSum={props.cartSum} /> : null}
+                {props.user ? (
+                  <ProfileDropdown user={props.user} />
+                ) : (
+                  <AccountDropdown />
+                )}
               {/* Mobile Menu Toggle */}
               <button
                 onClick={toggleMenu}
