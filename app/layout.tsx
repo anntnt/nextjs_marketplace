@@ -1,13 +1,12 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
 import { cookies } from 'next/headers';
 import type { ReactNode } from 'react';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+import dynamic from 'next/dynamic';
 import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
 
-const inter = Inter({ subsets: ['latin'] });
+const Header = dynamic(() => import('../components/Header'), { ssr: true });
+const Footer = dynamic(() => import('../components/Footer'), { ssr: true });
 
 export const metadata = {
   title: {
@@ -37,7 +36,7 @@ export default async function RootLayout({ children }: Props) {
   // 3. Make decision whether to show the login and register links or not
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="font-sans">
         <div className="flex flex-col h-screen bg-gray-50  antialiased dark:bg-gray-900">
           <Header user={user} cartSum={cartSum} />
 

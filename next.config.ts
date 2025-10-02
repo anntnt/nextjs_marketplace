@@ -2,8 +2,16 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   experimental: {
-    dynamicIO: true,
     typedRoutes: true,
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.output = config.output || {};
+      config.output.chunkFilename = '[name].js';
+      config.output.hotUpdateChunkFilename = '[id].hot-update.js';
+      config.output.hotUpdateMainFilename = '[fullhash].hot-update.json';
+    }
+    return config;
   },
   eslint: {
     ignoreDuringBuilds: true,

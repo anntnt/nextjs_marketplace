@@ -5,7 +5,7 @@ const products = [
     id: 1,
     name: 'Christmas tree hanging ornaments',
     brand: 'Holiday Co',
-    price: 13,
+    price: 1300,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_balls_13_wc6vaz_c_fill_w_710_h_448_dxz0qd.jpg',
     description: 'Christmas tree hanging ornaments',
@@ -16,7 +16,7 @@ const products = [
     id: 2,
     name: 'Christmas tree hanging ornaments',
     brand: 'Festive Decor',
-    price: 15,
+    price: 1500,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_balls_9_ze7l6a_c_fill_w_710_h_448_g_auto_psiaph.jpg',
     description: 'Christmas tree hanging ornaments',
@@ -27,7 +27,7 @@ const products = [
     id: 3,
     name: 'Christmas decoration',
     brand: 'WinterCraft',
-    price: 9,
+    price: 900,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_decor_14_mlrtnx_z61afa.jpg',
     description: 'Christmas decoration',
@@ -38,7 +38,7 @@ const products = [
     id: 4,
     name: 'Christmas House',
     brand: 'Snowy Homes',
-    price: 27,
+    price: 2700,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005663/xmas_house_27_uvfekj_zhhzx8.jpg',
     description:
@@ -50,7 +50,7 @@ const products = [
     id: 5,
     name: 'Christmas decoration',
     brand: 'Festive World',
-    price: 16,
+    price: 1600,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/santa_27_ocxhfb_c_fill_w_710_h_448_jc4inf.jpg',
     description: 'Christmas decoration',
@@ -61,7 +61,7 @@ const products = [
     id: 6,
     name: 'Snow globe',
     brand: 'Snowy Magic',
-    price: 12,
+    price: 1200,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_snow_globe_zpqoaw_c_fill_w_710_h_448_wml1hs.jpg',
     description: 'Snow globe',
@@ -72,7 +72,7 @@ const products = [
     id: 7,
     name: 'Jingle Bells',
     brand: 'BellTone',
-    price: 25,
+    price: 2500,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/junlebells_25_aatiuc_awm8ft.jpg',
     description: 'Jingle Bells',
@@ -83,7 +83,7 @@ const products = [
     id: 8,
     name: 'Christmas decoration',
     brand: 'Holiday Makers',
-    price: 24,
+    price: 2400,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005663/xmas_decor_23_2_knxwgg_c_fill_w_710_h_448_g_auto_haupzv.jpg',
     description: 'Christmas decoration',
@@ -94,7 +94,7 @@ const products = [
     id: 9,
     name: 'Christmas tree',
     brand: 'GreenTree Co',
-    price: 219,
+    price: 21900,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_tree_210_bl8six_c_fill_w_710_h_448_g_auto_t91ca5.jpg',
     description: 'Christmas tree',
@@ -105,7 +105,7 @@ const products = [
     id: 10,
     name: 'Macarons',
     brand: 'Sweet Bites',
-    price: 12,
+    price: 1200,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016818/macarons_13_trtxy2_yhjsja.jpg',
     description: 'Macarons',
@@ -116,7 +116,7 @@ const products = [
     id: 11,
     name: 'Berry Mix',
     brand: 'FreshFarm',
-    price: 14,
+    price: 1400,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016817/berries_14_eoj7dj_xw16b6.jpg',
     description: 'Berry Mix',
@@ -127,7 +127,7 @@ const products = [
     id: 12,
     name: 'Donuts',
     brand: 'Donutland',
-    price: 11,
+    price: 1100,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016817/donuts_11_2_bfsohy_yhjfir.jpg',
     description: 'Donuts',
@@ -138,7 +138,7 @@ const products = [
     id: 13,
     name: 'Pancakes',
     brand: 'Fluffy Foods',
-    price: 9,
+    price: 900,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016818/pancakes_9_pq7no0_rxftu1.jpg',
     description: 'Pancakes',
@@ -149,7 +149,7 @@ const products = [
     id: 14,
     name: 'Christmas tree',
     brand: 'Festive Green',
-    price: 29,
+    price: 2900,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016912/xmas_tree_29_tzfayw_ilngud.jpg',
     description: 'Christmas tree',
@@ -160,7 +160,7 @@ const products = [
     id: 15,
     name: 'Christmas decoration set',
     brand: 'Holiday Pack',
-    price: 36,
+    price: 3600,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_wreath_36_xa98c5_c_fill_w_710_h_448_g_auto_ssoz4b.jpg',
     description: 'Christmas decoration set',
@@ -171,7 +171,7 @@ const products = [
     id: 16,
     name: 'Mini Santa',
     brand: 'SantaWorks',
-    price: 17,
+    price: 1700,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/santa_27_ocxhfb_c_fill_w_710_h_448_jc4inf.jpg',
     description: 'Mini Santa',
@@ -182,7 +182,7 @@ const products = [
     id: 17,
     name: 'Cupcakes',
     brand: 'BakeHouse',
-    price: 21,
+    price: 2100,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017033/cupcakes_21_n2ijnf_npygpa.jpg',
     description: 'Cupcakes',
@@ -193,7 +193,7 @@ const products = [
     id: 18,
     name: 'Smartphone',
     brand: 'TechBrand',
-    price: 449,
+    price: 44900,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017095/mobile-phone_v586rg_xc7fgo.png',
     description: 'Smartphone',
@@ -204,7 +204,7 @@ const products = [
     id: 19,
     name: 'Wireless Power Bank',
     brand: 'PowerPlus',
-    price: 21,
+    price: 2100,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017111/Power_Bank_Wireless_21_v5mgda_ytjjdi.jpg',
     description: 'Wireless Power Bank',
@@ -215,7 +215,7 @@ const products = [
     id: 20,
     name: 'Christmas wreath',
     brand: 'Evergreen',
-    price: 39,
+    price: 3900,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017148/xmas_wreath_31_fwuc4d_vjaws7.jpg',
     description: 'Christmas wreath',
@@ -226,7 +226,7 @@ const products = [
     id: 21,
     name: 'Bluetooth speaker',
     brand: 'SoundMax',
-    price: 52,
+    price: 5200,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017196/Bluetooth_speaker-52_o3r58r_c_pad_b_gen_fill_w_710_h_448_pyffk8.jpg',
     description: 'Bluetooth speaker',
@@ -237,7 +237,7 @@ const products = [
     id: 22,
     name: 'Lipstick',
     brand: 'BeautyLine',
-    price: 22,
+    price: 2200,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017233/lipsticks-5893481_1280_wzq6qk_sc8oi6.jpg',
     description: 'Lipstick',
@@ -248,7 +248,7 @@ const products = [
     id: 23,
     name: 'Doll house',
     brand: 'ToyWorld',
-    price: 49,
+    price: 4900,
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017262/toy_hk5kt9_hymzz0.jpg',
     description: 'Doll house',

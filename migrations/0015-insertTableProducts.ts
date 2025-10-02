@@ -147,7 +147,9 @@ export async function up(sql: Sql) {
     const sellerId = sellerIds[index % sellerIds.length];
     for (let count = 0; count < 90; count++) {
       const seed = index * 1000 + count;
-      products.push(generateProduct(seed, categoryId, sellerId));
+      if (categoryId !== undefined && sellerId !== undefined) {
+        products.push(generateProduct(seed, categoryId, sellerId));
+      }
     }
   });
 
@@ -157,7 +159,9 @@ export async function up(sql: Sql) {
   for (let i = products.length; i < targetTotal; i++) {
     const categoryId = categoryIds[i % categoryIds.length];
     const sellerId = sellerIds[i % sellerIds.length];
-    products.push(generateProduct(i + 12345, categoryId, sellerId));
+    if (categoryId !== undefined && sellerId !== undefined) {
+      products.push(generateProduct(i + 12345, categoryId, sellerId));
+    }
   }
 
   const chunkSize = 100;
