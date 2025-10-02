@@ -247,7 +247,23 @@ export const getCategoryProductWithSellerInsecure = cache(
 );
 
 export const getProductsOfSeller = cache(
-  async (sessionToken: Session['token']) => {
+  async (
+    sessionToken: Session['token'],
+    page = 1,
+    pageSize = 25,
+  ): Promise<{ products: Product[]; totalCount: number }> => {
+    const currentPage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
+    const limit = Number.isFinite(pageSize) && pageSize > 0 ? Math.floor(pageSize) : 25;
+    const offset = (currentPage - 1) * limit;
+
+    const [{ count }] = await sql<{ count: number }[]>`
+      SELECT COUNT(*)::int AS count
+      FROM products
+      INNER JOIN sessions ON products.seller_id = sessions.user_id
+      WHERE sessions.token = ${sessionToken}
+        AND sessions.expiry_timestamp > now()
+    `;
+
     const productsRaw = await sql<
       {
         id: number;
@@ -262,16 +278,14 @@ export const getProductsOfSeller = cache(
         brand: string | null;
       }[]
     >`
-      SELECT
-        products.*
-      FROM
-        products
-        INNER JOIN sessions ON products.seller_id = sessions.user_id
-      WHERE
-        sessions.token = ${sessionToken}
+      SELECT products.*
+      FROM products
+      INNER JOIN sessions ON products.seller_id = sessions.user_id
+      WHERE sessions.token = ${sessionToken}
         AND sessions.expiry_timestamp > now()
-      ORDER BY
-        id;
+      ORDER BY products.id
+      LIMIT ${limit}
+      OFFSET ${offset}
     `;
 
     const products: Product[] = productsRaw.map((productRaw) => ({
@@ -279,7 +293,10 @@ export const getProductsOfSeller = cache(
       price: Number(productRaw.price),
     }));
 
-    return products;
+    return {
+      products,
+      totalCount: count ?? 0,
+    };
   },
 );
 export const removeProduct = cache(

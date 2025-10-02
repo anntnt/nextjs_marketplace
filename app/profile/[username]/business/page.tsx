@@ -1,14 +1,17 @@
-import { Tooltip } from 'flowbite-react';
 import { cookies } from 'next/headers';
-import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getProductsOfSeller } from '../../../../database/products';
 import { getUser } from '../../../../database/users';
-import { formatEuroFromCents } from '../../../../util/price';
-import ButtonRemoveProduct from './ButtonRemoveProduct';
+import SellerProductsTable from './SellerProductsTable';
 
-export default async function SellerProductsPage() {
+type Props = {
+  searchParams: Promise<{
+    page?: string | string[];
+  }>;
+};
+
+export default async function SellerProductsPage({ searchParams }: Props) {
   // 1. Check if the sessionToken cookie exists
   const sessionTokenCookie = (await cookies()).get('sessionToken');
 
@@ -23,7 +26,40 @@ export default async function SellerProductsPage() {
     redirect('/seller-area-only');
   }
 
-  const products = await getProductsOfSeller(sessionTokenCookie.value);
+  const resolvedSearchParams = await searchParams;
+  const pageParamRaw = Array.isArray(resolvedSearchParams.page)
+    ? resolvedSearchParams.page[0]
+    : resolvedSearchParams.page;
+  const requestedPage = Number(pageParamRaw);
+  const page = Number.isFinite(requestedPage) && requestedPage > 0
+    ? Math.floor(requestedPage)
+    : 1;
+  const pageSize = 25;
+
+  const { products, totalCount } = await getProductsOfSeller(
+    sessionTokenCookie.value,
+    page,
+    pageSize,
+  );
+
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+
+  if (page > totalPages && totalCount > 0) {
+    const target = totalPages === 1
+      ? `/profile/${user.username}/business`
+      : `/profile/${user.username}/business?page=${totalPages}`;
+    redirect(target);
+  }
+
+  const baseHref = `/profile/${user.username}/business`;
+  const makePageHref = (targetPage: number) =>
+    targetPage <= 1 ? baseHref : `${baseHref}?page=${targetPage}`;
+
+  const hasPrevious = page > 1;
+  const hasNext = page < totalPages;
+  const paginationWindow = [page - 1, page, page + 1]
+    .filter((p) => p >= 1 && p <= totalPages)
+    .filter((value, index, self) => self.indexOf(value) === index);
 
   return (
     <main className="flex-grow  w-full max-w-full md:px-20 py-12">
@@ -54,96 +90,48 @@ export default async function SellerProductsPage() {
             Add new product
           </Link>
         </div>
-        <div className="mx-auto max-w-screen-md px-4 2xl:px-0">
-          <div className="mx-auto max-w-3xl">
-            <div className="mt-6 sm:mt-8">
-              <div className="relative overflow-x-auto border-b border-gray-200 dark:border-gray-800">
-                <table className="w-full text-left font-medium text-gray-900 dark:text-white md:table-fixed">
-                  <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                    {products.map((product) => {
-                      const productId = String(product.id);
-                      return (
-                        <tr
-                          key={`products-${product.id}`}
-                          data-test-id={`seller-product-id-${product.id}`}
-                        >
-                          <td className="whitespace-nowrap py-2 md:w-[384px]">
-                            <Link
-                              href={`/marketplace/product/${product.id}`}
-                              className="hover:underline"
-                            >
-                              <div className="flex items-center gap-4">
-                                <div className="flex items-center aspect-square w-75 h-32 shrink-0">
-                                  <Image
-                                    className="h-auto w-4/5 sm:w-full max-h-full dark:hidden"
-                                    alt={`Product ${product.name}`}
-                                    src={product.imageUrl}
-                                    width={75}
-                                    height={56}
-                                  />
+        <div className="mx-auto max-w-screen-md px-4 2xl:px-0 space-y-6">
+          <SellerProductsTable products={products} username={user.username} />
 
-                                  <Image
-                                    className="hidden h-auto w-full max-h-full dark:block"
-                                    alt={`Product ${product.name}`}
-                                    src={product.imageUrl}
-                                    width={75}
-                                    height={56}
-                                  />
-                                </div>
-                                {product.name}
-                              </div>
-                            </Link>
-                          </td>
+          <nav className="flex items-center justify-center gap-2">
+            <Link
+              href={hasPrevious ? makePageHref(page - 1) : '#'}
+              aria-disabled={!hasPrevious}
+              className={`rounded-md border px-3 py-2 text-sm font-medium ${
+                hasPrevious
+                  ? 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
+                  : 'cursor-not-allowed text-gray-400 dark:text-gray-600'
+              }`}
+            >
+              Previous
+            </Link>
 
-                          <td className="p-2 text-base font-normal text-gray-900 dark:text-white">
-                            {formatEuroFromCents(product.price)}
-                          </td>
-                          <td className="p-2 text-base font-normal text-gray-900 dark:text-white">
-                            <Link
-                              prefetch={true}
-                              href={{
-                                pathname: `/profile/${user.username}/business/edit-product`,
-                                query: { productId: productId }, // Ensure the ID is a string
-                              }}
-                            >
-                              <Tooltip content="Edit product">
-                                <svg
-                                  className="w-[35px] h-[35px] text-gray-800 dark:text-white"
-                                  aria-hidden="true"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="24"
-                                  height="24"
-                                  fill="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z"
-                                    clipRule="evenodd"
-                                  />
-                                  <path
-                                    fillRule="evenodd"
-                                    d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z"
-                                    clipRule="evenodd"
-                                  />
-                                </svg>
-                              </Tooltip>
-                            </Link>
-                          </td>
+            {paginationWindow.map((pageNumber) => (
+              <Link
+                key={`seller-products-page-${pageNumber}`}
+                href={makePageHref(pageNumber)}
+                className={`rounded-md px-3 py-2 text-sm font-medium ${
+                  pageNumber === page
+                    ? 'bg-blue-1000 text-white'
+                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                {pageNumber}
+              </Link>
+            ))}
 
-                          <td className="p-2 text-right text-base font-bold text-gray-900 dark:text-white">
-                            <Tooltip content="Remove product">
-                              <ButtonRemoveProduct id={product.id} />
-                            </Tooltip>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+            <Link
+              href={hasNext ? makePageHref(page + 1) : '#'}
+              aria-disabled={!hasNext}
+              className={`rounded-md border px-3 py-2 text-sm font-medium ${
+                hasNext
+                  ? 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
+                  : 'cursor-not-allowed text-gray-400 dark:text-gray-600'
+              }`}
+            >
+              Next
+            </Link>
+          </nav>
         </div>
       </section>
     </main>
