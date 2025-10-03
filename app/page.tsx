@@ -67,7 +67,7 @@ export default function Home() {
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
-                  href="/become-a-seller"
+                  href="/sell"
                   className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-blue-500 dark:shadow-blue-900/60 dark:hover:bg-blue-400"
                 >
                   Launch your shop
