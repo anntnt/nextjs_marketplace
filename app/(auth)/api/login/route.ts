@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
-import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/cookies';
+// Removed unused import as ReadonlyRequestCookies is not exported
 import { NextResponse } from 'next/server';
 import { createSessionInsecure } from '../../../../database/sessions';
 import { createOrUpdateCartItem } from '../../../../database/cartProducts';
@@ -104,7 +104,7 @@ export async function POST(
     );
   }
 
-  const requestCookies: ReadonlyRequestCookies = await cookies();
+  const requestCookies = await cookies();
   const guestCartCookie = requestCookies.get('guestCart');
   const guestCartCookieValue = typeof guestCartCookie?.value === 'string'
     ? guestCartCookie.value

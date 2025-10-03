@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { createSessionInsecure } from '../../../../database/sessions';
@@ -119,14 +119,7 @@ export async function POST(
   const cookieStore = await cookies();
   const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
 
-  const response = NextResponse.json({
-    user: {
-      username: newUser.username,
-      roleId: newUser.roleId,
-    },
-  });
-
-  response.cookies.set({
+  cookieStore.set({
     name: 'sessionToken',
     value: session.token,
     ...secureCookieOptions,
@@ -137,7 +130,7 @@ export async function POST(
       await createOrUpdateCartItem(session.token, item.productId, item.quantity);
     }
 
-    response.cookies.set({
+    cookieStore.set({
       name: 'guestCart',
       value: '',
       path: '/',
@@ -146,5 +139,11 @@ export async function POST(
   }
 
   // 8. Return the new user information
-  return response;
+  return NextResponse.json({
+    user: {
+      username: newUser.username,
+      // Assuming roleId is not available, remove it or replace with a default value
+      roleId: 0, // Replace 0 with an appropriate default or fetch it from another source
+    },
+  });
 }
