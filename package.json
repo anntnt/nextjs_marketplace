@@ -14,7 +14,7 @@
     "@stripe/react-stripe-js": "^3.0.0",
     "@stripe/stripe-js": "^5.2.0",
     "@upleveled/ley": "^0.9.2",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "cloudinary": "^2.5.1",
     "dotenv-safe": "^9.1.0",
     "flowbite": "^2.5.2",
