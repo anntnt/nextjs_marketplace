@@ -20,13 +20,31 @@ export default function LoginForm(props: Props) {
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const response = await fetch('api/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
       body: JSON.stringify({
         username,
         password,
       }),
     });
+
+    if (!response.ok) {
+      try {
+        const errorBody = (await response.json()) as LoginResponseBody;
+        if ('errors' in errorBody) {
+          setErrors(errorBody.errors);
+        } else {
+          setErrors([{ message: 'Unable to login. Please try again.' }]);
+        }
+      } catch {
+        setErrors([{ message: 'Unable to login. Please try again.' }]);
+      }
+      return;
+    }
 
     const data: LoginResponseBody = await response.json();
 
