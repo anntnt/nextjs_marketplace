@@ -51,16 +51,44 @@ const CATEGORY_IMAGE_PLACEHOLDER =
 
 const EXTRA_CATEGORY_COUNT = 60;
 
-const extraCategories = Array.from({ length: EXTRA_CATEGORY_COUNT }, (_, index) => {
-  const adjective = adjectives[index % adjectives.length];
-  const noun = nouns[Math.floor(index / adjectives.length) % nouns.length];
-  const name = `${adjective} ${noun}`.slice(0, 30);
+const MAX_CATEGORY_NAME_LENGTH = 30;
 
-  return {
-    name,
-    imageUrl: CATEGORY_IMAGE_PLACEHOLDER,
-  };
-});
+const extraCategories = (() => {
+  const categories: { name: string; imageUrl: string }[] = [];
+  const usedNames = new Set<string>();
+
+  for (let index = 0; index < EXTRA_CATEGORY_COUNT; index++) {
+    const adjective = adjectives[index % adjectives.length];
+    const noun = nouns[Math.floor(index / adjectives.length) % nouns.length];
+    const baseName = `${adjective} ${noun}`;
+
+    const suffix = `-${String(index + 1).padStart(2, '0')}`;
+    const availableLength = MAX_CATEGORY_NAME_LENGTH - suffix.length;
+    const truncatedBase = baseName.slice(0, Math.max(availableLength, 0)).trimEnd();
+    let candidate = `${truncatedBase}${suffix}`;
+
+    if (candidate.length === 0) {
+      candidate = `Category${suffix}`;
+    }
+
+    if (usedNames.has(candidate)) {
+      let attempt = index + EXTRA_CATEGORY_COUNT;
+      do {
+        const attemptSuffix = `-${String(attempt + 1).padStart(2, '0')}`;
+        const attemptBase = baseName
+          .slice(0, Math.max(MAX_CATEGORY_NAME_LENGTH - attemptSuffix.length, 0))
+          .trimEnd();
+        candidate = `${attemptBase}${attemptSuffix}`;
+        attempt += 1;
+      } while (usedNames.has(candidate));
+    }
+
+    usedNames.add(candidate);
+    categories.push({ name: candidate, imageUrl: CATEGORY_IMAGE_PLACEHOLDER });
+  }
+
+  return categories;
+})();
 
 export async function up(sql: Sql) {
   for (const category of extraCategories) {
