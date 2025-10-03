@@ -1,7 +1,7 @@
 import upleveled from 'eslint-config-upleveled';
 
 const config = upleveled.map((entry) => {
-  if (!entry?.rules) {
+  if (!entry.rules) {
     return entry;
   }
 

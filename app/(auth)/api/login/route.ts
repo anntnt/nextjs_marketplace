@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers';
+import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/cookies';
 import { NextResponse } from 'next/server';
 import { createSessionInsecure } from '../../../../database/sessions';
 import { createOrUpdateCartItem } from '../../../../database/cartProducts';
@@ -103,10 +104,21 @@ export async function POST(
     );
   }
 
-  const cookieStore = await cookies();
-  const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+  const requestCookies: ReadonlyRequestCookies = await cookies();
+  const guestCartCookie = requestCookies.get('guestCart');
+  const guestCartCookieValue = typeof guestCartCookie?.value === 'string'
+    ? guestCartCookie.value
+    : undefined;
+  const guestCartItems = parseGuestCartCookie(guestCartCookieValue);
 
-  cookieStore.set({
+  const response = NextResponse.json({
+    user: {
+      username: userWithPasswordHash.username,
+      roleId: userWithPasswordHash.roleId,
+    },
+  });
+
+  response.cookies.set({
     name: 'sessionToken',
     value: session.token,
     ...secureCookieOptions,
@@ -117,7 +129,7 @@ export async function POST(
       await createOrUpdateCartItem(session.token, item.productId, item.quantity);
     }
 
-    cookieStore.set({
+    response.cookies.set({
       name: 'guestCart',
       value: '',
       path: '/',
@@ -127,10 +139,5 @@ export async function POST(
 
   // 7. Return the new user information without the password hash
 
-  return NextResponse.json({
-    user: {
-      username: userWithPasswordHash.username,
-      roleId: userWithPasswordHash.roleId,
-    },
-  });
+  return response;
 }

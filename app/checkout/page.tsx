@@ -14,7 +14,7 @@ export const metadata = {
 
 export default async function CheckoutPage() {
   // 1. Check if the sessionToken cookie exists
-  const sessionTokenCookie = (await cookies()).get('sessionToken');
+  const sessionTokenCookie = (cookies()).get('sessionToken');
 
   // 2. Query the current user with the sessionToken
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));

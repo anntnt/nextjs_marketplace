@@ -51,7 +51,7 @@ export async function POST(
   // 3. Get the token from the cookie
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
 
   /* Assume that user logged in and click the button 'Add to cart' */
@@ -99,7 +99,7 @@ export async function POST(
   }
   // 6. Return the content of the cart product
   return NextResponse.json({
-    cartProduct: { productId: newCartProduct?.productId },
+    cartProduct: { productId: newCartProduct.productId },
   });
 }
 export type CreateCartProductResponseBodyPut =
@@ -136,7 +136,7 @@ export async function PUT(
   // 3. Get the token from the cookie
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
 
   /* Assume that user logged in and click the button 'Add to cart' */
@@ -204,7 +204,7 @@ export async function DELETE(): Promise<NextResponse<CartResponseDelete>> {
   // 3. Get the token from the cookie
 
   const sessionTokenCookie = await getCookie('sessionToken');
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   // 4. Remove product
   if (!sessionTokenCookie) {

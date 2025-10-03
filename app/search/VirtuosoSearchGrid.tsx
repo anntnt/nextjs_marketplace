@@ -3,14 +3,13 @@
 import { Card } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { VirtuosoGrid } from 'react-virtuoso';
 import type { Product } from '../../database/products';
 import AddToCartForm from './addToCartForm';
 
 type Props = {
   query: string;
-  userRoleId?: number;
   pageSize?: number;
 };
 
@@ -33,13 +32,13 @@ VirtuosoGridList.displayName = 'VirtuosoGridList';
 
 export default function VirtuosoSearchGrid({
   query,
-  userRoleId,
   pageSize = 30, // Default page size
 }: Props) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const smoothScrollTo = useCallback((targetY: number, duration = 900) => {
     if (typeof window === 'undefined') return;
@@ -65,8 +64,7 @@ export default function VirtuosoSearchGrid({
   const scrollToTop = useCallback(() => {
     if (typeof window === 'undefined') return;
 
-    const target = document.getElementById('search-results');
-    const top = target?.getBoundingClientRect().top ?? 0;
+    const top = containerRef.current?.getBoundingClientRect().top ?? 0;
     const scrollTarget = window.scrollY + top - 120;
 
     smoothScrollTo(Math.max(0, scrollTarget));
@@ -82,7 +80,7 @@ export default function VirtuosoSearchGrid({
       );
       if (!res.ok) throw new Error('Failed to fetch products');
 
-      const data = await res.json();
+      const data: { products: Product[]; totalCount: number } = await res.json();
       setProducts(data.products);
       setTotalCount(data.totalCount);
     } catch (error) {
@@ -95,7 +93,7 @@ export default function VirtuosoSearchGrid({
   }, [query, page, pageSize]);
 
   useEffect(() => {
-    fetchProducts();
+    void fetchProducts();
   }, [fetchProducts]);
 
   // Render each product card
@@ -107,7 +105,7 @@ export default function VirtuosoSearchGrid({
       return (
         <div
           className="mx-auto flex w-full max-w-sm p-2 sm:mx-0 sm:w-auto"
-          key={product.id}
+          key={`search-product-${product.id}`}
         >
           <Card
             data-test-id={`product-id-${product.id}`}
@@ -173,89 +171,85 @@ export default function VirtuosoSearchGrid({
   );
 
   return (
-    <>
-      {loading && (
-        <div className="mb-6 flex w-full items-center justify-center">
-          <div className="flex items-center gap-3 rounded-full border border-blue-200/70 bg-white px-4 py-2 text-sm text-blue-700 shadow-sm dark:border-blue-800/70 dark:bg-gray-900 dark:text-blue-200">
-            <svg
-              className="h-4 w-4 animate-spin"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              />
-            </svg>
-            Loading results…
+      <div ref={containerRef}>
+        {loading && (
+          <div className="mb-6 flex w-full items-center justify-center">
+            <div className="flex items-center gap-3 rounded-full border border-blue-200/70 bg-white px-4 py-2 text-sm text-blue-700 shadow-sm dark:border-blue-800/70 dark:bg-gray-900 dark:text-blue-200">
+              <svg
+                className="h-4 w-4 animate-spin"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                />
+              </svg>
+              Loading results…
+            </div>
           </div>
-        </div>
-      )}
-      <VirtuosoGrid
-        useWindowScroll
-        totalCount={products.length}
-        itemContent={renderItemContent}
-        components={{ List: VirtuosoGridList }}
-      />
-      {/* Pagination */}
-      {shouldShowPagination && (
-        <nav
-          className="flex justify-center items-center gap-2 mt-6 text-gray-700 dark:text-gray-300"
-          aria-label="Pagination"
-        >
-          <button
-            className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
-          disabled={page === 1 || loading}
-          onClick={() => changePage(1)}
+        )}
+        <VirtuosoGrid
+          useWindowScroll
+          totalCount={products.length}
+          itemContent={renderItemContent}
+          components={{ List: VirtuosoGridList }}
+        />
+        {/* Pagination */}
+        {shouldShowPagination && (
+          <nav
+            className="flex justify-center items-center gap-2 mt-6 text-gray-700 dark:text-gray-300"
+            aria-label="Pagination"
           >
-            First
-          </button>
+            <button
+              className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
+              disabled={page === 1 || loading}
+              onClick={() => changePage(1)}
+            >
+              First
+            </button>
+            {pageNumbers.map((pageNumber) =>
+              pageNumber === '...'
+                ? (
+                    <span key={`dots-${pageNumber}-${page}`} className="px-2">
+                      ...
+                    </span>
+                  )
+                : (
+                    <button
+                      key={`page-${page}-${pageNumber}`}
+                      onClick={() => changePage(Number(pageNumber))}
+                      className={`px-3 py-1 rounded border disabled:opacity-50 ${
+                        pageNumber === page
+                          ? 'bg-blue-600 text-white border-blue-600'
+                          : 'border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'
+                      }`}
+                      disabled={loading || pageNumber === page}
+                    >
+                      {pageNumber}
+                    </button>
+                  ),
+            )}
 
-          {pageNumbers.map((p, i) =>
-            p === '...' ? (
-              <span
-                key={`dots-${p}-${pageNumbers
-                  .slice(0, i)
-                  .filter((x) => x === '...').length}`}
-                className="px-2"
-              >
-                ...
-              </span>
-            ) : (
-              <button
-                key={p}
-                onClick={() => changePage(Number(p))}
-                className={`px-3 py-1 rounded border disabled:opacity-50 ${
-                  p === page
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
-                disabled={loading || p === page}
-              >
-                {p}
-              </button>
-            ),
-          )}
-
-          <button
-            className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
-            disabled={page === totalPages || loading}
-            onClick={() => changePage(totalPages)}
-          >
-            Last
-          </button>
-        </nav>
-      )}
-    </>
+            <button
+              className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
+              disabled={page === totalPages || loading}
+              onClick={() => changePage(totalPages)}
+            >
+              Last
+            </button>
+          </nav>
+        )}
+      </div>
   );
 }

@@ -16,7 +16,7 @@ export default async function RegisterPage(props: Props) {
   // Task: Add redirect to home if user is logged in
 
   // 1. Check if the sessionToken cookie exists
-  const sessionTokenCookie = (await cookies()).get('sessionToken');
+  const sessionTokenCookie = (cookies()).get('sessionToken');
 
   // 2. Check if the sessionToken cookie is still valid
   const session =

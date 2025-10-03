@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { createElement, useEffect, useState } from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
 
@@ -16,7 +16,8 @@ type UserProps = {
   cartSum?: string;
 };
 
-const Search = dynamic<{ placeholder: string; className?: string }>(
+type SearchProps = { placeholder: string; className?: string };
+const searchComponent = dynamic<SearchProps>(
   () => import('./Search'),
   {
     ssr: false,
@@ -24,12 +25,22 @@ const Search = dynamic<{ placeholder: string; className?: string }>(
   },
 );
 
-const Cart = dynamic<{ cartSum?: string }>(() => import('./Cart'), {
+function Search(props: SearchProps) {
+  return createElement(searchComponent, props);
+}
+
+type CartProps = { cartSum?: string };
+const cartComponent = dynamic<CartProps>(() => import('./Cart'), {
   ssr: false,
   loading: () => null,
 });
 
-const ProfileDropdown = dynamic<{ user: User | UserWithUsernameAndRole | undefined }>(
+function Cart(props: CartProps) {
+  return createElement(cartComponent, props);
+}
+
+type ProfileDropdownProps = { user: User | UserWithUsernameAndRole | undefined };
+const profileDropdownComponent = dynamic<ProfileDropdownProps>(
   () => import('./ProfileDropdown'),
   {
     ssr: false,
@@ -37,17 +48,63 @@ const ProfileDropdown = dynamic<{ user: User | UserWithUsernameAndRole | undefin
   },
 );
 
-const AccountDropdown = dynamic(() => import('./AccountDropdown'), {
+function ProfileDropdown(props: ProfileDropdownProps) {
+  return createElement(profileDropdownComponent, props);
+}
+
+const accountDropdownComponent = dynamic(() => import('./AccountDropdown'), {
   ssr: false,
   loading: () => null,
 });
+
+function AccountDropdown() {
+  return createElement(accountDropdownComponent, {});
+}
 
 export default function Component(props: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
 
   const showCart = !props.user || props.user.roleId === 3;
+
+  useEffect(() => {
+    if (!isOpen) {
+      document.body.style.removeProperty('overflow');
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      if (previousOverflow) {
+        document.body.style.overflow = previousOverflow;
+      } else {
+        document.body.style.removeProperty('overflow');
+      }
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <header className="top-0 bg-white shadow-md z-10">
@@ -81,15 +138,6 @@ export default function Component(props: UserProps) {
 
               <li>
                 <Link
-                  href="/about"
-                  className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
-                >
-                  About
-                </Link>
-              </li>
-
-              <li>
-                <Link
                   href="/become-a-seller"
                   className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
                 >
@@ -107,38 +155,39 @@ export default function Component(props: UserProps) {
                   </Link>
                 </li>
               )}
-              <li>
-                <Link
-                  href="/support"
-                  className="font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000  focus:text-blue-1000"
-                >
-                  Support
-                </Link>
-              </li>
             </ul>
           </div>
 
           {/* Right Side - Search Box, Cart, Login/Register */}
-          <div className="flex flex-1 flex-wrap items-center justify-end gap-4">
-            <div className="hidden w-full flex-1 md:block">
-              <Search placeholder="Search products" className="max-w-3xl" />
+          <div className="flex flex-1 flex-wrap items-center justify-end gap-6">
+            <div className="hidden md:block">
+              <Search
+                placeholder="Search products"
+                className="w-full max-w-xl lg:max-w-2xl"
+              />
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6 md:gap-8">
               <div className="w-full md:hidden">
                 <Search placeholder="Search products" />
               </div>
-              {showCart ? <Cart cartSum={props.cartSum} /> : null}
-                {props.user ? (
+              {props.user ? (
+                <>
                   <ProfileDropdown user={props.user} />
-                ) : (
+                  {showCart ? <Cart cartSum={props.cartSum} /> : null}
+                </>
+              ) : (
+                <>
                   <AccountDropdown />
-                )}
+                  {showCart ? <Cart cartSum={props.cartSum} /> : null}
+                </>
+              )}
               {/* Mobile Menu Toggle */}
               <button
                 onClick={toggleMenu}
                 className="bg-blue-1000 border-blue-1000 inline-flex items-center p-2 text-white rounded-lg md:hidden hover:bg-blue-900 focus:outline-none"
                 aria-controls="navbar-menu"
                 aria-expanded={isOpen}
+                aria-haspopup="true"
               >
                 <span className="sr-only">Open main menu</span>
                 <svg
@@ -160,11 +209,17 @@ export default function Component(props: UserProps) {
 
           {/* Mobile Menu */}
           {isOpen && (
-            <div className="w-full md:hidden" id="navbar-menu">
+            <div
+              className="w-full md:hidden"
+              id="navbar-menu"
+              role="menu"
+              aria-hidden={!isOpen}
+            >
               <ul className="flex flex-col items-start p-4 mt-4  dark:bg-gray-800">
                 <li className="w-full">
                   <Link
                     href="/#categories"
+                    onClick={closeMenu}
                     className="block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000 font-semibold  hover:text-blue-1000  "
                   >
                     Categories
@@ -174,6 +229,7 @@ export default function Component(props: UserProps) {
                 <li className="w-full">
                   <Link
                     href="/about"
+                    onClick={closeMenu}
                     className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                   >
                     About
@@ -182,6 +238,7 @@ export default function Component(props: UserProps) {
                 <li className="w-full">
                   <Link
                     href="/become-a-seller"
+                    onClick={closeMenu}
                     className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                   >
                     Become a seller
@@ -190,6 +247,7 @@ export default function Component(props: UserProps) {
                 <li className="w-full">
                   <Link
                     href="/support"
+                    onClick={closeMenu}
                     className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                   >
                     Support
@@ -199,6 +257,7 @@ export default function Component(props: UserProps) {
                   <li className="w-full">
                     <Link
                       href={`/profile/${props.user.username}/business`}
+                      onClick={closeMenu}
                       className="active:text-blue-1000 focus:text-blue-1000 block w-full py-2 text-black dark:text-white "
                     >
                       <span className="font-semibold underline  decoration-4 decoration-blue-1000 dark:decoration-bue-1000 ">
@@ -213,13 +272,14 @@ export default function Component(props: UserProps) {
                     <li className="w-full ">
                       <Link
                         href={`/profile/${props.user.username}`}
+                        onClick={closeMenu}
                         className="font-semibold text-black dark:text-white hover:text-blue-1000  active:text-blue-1000  focus:text-blue-1000 "
                       >
                         {props.user.firstname}'s Dashboard
                       </Link>
                     </li>
                     <li className="w-full ">
-                      <LogoutButton />
+                      <LogoutButton onLogout={closeMenu} />
                     </li>
                   </>
                 ) : (
@@ -229,6 +289,7 @@ export default function Component(props: UserProps) {
                     <li className="w-full">
                       <Link
                         href="/login"
+                        onClick={closeMenu}
                         className="font-semibold block w-full py-2 text-black dark:text-white active:text-blue-1000  focus:text-blue-1000"
                       >
                         Login
@@ -242,6 +303,7 @@ export default function Component(props: UserProps) {
                       </div>
                       <Link
                         href="/register"
+                        onClick={closeMenu}
                         className="underline text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 font-semibold dark:hover:bg-gray-600 dark:hover:text-white text-center"
                       >
                         Register

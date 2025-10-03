@@ -72,12 +72,6 @@ export default function Home() {
                 >
                   Launch your shop
                 </Link>
-                <Link
-                  href="/support"
-                  className="inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-semibold text-blue-700 transition hover:-translate-y-0.5 hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-200 dark:hover:bg-blue-900/30"
-                >
-                  Contact support
-                </Link>
               </div>
             </div>
             <div className="relative hidden h-full min-h-[260px] w-full overflow-hidden rounded-3xl lg:block">

@@ -5,15 +5,20 @@ import { getUser } from '../../../database/users';
 
 export default async function UserProfilePage() {
   // 1. Check if the sessionToken cookie exists
-  const sessionTokenCookie = (await cookies()).get('sessionToken');
+  const cookieStore = await cookies();
+  const sessionTokenCookie = cookieStore.get('sessionToken');
+
+  if (!sessionTokenCookie) {
+    redirect('/login');
+  }
 
   // 2. Query the current user with the sessionToken
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
 
-  // 3. If user doesn't exist, redirect to login page
   if (!user) {
     redirect('/login');
   }
+
 
   return (
     <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-10 py-12">

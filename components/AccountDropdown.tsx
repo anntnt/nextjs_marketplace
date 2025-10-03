@@ -53,7 +53,7 @@ export default function Component() {
           <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
             <li>
               <Link
-                href={loginHref}
+                href={{ pathname: loginHref }}
                 className="rounded-lg block px-4 py-2 bg-yellow-100  dark:hover:bg-gray-600 dark:hover:text-white font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 text-center"
               >
                 Login
@@ -65,7 +65,7 @@ export default function Component() {
                 New to eStores?
               </div>
               <Link
-                href={registerHref}
+                href={{ pathname: registerHref }}
                 className="underline text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 font-semibold dark:hover:bg-gray-600 dark:hover:text-white text-center"
               >
                 Register

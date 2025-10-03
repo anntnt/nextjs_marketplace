@@ -1,16 +1,22 @@
 import type { NextConfig } from 'next';
+import type { Configuration as WebpackConfiguration } from 'webpack';
 
 const nextConfig: NextConfig = {
   experimental: {
     typedRoutes: true,
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config: WebpackConfiguration, { isServer }) => {
     if (isServer) {
-      config.output = config.output || {};
-      config.output.chunkFilename = '[name].js';
-      config.output.hotUpdateChunkFilename = '[id].hot-update.js';
-      config.output.hotUpdateMainFilename = '[fullhash].hot-update.json';
+      const output = config.output ?? {};
+
+      config.output = {
+        ...output,
+        chunkFilename: '[name].js',
+        hotUpdateChunkFilename: '[id].hot-update.js',
+        hotUpdateMainFilename: '[fullhash].hot-update.json',
+      };
     }
+
     return config;
   },
   eslint: {

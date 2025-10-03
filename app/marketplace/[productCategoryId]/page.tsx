@@ -14,7 +14,7 @@ async function SingleCategoryClientPage(props: Props) {
   const categoryId = Number((await props.params).productCategoryId);
   const categoryNameObj = await getCategoryNameInsecure(categoryId);
 
-  const sessionTokenCookie = (await cookies()).get('sessionToken');
+  const sessionTokenCookie = (cookies()).get('sessionToken');
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
 
   if (!categoryNameObj) {

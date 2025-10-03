@@ -9,7 +9,7 @@ export const getSearchProductsInsecure = cache(async (query: string) => {
   const searchString1 = `% ${query} %`;
   const searchString2 = `${query} %`;
   const searchString3 = `% ${query}`;
-  const searchString4 = `${query}`;
+  const searchString4 = query;
 
   const productsRaw = await sql<
     {

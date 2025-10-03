@@ -119,7 +119,14 @@ export async function POST(
   const cookieStore = await cookies();
   const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
 
-  cookieStore.set({
+  const response = NextResponse.json({
+    user: {
+      username: newUser.username,
+      roleId: newUser.roleId,
+    },
+  });
+
+  response.cookies.set({
     name: 'sessionToken',
     value: session.token,
     ...secureCookieOptions,
@@ -130,7 +137,7 @@ export async function POST(
       await createOrUpdateCartItem(session.token, item.productId, item.quantity);
     }
 
-    cookieStore.set({
+    response.cookies.set({
       name: 'guestCart',
       value: '',
       path: '/',
@@ -139,10 +146,5 @@ export async function POST(
   }
 
   // 8. Return the new user information
-  return NextResponse.json({
-    user: {
-      username: newUser.username,
-      roleId: newUser.roleId,
-    },
-  });
+  return response;
 }

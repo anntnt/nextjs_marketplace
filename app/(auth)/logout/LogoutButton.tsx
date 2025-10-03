@@ -3,7 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { logout } from './actions';
 
-export default function LogoutButton() {
+type Props = {
+  onLogout?: () => void;
+};
+
+export default function LogoutButton({ onLogout }: Props) {
   const router = useRouter();
 
   return (
@@ -17,6 +21,7 @@ export default function LogoutButton() {
           await logout();
           router.push('/');
           router.refresh();
+          onLogout?.();
         }}
         onKeyDown={async (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -25,6 +30,7 @@ export default function LogoutButton() {
             await logout();
             router.push('/');
             router.refresh();
+            onLogout?.();
           }
         }}
       >

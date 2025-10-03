@@ -8,6 +8,38 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 10000;
+  border-radius: 9999px;
+  background: #1d4ed8;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.skip-link:focus,
+.skip-link:active {
+  left: 50%;
+  top: 1.25rem;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%);
+  box-shadow: 0 15px 35px rgba(29, 78, 216, 0.3);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -69,5 +101,10 @@ body {
   button {
     @apply text-white border bg-blue-600 border-blue-600
     hover:bg-transparent hover:text-blue-600 rounded-md;
+  }
+
+  *:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.9);
+    outline-offset: 3px;
   }
 }

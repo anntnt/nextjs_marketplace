@@ -126,7 +126,7 @@ export async function up(sql: Sql) {
 
     const price = Math.floor(Math.random() * 145 * 100 + 500); // store as cents (€5.00 - €149.99)
 
-    const image_url = CATEGORY_IMAGE_PLACEHOLDER;
+    const imageUrl = CATEGORY_IMAGE_PLACEHOLDER;
     const brand = brands[Math.floor(Math.random() * brands.length)] ?? 'Generic';
 
     return {
@@ -134,9 +134,9 @@ export async function up(sql: Sql) {
       brand,
       description,
       price,
-      image_url,
-      seller_id: sellerId,
-      category_id: categoryId,
+      imageUrl,
+      sellerId,
+      categoryId,
     };
   };
 
@@ -145,9 +145,9 @@ export async function up(sql: Sql) {
     brand: string;
     description: string;
     price: number;
-    image_url: string;
-    seller_id: number;
-    category_id: number;
+    imageUrl: string;
+    sellerId: number;
+    categoryId: number;
   }
 
   const products: Product[] = [];
@@ -159,9 +159,7 @@ export async function up(sql: Sql) {
     const sellerId = sellerIds[index % sellerIds.length];
     for (let count = 0; count < PRODUCTS_PER_CATEGORY; count++) {
       const seed = index * 1000 + count;
-      if (categoryId !== undefined && sellerId !== undefined) {
-        products.push(generateProduct(seed, categoryId, sellerId));
-      }
+      products.push(generateProduct(seed, categoryId, sellerId));
     }
   });
 
@@ -169,19 +167,19 @@ export async function up(sql: Sql) {
   for (let i = 0; i < products.length; i += chunkSize) {
     const chunk = products.slice(i, i + chunkSize);
     const values = chunk.flatMap((p) => [
-      p.name ?? '',
-      p.brand ?? 'Generic',
-      p.description ?? '',
-      p.price ?? 0,
-      p.image_url ?? '',
-      p.seller_id ?? 0,
-      p.category_id ?? 0,
+      p.name,
+      p.brand,
+      p.description,
+      p.price,
+      p.imageUrl,
+      p.sellerId,
+      p.categoryId,
     ]);
 
     const valuePlaceholders = chunk
       .map(
-        (_, i) =>
-          `($${i * 7 + 1}, $${i * 7 + 2}, $${i * 7 + 3}, $${i * 7 + 4}, $${i * 7 + 5}, $${i * 7 + 6}, $${i * 7 + 7})`,
+        (_, chunkIndex) =>
+          `($${chunkIndex * 7 + 1}, $${chunkIndex * 7 + 2}, $${chunkIndex * 7 + 3}, $${chunkIndex * 7 + 4}, $${chunkIndex * 7 + 5}, $${chunkIndex * 7 + 6}, $${chunkIndex * 7 + 7})`,
       )
       .join(', ');
 

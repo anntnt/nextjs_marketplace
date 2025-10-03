@@ -28,7 +28,7 @@ export async function DELETE(
   // Get the token from the cookie
 
   const sessionTokenCookie = await getCookie('sessionToken');
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const productId = Number((await params).productId);
 
   if (!sessionTokenCookie) {

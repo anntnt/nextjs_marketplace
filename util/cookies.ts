@@ -1,19 +1,21 @@
 import { cookies } from 'next/headers';
+import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
-export async function getCookie(name: string) {
-  const cookie = (await cookies()).get(name);
-  if (!cookie) {
-    return undefined;
-  }
-  return cookie.value;
+const getCookieStore = async (): Promise<ReadonlyRequestCookies> => cookies();
+
+export async function getCookie(name: string): Promise<string | undefined> {
+  const cookieStore = await getCookieStore();
+  return cookieStore.get(name)?.value;
 }
 
-export async function setCookie(name: string, value: string) {
-  (await cookies()).set(name, value);
+export async function setCookie(name: string, value: string): Promise<void> {
+  const cookieStore = await getCookieStore();
+  cookieStore.set(name, value);
 }
 
-export async function deleteCookie(name: string) {
-  (await cookies()).delete(name);
+export async function deleteCookie(name: string): Promise<void> {
+  const cookieStore = await getCookieStore();
+  cookieStore.delete(name);
 }
 
 export const secureCookieOptions = {

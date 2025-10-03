@@ -182,7 +182,7 @@ export const getCategoryProductsInsecure = cache(
       FROM products
       WHERE category_id = ${categoryId}
     `;
-    const count = result?.[0]?.count ?? 0;
+    const count = result[0]?.count ?? 0;
 
     const productsRaw = await sql<
       {
@@ -264,7 +264,7 @@ export const getProductsOfSeller = cache(
       WHERE sessions.token = ${sessionToken}
         AND sessions.expiry_timestamp > now();
     `;
-    const count = result?.[0]?.count ?? 0;
+    const count = result[0]?.count ?? 0;
 
     const productsRaw = await sql<
       {

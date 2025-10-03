@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getValidSessionToken } from '../../../database/sessions';
 import { getSafeReturnToPath } from '../../../util/validation';
@@ -16,7 +15,8 @@ export default async function LoginPage(props: Props) {
   // Task: Add redirect to home if user is logged in
 
   // 1. Check if the sessionToken cookie exists
-  const sessionTokenCookie = (await cookies()).get('sessionToken');
+  const cookieStore = await cookies();
+  const sessionTokenCookie = cookieStore.get('sessionToken');
 
   // 2. Check if the sessionToken cookie is still valid
   const session =
