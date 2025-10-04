@@ -105,11 +105,14 @@ export async function up(sql: Sql) {
     await sql`
       INSERT INTO
         product_categories (category_name, image_url)
-      VALUES
-        (
-          ${productCategory.name},
-          ${productCategory.image_url}
-        )
+      SELECT
+        ${productCategory.name},
+        ${productCategory.image_url}
+      WHERE NOT EXISTS (
+        SELECT 1
+        FROM product_categories
+        WHERE category_name = ${productCategory.name}
+      )
     `;
   }
 }
@@ -119,7 +122,7 @@ export async function down(sql: Sql) {
     await sql`
       DELETE FROM product_categories
       WHERE
-        id = ${productCategory.id}
+        category_name = ${productCategory.name}
     `;
   }
 }
