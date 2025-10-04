@@ -56,9 +56,6 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body className="font-sans">
-        <a className="skip-link" href="#page-content">
-          Skip to main content
-        </a>
         <div className="flex flex-col h-screen bg-gray-50  antialiased dark:bg-gray-900">
           {flashMessage ? (
             <div

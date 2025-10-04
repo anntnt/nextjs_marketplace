@@ -94,9 +94,6 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-  li {
-    @apply p-4;
-  }
 
   button {
     @apply text-white border bg-blue-600 border-blue-600
