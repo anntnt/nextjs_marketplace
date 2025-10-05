@@ -156,7 +156,7 @@ export default function Header(props: UserProps) {
               {!props.user || props.user.roleId !== 2 ? (
                 <Link
                   href="/sell"
-                  className="hidden rounded-full bg-blue-1000 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-900 focus:bg-blue-900 focus:outline-none active:bg-blue-950 md:inline-flex"
+                  className="hidden rounded-full border border-blue-1000 px-4 py-2 text-sm font-semibold text-blue-1000 shadow-sm transition-colors hover:bg-blue-50 focus:bg-blue-50 focus:outline-none active:bg-blue-100 md:inline-flex dark:border-blue-300 dark:text-blue-200 dark:hover:bg-blue-900/20"
                 >
                   Open your shop
                 </Link>
@@ -226,7 +226,7 @@ export default function Header(props: UserProps) {
                   <Link
                     href="/sell"
                     onClick={closeMenu}
-                    className="block w-full rounded-full bg-blue-1000 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-950"
+                    className="block w-full rounded-full border border-blue-1000 py-2 text-center font-semibold text-blue-1000 shadow-sm transition-colors hover:bg-blue-50 focus:bg-blue-50 active:bg-blue-100 dark:border-blue-300 dark:text-blue-200 dark:hover:bg-blue-900/20"
                   >
                     Open your shop
                   </Link>
