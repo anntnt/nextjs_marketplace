@@ -226,7 +226,7 @@ export default function Header(props: UserProps) {
                   <Link
                     href="/sell"
                     onClick={closeMenu}
-                    className="block w-full rounded-full border border-blue-1000 py-2 text-center font-semibold text-blue-1000 shadow-sm transition-colors hover:bg-blue-50 focus:bg-blue-50 active:bg-blue-100 dark:border-blue-300 dark:text-blue-200 dark:hover:bg-blue-900/20"
+                    className="ml-0 block w-full max-w-[12rem] rounded-full border border-blue-1000 px-4 py-2 text-center font-semibold text-blue-1000 shadow-sm transition-colors hover:bg-blue-50 focus:bg-blue-50 active:bg-blue-100 dark:border-blue-300 dark:text-blue-200 dark:hover:bg-blue-900/20"
                   >
                     Open your shop
                   </Link>

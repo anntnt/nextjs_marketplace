@@ -7,22 +7,17 @@ export default function Component(props: ItemsProps) {
   const cartItems = props.cartSum ?? '0';
   return (
     <div className="sm:me-5">
-      <div className="text-white text-center rounded-full bg-red-500">
-        <strong>
-          <span data-test-id="cart-count" />
-        </strong>
-      </div>
       <Link
         href="/cart"
-        className="text-black dark:text-white hover:text-blue-1000"
+        className="relative inline-flex items-center text-black hover:text-blue-1000 dark:text-white"
       >
-        <div className="flex ">
-          <div className=" flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-white ">
-            <span data-test-id="cart-count">{cartItems}</span>
-          </div>
-        </div>
-
         <BsCart4 size={28} />
+        <span
+          className="absolute -top-1 -right-2 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-xs font-bold text-white"
+          data-test-id="cart-count"
+        >
+          {cartItems}
+        </span>
       </Link>
     </div>
   );
