@@ -53,10 +53,11 @@ export default function LoginForm(props: Props) {
       return;
     }
 
-    if (data.user.roleId === 3) {
-      const safeReturnTo = getSafeReturnToPath(props.returnTo);
-      const fallbackPath = pathname && pathname !== '/login' ? pathname : '/';
-      const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : fallbackPath;
+    const safeReturnTo = getSafeReturnToPath(props.returnTo);
+    const fallbackPath = pathname && pathname !== '/login' ? pathname : '/';
+    const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : fallbackPath;
+
+    if (data.user.roleId === 2 || data.user.roleId === 3) {
       router.push(target);
     } else {
       router.push(`/profile/${data.user.username}`);
