@@ -168,13 +168,13 @@ export default function Header(props: UserProps) {
               </div>
               {props.user ? (
                 <>
-                  {showCart ? <Cart cartSum={props.cartSum} /> : null}
                   <ProfileDropdown user={props.user} />
+                  {showCart ? <Cart cartSum={props.cartSum} /> : null}
                 </>
               ) : (
                 <>
+                  <AccountDropdown />                
                   {showCart ? <Cart cartSum={props.cartSum} /> : null}
-                  <AccountDropdown />
                 </>
               )}
               <button
