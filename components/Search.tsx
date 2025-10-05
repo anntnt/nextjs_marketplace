@@ -22,7 +22,7 @@ export default function Search({ placeholder, className }: Props) {
   return (
     <div className={`relative w-full ${className ?? ''}`}>
       <input
-        className="w-full px-3 sm:px-4 py-2 pr-12 rounded-lg border border-gray-300 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+        className="w-full rounded-full border border-blue-1000 px-4 py-2 pr-12 text-sm shadow-sm transition-colors focus:border-blue-900 focus:outline-none dark:border-blue-500 dark:bg-gray-800 dark:text-white"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
@@ -32,10 +32,10 @@ export default function Search({ placeholder, className }: Props) {
       />
       <button
         type="submit"
-        className="absolute inset-y-0 right-0 flex items-center justify-center px-3 text-sm font-medium text-white bg-blue-1000 rounded-e-lg border border-blue-700 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="border-white absolute inset-y-1 right-2 flex items-center justify-center rounded-full px-3 py-1 text-sm font-semibold text-blue-1000 transition-colors hover:text-blue-900 focus:outline-none dark:text-blue-300 dark:hover:text-blue-200"
       >
         <svg
-          className="w-4 h-4"
+          className="h-4 w-4 text-blue-1000 dark:text-blue-300"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
