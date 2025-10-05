@@ -129,25 +129,6 @@ export default function Header(props: UserProps) {
 
           <div className="flex flex-1 flex-wrap items-center justify-end gap-4 md:gap-6">
             <ul className="hidden items-center gap-6 font-semibold md:flex xl:gap-8">
-              <li>
-                <Link
-                  href="/support"
-                  className="inline-flex items-center gap-1 text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
-                >
-                  <FiHelpCircle className="h-4 w-4" aria-hidden="true" />
-                  Help
-                </Link>
-              </li>
-              {!props.user || props.user.roleId !== 2 ? (
-                <li>
-                  <Link
-                    href="/sell"
-                    className="text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
-                  >
-                    Open your shop
-                  </Link>
-                </li>
-              ) : null}
               {props.user && props.user.roleId === 2 && (
                 <li>
                   <Link
@@ -165,6 +146,21 @@ export default function Header(props: UserProps) {
             </div>
 
             <div className="flex items-center gap-4 md:gap-6">
+              <Link
+                href="/support"
+                className="hidden items-center gap-1 font-semibold text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white md:inline-flex"
+              >
+                <FiHelpCircle className="h-4 w-4" aria-hidden="true" />
+                Help
+              </Link>
+              {!props.user || props.user.roleId !== 2 ? (
+                <Link
+                  href="/sell"
+                  className="hidden rounded-full bg-blue-1000 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-900 focus:bg-blue-900 focus:outline-none active:bg-blue-950 md:inline-flex"
+                >
+                  Open your shop
+                </Link>
+              ) : null}
               <div className="w-full md:hidden">
                 <Search placeholder="Search products" />
               </div>
@@ -225,17 +221,17 @@ export default function Header(props: UserProps) {
                   Help
                 </Link>
               </li>
-              {!props.user || props.user.roleId !== 2 ? (
+              {(!props.user || props.user.roleId !== 2) && (
                 <li className="w-full">
                   <Link
                     href="/sell"
                     onClick={closeMenu}
-                    className="block w-full py-2 font-semibold text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
+                    className="block w-full rounded-full bg-blue-1000 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-950"
                   >
                     Open your shop
                   </Link>
                 </li>
-              ) : null}
+              )}
               {props.user && props.user.roleId === 2 && (
                 <li className="w-full">
                   <Link
