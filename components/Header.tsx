@@ -161,7 +161,7 @@ export default function Header(props: UserProps) {
             </ul>
 
             <div className="hidden flex-1 md:flex">
-              <Search placeholder="Search products" className="w-full max-w-3xl lg:max-w-4xl" />
+              <Search placeholder="Search products" className="w-full max-w-2xl lg:max-w-3xl" />
             </div>
 
             <div className="flex items-center gap-4 md:gap-6">
@@ -170,7 +170,9 @@ export default function Header(props: UserProps) {
               </div>
               {props.user ? (
                 <>
-                  <ProfileDropdown user={props.user} />
+                  <div className="md:mr-10">
+                    <ProfileDropdown user={props.user} />
+                  </div>
                   {showCart ? <Cart cartSum={props.cartSum} /> : null}
                 </>
               ) : (
