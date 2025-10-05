@@ -138,14 +138,16 @@ export default function Header(props: UserProps) {
                   Help
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/sell"
-                  className="text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
-                >
-                  Open your shop
-                </Link>
-              </li>
+              {!props.user || props.user.roleId !== 2 ? (
+                <li>
+                  <Link
+                    href="/sell"
+                    className="text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
+                  >
+                    Open your shop
+                  </Link>
+                </li>
+              ) : null}
               {props.user && props.user.roleId === 2 && (
                 <li>
                   <Link
@@ -221,15 +223,17 @@ export default function Header(props: UserProps) {
                   Help
                 </Link>
               </li>
-              <li className="w-full">
-                <Link
-                  href="/sell"
-                  onClick={closeMenu}
-                  className="block w-full py-2 font-semibold text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
-                >
-                  Open your shop
-                </Link>
-              </li>
+              {!props.user || props.user.roleId !== 2 ? (
+                <li className="w-full">
+                  <Link
+                    href="/sell"
+                    onClick={closeMenu}
+                    className="block w-full py-2 font-semibold text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
+                  >
+                    Open your shop
+                  </Link>
+                </li>
+              ) : null}
               {props.user && props.user.roleId === 2 && (
                 <li className="w-full">
                   <Link
