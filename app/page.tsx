@@ -54,39 +54,40 @@ export default function Home() {
 
 
       {/* Call to action */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-amber-200 via-white to-blue-200 dark:from-amber-900/60 dark:via-slate-900 dark:to-blue-900/60" />
-        <div className="mx-auto w-full max-w-screen-3xl px-4 py-16 sm:px-8">
-          <div className="grid gap-10 rounded-3xl bg-white/80 p-10 shadow-2xl shadow-amber-200/60 ring-white/60 backdrop-blur dark:bg-white/10 dark:shadow-blue-900/40 dark:ring-white/10 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-semibold text-gray-900 dark:text-white">
-                Ready to grow with eStores?
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Launch your storefront in minutes, access EU-wide shipping, and connect with shoppers who value quality.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/sell"
-                  className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-blue-500 dark:shadow-blue-900/60 dark:hover:bg-blue-400"
-                >
-                  Launch your shop
-                </Link>
+      <section className="bg-amber-100 py-24 sm:py-28 dark:bg-slate-900">
+        <div className="px-4 py-6 sm:px-8 sm:py-10">
+          <div className="mx-auto w-full max-w-4xl">
+            <div className="grid gap-10 rounded-3xl bg-white/85 p-10 shadow-2xl shadow-amber-200/60 ring-white/60 backdrop-blur dark:bg-white/10 dark:shadow-blue-900/40 dark:ring-white/10 lg:grid-cols-[1.2fr_0.8fr]">
+              <div className="space-y-4">
+                <h2 className="text-3xl font-semibold text-gray-900 dark:text-white">
+                  Ready to grow with eStores?
+                </h2>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Launch your storefront in minutes, access EU-wide shipping, and connect with shoppers who value quality.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    href="/sell"
+                    className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5 hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-blue-500 dark:shadow-blue-900/60 dark:hover:bg-blue-400"
+                  >
+                    Launch your shop
+                  </Link>
+                </div>
+              </div>
+              <div className="relative hidden h-full min-h-[260px] w-full overflow-hidden rounded-3xl lg:block">
+                <Image
+                  src="/images/myproducts.jpg"
+                  alt="Seller dashboard preview"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/60 via-gray-900/20 to-transparent" />
               </div>
             </div>
-            <div className="relative hidden h-full min-h-[260px] w-full overflow-hidden rounded-3xl lg:block">
-              <Image
-                src="/images/myproducts.jpg"
-                alt="Seller dashboard preview"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-gray-900/60 via-gray-900/20 to-transparent" />
-            </div>
+            <p className="mt-6 text-center text-sm text-red-600 dark:text-red-400">
+              *eStores is a portfolio project and not a real marketplace.
+            </p>
           </div>
-          <p className="mt-6 text-center text-sm text-red-600 dark:text-red-400">
-            *eStores is a portfolio project and not a real marketplace.
-          </p>
         </div>
       </section>
     </main>

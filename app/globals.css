@@ -1,3 +1,5 @@
+@reference 'tailwindcss';
+@config '../tailwind.config.js';
 @import 'flowbite';
 @import 'flowbite/dist/flowbite.min.css';
 @tailwind base;
@@ -96,8 +98,7 @@ body {
   }
 
   button {
-    @apply text-white border bg-blue-600 border-blue-600
-    hover:bg-transparent hover:text-blue-600 rounded-md;
+    @apply text-white border bg-blue-600 border-blue-600 hover:bg-transparent hover:text-blue-600 rounded-md;
   }
 
   *:focus-visible {
