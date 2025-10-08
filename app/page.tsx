@@ -57,8 +57,8 @@ export default function Home() {
       <section className="bg-gradient-to-r from-[#F59E0B] via-[#FCDFAF] to-[#A7F3D0] py-24 text-brand-text transition-colors sm:py-28 lg:py-32">
         <div className="px-0 py-8 sm:px-0 sm:py-12 lg:px-16 lg:py-14">
           <div className="mx-auto w-full max-w-5xl">
-            <div className="grid gap-10 rounded-3xl text-brand-text sm:rounded-[2.5rem] sm:p-0 md:bg-gradient-to-r md:from-[#F59E0B] md:via-[#FCDFAF] md:to-[#A7F3D0] md:p-8 lg:grid-cols-[1.1fr_0.9fr] lg:overflow-hidden lg:border lg:border-brand-border/60 lg:bg-brand-surface lg:p-0 dark:border-brand-border dark:bg-white dark:text-brand-text">
-              <div className="space-y-6 px-6 py-8 sm:px-6 sm:py-10 md:px-6 md:py-10 lg:px-0 lg:p-14">
+            <div className="grid  rounded-3xl text-brand-text sm:rounded-[2.5rem] sm:p-0 md:bg-gradient-to-r md:from-[#F59E0B] md:via-[#FCDFAF] md:to-[#A7F3D0] md:p-8 lg:grid-cols-[1.1fr_0.9fr] lg:overflow-hidden lg:border lg:border-brand-border/60 lg:bg-brand-surface lg:bg-none lg:p-0 dark:border-brand-border dark:bg-white dark:text-brand-text">
+              <div className="space-y-6 px-6 py-8 sm:px-6 sm:py-10 md:px-6 md:py-10 lg:px-0 lg:py-14 lg:pl-16 lg:pr-14">
                 <h2 className="text-3xl font-semibold text-brand-text">
                   Ready to grow with eStores?
                 </h2>
