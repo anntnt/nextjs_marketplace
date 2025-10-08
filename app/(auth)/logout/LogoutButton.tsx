@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { logout } from './actions';
 
 type Props = {
@@ -9,6 +9,7 @@ type Props = {
 
 export default function LogoutButton({ onLogout }: Props) {
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <form>
@@ -19,7 +20,8 @@ export default function LogoutButton({ onLogout }: Props) {
         className="block py-1 font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary sm:px-4 sm:text-center dark:text-brand-primary"
         onClick={async () => {
           await logout();
-          router.push('/');
+          const target = pathname && pathname !== '/logout' ? pathname : '/';
+          router.push(target);
           router.refresh();
           onLogout?.();
         }}
@@ -28,7 +30,8 @@ export default function LogoutButton({ onLogout }: Props) {
             e.preventDefault();
             // Simulate button click on Enter or Space
             await logout();
-            router.push('/');
+            const target = pathname && pathname !== '/logout' ? pathname : '/';
+            router.push(target);
             router.refresh();
             onLogout?.();
           }
