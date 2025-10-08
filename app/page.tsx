@@ -54,11 +54,11 @@ export default function Home() {
 
 
       {/* Call to action */}
-      <section className="bg-brand-warning py-24 text-white transition-colors sm:py-28">
-        <div className="px-4 py-6 sm:px-8 sm:py-10">
-          <div className="mx-auto w-full max-w-4xl">
-            <div className="grid gap-10 rounded-3xl border border-brand-border/60 bg-brand-surface p-10 text-brand-text shadow-2xl shadow-black/30 backdrop-blur lg:grid-cols-[1.2fr_0.8fr] lg:overflow-hidden lg:p-0 dark:border-brand-border dark:bg-white dark:text-brand-text">
-              <div className="space-y-4 lg:p-10">
+      <section className="bg-gradient-to-r from-[#F59E0B] via-[#FCDFAF] to-[#A7F3D0] py-24 text-brand-text transition-colors sm:py-28 lg:py-32">
+        <div className="px-0 py-8 sm:px-8 sm:py-12 lg:px-16 lg:py-14">
+          <div className="mx-auto w-full max-w-5xl">
+            <div className="grid gap-10 rounded-3xl text-brand-text sm:rounded-[2.5rem] sm:bg-brand-surface sm:p-8 md:border md:border-brand-border/60 md:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:overflow-hidden lg:p-0 dark:border-brand-border dark:bg-white dark:text-brand-text">
+              <div className="space-y-6 bg-transparent px-6 py-8 sm:bg-transparent sm:px-0 sm:py-0 lg:p-14">
                 <h2 className="text-3xl font-semibold text-brand-text">
                   Ready to grow with eStores?
                 </h2>
@@ -68,13 +68,13 @@ export default function Home() {
                 <div className="flex flex-wrap gap-3">
                   <Link
                     href="/sell"
-                    className="inline-flex items-center justify-center rounded-full border border-[#1E293B] bg-[#06B6D4] px-6 py-3 text-base font-semibold text-[#1E293B] shadow-lg shadow-black/30 transition hover:-translate-y-0.5 hover:bg-[#0EA5E9] hover:text-[#1E293B] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:text-[#1E293B] active:translate-y-0"
+                    className="inline-flex items-center justify-center rounded-full border border-brand-secondary bg-brand-secondary px-6 py-3 text-base font-semibold text-white shadow-lg shadow-black/30 transition hover:-translate-y-0.5 hover:bg-[#024c61] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 active:translate-y-0"
                   >
                     Launch your shop
                   </Link>
                 </div>
               </div>
-              <div className="relative hidden h-full min-h-[260px] w-full overflow-hidden lg:block">
+              <div className="relative order-first h-72 w-full overflow-hidden rounded-2xl sm:h-80 sm:rounded-3xl lg:order-none lg:h-full lg:rounded-none">
                 <Image
                   src="/images/smiling_woman.jpg"
                   alt="Seller dashboard preview"
