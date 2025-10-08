@@ -128,7 +128,7 @@ export default function SellerProductsTable({ products, username }: Props) {
   );
 
   return (
-    <div className="relative overflow-x-auto border-b border-gray-200 dark:border-gray-800">
+    <div className="relative overflow-x-auto border-b border-brand-border dark:border-gray-800">
       <TableVirtuoso
         data={products}
         useWindowScroll

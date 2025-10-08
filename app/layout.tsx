@@ -54,12 +54,12 @@ export default async function RootLayout({ children }: Props) {
 
   // 3. Make decision whether to show the login and register links or not
   return (
-    <html lang="en">
-      <body className="font-sans">
-        <div className="flex flex-col h-screen bg-gray-50  antialiased dark:bg-gray-900">
+    <html lang="en" className="h-full">
+      <body className="min-h-screen bg-brand-bg font-sans text-brand-text antialiased transition-colors dark:bg-dark-bg dark:text-dark-text">
+        <div className="flex min-h-screen flex-col">
           {flashMessage ? (
             <div
-              className="bg-blue-100 text-blue-900 text-sm text-center py-2"
+              className="bg-brand-primary/10 py-2 text-center text-sm text-brand-primary dark:bg-brand-primary/20"
               role="status"
               aria-live="polite"
             >

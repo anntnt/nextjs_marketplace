@@ -4,31 +4,31 @@ export default function Component() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto bg-gray-100">
-      <div className="w-full max-w-full flex flex-col gap-4 md:flex-row md:gap-0 justify-between items-center py-4 px-4 sm:px-10 xl:px-6 2xl:px-20 text-sm text-gray-600">
-        <Link href="/" className="hover:text-blue-1000 font-semibold text-gray-800">
+    <footer className="mt-auto border-t border-brand-secondary/40 bg-[#111827] text-white transition-colors dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text">
+      <div className="flex w-full max-w-full flex-col items-center justify-between gap-4 py-4 px-4 text-sm text-white sm:px-10 xl:px-6 2xl:px-20 md:flex-row md:gap-0">
+        <Link href="/" className="font-semibold text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent">
           © {year} eStores™
         </Link>
-        <nav className="flex items-center gap-4 text-gray-700">
-          <Link href="/about" className="hover:text-blue-1000 transition-colors">
+        <nav className="flex items-center gap-4 text-white">
+          <Link href="/about" className="text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent">
             About
           </Link>
-          <Link href="/support" className="hover:text-blue-1000 transition-colors">
+          <Link href="/support" className="text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent">
             Support
           </Link>
           <Link
             href="/privacy-policy"
-            className="hover:text-blue-1000 transition-colors"
+            className="text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent"
           >
             Privacy Policy
           </Link>
           <Link
             href="/terms-of-service"
-            className="hover:text-blue-1000 transition-colors"
+            className="text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent"
           >
             Terms of Service
           </Link>
-          <Link href="/contact" className="hover:text-blue-1000 transition-colors">
+          <Link href="/contact" className="text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent">
             Contact
           </Link>
         </nav>

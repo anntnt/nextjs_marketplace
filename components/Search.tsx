@@ -22,7 +22,7 @@ export default function Search({ placeholder, className }: Props) {
   return (
     <div className={`relative w-full ${className ?? ''}`}>
       <input
-        className="w-full rounded-full border border-blue-1000 px-4 py-2 pr-12 text-sm shadow-sm transition-colors focus:border-blue-900 focus:outline-none dark:border-blue-500 dark:bg-gray-800 dark:text-white"
+        className="w-full rounded-full border border-brand-border/70 bg-brand-surface px-4 py-2 pr-12 text-sm text-brand-text shadow-sm transition-colors placeholder:text-brand-muted focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/30 dark:border-dark-muted/60 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
@@ -32,10 +32,10 @@ export default function Search({ placeholder, className }: Props) {
       />
       <button
         type="submit"
-        className="border-white absolute inset-y-1 right-2 flex items-center justify-center rounded-full px-3 py-1 text-sm font-semibold text-blue-1000 transition-colors hover:text-blue-900 focus:outline-none dark:text-blue-300 dark:hover:text-blue-200"
+        className="absolute inset-y-1 right-2 flex items-center justify-center rounded-full px-3 py-1 text-sm font-semibold text-brand-primary transition-colors hover:text-brand-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 dark:text-brand-primary"
       >
         <svg
-          className="h-4 w-4 text-blue-1000 dark:text-blue-300"
+          className="h-4 w-4 text-brand-primary"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

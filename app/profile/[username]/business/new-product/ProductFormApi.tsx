@@ -56,7 +56,7 @@ export default function ProductFormApi(props: Props) {
   return (
     <div>
       {successMessage && (
-        <p className=" py-8 text-green-600 text-md font-semibold flex flex-col justify-center gap-3 max-w-sm mx-auto">
+        <p className="mx-auto flex max-w-sm flex-col justify-center gap-3 py-8 text-md font-semibold text-brand-accent">
           {successMessage}
         </p>
       )}
@@ -76,59 +76,59 @@ export default function ProductFormApi(props: Props) {
 
           await productFormApiHandler(formData);
         }}
-        className="py-8 flex flex-col justify-center gap-3 max-w-sm mx-auto"
+        className="mx-auto flex max-w-sm flex-col justify-center gap-3 py-8 text-brand-text dark:text-dark-text"
       >
         <input name="sellerId" type="hidden" value={props.sellerId} />
-        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
           Name
           <input
-            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
             required
             name="name"
             value={name}
             onChange={(event) => setName(event.currentTarget.value)}
           />
         </label>
-        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
           Price €
           <input
             value={price}
             type="number"
             step="0.01"
-            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
             required
             name="price"
             onChange={(event) => setPrice(event.currentTarget.value)}
           />
         </label>
 
-        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
           Select Image:
           <input
             value={imageUrl}
-            className=" block w-full text-sm text-blue-1000 border border-gray-300 rounded-lg cursor-pointer bg-white dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            className="block w-full cursor-pointer rounded-lg border border-brand-muted/30 bg-brand-surface text-sm text-brand-primary transition focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-brand-primary"
             type="file"
             name="image"
             accept="image/*"
             onChange={(event) => setImageUrl(event.currentTarget.value)}
           />
         </label>
-        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
           Description
           <textarea
             value={description}
-            className=" bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
             rows={8}
             required
             name="description"
             onChange={(event) => setDescription(event.currentTarget.value)}
           />
         </label>
-        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
           Category
           <select
             value={categoryId}
-            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text"
             name="categoryId"
             onChange={(event) => setCategoryId(event.currentTarget.value)}
           >
@@ -145,7 +145,7 @@ export default function ProductFormApi(props: Props) {
             })}
           </select>
         </label>
-        <button className=" space-x-4 text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">
+        <button className="me-2 inline-flex items-center justify-center gap-2 rounded-lg border border-brand-primary bg-brand-primary px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70">
           Create product
         </button>
       </form>

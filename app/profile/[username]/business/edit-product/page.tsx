@@ -35,8 +35,8 @@ export default async function EditProductPage(props: Props) {
   const productCategories = await getProductCategoriesInsecure();
 
   return (
-    <main className="flex-grow bg-gray-50 w-full max-w-full px-20 py-12">
-      <h1 className="mb-4 text-4xl text-center">Edit Product</h1>
+    <main className="flex-grow bg-brand-bg w-full max-w-full px-20 py-12">
+      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Edit Product</h1>
       <EditProductFormApi
         username={user.username}
         product={product!}

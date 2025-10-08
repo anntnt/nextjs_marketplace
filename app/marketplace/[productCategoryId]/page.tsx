@@ -22,11 +22,11 @@ async function SingleCategoryClientPage(props: Props) {
   }
 
   return (
-    <main className="bg-gray-50 dark:bg-gray-900 flex-grow w-full max-w-full px-4 sm:px-8 py-12">
-      <h1 className="mb-4 text-4xl text-center">
+    <main className="bg-brand-bg dark:bg-dark-bg flex-grow w-full max-w-full px-4 sm:px-8 py-12">
+      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">
         {categoryNameObj.categoryName}
       </h1>
-      <section id="category-products" className="py-8 antialiased md:py-16">
+      <section id="category-products" className="py-8 antialiased">
         <div className="mx-auto w-full max-w-screen-3xl px-0 sm:px-2 lg:px-4">
           <div className="mb-4 md:mb-8">
             <VirtuosoProductGrid

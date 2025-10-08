@@ -22,7 +22,7 @@ export default function ProductForm(props: Props) {
         <Link
           href="/"
           title=""
-          className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900  rounded-lg   dark:bg-gray-800 dark:text-gray-400 "
+          className="flex items-center justify-center rounded-lg border border-brand-border bg-brand-surface px-5 py-2.5 text-sm font-medium text-brand-text transition-colors hover:border-brand-primary hover:bg-brand-primary/10 hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/50 dark:border-dark-muted/60 dark:bg-dark-surface dark:text-dark-text"
           role="button"
         >
           <svg
@@ -76,13 +76,13 @@ export default function ProductForm(props: Props) {
             <div className="flex items-center">
               <button
                 type="button"
-                className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 font-bold text-xl"
+                className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-brand-border bg-brand-surface font-bold text-xl text-brand-text transition-colors hover:border-brand-primary hover:bg-brand-primary/10 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 dark:border-dark-muted/60 dark:bg-dark-surface dark:text-white dark:hover:border-brand-primary dark:hover:bg-brand-primary/20 dark:focus:ring-brand-primary/40"
                 onClick={() =>
                   quantity > 1 ? setQuantity(quantity - 1) : quantity
                 }
               >
                 <svg
-                  className="h-2.5 w-2.5 text-gray-900 dark:text-white"
+                  className="h-2.5 w-2.5 text-brand-text dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -100,7 +100,7 @@ export default function ProductForm(props: Props) {
               <input
                 id="counter-input"
                 data-input-counter
-                className="w-10 shrink-0 border-0 bg-transparent text-center text-xl  text-gray-900 focus:outline-none focus:ring-0 dark:text-white font-bold"
+                className="w-10 shrink-0 border-0 bg-transparent text-center text-xl font-bold text-brand-text focus:outline-none focus:ring-0 dark:text-white"
                 value={quantity}
                 disabled
                 data-test-id="product-quantity"
@@ -109,11 +109,11 @@ export default function ProductForm(props: Props) {
 
               <button
                 type="button"
-                className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 font-bold text-xl"
+                className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-brand-border bg-brand-surface font-bold text-xl text-brand-text transition-colors hover:border-brand-primary hover:bg-brand-primary/10 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 dark:border-dark-muted/60 dark:bg-dark-surface dark:text-white dark:hover:border-brand-primary dark:hover:bg-brand-primary/20 dark:focus:ring-brand-primary/40"
                 onClick={() => setQuantity(quantity + 1)}
               >
                 <svg
-                  className="h-2.5 w-2.5 text-gray-900 dark:text-white"
+                  className="h-2.5 w-2.5 text-brand-text dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -130,7 +130,7 @@ export default function ProductForm(props: Props) {
               </button>
             </div>
             <div className="text-end md:order-4  flex items-center justify-between  md:justify-end">
-              <button className=" inline-flex items-center rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300dark:bg-primary-600">
+              <button className="inline-flex items-center rounded-lg border border-brand-primary bg-brand-primary px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70">
                 <BsCart4 size={20} className="mr-3 mb-1" />
                 Add to cart
               </button>

@@ -62,16 +62,16 @@ export default async function SellerProductsPage({ searchParams }: Props) {
     .filter((value, index, self) => self.indexOf(value) === index);
 
   return (
-    <main className="flex-grow  w-full max-w-full md:px-20 py-12">
-      <h1 className="mb-4 text-4xl text-center">My Products</h1>
-      <section className=" py-8 antialiased dark:bg-gray-900 md:py-16">
+    <main className="flex-grow w-full max-w-full bg-brand-bg px-5 py-12 text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text md:px-20">
+      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">My Products</h1>
+      <section className="py-8">
         <div className="mx-auto max-w-screen-md px-4 2xl:px-0">
           <Link
             href={`/profile/${user.username}/business/new-product`}
-            className=" border-blue-1000 inline-flex items-center px-4 py-2 text-md font-medium text-gray-900 bg-white border border-bue-1000 rounded-lg hover:bg-gray-100 hover:text-yellow-300 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+            className="inline-flex items-center gap-2 rounded-lg border border-brand-primary bg-brand-surface px-4 py-2 text-md font-medium text-brand-text transition-colors hover:border-brand-secondary hover:bg-brand-secondary/10 hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 dark:border-brand-primary dark:bg-dark-surface dark:text-dark-text"
           >
             <svg
-              className="w-7 h-7 me-1.5 text-gray-800 dark:text-white"
+              className="me-1.5 h-7 w-7 text-brand-primary"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -90,17 +90,17 @@ export default async function SellerProductsPage({ searchParams }: Props) {
             Add new product
           </Link>
         </div>
-        <div className="mx-auto max-w-screen-md px-4 2xl:px-0 space-y-6">
+        <div className="mx-auto max-w-screen-md space-y-6 px-4 2xl:px-0">
           <SellerProductsTable products={products} username={user.username} />
 
-          <nav className="flex items-center justify-center gap-2">
+          <nav className="flex items-center justify-center gap-2 text-brand-muted dark:text-dark-muted">
             <Link
               href={hasPrevious ? makePageHref(page - 1) : '#'}
               aria-disabled={!hasPrevious}
-              className={`rounded-md border px-3 py-2 text-sm font-medium ${
+              className={`rounded-md border px-3 py-2 text-sm font-medium transition-colors ${
                 hasPrevious
-                  ? 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
-                  : 'cursor-not-allowed text-gray-400 dark:text-gray-600'
+                  ? 'border-brand-muted/30 text-brand-text hover:border-brand-primary hover:bg-brand-primary/10 hover:text-brand-primary dark:border-dark-muted/30 dark:text-dark-text dark:hover:border-brand-primary dark:hover:bg-brand-primary/10'
+                  : 'cursor-not-allowed border-brand-muted/20 text-brand-muted dark:border-dark-muted/20 dark:text-dark-muted'
               }`}
             >
               Previous
@@ -110,10 +110,10 @@ export default async function SellerProductsPage({ searchParams }: Props) {
               <Link
                 key={`seller-products-page-${pageNumber}`}
                 href={makePageHref(pageNumber)}
-                className={`rounded-md px-3 py-2 text-sm font-medium ${
+                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                   pageNumber === page
-                    ? 'bg-blue-1000 text-white'
-                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
+                    ? 'border border-brand-primary bg-brand-primary text-white'
+                    : 'border border-brand-muted/30 text-brand-text hover:border-brand-primary hover:bg-brand-primary/10 hover:text-brand-primary dark:border-dark-muted/30 dark:text-dark-text dark:hover:border-brand-primary dark:hover:bg-brand-primary/10'
                 }`}
               >
                 {pageNumber}
@@ -123,10 +123,10 @@ export default async function SellerProductsPage({ searchParams }: Props) {
             <Link
               href={hasNext ? makePageHref(page + 1) : '#'}
               aria-disabled={!hasNext}
-              className={`rounded-md border px-3 py-2 text-sm font-medium ${
+              className={`rounded-md border px-3 py-2 text-sm font-medium transition-colors ${
                 hasNext
-                  ? 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
-                  : 'cursor-not-allowed text-gray-400 dark:text-gray-600'
+                  ? 'border-brand-muted/30 text-brand-text hover:border-brand-primary hover:bg-brand-primary/10 hover:text-brand-primary dark:border-dark-muted/30 dark:text-dark-text dark:hover:border-brand-primary dark:hover:bg-brand-primary/10'
+                  : 'cursor-not-allowed border-brand-muted/20 text-brand-muted dark:border-dark-muted/20 dark:text-dark-muted'
               }`}
             >
               Next

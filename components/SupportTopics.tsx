@@ -37,25 +37,27 @@ export default function Component() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h2 className="text-2xl mb-8 text-center">
+    <div className="mx-auto max-w-4xl p-6">
+      <h2 className="mb-8 text-center text-2xl text-brand-text dark:text-dark-text">
         Quickly find answers by topic
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2   gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {topics.map((topic) => (
           <div
             key={`topic-${topic.title}`}
-            className="p-4 xl:pl-6 border rounded-lg shadow-sm hover:shadow-md transition"
+            className="rounded-lg border border-brand-muted/20 bg-brand-surface p-4 shadow-sm transition hover:shadow-md hover:shadow-brand-primary/20 dark:border-dark-muted/20 dark:bg-dark-surface"
           >
-            <h3 className="text-lg font-semibold">{topic.title}</h3>
-            <ul className="text-sm text-gray-600 mt-2 space-y-1">
+            <h3 className="text-lg font-semibold text-brand-text dark:text-dark-text">
+              {topic.title}
+            </h3>
+            <ul className="mt-2 space-y-1 text-sm text-brand-muted dark:text-dark-muted">
               {topic.description.map((point) => (
                 <li
                   key={`description-${point}`}
                   className="flex items-center gap-2 pl-0"
                 >
                   <svg
-                    className="w-6 h-6 text-gray-800 dark:text-white"
+                    className="h-5 w-5 text-brand-primary"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

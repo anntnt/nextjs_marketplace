@@ -21,8 +21,8 @@ export default async function UserProfilePage() {
   }
   const productCategories = await getProductCategoriesInsecure();
   return (
-    <main className="flex-grow  bg-gray-50 w-full max-w-full px-20 py-12">
-      <h1 className="mb-4 text-4xl text-center">New Product</h1>
+    <main className="flex-grow  bg-brand-bg w-full max-w-full px-20 py-12">
+      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">New Product</h1>
       <ProductFormApi
         sellerId={user.id}
         productCategories={productCategories}

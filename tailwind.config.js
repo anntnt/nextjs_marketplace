@@ -2,6 +2,7 @@
 import flowbitePlugin from 'flowbite/plugin'
 
 const config = {
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
@@ -11,35 +12,28 @@ const config = {
   theme: {
     extend: {
       colors: {
-        // 👇 keine "colors" mehr importieren — amber usw. sind automatisch verfügbar
-        gray: {
-          1000: '#3E3E3E',
+        brand: {
+          primary: '#06B6D4', // Soft Cyan
+          secondary: '#036C87', // Deep Teal
+          accent: '#F87171', // Coral
+          success: '#A7F3D0', // Mint
+          warning: '#F59E0B', // Amber CTA
+          error: '#EF4444', // Red
+          bg: '#F3F4F6', // Mist Gray background
+          surface: '#FFFFFF', // Card/Section
+          border: '#E5E7EB', // Gray Line
+          text: '#111827', // Graphite text
+          muted: '#64748B', // Cool Gray subtext
         },
-        blue: {
-          900: '#0D93C9',
-          950: '#4368b5',
-          960: '#6985c0',
-          970: '#557ef9',
-          1000: '#1c64f2',
+        dark: {
+          bg: '#0F172A',
+          surface: '#1E293B',
+          text: '#F9FAFB',
+          muted: '#94A3B8',
         },
-        purple: {
-          1000: '#734AEE',
-        },
-        red: '#F24932',
-        green: {
-          100: '#88D8CD',
-          200: '#19A494',
-          300: '#36A7B9',
-          400: '#1bfc06',
-        },
-        yellow: {
-          100: '#FEF083',
-          200: '#F1D140',
-          300: '#EFB724',
-        },
-        orange: {
-          1000: '#f98047',
-        },
+      },
+      textColor: {
+        inherit: 'inherit',
       },
     },
   },

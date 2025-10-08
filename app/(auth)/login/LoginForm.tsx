@@ -68,7 +68,7 @@ export default function LoginForm(props: Props) {
 
   return (
     <>
-      <div className="max-w-sm mx-auto">
+      <div className="mx-auto max-w-sm text-brand-text dark:text-dark-text">
         <form
           className="py-8"
           onSubmit={async (event) => await handleLogin(event)}
@@ -76,13 +76,13 @@ export default function LoginForm(props: Props) {
           <div className="mb-5">
             <label
               htmlFor="username"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="mb-2 block text-sm font-medium text-brand-text dark:text-dark-text"
             >
               Your username
             </label>
             <input
               id="username"
-              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+              className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
               required
               value={username}
               onChange={(event) => setUsername(event.currentTarget.value)}
@@ -91,21 +91,21 @@ export default function LoginForm(props: Props) {
           <div className="mb-5">
             <label
               htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="mb-2 block text-sm font-medium text-brand-text dark:text-dark-text"
             >
               Your password
             </label>
             <input
               id="password"
               type="password"
-              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+              className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
               required
               value={password}
               onChange={(event) => setPassword(event.currentTarget.value)}
             />
           </div>
           <div className="mb-5">
-            <button className="text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            <button className="mb-2 me-2 w-full rounded-lg border border-brand-warning bg-brand-warning px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#d97706] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70">
               Login
             </button>
           </div>
@@ -118,14 +118,14 @@ export default function LoginForm(props: Props) {
           </div>
         </form>
       </div>
-      <div className="max-w-lg mx-auto text-center  text-lg">
+      <div className="mx-auto max-w-lg text-center text-lg text-brand-text dark:text-dark-text">
         <hr className="mb-4" />
-        <div className=" text-black dark:text-white text-center">
+        <div className="text-center text-brand-muted dark:text-dark-muted">
           New to eStores?
         </div>
         <Link
           href="/register"
-          className="underline text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 font-semibold dark:hover:bg-gray-600 dark:hover:text-white text-center"
+          className="font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
         >
           Sign up
         </Link>{' '}

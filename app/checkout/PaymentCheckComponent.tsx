@@ -12,12 +12,12 @@ export default function PaymentForm() {
   return (
     <div>
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-xl font-semibold text-brand-text dark:text-white">
           Payment
         </h2>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
+          <div className="rounded-lg border border-brand-border bg-brand-surface p-4 ps-4 dark:border-dark-muted/60 dark:bg-dark-surface">
             <div className="flex items-start">
               <div className="flex h-5 items-center">
                 <input
@@ -33,13 +33,13 @@ export default function PaymentForm() {
               </div>
 
               <div className="ms-4 text-sm">
-                <label className="font-medium leading-none text-gray-900 dark:text-white">
+                <label className="font-medium leading-none text-brand-text dark:text-white">
                   {' '}
                   Credit Card{' '}
                 </label>
                 <p
                   id="credit-card-text"
-                  className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400"
+                  className="mt-1 text-xs font-normal text-brand-muted dark:text-dark-muted"
                 >
                   Pay with your credit card
                 </p>
@@ -47,7 +47,7 @@ export default function PaymentForm() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
+          <div className="rounded-lg border border-brand-border bg-brand-surface p-4 ps-4 dark:border-dark-muted/60 dark:bg-dark-surface">
             <div className="flex items-start">
               <div className="flex h-5 items-center">
                 <input
@@ -63,19 +63,19 @@ export default function PaymentForm() {
               </div>
 
               <div className="ms-4 text-sm">
-                <label className="font-medium leading-none text-gray-900 dark:text-white">
+                <label className="font-medium leading-none text-brand-text dark:text-white">
                   {' '}
                   Payment on delivery{' '}
                 </label>
                 <p
                   id="pay-on-delivery-text"
-                  className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400"
+                  className="mt-1 text-xs font-normal text-brand-muted dark:text-dark-muted"
                 />
               </div>
             </div>
           </div>
 
-          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
+          <div className="rounded-lg border border-brand-border bg-brand-surface p-4 ps-4 dark:border-dark-muted/60 dark:bg-dark-surface">
             <div className="flex items-start">
               <div className="flex h-5 items-center">
                 <input
@@ -91,13 +91,13 @@ export default function PaymentForm() {
               </div>
 
               <div className="ms-4 text-sm">
-                <label className="font-medium leading-none text-gray-900 dark:text-white">
+                <label className="font-medium leading-none text-brand-text dark:text-white">
                   {' '}
                   Paypal account{' '}
                 </label>
                 <p
                   id="paypal-text"
-                  className="mt-1 text-xs font-normal text-gray-500 dark:text-gray-400"
+                  className="mt-1 text-xs font-normal text-brand-muted dark:text-dark-muted"
                 >
                   Connect to your account
                 </p>
@@ -110,7 +110,7 @@ export default function PaymentForm() {
       <div className="space-y-4">
         {paymentType === 'credit-card' && <StripeForm />}
         {paymentType === 'pay-on-delivery' && (
-          <div className="font-normal text-center grid py-4  dark:text-gray-400">
+          <div className="grid py-4 text-center font-normal text-brand-muted dark:text-dark-muted">
             {' '}
             <i>
               This payment is currently in progress. Please check back later.
@@ -118,7 +118,7 @@ export default function PaymentForm() {
           </div>
         )}
         {paymentType === 'paypal' && (
-          <div className="font-normal text-center grid py-4  dark:text-gray-400">
+          <div className="grid py-4 text-center font-normal text-brand-muted dark:text-dark-muted">
             {' '}
             <i>
               This payment is currently in progress. Please check back later.

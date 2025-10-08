@@ -130,9 +130,9 @@ export default function VirtuosoProductGrid({
             <div className="flex flex-1 flex-col gap-4">
               <Link
                 href={`/marketplace/product/${product.id}`}
-                className="hover:underline"
+                className="text-brand-text transition-colors hover:text-brand-primary dark:text-dark-text"
               >
-                <h2 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white h-14">
+                <h2 className="h-14 text-xl font-semibold tracking-tight">
                   {product.name}
                 </h2>
               </Link>
@@ -158,8 +158,10 @@ export default function VirtuosoProductGrid({
       buttons.push(
         <button
           key={`product-page-${i}`}
-          className={`px-3 py-1 border rounded-md mx-1 ${
-            i === currentPage ? 'bg-blue-600 text-white' : 'bg-white text-black'
+          className={`mx-1 rounded-md border px-3 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 ${
+            i === currentPage
+              ? 'border-brand-primary bg-brand-primary text-white'
+              : 'border-brand-muted/30 bg-brand-surface text-brand-text hover:border-brand-primary hover:text-brand-primary dark:border-dark-muted/30 dark:bg-dark-surface dark:text-dark-text dark:hover:border-brand-primary dark:hover:text-brand-primary'
           }`}
           onClick={() => changePage(i)}
         >
@@ -169,10 +171,10 @@ export default function VirtuosoProductGrid({
     }
 
     return (
-      <div className="flex justify-center items-center gap-2 py-6">
+      <div className="flex items-center justify-center gap-2 py-6 text-brand-muted dark:text-dark-muted">
         <button
           disabled={currentPage === 1}
-          className="px-3 py-1 border rounded-md"
+          className="rounded-md border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:cursor-not-allowed disabled:border-brand-muted/20 disabled:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:border-dark-muted/20 dark:disabled:text-dark-muted"
           onClick={() => changePage(1)}
         >
           First
@@ -182,7 +184,7 @@ export default function VirtuosoProductGrid({
         {end < totalPages && <span>…</span>}
         <button
           disabled={currentPage === totalPages}
-          className="px-3 py-1 border rounded-md"
+          className="rounded-md border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:cursor-not-allowed disabled:border-brand-muted/20 disabled:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:border-dark-muted/20 dark:disabled:text-dark-muted"
           onClick={() => changePage(totalPages)}
         >
           Last

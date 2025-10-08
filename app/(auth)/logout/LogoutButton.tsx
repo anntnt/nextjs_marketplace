@@ -16,7 +16,7 @@ export default function LogoutButton({ onLogout }: Props) {
         role="button"
         aria-label="Logout"
         tabIndex={0}
-        className=" underline block sm:px-4 py-1  dark:hover:bg-gray-600 dark:hover:text-white font-semibold text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 sm:text-center"
+        className="block py-1 font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary sm:px-4 sm:text-center dark:text-brand-primary"
         onClick={async () => {
           await logout();
           router.push('/');

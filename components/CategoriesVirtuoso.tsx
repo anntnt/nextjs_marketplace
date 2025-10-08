@@ -129,9 +129,9 @@ export default function CategoriesVirtuoso() {
         >
           <Link
             href={`/marketplace/${category.id}`}
-            className="hover:underline"
+            className="text-brand-text transition-colors hover:text-brand-primary dark:text-dark-text dark:hover:text-brand-primary"
           >
-            <h2 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">
+            <h2 className="text-lg font-semibold tracking-tight">
               {category.categoryName}
             </h2>
           </Link>
@@ -153,8 +153,10 @@ export default function CategoriesVirtuoso() {
       buttons.push(
         <button
           key={`category-page-${i}`}
-          className={`px-3 py-1 border rounded-md mx-1 ${
-            i === page ? 'bg-blue-600 text-white' : 'bg-white text-black'
+          className={`mx-1 rounded-md border px-3 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 ${
+            i === page
+              ? 'border-brand-primary bg-brand-primary text-white'
+              : 'border-brand-muted/30 bg-brand-surface text-brand-muted hover:border-brand-primary hover:text-brand-primary dark:border-dark-muted/30 dark:bg-dark-surface dark:text-dark-muted dark:hover:border-brand-primary dark:hover:text-brand-primary'
           }`}
           onClick={() => changePage(i)}
           disabled={loading || i === page}
@@ -165,9 +167,9 @@ export default function CategoriesVirtuoso() {
     }
 
     return (
-      <div className="mt-8 flex items-center justify-center gap-2">
+      <div className="mt-8 flex items-center justify-center gap-2 text-brand-muted dark:text-dark-muted">
         <button
-          className="px-3 py-1 border rounded-md disabled:opacity-40"
+          className="rounded-md border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-40 disabled:hover:border-brand-muted/30 disabled:hover:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:hover:border-dark-muted/30 dark:disabled:hover:text-dark-muted"
           onClick={() => changePage(1)}
           disabled={page === 1 || loading}
         >
@@ -177,7 +179,7 @@ export default function CategoriesVirtuoso() {
         {buttons}
         {end < totalPages && <span>…</span>}
         <button
-          className="px-3 py-1 border rounded-md disabled:opacity-40"
+          className="rounded-md border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-40 disabled:hover:border-brand-muted/30 disabled:hover:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:hover:border-dark-muted/30 dark:disabled:hover:text-dark-muted"
           onClick={() => changePage(totalPages)}
           disabled={page === totalPages || loading}
         >
@@ -191,7 +193,7 @@ export default function CategoriesVirtuoso() {
     <div className="relative">
       {(loading || categories.length === 0) && (
         <div className="mb-6 flex w-full items-center justify-center">
-          <div className="flex items-center gap-3 rounded-full border border-blue-200/70 bg-white px-4 py-2 text-sm text-blue-700 shadow-sm dark:border-blue-800/70 dark:bg-gray-900 dark:text-blue-200">
+          <div className="flex items-center gap-3 rounded-full border border-brand-muted/30 bg-brand-surface px-4 py-2 text-sm text-brand-muted shadow-sm shadow-brand-primary/10 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-muted">
             <svg
               className="h-4 w-4 animate-spin"
               viewBox="0 0 24 24"

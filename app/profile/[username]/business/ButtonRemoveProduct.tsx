@@ -17,7 +17,7 @@ export default function ButtonRemoveForm(props: Props) {
     <div
       role="button"
       tabIndex={0}
-      className="bg-gray-50  antialiased dark:bg-gray-900 cursor-pointer"
+      className="cursor-pointer bg-transparent"
       onClick={async () => {
         const response = await fetch(`/api/products/${props.id}`, {
           method: 'DELETE',
@@ -51,7 +51,7 @@ export default function ButtonRemoveForm(props: Props) {
       aria-label="Delete product"
     >
       <svg
-        className="w-[35px] h-[35px] text-gray-800 dark:text-white"
+        className="h-[35px] w-[35px] text-brand-text dark:text-white"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         width="24"

@@ -21,16 +21,16 @@ export default async function UserProfilePage() {
 
 
   return (
-    <main className="bg-gray-50 dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-10 py-12">
-      <h1 className="mb-4 text-4xl text-center">{user.username}'s Dashboard</h1>
+    <main className="flex-grow w-full max-w-full bg-brand-bg px-5 py-12 text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text sm:px-10">
+      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">{user.username}'s Dashboard</h1>
 
-      <section className="mb-4  py-8 antialiased dark:bg-gray-900 md:py-12">
+      <section className="mb-4 py-8 md:py-12">
         <div className="mx-auto max-w-screen-xl px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-20">
           {user.roleId === 2 && (
-            <div className="text-lg text-center">
+            <div className="text-center text-lg">
               Manage and showcase{' '}
               <Link href={`/profile/${user.username}/business`}>
-                <span className="py-8 hover:text-blue-1000 font-bold">
+                <span className="py-8 font-bold text-brand-primary transition-colors hover:text-brand-secondary">
                   my products
                 </span>
               </Link>{' '}
@@ -38,23 +38,23 @@ export default async function UserProfilePage() {
             </div>
           )}
           {user.roleId === 3 && (
-            <div className="text-lg text-center">
+            <div className="text-center text-lg">
               Visit our{' '}
               <Link href="/#categories">
-                <span className="py-8 hover:text-blue-1000 font-bold">
+                <span className="py-8 font-bold text-brand-primary transition-colors hover:text-brand-secondary">
                   categories
                 </span>
               </Link>{' '}
               and discover amazing products!
             </div>
           )}
-          <hr className="my-4" />
-          <nav className="mb-4 flex" aria-label="Breadcrumb">
+          <hr className="my-4 border-brand-muted/20 dark:border-dark-muted/20" />
+          <nav className="mb-4 flex text-brand-muted dark:text-dark-muted" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
               <li className="inline-flex items-center">
                 <Link
                   href="/"
-                  className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white"
+                  className="inline-flex items-center text-sm font-medium transition-colors hover:text-brand-primary"
                 >
                   <svg
                     className="me-2 h-4 w-4"
@@ -79,7 +79,7 @@ export default async function UserProfilePage() {
               <li>
                 <div className="flex items-center">
                   <svg
-                    className="mx-1 h-4 w-4 text-gray-400 rtl:rotate-180"
+                    className="mx-1 h-4 w-4 text-brand-muted rtl:rotate-180 dark:text-dark-muted"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -97,7 +97,7 @@ export default async function UserProfilePage() {
                   </svg>
                   <Link
                     href="/"
-                    className="ms-1 text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white md:ms-2"
+                    className="ms-1 text-sm font-medium transition-colors hover:text-brand-primary md:ms-2"
                   >
                     My account
                   </Link>
@@ -105,19 +105,19 @@ export default async function UserProfilePage() {
               </li>
             </ol>
           </nav>
-          <div className="mb-4 text-3xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6">
+          <div className="mb-4 text-3xl font-semibold text-brand-text dark:text-dark-text sm:text-2xl md:mb-6">
             General overview
           </div>
 
-          <div className="grid grid-cols-2 gap-6 border-b border-t border-gray-200 py-4 dark:border-gray-700 md:py-8 lg:grid-cols-4 xl:gap-16">
+          <div className="grid grid-cols-2 gap-6 border-b border-t border-brand-muted/20 py-4 dark:border-dark-muted/20 md:py-8 lg:grid-cols-4 xl:gap-16">
             <div>
               {user.roleId === 2 ? (
                 <Link
                   href={`/profile/${user.username}/business`}
-                  className="inline-flex items-center px-5 py-2 text-md font-medium text-gray-900 bg-white border border-blue-1000 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-brand-primary bg-brand-surface px-5 py-2 text-md font-medium text-brand-text transition-colors hover:border-brand-secondary hover:bg-brand-secondary/10 hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 dark:border-brand-primary dark:bg-dark-surface dark:text-dark-text"
                 >
                   <svg
-                    className="w-6 h-6 me-1.5 text-gray-800 dark:text-white"
+                    className="me-1.5 h-6 w-6 text-brand-primary"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -140,10 +140,10 @@ export default async function UserProfilePage() {
                   {' '}
                   <Link
                     href={`/profile/${user.username}/orders`}
-                    className="inline-flex items-center px-5 py-2 text-md font-medium text-gray-900 bg-white border border-blue-1000 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-brand-primary bg-brand-surface px-5 py-2 text-md font-medium text-brand-text transition-colors hover:border-brand-secondary hover:bg-brand-secondary/10 hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 dark:border-brand-primary dark:bg-dark-surface dark:text-dark-text"
                   >
                     <svg
-                      className="w-6 h-6 me-1.5 text-gray-800 dark:text-white"
+                      className="me-1.5 h-6 w-6 text-brand-primary"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -169,10 +169,10 @@ export default async function UserProfilePage() {
             <div>
               <Link
                 href={`/profile/${user.username}/messages-inbox`}
-                className="inline-flex items-center px-5 py-2 text-md font-medium text-gray-900 bg-white border border-blue-1000 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-brand-primary bg-brand-surface px-5 py-2 text-md font-medium text-brand-text transition-colors hover:border-brand-secondary hover:bg-brand-secondary/10 hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 dark:border-brand-primary dark:bg-dark-surface dark:text-dark-text"
               >
                 <svg
-                  className="w-6 h-6 me-1.5 text-gray-800 dark:text-white"
+                  className="me-1.5 h-6 w-6 text-brand-primary"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -194,10 +194,10 @@ export default async function UserProfilePage() {
             <div>
               <Link
                 href="/support"
-                className="inline-flex items-center px-5 py-2 text-md font-medium text-gray-900 bg-white border border-blue-1000 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-brand-primary bg-brand-surface px-5 py-2 text-md font-medium text-brand-text transition-colors hover:border-brand-secondary hover:bg-brand-secondary/10 hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 dark:border-brand-primary dark:bg-dark-surface dark:text-dark-text"
               >
                 <svg
-                  className="w-6 h-6 me-1.5 text-gray-800 dark:text-white"
+                  className="me-1.5 h-6 w-6 text-brand-primary"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -259,7 +259,7 @@ export default async function UserProfilePage() {
             </div>
             <Link
               href="/edit-your-data"
-              className="inline-flex  items-center justify-center rounded-lg bg-blue-1000 px-5 py-2.5 text-md font-medium text-white hover:bg-blue-700 hover:text-white focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-auto"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-brand-primary bg-brand-primary px-5 py-2.5 text-md font-medium text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70"
             >
               <svg
                 className="-ms-0.5 me-1.5 h-6 w-6"

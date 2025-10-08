@@ -78,13 +78,13 @@ export default async function CartPage() {
     return (
       <main className="flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <h1 className="mb-4 text-3xl text-center">Your Cart</h1>
+          <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Your Cart</h1>
 
           <p>Your cart is empty</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               href="/#categories"
-              className="text-center sm:w-auto rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-semibold text-gray-800 hover:bg-gray-100"
+              className="text-center sm:w-auto rounded-lg border border-brand-border px-5 py-2.5 text-sm font-semibold text-brand-text transition-colors hover:border-brand-primary hover:bg-brand-primary/10 hover:text-brand-primary"
             >
               Continue shopping
             </Link>
@@ -103,9 +103,9 @@ export default async function CartPage() {
     : '/login?returnTo=%2Fcheckout';
 
   return (
-    <main className="bg-gray-50  antialiased dark:bg-gray-900 flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
+    <main className="bg-brand-bg  antialiased dark:bg-dark-bg flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h1 className="mb-4 text-3xl text-center">Your Cart</h1>
+        <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Your Cart</h1>
         <div className="grid sm:grid-cols-2 gap-4 mt-8 py-8">
           <div className="md:col-span-2 space-y-4">
             {productsFromCart.map((product) => {
@@ -113,7 +113,7 @@ export default async function CartPage() {
                 <div
                   key={`product-${product.id}`}
                   data-test-id={`product-id-${product.id}`}
-                  className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6 flex gap-4  px-4 py-6 "
+                  className="flex gap-4 rounded-lg border border-brand-border bg-brand-surface px-4 py-6 shadow-sm transition dark:border-dark-muted/60 dark:bg-dark-surface md:p-6"
                 >
                   <div className="flex gap-4">
                     <div className="w-28 h-auto max-sm:w-24 max-sm:h-24 shrink-0">
@@ -134,7 +134,7 @@ export default async function CartPage() {
                     </div>
                     <div className="flex flex-col gap-4">
                       <div>
-                        <h2 className="text-base font-bold text-gray-800">
+                        <h2 className="text-base font-bold text-brand-text">
                           {product.name}
                         </h2>
                       </div>
@@ -149,7 +149,7 @@ export default async function CartPage() {
                     <div className="flex items-start gap-4 justify-end">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 cursor-pointer fill-gray-400 inline-block"
+                        className="inline-block w-4 cursor-pointer fill-brand-muted"
                         viewBox="0 0 64 64"
                       >
                         <path
@@ -160,7 +160,7 @@ export default async function CartPage() {
 
                       <RemoveCartProductButton productId={product.id} />
                     </div>
-                    <p className="text-md font-bold text-gray-800 mt-5">
+                    <p className="mt-5 text-md font-bold text-brand-text dark:text-dark-text">
                       {formatEuroFromCents(product.price)}
                     </p>
                   </div>
@@ -169,8 +169,8 @@ export default async function CartPage() {
             })}
           </div>
 
-          <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6bg-white  px-4 py-6 h-max ">
-            <ul className="text-gray-800 space-y-4">
+          <div className="h-max space-y-4 rounded-lg border border-brand-muted/20 bg-brand-surface px-4 py-6 shadow-sm transition dark:border-dark-muted/20 dark:bg-dark-surface sm:p-6">
+            <ul className="space-y-4 text-brand-text dark:text-dark-text">
               <li className="flex flex-wrap gap-4 text-md">
                 Subtotal
                 <span className="ml-auto ">{formatEuroFromCents(subTotal)}</span>
@@ -182,7 +182,7 @@ export default async function CartPage() {
                 </span>
               </li>
               <li>
-                <hr className="border-gray-300" />
+                <hr className="border-brand-muted/20 dark:border-dark-muted/30" />
               </li>
               <li className="flex flex-wrap gap-4 text-md font-bold">
                 Total
@@ -194,21 +194,21 @@ export default async function CartPage() {
               <Link
                 href={checkoutHref}
                 type="button"
-                className="text-center w-full text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                className="me-2 inline-flex w-full justify-center rounded-lg border border-brand-primary bg-brand-primary px-5 py-2.5 text-md font-medium text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70"
               >
                 Checkout
               </Link>
               <Link
                 href="/#categories"
                 type="button"
-                className="text-center text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-100 text-gray-800 border border-gray-300 rounded-md"
+                className="inline-flex w-full justify-center rounded-md border border-brand-muted/30 px-4 py-2.5 text-sm font-semibold tracking-wide text-brand-text transition-colors hover:border-brand-primary hover:bg-brand-primary/10 hover:text-brand-primary dark:border-dark-muted/30 dark:text-dark-text dark:hover:border-brand-primary dark:hover:bg-brand-primary/20 dark:hover:text-brand-primary"
               >
                 Continue shopping
               </Link>
             </div>
 
             {isGuest ? (
-              <p className="mt-4 text-sm text-gray-500">
+              <p className="mt-4 text-sm text-brand-muted dark:text-dark-muted">
                 You can add products without signing in. We will ask you to log in
                 or create an account before checkout so we can save your order.
               </p>

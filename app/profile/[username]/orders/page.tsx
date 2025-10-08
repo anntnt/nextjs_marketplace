@@ -16,8 +16,8 @@ export default async function UserProfilePage() {
 
   return (
     <main className="flex-grow  w-full max-w-full px-20 py-12">
-      <h1 className="mb-4 text-4xl text-center">My Orders</h1>
-      <section className="py-8 antialiased  md:py-16     text-xl  font-normal   sm:px-16 xl:px-48 dark:text-gray-400">
+      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">My Orders</h1>
+      <section className="py-8 antialiased text-xl font-normal sm:px-16 xl:px-48 dark:text-gray-400">
         <div className="mx-auto text-center max-w-screen-xl px-4 2xl:px-0">
           <p>
             <i>This page is currently in progress. Please check back later.</i>

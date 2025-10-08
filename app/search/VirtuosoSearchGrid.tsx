@@ -174,7 +174,7 @@ export default function VirtuosoSearchGrid({
       <div ref={containerRef}>
         {loading && (
           <div className="mb-6 flex w-full items-center justify-center">
-            <div className="flex items-center gap-3 rounded-full border border-blue-200/70 bg-white px-4 py-2 text-sm text-blue-700 shadow-sm dark:border-blue-800/70 dark:bg-gray-900 dark:text-blue-200">
+            <div className="flex items-center gap-3 rounded-full border border-brand-muted/30 bg-brand-surface px-4 py-2 text-sm text-brand-muted shadow-sm shadow-brand-primary/15 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-muted">
               <svg
                 className="h-4 w-4 animate-spin"
                 viewBox="0 0 24 24"
@@ -208,11 +208,11 @@ export default function VirtuosoSearchGrid({
         {/* Pagination */}
         {shouldShowPagination && (
           <nav
-            className="flex justify-center items-center gap-2 mt-6 text-gray-700 dark:text-gray-300"
+            className="mt-6 flex items-center justify-center gap-2 text-brand-muted dark:text-dark-muted"
             aria-label="Pagination"
           >
             <button
-              className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
+              className="rounded border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-50 disabled:hover:border-brand-muted/30 disabled:hover:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:hover:border-dark-muted/30 dark:disabled:hover:text-dark-muted"
               disabled={page === 1 || loading}
               onClick={() => changePage(1)}
             >
@@ -229,10 +229,10 @@ export default function VirtuosoSearchGrid({
                     <button
                       key={`page-${page}-${pageNumber}`}
                       onClick={() => changePage(Number(pageNumber))}
-                      className={`px-3 py-1 rounded border disabled:opacity-50 ${
+                      className={`rounded border px-3 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-50 ${
                         pageNumber === page
-                          ? 'bg-blue-600 text-white border-blue-600'
-                          : 'border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'
+                          ? 'border-brand-primary bg-brand-primary text-white'
+                          : 'border-brand-muted/30 text-brand-muted hover:border-brand-primary hover:text-brand-primary dark:border-dark-muted/30 dark:text-dark-muted dark:hover:border-brand-primary dark:hover:text-brand-primary'
                       }`}
                       disabled={loading || pageNumber === page}
                     >
@@ -242,7 +242,7 @@ export default function VirtuosoSearchGrid({
             )}
 
             <button
-              className="px-3 py-1 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50"
+              className="rounded border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-50 disabled:hover:border-brand-muted/30 disabled:hover:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:hover:border-dark-muted/30 dark:disabled:hover:text-dark-muted"
               disabled={page === totalPages || loading}
               onClick={() => changePage(totalPages)}
             >

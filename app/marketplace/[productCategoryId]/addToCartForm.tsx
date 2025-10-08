@@ -19,7 +19,7 @@ export default function AddToCartForm(props: Props) {
   return (
     <div className="mt-auto">
       <div className="mt-4 flex flex-col gap-3">
-        <p className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
+        <p className="text-2xl font-extrabold leading-tight text-brand-text dark:text-dark-text">
           {formatEuroFromCents(props.product.price)}
         </p>
         <form
@@ -50,7 +50,7 @@ export default function AddToCartForm(props: Props) {
           }}
         >
           {!props.roleId || props.roleId !== 2 ? (
-            <button className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-blue-1000 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:bg-primary-600">
+            <button className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg border border-brand-primary bg-brand-primary px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70">
               <BsCart4 size={20} />
               Add to cart
             </button>

@@ -109,15 +109,15 @@ export default function Header(props: UserProps) {
   }, []);
 
   return (
-    <header className="top-0 z-10 bg-white shadow-md">
-      <nav className="bg-yellow-100 border-gray-200 py-3.5 sm:py-3 dark:bg-gray-900">
+    <header className="top-0 z-10 border-b border-brand-secondary/50 bg-brand-secondary text-white shadow-lg transition-colors dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text">
+      <nav className="py-3.5 sm:py-3">
         <div className="mx-auto flex w-full max-w-screen-2xl items-center gap-4 px-2 sm:px-4 lg:px-6">
           <Link
             href="/"
-            className="flex items-center text-xl font-semibold active:text-blue-1000 focus:text-blue-1000 dark:text-white"
+            className="flex items-center text-xl font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning focus:outline-none dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning"
           >
             <Image
-              src="/images/estores_logo.png"
+              src="/images/estores_logo.webp"
               width={559}
               height={102}
               className="h-auto w-32 pb-3 sm:pb-2 md:w-36 lg:w-40"
@@ -133,7 +133,7 @@ export default function Header(props: UserProps) {
                 <li>
                   <Link
                     href={`/profile/${props.user.username}/business`}
-                    className="text-black underline decoration-4 decoration-blue-1000 hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white dark:decoration-blue-1000"
+                    className="text-white underline decoration-4 decoration-brand-accent transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning dark:decoration-brand-accent"
                   >
                     My Products
                   </Link>
@@ -148,7 +148,7 @@ export default function Header(props: UserProps) {
             <div className="flex items-center gap-4 md:gap-6">
               <Link
                 href="/support"
-                className="hidden items-center gap-1 font-semibold text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white md:inline-flex"
+                className="hidden items-center gap-1 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:inline-flex"
               >
                 <FiHelpCircle className="h-4 w-4" aria-hidden="true" />
                 Help
@@ -156,7 +156,7 @@ export default function Header(props: UserProps) {
               {!props.user || props.user.roleId !== 2 ? (
                 <Link
                   href="/sell"
-                  className="hidden rounded-full border border-blue-1000 px-4 py-2 text-sm font-semibold text-blue-1000 shadow-sm transition-colors hover:bg-blue-50 focus:bg-blue-50 focus:outline-none active:bg-blue-100 md:inline-flex dark:border-blue-300 dark:text-blue-200 dark:hover:bg-blue-900/20"
+                  className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:bg-[#d97706] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 active:translate-y-0 md:inline-flex"
                 >
                   Open your shop
                 </Link>
@@ -179,7 +179,7 @@ export default function Header(props: UserProps) {
               )}
               <button
                 onClick={toggleMenu}
-                className="inline-flex items-center rounded-lg border border-blue-1000 bg-blue-1000 p-2 text-white hover:bg-blue-900 focus:outline-none md:hidden"
+                className="inline-flex items-center rounded-lg border border-brand-border bg-white p-2 text-brand-text transition-colors hover:border-brand-primary hover:bg-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/50 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text md:hidden"
                 aria-controls="navbar-menu"
                 aria-expanded={isOpen}
                 aria-haspopup="true"
@@ -210,12 +210,12 @@ export default function Header(props: UserProps) {
             role="menu"
             aria-hidden={!isOpen}
           >
-            <ul className="mt-4 flex flex-col items-start gap-2 p-4 dark:bg-gray-800">
+            <ul className="mt-4 flex flex-col items-start gap-2 bg-brand-surface p-4 text-brand-text shadow-lg dark:bg-dark-surface dark:text-dark-text">
               <li className="w-full">
                 <Link
                   href="/support"
                   onClick={closeMenu}
-                  className="inline-flex w-full items-center gap-2 py-2 font-semibold text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
+                  className="inline-flex w-full items-center gap-2 py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
                 >
                   <FiHelpCircle className="h-4 w-4" aria-hidden="true" />
                   Help
@@ -226,7 +226,7 @@ export default function Header(props: UserProps) {
                   <Link
                     href="/sell"
                     onClick={closeMenu}
-                    className="ml-0 block w-full max-w-[12rem] rounded-full border border-blue-1000 px-4 py-2 text-center font-semibold text-blue-1000 shadow-sm transition-colors hover:bg-blue-50 focus:bg-blue-50 active:bg-blue-100 dark:border-blue-300 dark:text-blue-200 dark:hover:bg-blue-900/20"
+                    className="ml-0 block w-full max-w-[12rem] rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 active:bg-brand-primary"
                   >
                     Open your shop
                   </Link>
@@ -237,9 +237,9 @@ export default function Header(props: UserProps) {
                   <Link
                     href={`/profile/${props.user.username}/business`}
                     onClick={closeMenu}
-                    className="block w-full py-2 text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
+                    className="block w-full py-2 transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
                   >
-                    <span className="font-semibold underline decoration-4 decoration-blue-1000 dark:decoration-blue-1000">
+                    <span className="font-semibold underline decoration-4 decoration-brand-primary">
                       My Products
                     </span>
                   </Link>
@@ -251,7 +251,7 @@ export default function Header(props: UserProps) {
                     <Link
                       href={`/profile/${props.user.username}`}
                       onClick={closeMenu}
-                      className="block w-full py-2 font-semibold text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
+                      className="block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
                     >
                       {props.user.firstname}'s Dashboard
                     </Link>
@@ -266,18 +266,18 @@ export default function Header(props: UserProps) {
                     <Link
                       href="/login"
                       onClick={closeMenu}
-                      className="block w-full py-2 font-semibold text-black hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white"
+                      className="block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
                     >
                       Login
                     </Link>
                   </li>
                   <li className="w-full">
                     <hr className="mb-4" />
-                    <div className="text-black dark:text-white">New to eStores?</div>
+                    <div className="text-brand-muted dark:text-dark-muted">New to eStores?</div>
                     <Link
                       href="/register"
                       onClick={closeMenu}
-                      className="text-center font-semibold text-black underline hover:text-blue-1000 focus:text-blue-1000 active:text-blue-1000 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white"
+                      className="text-center font-semibold text-brand-primary underline transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary"
                     >
                       Register
                     </Link>{' '}

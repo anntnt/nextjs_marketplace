@@ -70,10 +70,10 @@ export default function RegisterForm(props: Props) {
   };
   return (
     <>
-      <div className="max-w-sm mx-auto">
+      <div className="mx-auto max-w-sm text-brand-text dark:text-dark-text">
         <hr className="mb-4" />
         <h2 className="mb-4 text-md text-center">Be part of eStores! </h2>
-        <div className="text-sm">
+        <div className="text-sm text-brand-muted dark:text-dark-muted">
           Sign up as a <strong>buyer</strong> to explore and shop for amazing
           products, or join as a <strong>seller</strong> to showcase your items
           and reach more customers.
@@ -110,11 +110,11 @@ export default function RegisterForm(props: Props) {
           <div className="mb-5">
             <label
               htmlFor="username"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text"
             >
               Username*
               <input
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
                 required
                 value={username}
                 onChange={(event) => setUsername(event.currentTarget.value)}
@@ -122,71 +122,71 @@ export default function RegisterForm(props: Props) {
             </label>
           </div>
           <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
               Password*
               <input
                 type="password"
                 value={password}
                 required
                 onChange={(event) => setPassword(event.currentTarget.value)}
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
               />
             </label>
           </div>
           <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
               First name*
               <input
                 value={firstName}
                 onChange={(event) => setFirstName(event.currentTarget.value)}
                 required
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
               />
             </label>
           </div>
           <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
               Last name*
               <input
                 value={lastName}
                 onChange={(event) => setLastName(event.currentTarget.value)}
                 required
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
               />
             </label>
           </div>
           <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
               Email address*
               <input
                 value={emailAddress}
                 type="email"
                 onChange={(event) => setEmailAddress(event.currentTarget.value)}
                 required
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
               />
             </label>
           </div>
           <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
               Birth date*
               <input
                 value={birthday}
                 type="date"
                 onChange={(event) => setBirthday(event.currentTarget.value)}
                 required
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
               />
             </label>
           </div>
           <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
               Gender
               <select
                 id="countries"
                 value={gender}
                 onChange={(event) => setGender(event.currentTarget.value)}
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
               >
                 <option>Please select one...</option>
                 <option value="female">female</option>
@@ -198,23 +198,23 @@ export default function RegisterForm(props: Props) {
 
           {roleId === 2 && (
             <div className="mb-5">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
                 Store name
                 <input
                   value={storeName}
                   onChange={(event) => setStoreName(event.currentTarget.value)}
-                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+                  className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
                 />
               </label>
             </div>
           )}
           <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
               Address
               <input
                 value={uAddress}
                 onChange={(event) => setUAddress(event.currentTarget.value)}
-                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-1000 focus:border-blue-1000 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-1000 dark:focus:border-blue-1000"
+                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
               />
             </label>
           </div>
@@ -225,18 +225,18 @@ export default function RegisterForm(props: Props) {
                 id="privacyAgreement"
                 type="checkbox"
                 required
-                className="w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                className="h-4 w-4 rounded border-brand-muted/40 text-brand-primary focus:ring-2 focus:ring-brand-primary/50 dark:border-dark-muted/40 dark:bg-dark-surface"
               />
               <label
                 htmlFor="privacyAgreement"
-                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="ms-2 text-sm font-medium text-brand-text dark:text-dark-text"
               >
                 I agree to the Privacy Policy*
               </label>
             </div>
           </div>
           <div className="mb-5">
-            <button className="text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            <button className="mb-2 me-2 w-full rounded-lg border border-brand-warning bg-brand-warning px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#d97706] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70">
               Register
             </button>
           </div>
@@ -249,14 +249,14 @@ export default function RegisterForm(props: Props) {
           </div>
         </form>
       </div>
-      <div className="max-w-lg mx-auto text-center  text-lg">
+      <div className="mx-auto max-w-lg text-center text-lg text-brand-text dark:text-dark-text">
         <hr className="mb-4" />
-        <div className=" text-black dark:text-white text-center">
+        <div className="text-center text-brand-muted dark:text-dark-muted">
           Already have an account?
         </div>
         <Link
           href="/login"
-          className="underline text-black dark:text-white hover:text-blue-1000 active:text-blue-1000 focus:text-blue-1000 font-semibold dark:hover:bg-gray-600 dark:hover:text-white text-center"
+          className="font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
         >
           Log in
         </Link>{' '}

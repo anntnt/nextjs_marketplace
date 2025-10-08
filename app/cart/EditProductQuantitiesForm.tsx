@@ -55,10 +55,10 @@ export default function EditProductQuantitiesForm(props: Props) {
           router.refresh();
         }}
         type="button"
-        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 font-bold text-xl"
+        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-brand-border bg-brand-surface font-bold text-xl text-brand-text transition-colors hover:border-brand-primary hover:bg-brand-primary/10 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 dark:border-dark-muted/60 dark:bg-dark-surface dark:text-white dark:hover:border-brand-primary dark:hover:bg-brand-primary/20 dark:focus:ring-brand-primary/40"
       >
         <svg
-          className="h-2.5 w-2.5 text-gray-900 dark:text-white"
+          className="h-2.5 w-2.5 text-brand-text dark:text-white"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -76,7 +76,7 @@ export default function EditProductQuantitiesForm(props: Props) {
       <input
         id="counter-input"
         data-input-counter
-        className="w-12 shrink-0 border-0 bg-transparent text-center text-sm  text-gray-900 focus:outline-none focus:ring-0 dark:text-white "
+        className="w-12 shrink-0 border-0 bg-transparent text-center text-sm text-brand-text focus:outline-none focus:ring-0 dark:text-white"
         value={quantity}
         disabled
         data-test-id="product-quantity"
@@ -111,10 +111,10 @@ export default function EditProductQuantitiesForm(props: Props) {
           router.refresh();
         }}
         type="button"
-        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 font-bold text-xl"
+        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-brand-border bg-brand-surface font-bold text-xl text-brand-text transition-colors hover:border-brand-primary hover:bg-brand-primary/10 focus:outline-none focus:ring-2 focus:ring-brand-primary/30 dark:border-dark-muted/60 dark:bg-dark-surface dark:text-white dark:hover:border-brand-primary dark:hover:bg-brand-primary/20 dark:focus:ring-brand-primary/40"
       >
         <svg
-          className="h-2.5 w-2.5 text-gray-900 dark:text-white"
+          className="h-2.5 w-2.5 text-brand-text dark:text-white"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

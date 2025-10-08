@@ -30,8 +30,8 @@ export default async function LoginPage(props: Props) {
 
   // 4. If the sessionToken cookie is invalid or doesn't exist, show the login form
   return (
-    <main className="flex-grow  w-full max-w-full bg-gray-50  antialiased dark:bg-gray-900 px-5 sm:px-20 py-12">
-      <h1 className="mb-4 text-4xl text-center">Log in to your account</h1>
+    <main className="flex-grow  w-full max-w-full bg-brand-bg  antialiased dark:bg-dark-bg px-5 sm:px-20 py-12">
+      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Log in to your account</h1>
       <LoginForm returnTo={returnTo} />
     </main>
   );

@@ -63,7 +63,7 @@ export default function CheckoutForm() {
       <form id="payment-form" className="mx-auto" onSubmit={handleSubmit}>
         <PaymentElement id="payment-element" />
         <button
-          className="space-x-4 text-white bg-blue-1000 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          className="me-2 inline-flex items-center rounded-lg border border-brand-primary bg-brand-primary px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 disabled:opacity-50"
           disabled={isLoading || !stripe || !elements}
           id="submit"
           onClick={async () => {
