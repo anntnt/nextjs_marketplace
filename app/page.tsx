@@ -55,10 +55,10 @@ export default function Home() {
 
       {/* Call to action */}
       <section className="bg-gradient-to-r from-[#F59E0B] via-[#FCDFAF] to-[#A7F3D0] py-24 text-brand-text transition-colors sm:py-28 lg:py-32">
-        <div className="px-0 py-8 sm:px-8 sm:py-12 lg:px-16 lg:py-14">
+        <div className="px-0 py-8 sm:px-0 sm:py-12 lg:px-16 lg:py-14">
           <div className="mx-auto w-full max-w-5xl">
-            <div className="grid gap-10 rounded-3xl text-brand-text sm:rounded-[2.5rem] sm:bg-brand-surface sm:p-8 md:border md:border-brand-border/60 md:p-12 lg:grid-cols-[1.1fr_0.9fr] lg:overflow-hidden lg:p-0 dark:border-brand-border dark:bg-white dark:text-brand-text">
-              <div className="space-y-6 bg-transparent px-6 py-8 sm:bg-transparent sm:px-0 sm:py-0 lg:p-14">
+            <div className="grid gap-10 rounded-3xl text-brand-text sm:rounded-[2.5rem] sm:p-0 md:bg-gradient-to-r md:from-[#F59E0B] md:via-[#FCDFAF] md:to-[#A7F3D0] md:p-8 lg:grid-cols-[1.1fr_0.9fr] lg:overflow-hidden lg:border lg:border-brand-border/60 lg:bg-brand-surface lg:p-0 dark:border-brand-border dark:bg-white dark:text-brand-text">
+              <div className="space-y-6 px-6 py-8 sm:px-6 sm:py-10 md:px-6 md:py-10 lg:px-0 lg:p-14">
                 <h2 className="text-3xl font-semibold text-brand-text">
                   Ready to grow with eStores?
                 </h2>
@@ -74,7 +74,7 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-              <div className="relative order-first h-72 w-full overflow-hidden rounded-2xl sm:h-80 sm:rounded-3xl lg:order-none lg:h-full lg:rounded-none">
+              <div className="relative order-first h-72 w-full overflow-hidden sm:h-80 sm:rounded-3xl lg:order-none lg:h-full lg:rounded-none">
                 <Image
                   src="/images/smiling_woman.jpg"
                   alt="Seller dashboard preview"
