@@ -14,7 +14,7 @@ const returnToSchema = z.string().refine((value) => {
     //   - question marks
     //   - lowercase letters
     //   - dashes
-    /^\/[\d#/=?a-z-]+$/.test(value)
+    /^\/[\d#/=?A-Za-z._~-]+$/.test(value)
   );
 });
 

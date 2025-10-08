@@ -12,14 +12,14 @@ export default function Component() {
   const loginHref = useMemo(() => {
     const sanitized = pathname && pathname !== '/login' ? pathname : undefined;
     const safe = getSafeReturnToPath(sanitized);
-    return safe ? `/login?returnTo=${encodeURIComponent(safe)}` : '/login';
+    return safe ? `/login?returnTo=${safe}` : '/login';
   }, [pathname]);
 
   const registerHref = useMemo(() => {
     if (!pathname || pathname === '/register') {
       return '/register';
     }
-    return `/register?returnTo=${encodeURIComponent(currentPath)}`;
+    return `/register?returnTo=${currentPath}`;
   }, [currentPath, pathname]);
   return (
     <div
@@ -60,7 +60,7 @@ export default function Component() {
               <ul className="px-7 pb-7 pt-6 text-sm text-brand-muted dark:text-dark-muted">
                 <li>
                   <Link
-                    href={{ pathname: loginHref }}
+                    href={loginHref}
                     className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 active:bg-brand-secondary/90"
                   >
                     Login
@@ -72,7 +72,7 @@ export default function Component() {
                     New to eStores?
                   </div>
                   <Link
-                    href={{ pathname: registerHref }}
+                    href={registerHref}
                     className="text-center font-semibold text-brand-primary underline transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
                   >
                     Register

@@ -53,15 +53,13 @@ export default function RegisterForm(props: Props) {
       return;
     }
 
-    if (data.user.roleId === 3) {
-      const safeReturnTo = getSafeReturnToPath(props.returnTo);
-      const fallbackPath = pathname && pathname !== '/register' ? pathname : '/';
-      const target = safeReturnTo && safeReturnTo !== '/register' ? safeReturnTo : fallbackPath;
-      router.push(target);
-    } else {
-      router.push(`/profile/${data.user.username}`);
-    }
+    const safeReturnTo = getSafeReturnToPath(props.returnTo);
+    const fallbackPath = pathname && pathname !== '/register' ? pathname : '/';
+    const target = safeReturnTo && safeReturnTo !== '/register'
+      ? safeReturnTo
+      : fallbackPath;
 
+    router.push(target);
     router.refresh();
   }
 
