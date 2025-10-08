@@ -57,7 +57,7 @@ export default function Home() {
       <section className="bg-gradient-to-r from-[#F59E0B] via-[#FCDFAF] to-[#A7F3D0] py-24 text-brand-text transition-colors sm:py-28 lg:py-32">
         <div className="px-0 py-8 sm:px-0 sm:py-12 lg:px-16 lg:py-14">
           <div className="mx-auto w-full max-w-5xl">
-            <div className="grid  rounded-3xl text-brand-text sm:rounded-[2.5rem] sm:p-0 md:bg-gradient-to-r md:from-[#F59E0B] md:via-[#FCDFAF] md:to-[#A7F3D0] md:p-8 lg:grid-cols-[1.1fr_0.9fr] lg:overflow-hidden lg:border lg:border-brand-border/60 lg:bg-brand-surface lg:bg-none lg:p-0 dark:border-brand-border dark:bg-white dark:text-brand-text">
+            <div className="grid gap-10 px-4 rounded-3xl text-brand-text sm:px-6 sm:rounded-[2.5rem] sm:p-0 md:bg-gradient-to-r md:from-[#F59E0B] md:via-[#FCDFAF] md:to-[#A7F3D0] md:px-8 md:py-8 lg:grid-cols-[1.1fr_0.9fr] lg:overflow-hidden lg:border lg:border-brand-border/60 lg:bg-brand-surface lg:bg-none lg:px-0 lg:py-0 dark:border-brand-border dark:bg-white dark:text-brand-text">
               <div className="space-y-8 px-6 py-8 sm:px-6 sm:py-10 md:px-6 md:py-10 lg:px-0 lg:py-14 lg:pl-16 lg:pr-14">
                 <h2 className="text-3xl font-semibold text-brand-text">
                   Ready to grow with eStores?
@@ -74,14 +74,16 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-              <div className="relative order-first h-72 w-full overflow-hidden sm:h-80 sm:rounded-3xl lg:order-none lg:h-full lg:rounded-none">
-                <Image
-                  src="/images/smiling_woman.jpg"
-                  alt="Seller dashboard preview"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-brand-secondary/70 via-brand-secondary/10 to-transparent" />
+              <div className="order-first md:px-6 lg:order-none lg:px-0">
+                <div className="relative h-72 w-full overflow-hidden sm:h-80 sm:rounded-3xl lg:h-full lg:rounded-none">
+                  <Image
+                    src="/images/smiling_woman.jpg"
+                    alt="Seller dashboard preview"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-brand-secondary/70 via-brand-secondary/10 to-transparent" />
+                </div>
               </div>
             </div>
             <p className="mt-6 text-center text-sm text-white/90">
