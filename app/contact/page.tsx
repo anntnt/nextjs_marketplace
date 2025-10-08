@@ -11,11 +11,13 @@ export default function Page() {
 
         <section className="py-8 text-lg">
           <p className="mb-8 text-left">
-            Hi, I'm Ann Tran, a full-stack web developer.<br />
-            Have a question about this project or just want to connect?
+          Hey there! I'm Ann Tran, a full-stack web developer who loves turning ideas into smooth, functional, and visually engaging web applications.<br />
+          </p>
+          <p>
+          Have a question about this project, or just want to connect? I’d be happy to chat and exchange ideas!
           </p>
 
-          <ul className="mt-6 space-y-1 text-left text-base leading-tight">
+          <ul className="mt-8 space-y-1 text-left text-base leading-tight">
             <li>
               📧 Email:{' '}
               <a
