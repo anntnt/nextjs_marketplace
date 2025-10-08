@@ -13,7 +13,7 @@ export default function Component(props: ItemsProps) {
       >
         <BsCart4 size={28} />
         <span
-          className="absolute -top-1 -right-2 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand-primary px-1 text-xs font-bold text-white"
+          className="absolute -top-1 -right-2 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand-accent px-1 text-xs font-bold text-white"
           data-test-id="cart-count"
         >
           {cartItems}

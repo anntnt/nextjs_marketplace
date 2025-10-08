@@ -11,7 +11,7 @@ export default function Page() {
 
         <section className="py-8 text-lg">
           <p className="mb-8 text-left">
-            Hi, I'm <span className="font-semibold text-brand-primary dark:text-brand-primary">Ann Tran</span>, a full-stack web developer.<br />
+            Hi, I'm Ann Tran, a full-stack web developer.<br />
             Have a question about this project or just want to connect?
           </p>
 
@@ -38,11 +38,6 @@ export default function Page() {
               </a>
             </li>
           </ul>
-
-
-          <div className="mt-10 text-left text-sm text-brand-muted dark:text-dark-muted">
-            *Portfolio project — not a real marketplace.
-          </div>
         </section>
       </div>
     </main>

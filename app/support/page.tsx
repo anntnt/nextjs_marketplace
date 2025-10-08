@@ -10,7 +10,7 @@ export default function Page() {
       <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Support</h1>
 
       <section className="py-8 text-xl font-normal sm:px-16 xl:px-48">
-        <div className="text-center text-sm text-brand-muted dark:text-dark-muted">
+        <div className="text-center text-sm text-[#F87171] dark:text-dark-muted">
             *Portfolio project — not a real marketplace.
         </div>
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
