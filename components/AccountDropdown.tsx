@@ -28,11 +28,11 @@ export default function Component() {
       onMouseLeave={() => setIsOpen(false)}
     >
       <button
-        className="hidden items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:flex"
+        className="group hidden items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:flex"
         type="button"
       >
         <svg
-          className="h-6 w-6 text-white dark:text-brand-accent"
+          className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning group-focus:text-brand-warning group-active:text-brand-warning dark:text-brand-accent dark:group-hover:text-brand-warning dark:group-focus:text-brand-warning dark:group-active:text-brand-warning"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -60,7 +60,7 @@ export default function Component() {
               <ul className="px-7 pb-7 pt-6 text-sm text-brand-muted dark:text-dark-muted">
                 <li>
                   <Link
-                    href={loginHref}
+                    href={{ pathname: loginHref }}
                     className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 active:bg-brand-secondary/90"
                   >
                     Login
@@ -72,7 +72,7 @@ export default function Component() {
                     New to eStores?
                   </div>
                   <Link
-                    href={registerHref}
+                    href={{ pathname: registerHref }}
                     className="text-center font-semibold text-brand-primary underline transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
                   >
                     Register

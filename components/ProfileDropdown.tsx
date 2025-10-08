@@ -17,11 +17,11 @@ export default function Component(props: UserProps) {
       onMouseLeave={() => setIsOpen(false)}
     >
       <button
-        className="hidden items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:flex"
+        className="group hidden items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:flex"
         type="button"
       >
         <svg
-          className="h-6 w-6 text-white dark:text-brand-accent"
+          className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning group-focus:text-brand-warning group-active:text-brand-warning dark:text-brand-accent dark:group-hover:text-brand-warning dark:group-focus:text-brand-warning dark:group-active:text-brand-warning"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"

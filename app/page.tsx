@@ -37,7 +37,7 @@ export default function Home() {
       {/* Categories */}
       <section
         id="categories"
-        className="mb-16 bg-brand-surface py-12 pb-8 dark:bg-dark-surface"
+        className="bg-brand-surface pt-12 pb-16 dark:bg-dark-surface"
       >
         <div className="mx-auto w-full max-w-screen-3xl px-4 sm:px-8">
           <div className="mx-auto mb-8 max-w-3xl text-center">
