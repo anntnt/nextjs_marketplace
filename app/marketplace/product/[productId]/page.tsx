@@ -50,7 +50,7 @@ export default async function SingleProductPage(props: Props) {
                 {product.name}
               </h1>
               <div className="py-4 text-sm font-semibold sm:text-md text-brand-muted dark:text-dark-muted">
-                <span className="text-brand-success">{product.storeName}</span>
+                <span className="text-brand-primary">{product.storeName}</span>
               </div>
               <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
                 <p className="text-2xl font-extrabold text-brand-text sm:text-3xl dark:text-white">
