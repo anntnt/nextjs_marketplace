@@ -2,18 +2,6 @@ import type { Sql } from 'postgres';
 
 const users = [
   {
-    username: 'seller',
-    firstname: 'Seller',
-    lastname: 'Account',
-    email_address: 'seller@example.com',
-    password_hash: '$2b$12$kuJhBH.OuqYbqx0OG4HXj.nmkBUP79mIvJPi6KaGmkz.C5cpmnPpG',
-    birthday: new Date('1990-01-01'),
-    gender: null,
-    store_name: 'Sample Seller Store',
-    address: '123 Sample Street, Sample City',
-    roleName: 'Seller',
-  },
-  {
     username: 'buyer',
     firstname: 'Buyer',
     lastname: 'Account',
@@ -26,6 +14,18 @@ const users = [
     roleName: 'Buyer',
   },
   {
+    username: 'seller1',
+    firstname: 'Seller',
+    lastname: 'One',
+    email_address: 'seller@example.com',
+    password_hash: '$2b$12$kuJhBH.OuqYbqx0OG4HXj.nmkBUP79mIvJPi6KaGmkz.C5cpmnPpG',
+    birthday: new Date('1990-01-01'),
+    gender: null,
+    store_name: 'Essentia Store',
+    address: '123 Sample Street, Sample City',
+    roleName: 'Seller',
+  },
+  {
     username: 'seller2',
     firstname: 'Seller',
     lastname: 'Two',
@@ -33,8 +33,8 @@ const users = [
     password_hash: '$2b$12$5PuDK3588gdI6up1nHKJLuX6Kop8bpP61oYXL/Er/DKJ5HI6wB2PS',
     birthday: new Date('1991-03-03'),
     gender: null,
-    store_name: 'Seller 2 Store',
-    address: 'Seller 2 Address',
+    store_name: 'TrendNest Store',
+    address: '3456 Sample Street, Sample City',
     roleName: 'Seller',
   },
   {
@@ -45,8 +45,8 @@ const users = [
     password_hash: '$2b$12$bZHoCCZL2NNNzfW.34TKD.9DDFKarJzoE/jemxQI6oB59YvaTTgGq',
     birthday: new Date('1993-04-04'),
     gender: null,
-    store_name: 'Seller 3 Store',
-    address: 'Seller 3 Address',
+    store_name: 'Moori Store',
+    address: '7899 Sample Street, Sample City',
     roleName: 'Seller',
   },
 ];
