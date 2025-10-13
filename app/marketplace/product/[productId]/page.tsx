@@ -16,7 +16,7 @@ type Props = {
 export default async function SingleProductPage(props: Props) {
   const productId = Number((await props.params).productId);
   // 1. Check if the sessionToken cookie exists
-  const sessionTokenCookie = (cookies()).get('sessionToken');
+  const sessionTokenCookie = (await cookies()).get('sessionToken');
 
   // 2. Query the current user with the sessionToken
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
