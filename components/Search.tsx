@@ -35,7 +35,7 @@ export default function Search({ placeholder, className }: Props) {
         className="absolute inset-y-1 right-2 flex items-center justify-center rounded-full px-3 py-1 text-sm font-semibold text-brand-primary transition-colors hover:text-brand-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 dark:text-brand-primary"
       >
         <svg
-          className="h-4 w-4 text-brand-primary"
+          className="h-4 w-4 text-white"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
