@@ -421,7 +421,14 @@ export default function RegisterForm(props: Props) {
                 htmlFor="privacyAgreement"
                 className="ms-2 text-sm font-medium text-brand-text dark:text-dark-text"
               >
-                I agree to the Privacy Policy*
+                I agree to the{' '}
+                <Link
+                  href="/privacy-policy"
+                  className="font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
+                >
+                  Privacy Policy
+                </Link>
+                *
               </label>
             </div>
             {fieldErrors.privacyAgreement ? (
