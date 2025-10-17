@@ -35,8 +35,40 @@ export async function POST(
   const result = userSchema.safeParse(requestBody);
 
   if (!result.success) {
+    const friendlyFieldNames: Record<string, string> = {
+      username: 'Username',
+      password: 'Password',
+      firstName: 'First name',
+      lastName: 'Last name',
+      emailAddress: 'Email address',
+      birthday: 'Birth date',
+      gender: 'Gender',
+      storeName: 'Store name',
+      uAddress: 'Address',
+      roleId: 'Role',
+    };
+
+    const flattenedErrors = result.error.flatten();
+    const fieldErrorMessages = Object.entries(flattenedErrors.fieldErrors).flatMap(
+      ([field, messages]) =>
+        (messages ?? []).map((message) => {
+          const label = friendlyFieldNames[field] ?? field;
+          return `${label}: ${message}`;
+        }),
+    );
+
+    const formErrorMessages = flattenedErrors.formErrors ?? [];
+    const formattedErrors = [...fieldErrorMessages, ...formErrorMessages].map((message) => ({
+      message,
+    }));
+
     return NextResponse.json(
-      { errors: result.error.issues },
+      {
+        errors:
+          formattedErrors.length > 0
+            ? formattedErrors
+            : [{ message: 'Please check the form and try again.' }],
+      },
       {
         status: 400,
       },
@@ -51,7 +83,7 @@ export async function POST(
       {
         errors: [
           {
-            message: 'Username already taken',
+            message: 'Username: This username is not available.',
           },
         ],
       },

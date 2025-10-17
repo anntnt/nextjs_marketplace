@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export const userLoginSchema = z.object({
   username: z.string().min(3),
-  password: z.string().min(3),
+  password: z.string().min(8),
 });
 
 export type UserLogin = {
@@ -11,13 +11,49 @@ export type UserLogin = {
   username: string;
 };
 
+const MIN_BIRTH_YEAR = 1900;
+
+const birthDateSchema = z.preprocess(
+  (value) => {
+    if (value instanceof Date) return value;
+    if (typeof value === 'string' || typeof value === 'number') {
+      const date = new Date(value);
+      if (!Number.isNaN(date.getTime())) return date;
+    }
+    return value;
+  },
+  z
+    .date({
+      required_error: 'Birth date is required.',
+      invalid_type_error: 'Birth date: Please enter a valid date.',
+    })
+    .superRefine((date, ctx) => {
+      if (date.getFullYear() < MIN_BIRTH_YEAR) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Birth date: Please enter a valid date.',
+        });
+        return;
+      }
+
+      const today = new Date();
+      const threshold = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+      if (date > threshold) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Birth date: You must be at least 18 years old.',
+        });
+      }
+    }),
+);
+
 export const userSchema = z.object({
   username: z.string().min(3),
   firstName: z.string(),
   lastName: z.string(),
-  password: z.string().min(3),
+  password: z.string().min(8),
   emailAddress: z.string(),
-  birthday: z.coerce.date(),
+  birthday: birthDateSchema,
   gender: z.string().optional(),
   storeName: z.string().optional(),
   uAddress: z.string().optional(),
