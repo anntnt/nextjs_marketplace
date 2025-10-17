@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { deleteSession } from '../../../database/sessions';
+import { setFlashMessage } from '../../actions/flashMessage';
 
 export async function logout() {
   // Task: Implement the user logout workflow
@@ -18,13 +19,7 @@ export async function logout() {
     cookieStore.delete(token.name);
   }
 
-  cookieStore.set({
-    name: 'flashMessage',
-    value: 'You are logged out.',
-    path: '/',
-    sameSite: 'lax',
-    maxAge: 5,
-  });
+  await setFlashMessage('You have been logged out successfully.', 'success');
 
   return;
 }

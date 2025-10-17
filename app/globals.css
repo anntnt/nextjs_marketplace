@@ -121,7 +121,7 @@ a:focus {
   }
 
   button {
-    @apply border border-brand-primary bg-brand-primary font-medium text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 dark:border-brand-primary dark:bg-brand-primary dark:hover:bg-brand-secondary;
+    @apply border border-brand-primary bg-brand-primary cursor-pointer font-medium text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 dark:border-brand-primary dark:bg-brand-primary dark:hover:bg-brand-secondary;
   }
 
   p {
