@@ -1,13 +1,18 @@
 import type { Sql } from 'postgres';
 import { z } from 'zod';
 
+const USERNAME_PATTERN = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
+const USERNAME_MIN_MESSAGE = 'Username: Please enter at least 3 characters for the username.';
+const USERNAME_PATTERN_MESSAGE =
+  'Username: Your username must have at least one letter and no unusual characters.';
+const PASSWORD_MIN_MESSAGE = 'Password: Please enter at least 8 characters for the password.';
+
 export const userLoginSchema = z.object({
   username: z
     .string()
-    .min(3, { message: 'Please enter at least 3 characters for the username.' }),
-  password: z
-    .string()
-    .min(8, { message: 'Please enter at least 8 characters for the password.' }),
+    .min(3, { message: USERNAME_MIN_MESSAGE })
+    .regex(USERNAME_PATTERN, { message: USERNAME_PATTERN_MESSAGE }),
+  password: z.string().min(8, { message: PASSWORD_MIN_MESSAGE }),
 });
 
 export type UserLogin = {
@@ -54,12 +59,11 @@ const birthDateSchema = z.preprocess(
 export const userSchema = z.object({
   username: z
     .string()
-    .min(3, { message: 'Please enter at least 3 characters for the username.' }),
+    .min(3, { message: USERNAME_MIN_MESSAGE })
+    .regex(USERNAME_PATTERN, { message: USERNAME_PATTERN_MESSAGE }),
   firstName: z.string(),
   lastName: z.string(),
-  password: z
-    .string()
-    .min(8, { message: 'Please enter at least 8 characters for the password.' }),
+  password: z.string().min(8, { message: PASSWORD_MIN_MESSAGE }),
   emailAddress: z.string(),
   birthday: birthDateSchema,
   gender: z.string().optional(),

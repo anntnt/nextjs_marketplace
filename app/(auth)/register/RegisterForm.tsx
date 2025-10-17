@@ -38,6 +38,9 @@ const FIELD_REQUIRED_MESSAGES: Record<FieldName, string> = {
   privacyAgreement: 'Please agree to the Privacy Policy.',
 };
 
+const USERNAME_PATTERN = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
+const USERNAME_PATTERN_MESSAGE =
+  'Username: Your username must have at least one letter and no unusual characters.';
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MINIMUM_AGE = 18;
 const MIN_BIRTH_YEAR = 1900;
@@ -144,8 +147,9 @@ export default function RegisterForm(props: Props) {
     event.preventDefault();
 
     const trimmedEmail = emailAddress.trim();
+    const trimmedUsername = username.trim();
     const requiredFields: Array<{ key: FieldName; value: string }> = [
-      { key: 'username', value: username.trim() },
+      { key: 'username', value: trimmedUsername },
       { key: 'password', value: password.trim() },
       { key: 'firstName', value: firstName.trim() },
       { key: 'lastName', value: lastName.trim() },
@@ -164,9 +168,13 @@ export default function RegisterForm(props: Props) {
       }
     }
 
+    if (trimmedUsername && !USERNAME_PATTERN.test(trimmedUsername)) {
+      validationErrors.push({ message: USERNAME_PATTERN_MESSAGE });
+    }
+
     if (trimmedEmail && !EMAIL_PATTERN.test(trimmedEmail)) {
       validationErrors.push({
-        message: `${FIELD_LABELS.emailAddress} must be a valid email address.`,
+        message: `${FIELD_LABELS.emailAddress}: Please enter a valid email address.`,
       });
     }
 
@@ -201,7 +209,7 @@ export default function RegisterForm(props: Props) {
     const response = await fetch('api/register', {
       method: 'POST',
       body: JSON.stringify({
-        username,
+        username: trimmedUsername,
         password,
         firstName,
         lastName,
@@ -368,37 +376,39 @@ export default function RegisterForm(props: Props) {
           </div>
 
           {/* Privacy */}
-          <div className="mb-5 flex items-center">
-            <input
-              id="privacyAgreement"
-              type="checkbox"
-              ref={privacyRef}
-              checked={privacyAgreementAccepted}
-              onChange={(event) => {
-                clearFieldError('privacyAgreement');
-                setPrivacyAgreementAccepted(event.currentTarget.checked);
-              }}
-              aria-invalid={Boolean(fieldErrors.privacyAgreement)}
-              aria-describedby={fieldErrors.privacyAgreement ? 'privacy-error' : undefined}
-              className="h-4 w-4 rounded border-brand-muted/40 text-brand-primary focus:ring-2 focus:ring-brand-primary/50 dark:border-dark-muted/40 dark:bg-dark-surface"
-            />
-            <label htmlFor="privacyAgreement" className="ml-2 text-sm font-medium">
-              I agree to the{' '}
-              <Link
-                href="/privacy-policy"
-                className="text-brand-primary underline hover:text-brand-secondary focus:text-brand-secondary"
-              >
-                Privacy Policy
-              </Link>
-              *
-            </label>
-          </div>
+          <div className="mb-5">
+            <div className={`flex items-center ${fieldErrors.privacyAgreement ? 'rounded border border-red-500 p-2' : ''}`}>
+              <input
+                id="privacyAgreement"
+                type="checkbox"
+                ref={privacyRef}
+                checked={privacyAgreementAccepted}
+                onChange={(event) => {
+                  clearFieldError('privacyAgreement');
+                  setPrivacyAgreementAccepted(event.currentTarget.checked);
+                }}
+                aria-invalid={Boolean(fieldErrors.privacyAgreement)}
+                aria-describedby={fieldErrors.privacyAgreement ? 'privacy-error' : undefined}
+                className={`h-4 w-4 rounded text-brand-primary focus:ring-2 focus:ring-brand-primary/50 dark:bg-dark-surface ${fieldErrors.privacyAgreement ? 'border-red-500 focus:ring-red-300' : 'border-brand-muted/40 dark:border-dark-muted/40'}`}
+              />
+              <label htmlFor="privacyAgreement" className="ml-2 text-sm font-medium">
+                I agree to the{' '}
+                <Link
+                  href="/privacy-policy"
+                  className="text-brand-primary underline hover:text-brand-secondary focus:text-brand-secondary"
+                >
+                  Privacy Policy
+                </Link>
+                *
+              </label>
+            </div>
 
             {fieldErrors.privacyAgreement && (
               <div id="privacy-error" className="mt-2" role="alert">
                 <ErrorMessage>{fieldErrors.privacyAgreement}</ErrorMessage>
               </div>
             )}
+          </div>
 
           {/* Submit button */}
           <button
