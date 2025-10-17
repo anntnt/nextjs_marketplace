@@ -31,6 +31,24 @@ const config = {
           text: '#F9FAFB',
           muted: '#94A3B8',
         },
+
+        // ✅ AA-konforme Flash Message Farben
+        success: {
+          DEFAULT: '#064E3B', // Text
+          light: '#D1FAE5',   // Hintergrund
+        },
+        info: {
+          DEFAULT: '#034D67', // Text
+          light: '#BAE6FD',   // Hintergrund
+        },
+        warning: {
+          DEFAULT: '#78350F', // Text
+          light: '#FEF3C7',   // Hintergrund
+        },
+        error: {
+          DEFAULT: '#7F1D1D', // Text
+          light: '#FECACA',   // Hintergrund
+        },
       },
       textColor: {
         inherit: 'inherit',
