@@ -11,34 +11,24 @@ export default function LogoutButton({ onLogout }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
+  const handleLogout = async () => {
+    await logout();
+    const target = pathname && pathname !== '/logout' ? pathname : '/';
+    router.push(target);
+    router.refresh();
+    onLogout?.();
+  };
+
   return (
     <form>
-      <div
-        role="button"
+      <button
+        type="button"
         aria-label="Logout"
-        tabIndex={0}
-        className="block py-1 font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary sm:px-4 sm:text-center dark:text-brand-primary"
-        onClick={async () => {
-          await logout();
-          const target = pathname && pathname !== '/logout' ? pathname : '/';
-          router.push(target);
-          router.refresh();
-          onLogout?.();
-        }}
-        onKeyDown={async (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            // Simulate button click on Enter or Space
-            await logout();
-            const target = pathname && pathname !== '/logout' ? pathname : '/';
-            router.push(target);
-            router.refresh();
-            onLogout?.();
-          }
-        }}
+        className="block border-0 bg-white py-1 font-semibold text-brand-warning underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary sm:px-4 sm:text-center"
+        onClick={handleLogout}
       >
         Logout
-      </div>
+      </button>
     </form>
   );
 }
