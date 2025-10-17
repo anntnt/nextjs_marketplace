@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { getSafeReturnToPath } from '../../../util/validation';
 import ErrorMessage from '../../ErrorMessage';
 import type { RegisterResponseBody } from '../api/register/route';
@@ -81,6 +81,14 @@ export default function RegisterForm(props: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const birthdayRef = useRef<HTMLInputElement>(null);
+  const privacyRef = useRef<HTMLInputElement>(null);
+
   const { fieldErrors, formErrors } = useMemo(() => {
     const fieldErrorMap: Partial<Record<FieldName, string>> = {};
     const otherErrors: string[] = [];
@@ -110,6 +118,43 @@ export default function RegisterForm(props: Props) {
       ),
     );
   };
+
+  useEffect(() => {
+    if (errors.length === 0) return;
+
+    const fieldOrder: FieldName[] = [
+      'username',
+      'password',
+      'firstName',
+      'lastName',
+      'emailAddress',
+      'birthday',
+      'privacyAgreement',
+    ];
+
+    const refs: Record<FieldName, RefObject<HTMLInputElement>> = {
+      username: usernameRef,
+      password: passwordRef,
+      firstName: firstNameRef,
+      lastName: lastNameRef,
+      emailAddress: emailRef,
+      birthday: birthdayRef,
+      privacyAgreement: privacyRef,
+    };
+
+    for (const field of fieldOrder) {
+      if (fieldErrors[field]) {
+        const ref = refs[field].current;
+        if (ref) {
+          ref.focus();
+          if (ref.scrollIntoView) {
+            ref.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          }
+        }
+        break;
+      }
+    }
+  }, [errors, fieldErrors]);
 
   async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -259,6 +304,7 @@ export default function RegisterForm(props: Props) {
             </label>
             <input
               id="username"
+              ref={usernameRef}
               className={getInputClasses(Boolean(fieldErrors.username))}
               aria-invalid={Boolean(fieldErrors.username)}
               value={username}
@@ -283,6 +329,7 @@ export default function RegisterForm(props: Props) {
             <input
               id="password"
               type="password"
+              ref={passwordRef}
               value={password}
               onChange={(event) => {
                 clearFieldError('password');
@@ -306,6 +353,7 @@ export default function RegisterForm(props: Props) {
             </label>
             <input
               id="firstName"
+              ref={firstNameRef}
               value={firstName}
               onChange={(event) => {
                 clearFieldError('firstName');
@@ -329,6 +377,7 @@ export default function RegisterForm(props: Props) {
             </label>
             <input
               id="lastName"
+              ref={lastNameRef}
               value={lastName}
               onChange={(event) => {
                 clearFieldError('lastName');
@@ -352,6 +401,7 @@ export default function RegisterForm(props: Props) {
             </label>
             <input
               id="emailAddress"
+              ref={emailRef}
               value={emailAddress}
               type="email"
               onChange={(event) => {
@@ -376,6 +426,7 @@ export default function RegisterForm(props: Props) {
             </label>
             <input
               id="birthday"
+              ref={birthdayRef}
               value={birthday}
               type="date"
               onChange={(event) => {
@@ -436,6 +487,7 @@ export default function RegisterForm(props: Props) {
               <input
                 id="privacyAgreement"
                 type="checkbox"
+                ref={privacyRef}
                 checked={privacyAgreementAccepted}
                 onChange={(event) => {
                   clearFieldError('privacyAgreement');
