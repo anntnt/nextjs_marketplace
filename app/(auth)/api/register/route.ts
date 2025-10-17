@@ -48,12 +48,29 @@ export async function POST(
       roleId: 'Role',
     };
 
+    const friendlyRequiredMessages: Record<string, string> = {
+      username: 'Please enter your username.',
+      password: 'Please enter your password.',
+      firstName: 'Please enter your first name.',
+      lastName: 'Please enter your last name.',
+      emailAddress: 'Please enter your email address.',
+      birthday: 'Please enter your birth date.',
+      gender: 'Please select your gender.',
+      storeName: 'Please enter your store name.',
+      uAddress: 'Please enter your address.',
+      roleId: 'Please choose a role.',
+    };
+
     const flattenedErrors = result.error.flatten();
     const fieldErrorMessages = Object.entries(flattenedErrors.fieldErrors).flatMap(
       ([field, messages]) =>
-        (messages ?? []).map((message) => {
+        (messages ?? []).map((rawMessage) => {
           const label = friendlyFieldNames[field] ?? field;
-          return `${label}: ${message}`;
+          const friendlyMessage =
+            rawMessage === 'Required' && friendlyRequiredMessages[field]
+              ? friendlyRequiredMessages[field]
+              : rawMessage;
+          return `${label}: ${friendlyMessage}`;
         }),
     );
 

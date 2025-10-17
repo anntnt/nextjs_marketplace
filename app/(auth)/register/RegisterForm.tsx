@@ -28,6 +28,16 @@ const FIELD_LABELS: Record<FieldName, string> = {
   privacyAgreement: 'Privacy Policy agreement',
 };
 
+const FIELD_REQUIRED_MESSAGES: Record<FieldName, string> = {
+  username: 'Please enter your username.',
+  password: 'Please enter your password.',
+  firstName: 'Please enter your first name.',
+  lastName: 'Please enter your last name.',
+  emailAddress: 'Please enter your email address.',
+  birthday: 'Please enter your birth date.',
+  privacyAgreement: 'Please agree to the Privacy Policy.',
+};
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MINIMUM_AGE = 18;
 const MIN_BIRTH_YEAR = 1900;
@@ -99,13 +109,15 @@ export default function RegisterForm(props: Props) {
 
     for (const field of requiredFields) {
       if (!field.value) {
-        validationErrors.push({ message: `${FIELD_LABELS[field.key]} is required.` });
+        validationErrors.push({
+          message: `${FIELD_LABELS[field.key]}: ${FIELD_REQUIRED_MESSAGES[field.key]}`,
+        });
       }
     }
 
     if (trimmedEmail && !EMAIL_PATTERN.test(trimmedEmail)) {
       validationErrors.push({
-        message: `${FIELD_LABELS.emailAddress} must be a valid email address.`,
+        message: `${FIELD_LABELS.emailAddress}: Please enter a valid email address.`,
       });
     }
 
