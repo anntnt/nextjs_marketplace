@@ -156,8 +156,10 @@ export default function Header(props: UserProps) {
               {!props.user || props.user.roleId !== 2 ? (
                 <Link
                   href="/sell"
-                  className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:-translate-y-0.5 hover:bg-white 
-                  focus:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 active:translate-y-0 md:inline-flex"
+                  className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform
+                    hover:text-brand-warning hover:-translate-y-0.5 hover:bg-white
+                    focus:text-brand-warning focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60
+                    active:translate-y-0 md:inline-flex"
                 >
                   Open your shop
                 </Link>
