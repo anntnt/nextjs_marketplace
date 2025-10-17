@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { FlashMessageType } from '../lib/flashMessage';
 
 type FlashMessageBannerProps = {
@@ -9,6 +9,22 @@ type FlashMessageBannerProps = {
 };
 
 export default function FlashMessageBanner({ message, type = 'info' }: FlashMessageBannerProps) {
+  const [isVisible, setIsVisible] = useState(() => Boolean(message));
+
+  useEffect(() => {
+    if (!message) {
+      setIsVisible(false);
+      return;
+    }
+
+    setIsVisible(true);
+    const timeoutId = window.setTimeout(() => setIsVisible(false), 3000);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [message]);
+
   const styles = useMemo(() => {
     switch (type) {
       case 'success':
@@ -22,7 +38,7 @@ export default function FlashMessageBanner({ message, type = 'info' }: FlashMess
     }
   }, [type]);
 
-  if (!message) return null;
+  if (!message || !isVisible) return null;
 
   return (
     <div className={`py-2 text-center text-sm ${styles}`} role="status" aria-live="polite">
