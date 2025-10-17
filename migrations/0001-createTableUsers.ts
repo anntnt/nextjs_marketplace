@@ -2,8 +2,12 @@ import type { Sql } from 'postgres';
 import { z } from 'zod';
 
 export const userLoginSchema = z.object({
-  username: z.string().min(3),
-  password: z.string().min(8),
+  username: z
+    .string()
+    .min(3, { message: 'Please enter at least 3 characters for the username.' }),
+  password: z
+    .string()
+    .min(8, { message: 'Please enter at least 8 characters for the password.' }),
 });
 
 export type UserLogin = {
@@ -24,7 +28,7 @@ const birthDateSchema = z.preprocess(
   },
   z
     .date({
-      required_error: 'Birth date is required.',
+      required_error: 'Required',
       invalid_type_error: 'Birth date: Please enter a valid date.',
     })
     .superRefine((date, ctx) => {
@@ -48,10 +52,14 @@ const birthDateSchema = z.preprocess(
 );
 
 export const userSchema = z.object({
-  username: z.string().min(3),
+  username: z
+    .string()
+    .min(3, { message: 'Please enter at least 3 characters for the username.' }),
   firstName: z.string(),
   lastName: z.string(),
-  password: z.string().min(8),
+  password: z
+    .string()
+    .min(8, { message: 'Please enter at least 8 characters for the password.' }),
   emailAddress: z.string(),
   birthday: birthDateSchema,
   gender: z.string().optional(),

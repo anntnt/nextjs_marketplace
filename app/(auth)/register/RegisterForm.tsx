@@ -42,27 +42,11 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MINIMUM_AGE = 18;
 const MIN_BIRTH_YEAR = 1900;
 
-const baseInputClasses =
-  'mt-2 block w-full rounded-lg border bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:outline-none focus:ring-2 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted';
-const normalInputStateClasses =
-  'border-brand-muted/30 focus:border-brand-primary focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:focus:border-brand-primary dark:focus:ring-brand-primary/40';
-const errorInputStateClasses =
-  'border-brand-error focus:border-brand-error focus:ring-brand-error/40 dark:border-brand-error dark:focus:border-brand-error dark:focus:ring-brand-error/40';
-
-const getInputClasses = (hasError: boolean) =>
-  `${baseInputClasses} ${hasError ? errorInputStateClasses : normalInputStateClasses}`;
-
-const baseCheckboxClasses =
-  'h-4 w-4 rounded border text-brand-primary focus:ring-2 dark:bg-dark-surface';
-const normalCheckboxStateClasses =
-  'border-brand-muted/40 focus:ring-brand-primary/50 dark:border-dark-muted/40';
-const errorCheckboxStateClasses =
-  'border-brand-error focus:ring-brand-error/40 dark:border-brand-error';
-
-const getCheckboxClasses = (hasError: boolean) =>
-  `${baseCheckboxClasses} ${hasError ? errorCheckboxStateClasses : normalCheckboxStateClasses}`;
-
 export default function RegisterForm(props: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Form state
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -71,16 +55,12 @@ export default function RegisterForm(props: Props) {
   const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
   const [privacyAgreementAccepted, setPrivacyAgreementAccepted] = useState(false);
-
   const [roleId, setRoleId] = useState(3);
   const [storeName, setStoreName] = useState('');
   const [uAddress, setUAddress] = useState('');
-
   const [errors, setErrors] = useState<{ message: string }[]>([]);
 
-  const router = useRouter();
-  const pathname = usePathname();
-
+  // Refs for accessibility
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
@@ -89,36 +69,28 @@ export default function RegisterForm(props: Props) {
   const birthdayRef = useRef<HTMLInputElement>(null);
   const privacyRef = useRef<HTMLInputElement>(null);
 
+  // Error mapping
   const { fieldErrors, formErrors } = useMemo(() => {
     const fieldErrorMap: Partial<Record<FieldName, string>> = {};
     const otherErrors: string[] = [];
 
     for (const { message } of errors) {
-      const match = (Object.entries(FIELD_LABELS) as [FieldName, string][]).find(([, label]) =>
-        message.toLowerCase().startsWith(label.toLowerCase()),
-      );
+      const match = (Object.entries(FIELD_LABELS) as [FieldName, string][])
+        .find(([, label]) => message.toLowerCase().startsWith(label.toLowerCase()));
 
       if (match) {
         const [field, label] = match;
         const remainder = message.slice(label.length).trim().replace(/^:\s*/, '');
         fieldErrorMap[field] = remainder || message;
-        continue;
+      } else {
+        otherErrors.push(message);
       }
-
-      otherErrors.push(message);
     }
 
     return { fieldErrors: fieldErrorMap, formErrors: otherErrors };
   }, [errors]);
 
-  const clearFieldError = (field: FieldName) => {
-    setErrors((prev) =>
-      prev.filter(
-        (error) => !error.message.toLowerCase().startsWith(FIELD_LABELS[field].toLowerCase()),
-      ),
-    );
-  };
-
+  // Focus on first invalid field
   useEffect(() => {
     if (errors.length === 0) return;
 
@@ -147,14 +119,26 @@ export default function RegisterForm(props: Props) {
         const ref = refs[field].current;
         if (ref) {
           ref.focus();
-          if (ref.scrollIntoView) {
-            ref.scrollIntoView({ block: 'center', behavior: 'smooth' });
-          }
+          ref.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
         }
         break;
       }
     }
   }, [errors, fieldErrors]);
+
+  const getInputClasses = (hasError: boolean) =>
+    `mt-2 block w-full rounded-lg border p-2.5 text-sm transition
+     ${hasError ? 'border-red-500 ring-2 ring-red-300' : 'border-brand-muted/30 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/40'}
+     bg-brand-surface text-brand-text placeholder:text-brand-muted
+     dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted`;
+
+  const clearFieldError = (field: FieldName) => {
+    setErrors((prev) =>
+      prev.filter(
+        (error) => !error.message.toLowerCase().startsWith(FIELD_LABELS[field].toLowerCase()),
+      ),
+    );
+  };
 
   async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -182,21 +166,17 @@ export default function RegisterForm(props: Props) {
 
     if (trimmedEmail && !EMAIL_PATTERN.test(trimmedEmail)) {
       validationErrors.push({
-        message: `${FIELD_LABELS.emailAddress}: Please enter a valid email address.`,
+        message: `${FIELD_LABELS.emailAddress} must be a valid email address.`,
       });
     }
 
     if (birthday) {
       const parsedBirthDate = new Date(birthday);
       if (Number.isNaN(parsedBirthDate.getTime())) {
-        validationErrors.push({
-          message: 'Birth date: Please enter a valid date.',
-        });
+        validationErrors.push({ message: 'Birth date: Please enter a valid date.' });
       } else {
         if (parsedBirthDate.getFullYear() < MIN_BIRTH_YEAR) {
-          validationErrors.push({
-            message: 'Birth date: Please enter a valid date.',
-          });
+          validationErrors.push({ message: 'Birth date: Please enter a valid date.' });
         } else {
           const today = new Date();
           const minimumBirthDate = new Date(
@@ -205,9 +185,7 @@ export default function RegisterForm(props: Props) {
             today.getDate(),
           );
           if (parsedBirthDate > minimumBirthDate) {
-            validationErrors.push({
-              message: 'Birth date: You must be at least 18 years old.',
-            });
+            validationErrors.push({ message: 'Birth date: You must be at least 18 years old.' });
           }
         }
       }
@@ -245,9 +223,7 @@ export default function RegisterForm(props: Props) {
 
     const safeReturnTo = getSafeReturnToPath(props.returnTo);
     const fallbackPath = pathname && pathname !== '/register' ? pathname : '/';
-    const target = safeReturnTo && safeReturnTo !== '/register'
-      ? safeReturnTo
-      : fallbackPath;
+    const target = safeReturnTo && safeReturnTo !== '/register' ? safeReturnTo : fallbackPath;
 
     router.push(target);
     router.refresh();
@@ -256,288 +232,191 @@ export default function RegisterForm(props: Props) {
   const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRoleId(Number(event.target.value));
   };
+
   return (
     <>
       <div className="mx-auto max-w-sm text-brand-text dark:text-dark-text">
-        <hr className="mb-4" />
-        <h2 className="mb-4 text-md text-center">Be part of eStores! </h2>
-        <div className="text-sm text-brand-muted dark:text-dark-muted">
-          Sign up as a <strong>buyer</strong> to explore and shop for amazing
-          products, or join as a <strong>seller</strong> to showcase your items
-          and reach more customers.
-        </div>
+        <h2 className="mb-4 text-center text-md">Be part of eStores!</h2>
+        <p className="text-sm text-brand-muted dark:text-dark-muted">
+          Sign up as a <strong>buyer</strong> to shop, or join as a <strong>seller</strong> to sell your products.
+        </p>
+
         <form
           noValidate
-          onSubmit={async (event) => await handleRegister(event)}
+          onSubmit={handleRegister}
+          aria-describedby={formErrors.length ? 'form-errors' : undefined}
           className="py-8"
         >
-          <div className="mb-5 flex items-center gap-4">
-            <span>Start</span>
-            <input
-              type="radio"
-              id="buyer"
-              name="roleId"
-              value="3"
-              checked={roleId === 3}
-              onChange={handleRoleChange}
-            />
-            <label htmlFor="buyer">Shopping</label>
-            <span>or</span>
-            <input
-              type="radio"
-              id="seller"
-              name="roleId"
-              value="2"
-              checked={roleId === 2}
-              onChange={handleRoleChange}
-            />
-            <label htmlFor="seller">Selling</label>
-          </div>
-          <hr className="mb-4" />
-
-          <div className="mb-5">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-brand-text dark:text-dark-text"
+          {formErrors.length > 0 && (
+            <div
+              id="form-errors"
+              role="alert"
+              className="mb-5 rounded-md border border-red-500 bg-red-50 p-3 text-red-700"
             >
-              Username*
-            </label>
-            <input
-              id="username"
-              ref={usernameRef}
-              className={getInputClasses(Boolean(fieldErrors.username))}
-              aria-invalid={Boolean(fieldErrors.username)}
-              value={username}
-              onChange={(event) => {
-                clearFieldError('username');
-                setUsername(event.currentTarget.value);
-              }}
-            />
-            {fieldErrors.username ? (
-              <div className="mt-2">
-                <ErrorMessage>{fieldErrors.username}</ErrorMessage>
-              </div>
-            ) : null}
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-brand-text dark:text-dark-text"
-            >
-              Password*
-            </label>
-            <input
-              id="password"
-              type="password"
-              ref={passwordRef}
-              value={password}
-              onChange={(event) => {
-                clearFieldError('password');
-                setPassword(event.currentTarget.value);
-              }}
-              className={getInputClasses(Boolean(fieldErrors.password))}
-              aria-invalid={Boolean(fieldErrors.password)}
-            />
-            {fieldErrors.password ? (
-              <div className="mt-2">
-                <ErrorMessage>{fieldErrors.password}</ErrorMessage>
-              </div>
-            ) : null}
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="firstName"
-              className="block text-sm font-medium text-brand-text dark:text-dark-text"
-            >
-              First name*
-            </label>
-            <input
-              id="firstName"
-              ref={firstNameRef}
-              value={firstName}
-              onChange={(event) => {
-                clearFieldError('firstName');
-                setFirstName(event.currentTarget.value);
-              }}
-              className={getInputClasses(Boolean(fieldErrors.firstName))}
-              aria-invalid={Boolean(fieldErrors.firstName)}
-            />
-            {fieldErrors.firstName ? (
-              <div className="mt-2">
-                <ErrorMessage>{fieldErrors.firstName}</ErrorMessage>
-              </div>
-            ) : null}
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="lastName"
-              className="block text-sm font-medium text-brand-text dark:text-dark-text"
-            >
-              Last name*
-            </label>
-            <input
-              id="lastName"
-              ref={lastNameRef}
-              value={lastName}
-              onChange={(event) => {
-                clearFieldError('lastName');
-                setLastName(event.currentTarget.value);
-              }}
-              className={getInputClasses(Boolean(fieldErrors.lastName))}
-              aria-invalid={Boolean(fieldErrors.lastName)}
-            />
-            {fieldErrors.lastName ? (
-              <div className="mt-2">
-                <ErrorMessage>{fieldErrors.lastName}</ErrorMessage>
-              </div>
-            ) : null}
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="emailAddress"
-              className="block text-sm font-medium text-brand-text dark:text-dark-text"
-            >
-              Email address*
-            </label>
-            <input
-              id="emailAddress"
-              ref={emailRef}
-              value={emailAddress}
-              type="email"
-              onChange={(event) => {
-                clearFieldError('emailAddress');
-                setEmailAddress(event.currentTarget.value);
-              }}
-              className={getInputClasses(Boolean(fieldErrors.emailAddress))}
-              aria-invalid={Boolean(fieldErrors.emailAddress)}
-            />
-            {fieldErrors.emailAddress ? (
-              <div className="mt-2">
-                <ErrorMessage>{fieldErrors.emailAddress}</ErrorMessage>
-              </div>
-            ) : null}
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="birthday"
-              className="block text-sm font-medium text-brand-text dark:text-dark-text"
-            >
-              Birth date*
-            </label>
-            <input
-              id="birthday"
-              ref={birthdayRef}
-              value={birthday}
-              type="date"
-              onChange={(event) => {
-                clearFieldError('birthday');
-                setBirthday(event.currentTarget.value);
-              }}
-              className={getInputClasses(Boolean(fieldErrors.birthday))}
-              aria-invalid={Boolean(fieldErrors.birthday)}
-            />
-            {fieldErrors.birthday ? (
-              <div className="mt-2">
-                <ErrorMessage>{fieldErrors.birthday}</ErrorMessage>
-              </div>
-            ) : null}
-          </div>
-          <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-              Gender
-              <select
-                id="countries"
-                value={gender}
-                onChange={(event) => setGender(event.currentTarget.value)}
-                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
-              >
-                <option>Please select one...</option>
-                <option value="female">female</option>
-                <option value="male">male</option>
-                <option value="other">other</option>
-              </select>
-            </label>
-          </div>
-
-          {roleId === 2 && (
-            <div className="mb-5">
-              <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-                Store name
-                <input
-                  value={storeName}
-                  onChange={(event) => setStoreName(event.currentTarget.value)}
-                  className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
-                />
-              </label>
+              <p>Please correct the following errors:</p>
+              <ul className="list-disc pl-5">
+                {formErrors.map((error) => (
+                  <li key={error}>{error}</li>
+                ))}
+              </ul>
             </div>
           )}
-          <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-              Address
+
+          {/* Role selection */}
+          <fieldset className="mb-5">
+            <legend className="block text-sm font-medium">Choose your role*</legend>
+            <div className="mt-2 flex items-center gap-4">
               <input
-                value={uAddress}
-                onChange={(event) => setUAddress(event.currentTarget.value)}
-                className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
+                type="radio"
+                id="buyer"
+                name="roleId"
+                value="3"
+                checked={roleId === 3}
+                onChange={handleRoleChange}
               />
+              <label htmlFor="buyer">Buyer</label>
+              <input
+                type="radio"
+                id="seller"
+                name="roleId"
+                value="2"
+                checked={roleId === 2}
+                onChange={handleRoleChange}
+              />
+              <label htmlFor="seller">Seller</label>
+            </div>
+          </fieldset>
+
+          {/* Input fields */}
+          {([
+            { id: 'username', label: 'Username*', type: 'text', value: username, setter: setUsername, ref: usernameRef },
+            { id: 'password', label: 'Password*', type: 'password', value: password, setter: setPassword, ref: passwordRef },
+            { id: 'firstName', label: 'First name*', type: 'text', value: firstName, setter: setFirstName, ref: firstNameRef },
+            { id: 'lastName', label: 'Last name*', type: 'text', value: lastName, setter: setLastName, ref: lastNameRef },
+            { id: 'emailAddress', label: 'Email address*', type: 'email', value: emailAddress, setter: setEmailAddress, ref: emailRef },
+            { id: 'birthday', label: 'Birth date*', type: 'date', value: birthday, setter: setBirthday, ref: birthdayRef },
+          ] as const).map(({ id, label, type, value, setter, ref }) => (
+            <div key={id} className="mb-5">
+              <label htmlFor={id} className="block text-sm font-medium">
+                {label}
+              </label>
+              <input
+                id={id}
+                ref={ref}
+                type={type}
+                className={getInputClasses(Boolean(fieldErrors[id as FieldName]))}
+                aria-invalid={Boolean(fieldErrors[id as FieldName])}
+                aria-describedby={fieldErrors[id as FieldName] ? `${id}-error` : undefined}
+                value={value}
+                onChange={(e) => {
+                  clearFieldError(id as FieldName);
+                  setter(e.currentTarget.value);
+                }}
+              />
+              {fieldErrors[id as FieldName] && (
+              <div id={`${id}-error`} className="mt-2" role="alert">
+                <ErrorMessage>{fieldErrors[id as FieldName]}</ErrorMessage>
+              </div>
+              )}
+            </div>
+          ))}
+
+          {/* Gender */}
+          <div className="mb-5">
+            <label htmlFor="gender" className="block mb-2 text-sm font-medium">
+              Gender
+            </label>
+            <select
+              id="gender"
+              value={gender}
+              onChange={(event) => setGender(event.currentTarget.value)}
+              className={getInputClasses(false)}
+            >
+              <option value="">Please select...</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          {/* Conditional Seller field */}
+          {roleId === 2 && (
+            <div className="mb-5">
+              <label htmlFor="storeName" className="block mb-2 text-sm font-medium">
+                Store name
+              </label>
+              <input
+                id="storeName"
+                value={storeName}
+                onChange={(event) => setStoreName(event.currentTarget.value)}
+                className={getInputClasses(false)}
+              />
+            </div>
+          )}
+
+          {/* Address */}
+          <div className="mb-5">
+            <label htmlFor="uAddress" className="block mb-2 text-sm font-medium">
+              Address
+            </label>
+            <input
+              id="uAddress"
+              value={uAddress}
+              onChange={(event) => setUAddress(event.currentTarget.value)}
+              className={getInputClasses(false)}
+            />
+          </div>
+
+          {/* Privacy */}
+          <div className="mb-5 flex items-center">
+            <input
+              id="privacyAgreement"
+              type="checkbox"
+              ref={privacyRef}
+              checked={privacyAgreementAccepted}
+              onChange={(event) => {
+                clearFieldError('privacyAgreement');
+                setPrivacyAgreementAccepted(event.currentTarget.checked);
+              }}
+              aria-invalid={Boolean(fieldErrors.privacyAgreement)}
+              aria-describedby={fieldErrors.privacyAgreement ? 'privacy-error' : undefined}
+              className="h-4 w-4 rounded border-brand-muted/40 text-brand-primary focus:ring-2 focus:ring-brand-primary/50 dark:border-dark-muted/40 dark:bg-dark-surface"
+            />
+            <label htmlFor="privacyAgreement" className="ml-2 text-sm font-medium">
+              I agree to the{' '}
+              <Link
+                href="/privacy-policy"
+                className="text-brand-primary underline hover:text-brand-secondary focus:text-brand-secondary"
+              >
+                Privacy Policy
+              </Link>
+              *
             </label>
           </div>
 
-          <div className="mb-5">
-            <div className="flex items-center">
-              <input
-                id="privacyAgreement"
-                type="checkbox"
-                ref={privacyRef}
-                checked={privacyAgreementAccepted}
-                onChange={(event) => {
-                  clearFieldError('privacyAgreement');
-                  setPrivacyAgreementAccepted(event.currentTarget.checked);
-                }}
-                className={getCheckboxClasses(Boolean(fieldErrors.privacyAgreement))}
-                aria-invalid={Boolean(fieldErrors.privacyAgreement)}
-              />
-              <label
-                htmlFor="privacyAgreement"
-                className="ms-2 text-sm font-medium text-brand-text dark:text-dark-text"
-              >
-                I agree to the{' '}
-                <Link
-                  href="/privacy-policy"
-                  className="font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
-                >
-                  Privacy Policy
-                </Link>
-                *
-              </label>
-            </div>
-            {fieldErrors.privacyAgreement ? (
-              <div className="mt-2">
+            {fieldErrors.privacyAgreement && (
+              <div id="privacy-error" className="mt-2" role="alert">
                 <ErrorMessage>{fieldErrors.privacyAgreement}</ErrorMessage>
               </div>
-            ) : null}
-          </div>
-          <div className="mb-5">
-            <button className="mb-2 me-2 w-full rounded-lg border border-brand-warning bg-brand-warning px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#d97706] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70">
-              Register
-            </button>
-          </div>
-          {formErrors.length > 0 ? (
-            <div className="mb-5 space-y-2">
-              {formErrors.map((error) => (
-                <ErrorMessage key={`error-${error}`}>{error}</ErrorMessage>
-              ))}
-            </div>
-          ) : null}
+            )}
+
+          {/* Submit button */}
+          <button
+            type="submit"
+            className="mb-2 w-full rounded-lg border border-brand-warning bg-brand-warning px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#d97706] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70"
+          >
+            Register
+          </button>
         </form>
       </div>
+
+      {/* Login section */}
       <div className="mx-auto max-w-lg text-center text-lg text-brand-text dark:text-dark-text">
         <hr className="mb-4" />
-        <div className="text-center text-brand-muted dark:text-dark-muted">
-          Already have an account?
-        </div>
+        <p className="text-brand-muted dark:text-dark-muted">Already have an account?</p>
         <Link
           href="/login"
-          className="font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
+          className="font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary"
         >
           Log in
         </Link>{' '}
