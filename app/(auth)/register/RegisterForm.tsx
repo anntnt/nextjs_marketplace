@@ -42,6 +42,26 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MINIMUM_AGE = 18;
 const MIN_BIRTH_YEAR = 1900;
 
+const baseInputClasses =
+  'mt-2 block w-full rounded-lg border bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:outline-none focus:ring-2 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted';
+const normalInputStateClasses =
+  'border-brand-muted/30 focus:border-brand-primary focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:focus:border-brand-primary dark:focus:ring-brand-primary/40';
+const errorInputStateClasses =
+  'border-brand-error focus:border-brand-error focus:ring-brand-error/40 dark:border-brand-error dark:focus:border-brand-error dark:focus:ring-brand-error/40';
+
+const getInputClasses = (hasError: boolean) =>
+  `${baseInputClasses} ${hasError ? errorInputStateClasses : normalInputStateClasses}`;
+
+const baseCheckboxClasses =
+  'h-4 w-4 rounded border text-brand-primary focus:ring-2 dark:bg-dark-surface';
+const normalCheckboxStateClasses =
+  'border-brand-muted/40 focus:ring-brand-primary/50 dark:border-dark-muted/40';
+const errorCheckboxStateClasses =
+  'border-brand-error focus:ring-brand-error/40 dark:border-brand-error';
+
+const getCheckboxClasses = (hasError: boolean) =>
+  `${baseCheckboxClasses} ${hasError ? errorCheckboxStateClasses : normalCheckboxStateClasses}`;
+
 export default function RegisterForm(props: Props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -239,7 +259,8 @@ export default function RegisterForm(props: Props) {
             </label>
             <input
               id="username"
-              className="mt-2 block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
+              className={getInputClasses(Boolean(fieldErrors.username))}
+              aria-invalid={Boolean(fieldErrors.username)}
               value={username}
               onChange={(event) => {
                 clearFieldError('username');
@@ -267,7 +288,8 @@ export default function RegisterForm(props: Props) {
                 clearFieldError('password');
                 setPassword(event.currentTarget.value);
               }}
-              className="mt-2 block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
+              className={getInputClasses(Boolean(fieldErrors.password))}
+              aria-invalid={Boolean(fieldErrors.password)}
             />
             {fieldErrors.password ? (
               <div className="mt-2">
@@ -289,7 +311,8 @@ export default function RegisterForm(props: Props) {
                 clearFieldError('firstName');
                 setFirstName(event.currentTarget.value);
               }}
-              className="mt-2 block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
+              className={getInputClasses(Boolean(fieldErrors.firstName))}
+              aria-invalid={Boolean(fieldErrors.firstName)}
             />
             {fieldErrors.firstName ? (
               <div className="mt-2">
@@ -311,7 +334,8 @@ export default function RegisterForm(props: Props) {
                 clearFieldError('lastName');
                 setLastName(event.currentTarget.value);
               }}
-              className="mt-2 block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
+              className={getInputClasses(Boolean(fieldErrors.lastName))}
+              aria-invalid={Boolean(fieldErrors.lastName)}
             />
             {fieldErrors.lastName ? (
               <div className="mt-2">
@@ -334,7 +358,8 @@ export default function RegisterForm(props: Props) {
                 clearFieldError('emailAddress');
                 setEmailAddress(event.currentTarget.value);
               }}
-              className="mt-2 block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
+              className={getInputClasses(Boolean(fieldErrors.emailAddress))}
+              aria-invalid={Boolean(fieldErrors.emailAddress)}
             />
             {fieldErrors.emailAddress ? (
               <div className="mt-2">
@@ -357,7 +382,8 @@ export default function RegisterForm(props: Props) {
                 clearFieldError('birthday');
                 setBirthday(event.currentTarget.value);
               }}
-              className="mt-2 block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
+              className={getInputClasses(Boolean(fieldErrors.birthday))}
+              aria-invalid={Boolean(fieldErrors.birthday)}
             />
             {fieldErrors.birthday ? (
               <div className="mt-2">
@@ -415,7 +441,8 @@ export default function RegisterForm(props: Props) {
                   clearFieldError('privacyAgreement');
                   setPrivacyAgreementAccepted(event.currentTarget.checked);
                 }}
-                className="h-4 w-4 rounded border-brand-muted/40 text-brand-primary focus:ring-2 focus:ring-brand-primary/50 dark:border-dark-muted/40 dark:bg-dark-surface"
+                className={getCheckboxClasses(Boolean(fieldErrors.privacyAgreement))}
+                aria-invalid={Boolean(fieldErrors.privacyAgreement)}
               />
               <label
                 htmlFor="privacyAgreement"
