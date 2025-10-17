@@ -25,7 +25,7 @@ export default function LogoutButton({ onLogout }: Props) {
       <button
         type="button"
         aria-label="Logout"
-        className="block border-0 bg-white py-1 font-semibold text-brand-warning underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary sm:px-4 sm:text-center"
+        className="text-brand-text block border-0 bg-white py-1 underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary sm:px-4 sm:text-center"
         onClick={handleLogout}
       >
         Logout
