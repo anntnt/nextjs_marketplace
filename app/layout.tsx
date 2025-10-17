@@ -2,6 +2,7 @@ import './globals.css';
 import { createElement, type ComponentProps, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Footer from '../components/Footer';
+import FlashMessageBanner from '../components/FlashMessageBanner';
 import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
 import { getGuestCartTotalQuantity, parseGuestCartCookie } from '../util/guestCart';
@@ -33,9 +34,6 @@ export default async function RootLayout({ children }: Props) {
   const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
   const flashMessageCookie = cookieStore.get('flashMessage');
   const flashMessage = flashMessageCookie?.value;
-  if (flashMessageCookie) {
-    cookieStore.delete('flashMessage');
-  }
 
   // 2. Get the current logged in user from the database using the sessionToken value
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
@@ -57,15 +55,7 @@ export default async function RootLayout({ children }: Props) {
     <html lang="en" className="h-full">
       <body className="min-h-screen bg-brand-bg font-sans text-brand-text antialiased transition-colors dark:bg-dark-bg dark:text-dark-text">
         <div className="flex min-h-screen flex-col">
-          {flashMessage ? (
-            <div
-              className="bg-brand-primary/10 py-2 text-center text-sm text-brand-primary dark:bg-brand-primary/20"
-              role="status"
-              aria-live="polite"
-            >
-              {flashMessage}
-            </div>
-          ) : null}
+          <FlashMessageBanner message={flashMessage} />
           <Header user={user} cartSum={cartSum} />
 
           <div id="page-content" tabIndex={-1} className="flex-1 focus:outline-none">
