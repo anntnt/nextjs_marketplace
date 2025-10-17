@@ -17,7 +17,7 @@ export default function Component(props: UserProps) {
       onMouseLeave={() => setIsOpen(false)}
     >
       <button
-        className="group hidden items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:flex"
+        className="bg-brand-secondary cursor-pointer group hidden items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:flex"
         type="button"
       >
         <svg
