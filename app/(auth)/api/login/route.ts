@@ -34,10 +34,14 @@ export async function POST(
 
   if (!result.success) {
     return NextResponse.json(
-      { errors: result.error.issues },
       {
-        status: 400,
+        errors: [
+          {
+            message: 'Username or Password is invalid',
+          },
+        ],
       },
+      { status: 400 },
     );
   }
 
