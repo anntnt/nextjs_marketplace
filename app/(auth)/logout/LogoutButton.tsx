@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { logout } from './actions';
+import type { Route } from 'next';
 
 type Props = {
   onLogout?: () => void;
@@ -14,7 +15,7 @@ export default function LogoutButton({ onLogout }: Props) {
   const handleLogout = async () => {
     await logout();
     const target = pathname && pathname !== '/logout' ? pathname : '/';
-    router.push(target);
+    router.push(target as Route);
     router.refresh();
     onLogout?.();
   };
