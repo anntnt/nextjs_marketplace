@@ -44,7 +44,6 @@ const USERNAME_PATTERN_MESSAGE =
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MINIMUM_AGE = 18;
 const MIN_BIRTH_YEAR = 1900;
-
 export default function RegisterForm(props: Props) {
   const router = useRouter();
   const pathname = usePathname();

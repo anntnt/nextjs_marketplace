@@ -6,7 +6,7 @@ import FlashMessageBanner from '../components/FlashMessageBanner';
 import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
 import { getGuestCartTotalQuantity, parseGuestCartCookie } from '../util/guestCart';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import type { FlashMessageType } from '../lib/flashMessage';
 
 const headerComponent = dynamic(() => import('../components/Header'), { ssr: true });
@@ -27,10 +27,28 @@ export const metadata = {
 type Props = {
   children: ReactNode;
 };
+
+function getPreferredLanguage(acceptLanguage: string | null): string {
+  if (!acceptLanguage) {
+    return 'en';
+  }
+
+  const [primary] = acceptLanguage.split(',');
+  const normalized = primary?.split(';')[0]?.trim();
+
+  if (!normalized) {
+    return 'en';
+  }
+
+  return normalized.toLowerCase();
+}
+
 export default async function RootLayout({ children }: Props) {
   // Display the logged in user's username in the navigation bar and hide the login and register links depending on whether the user is logged in or not
   // 1. Checking if the sessionToken cookie exists
   const cookieStore = await cookies();
+  const headerList = await headers();
+  const htmlLang = getPreferredLanguage(headerList.get('accept-language'));
   const sessionTokenCookie = cookieStore.get('sessionToken');
   const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
   const flashMessageCookie = cookieStore.get('flashMessage');
@@ -54,7 +72,7 @@ export default async function RootLayout({ children }: Props) {
 
   // 3. Make decision whether to show the login and register links or not
   return (
-    <html lang="en" className="h-full">
+    <html lang={htmlLang} className="h-full" suppressHydrationWarning>
       <body className="min-h-screen bg-brand-bg font-sans text-brand-text antialiased transition-colors dark:bg-dark-bg dark:text-dark-text">
         <div className="flex min-h-screen flex-col">
           <Header user={user} cartSum={cartSum} />

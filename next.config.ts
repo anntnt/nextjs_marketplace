@@ -2,9 +2,7 @@ import type { NextConfig } from 'next';
 import type { Configuration as WebpackConfiguration } from 'webpack';
 
 const nextConfig: NextConfig = {
-  experimental: {
-    typedRoutes: true,
-  },
+  typedRoutes: true,
   webpack: (config: WebpackConfiguration, { isServer }) => {
     if (isServer) {
       const output = config.output ?? {};

@@ -13,6 +13,10 @@ export type UserWithUsername = {
 export type UserWithUsernameAndRole = UserWithUsername & {
   roleId: number;
 };
+export type UserWithEmail = {
+  id: number;
+  emailAddress: string;
+};
 export const getUser = cache(async (sessionToken: Session['token']) => {
   const [user] = await sql<User[]>`
     SELECT
@@ -48,6 +52,20 @@ export const getUserInsecure = cache(async (username: User['username']) => {
       users
     WHERE
       username = ${username}
+  `;
+
+  return user;
+});
+
+export const getUserByEmailInsecure = cache(async (emailAddress: User['emailAddress']) => {
+  const [user] = await sql<UserWithEmail[]>`
+    SELECT
+      id,
+      email_address AS emailAddress
+    FROM
+      users
+    WHERE
+      email_address = ${emailAddress}
   `;
 
   return user;

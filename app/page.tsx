@@ -80,6 +80,7 @@ export default function Home() {
                     src="/images/smiling_woman.jpg"
                     alt="Seller dashboard preview"
                     fill
+                    sizes="(min-width: 1024px) 45vw, (min-width: 640px) 60vw, 90vw"
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-tr from-brand-secondary/70 via-brand-secondary/10 to-transparent" />

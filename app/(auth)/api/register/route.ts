@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import { createSessionInsecure } from '../../../../database/sessions';
 import {
   createUserInsecure,
+  getUserByEmailInsecure,
   getUserInsecure,
 } from '../../../../database/users';
 import { createOrUpdateCartItem } from '../../../../database/cartProducts';
@@ -100,7 +101,26 @@ export async function POST(
       {
         errors: [
           {
-            message: 'Username: This username is not available.',
+            message:
+              'Username: The username you entered is already taken. Please choose a different one.',
+          },
+        ],
+      },
+      {
+        status: 400,
+      },
+    );
+  }
+
+  const userWithEmail = await getUserByEmailInsecure(result.data.emailAddress);
+
+  if (userWithEmail) {
+    return NextResponse.json(
+      {
+        errors: [
+          {
+            message:
+              'Email address: The email address you entered is already in use. Please use a different one.',
           },
         ],
       },
@@ -134,7 +154,7 @@ export async function POST(
       {
         errors: [
           {
-            message: 'Registration failed',
+            message: 'Registration failed. Please check your information and try again.',
           },
         ],
       },
@@ -155,7 +175,7 @@ export async function POST(
       {
         errors: [
           {
-            message: 'Problem creating session',
+            message: 'There was a problem starting your session. Please try again.',
           },
         ],
       },
