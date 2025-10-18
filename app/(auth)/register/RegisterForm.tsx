@@ -65,6 +65,7 @@ export default function RegisterForm(props: Props) {
   const [storeName, setStoreName] = useState('');
   const [uAddress, setUAddress] = useState('');
   const [errors, setErrors] = useState<{ message: string }[]>([]);
+  const [shouldAutoFocusError, setShouldAutoFocusError] = useState(false);
 
   // Refs for accessibility
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -99,7 +100,7 @@ export default function RegisterForm(props: Props) {
 
   // Focus on first invalid field
   useEffect(() => {
-    if (errors.length === 0) return;
+    if (!shouldAutoFocusError || errors.length === 0) return;
 
     const fieldOrder: FieldName[] = [
       'username',
@@ -133,7 +134,8 @@ export default function RegisterForm(props: Props) {
         break;
       }
     }
-  }, [errors, fieldErrors]);
+    setShouldAutoFocusError(false);
+  }, [errors, fieldErrors, shouldAutoFocusError]);
 
   const getInputClasses = (hasError: boolean) =>
     `mt-2 block w-full rounded-lg border p-2.5 text-sm transition
@@ -214,10 +216,12 @@ export default function RegisterForm(props: Props) {
 
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
+      setShouldAutoFocusError(true);
       return;
     }
 
     setErrors([]);
+    setShouldAutoFocusError(false);
 
     const response = await fetch('api/register', {
       method: 'POST',
@@ -240,6 +244,7 @@ export default function RegisterForm(props: Props) {
 
     if ('errors' in data) {
       setErrors(data.errors);
+      setShouldAutoFocusError(true);
       return;
     }
 
