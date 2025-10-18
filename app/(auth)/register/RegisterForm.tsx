@@ -12,6 +12,7 @@ type Props = { returnTo?: string | string[] };
 type FieldName =
   | 'username'
   | 'password'
+  | 'passwordRepeat'
   | 'firstName'
   | 'lastName'
   | 'emailAddress'
@@ -21,6 +22,7 @@ type FieldName =
 const FIELD_LABELS: Record<FieldName, string> = {
   username: 'Username',
   password: 'Password',
+  passwordRepeat: 'Confirm password',
   firstName: 'First name',
   lastName: 'Last name',
   emailAddress: 'Email address',
@@ -31,6 +33,7 @@ const FIELD_LABELS: Record<FieldName, string> = {
 const FIELD_REQUIRED_MESSAGES: Record<FieldName, string> = {
   username: 'Please enter your username.',
   password: 'Please enter your password.',
+  passwordRepeat: 'Please confirm your password.',
   firstName: 'Please enter your first name.',
   lastName: 'Please enter your last name.',
   emailAddress: 'Please enter your email address.',
@@ -51,6 +54,7 @@ export default function RegisterForm(props: Props) {
   // Form state
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordRepeat, setPasswordRepeat] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
@@ -65,6 +69,7 @@ export default function RegisterForm(props: Props) {
   // Refs for accessibility
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordRepeatRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -99,6 +104,7 @@ export default function RegisterForm(props: Props) {
     const fieldOrder: FieldName[] = [
       'username',
       'password',
+      'passwordRepeat',
       'firstName',
       'lastName',
       'emailAddress',
@@ -109,6 +115,7 @@ export default function RegisterForm(props: Props) {
     const refs: Record<FieldName, RefObject<HTMLInputElement>> = {
       username: usernameRef,
       password: passwordRef,
+      passwordRepeat: passwordRepeatRef,
       firstName: firstNameRef,
       lastName: lastNameRef,
       emailAddress: emailRef,
@@ -150,6 +157,7 @@ export default function RegisterForm(props: Props) {
     const requiredFields: Array<{ key: FieldName; value: string }> = [
       { key: 'username', value: trimmedUsername },
       { key: 'password', value: password.trim() },
+      { key: 'passwordRepeat', value: passwordRepeat.trim() },
       { key: 'firstName', value: firstName.trim() },
       { key: 'lastName', value: lastName.trim() },
       { key: 'emailAddress', value: trimmedEmail },
@@ -174,6 +182,12 @@ export default function RegisterForm(props: Props) {
     if (trimmedEmail && !EMAIL_PATTERN.test(trimmedEmail)) {
       validationErrors.push({
         message: `${FIELD_LABELS.emailAddress}: Please enter a valid email address.`,
+      });
+    }
+
+    if (password && passwordRepeat && password !== passwordRepeat) {
+      validationErrors.push({
+        message: 'Confirm password: The passwords do not match.',
       });
     }
 
@@ -210,6 +224,7 @@ export default function RegisterForm(props: Props) {
       body: JSON.stringify({
         username: trimmedUsername,
         password,
+        passwordRepeat,
         firstName,
         lastName,
         emailAddress: trimmedEmail,
@@ -297,7 +312,8 @@ export default function RegisterForm(props: Props) {
           {/* Input fields */}
           {([
             { id: 'username', label: 'Username*', type: 'text', value: username, setter: setUsername, ref: usernameRef },
-            { id: 'password', label: 'Password*', type: 'password', value: password, setter: setPassword, ref: passwordRef },
+          { id: 'password', label: 'Password*', type: 'password', value: password, setter: setPassword, ref: passwordRef },
+          { id: 'passwordRepeat', label: 'Confirm password*', type: 'password', value: passwordRepeat, setter: setPasswordRepeat, ref: passwordRepeatRef },
             { id: 'firstName', label: 'First name*', type: 'text', value: firstName, setter: setFirstName, ref: firstNameRef },
             { id: 'lastName', label: 'Last name*', type: 'text', value: lastName, setter: setLastName, ref: lastNameRef },
             { id: 'emailAddress', label: 'Email address*', type: 'email', value: emailAddress, setter: setEmailAddress, ref: emailRef },

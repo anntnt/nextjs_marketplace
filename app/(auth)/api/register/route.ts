@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
 import { createSessionInsecure } from '../../../../database/sessions';
 import {
   createUserInsecure,
@@ -9,10 +10,7 @@ import {
   getUserInsecure,
 } from '../../../../database/users';
 import { createOrUpdateCartItem } from '../../../../database/cartProducts';
-import {
-  type UserLogin,
-  userSchema,
-} from '../../../../migrations/0001-createTableUsers';
+import { type UserLogin, userSchema } from '../../../../migrations/0001-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 import { parseGuestCartCookie } from '../../../../util/guestCart';
 
@@ -24,21 +22,24 @@ export type RegisterResponseBody =
       errors: { message: string }[];
     };
 
-export async function POST(
-  request: Request,
-): Promise<NextResponse<RegisterResponseBody>> {
+const registerSchema = userSchema.extend({
+  passwordRepeat: z.string(),
+});
+
+export async function POST(request: Request): Promise<NextResponse<RegisterResponseBody>> {
   // Task: Implement the user registration workflow
 
   // 1. Get the user data from the request
   const requestBody = await request.json();
 
   // 2. Validate the user data with zod
-  const result = userSchema.safeParse(requestBody);
+  const result = registerSchema.safeParse(requestBody);
 
   if (!result.success) {
     const friendlyFieldNames: Record<string, string> = {
       username: 'Username',
       password: 'Password',
+      passwordRepeat: 'Confirm password',
       firstName: 'First name',
       lastName: 'Last name',
       emailAddress: 'Email address',
@@ -52,6 +53,7 @@ export async function POST(
     const friendlyRequiredMessages: Record<string, string> = {
       username: 'Please enter your username.',
       password: 'Please enter your password.',
+      passwordRepeat: 'Please confirm your password.',
       firstName: 'Please enter your first name.',
       lastName: 'Please enter your last name.',
       emailAddress: 'Please enter your email address.',
@@ -93,16 +95,12 @@ export async function POST(
     );
   }
 
-  // 3. Check if user already exist in the database
-  const user = await getUserInsecure(result.data.username);
-
-  if (user) {
+  if (result.data.password !== result.data.passwordRepeat) {
     return NextResponse.json(
       {
         errors: [
           {
-            message:
-              'Username: The username you entered is already taken. Please choose a different one.',
+            message: 'Confirm password: The passwords do not match.',
           },
         ],
       },
@@ -112,7 +110,27 @@ export async function POST(
     );
   }
 
-  const userWithEmail = await getUserByEmailInsecure(result.data.emailAddress);
+  // 3. Check if user already exist in the database
+  const { passwordRepeat, ...validatedUser } = result.data;
+  const user = await getUserInsecure(validatedUser.username);
+
+  if (user) {
+    return NextResponse.json(
+      {
+        errors: [
+          {
+            message:
+              'Username: The username you entered is not available. Please choose a different one.',
+          },
+        ],
+      },
+      {
+        status: 400,
+      },
+    );
+  }
+
+  const userWithEmail = await getUserByEmailInsecure(validatedUser.emailAddress);
 
   if (userWithEmail) {
     return NextResponse.json(
@@ -133,20 +151,20 @@ export async function POST(
   // This is where you do confirm password
 
   // 4. Hash the plain password from the user
-  const passwordHash = await bcrypt.hash(result.data.password, 12);
+  const passwordHash = await bcrypt.hash(validatedUser.password, 12);
 
   // 5. Save the user information with the hashed password in the database
   const newUser = await createUserInsecure(
-    result.data.username,
+    validatedUser.username,
     passwordHash,
-    result.data.firstName,
-    result.data.lastName,
-    result.data.emailAddress,
-    result.data.birthday,
-    result.data.gender || null,
-    result.data.storeName || null,
-    result.data.uAddress || null,
-    result.data.roleId,
+    validatedUser.firstName,
+    validatedUser.lastName,
+    validatedUser.emailAddress,
+    validatedUser.birthday,
+    validatedUser.gender || null,
+    validatedUser.storeName || null,
+    validatedUser.uAddress || null,
+    validatedUser.roleId,
   );
 
   if (!newUser) {
