@@ -13,7 +13,7 @@ export default function LoginForm(props: Props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<
-    { message: string; type?: 'auth' | 'field' | 'form' }
+    { message: string; type?: 'auth' | 'field' | 'form' }[]
   >([]);
   const [shouldAutoFocusError, setShouldAutoFocusError] = useState(false);
 
@@ -46,7 +46,8 @@ export default function LoginForm(props: Props) {
     let authMessage = '';
     const authFields = new Set<FieldName>();
 
-    for (const { message } of errors) {
+    for (const error of errors) {
+      const { message } = error;
       const normalizedMessage = message.toLowerCase();
 
       if (normalizedMessage.includes('username or password is invalid')) {
@@ -81,8 +82,8 @@ export default function LoginForm(props: Props) {
 
     const fieldOrder: FieldName[] = ['username', 'password'];
     const refs: Record<FieldName, RefObject<HTMLInputElement>> = {
-      username: usernameRef,
-      password: passwordRef,
+      username: usernameRef as RefObject<HTMLInputElement>,
+      password: passwordRef as RefObject<HTMLInputElement>,
     };
 
     for (const field of fieldOrder) {
@@ -160,15 +161,15 @@ export default function LoginForm(props: Props) {
         const errorBody = (await response.json()) as LoginResponseBody;
         if ('errors' in errorBody) {
           setErrors(
-            errorBody.errors.map((error) => ({
-              message: error.message,
-              type: error.message.toLowerCase().includes('username or password')
-                ? 'auth'
-                : 'form',
-            })),
-          );
+                      errorBody.errors.map((error) => ({
+                        message: error.message,
+                        type: error.message.toLowerCase().includes('username or password')
+                          ? 'auth'
+                          : ('form' as 'auth' | 'field' | 'form'),
+                      })),
+                    );
         } else {
-          setErrors([{ message: 'Unable to login. Please try again.', type: 'form' }]);
+          setErrors([{ message: 'Unable to login. Please try again.', type: 'form' as const }]);
         }
       } catch {
         setErrors([{ message: 'Unable to login. Please try again.', type: 'form' }]);
@@ -181,13 +182,13 @@ export default function LoginForm(props: Props) {
 
     if ('errors' in data) {
       setErrors(
-        data.errors.map((error) => ({
-          message: error.message,
-          type: error.message.toLowerCase().includes('username or password')
-            ? 'auth'
-            : 'form',
-        })),
-      );
+              data.errors.map((error) => ({
+                message: error.message,
+                type: error.message.toLowerCase().includes('username or password')
+                  ? 'auth'
+                  : ('form' as 'auth' | 'field' | 'form'),
+              })),
+            );
       setShouldAutoFocusError(true);
       return;
     }
@@ -200,7 +201,8 @@ export default function LoginForm(props: Props) {
     const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : fallbackPath;
 
     if (data.user.roleId === 2 || data.user.roleId === 3) {
-      router.push(target);
+      
+      router.push(target as any);
     } else {
       router.push(`/profile/${data.user.username}`);
     }

@@ -68,14 +68,14 @@ export default function RegisterForm(props: Props) {
   const [shouldAutoFocusError, setShouldAutoFocusError] = useState(false);
 
   // Refs for accessibility
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const passwordRepeatRef = useRef<HTMLInputElement>(null);
-  const firstNameRef = useRef<HTMLInputElement>(null);
-  const lastNameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const birthdayRef = useRef<HTMLInputElement>(null);
-  const privacyRef = useRef<HTMLInputElement>(null);
+  const usernameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
+  const passwordRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
+  const passwordRepeatRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
+  const firstNameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
+  const lastNameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
+  const emailRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
+  const birthdayRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
+  const privacyRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
 
   // Error mapping
   const { fieldErrors, formErrors } = useMemo(() => {
@@ -114,9 +114,9 @@ export default function RegisterForm(props: Props) {
     ];
 
     const refs: Record<FieldName, RefObject<HTMLInputElement>> = {
-      username: usernameRef,
-      password: passwordRef,
-      passwordRepeat: passwordRepeatRef,
+      username: usernameRef as RefObject<HTMLInputElement>,
+      password: passwordRef as RefObject<HTMLInputElement>,
+      passwordRepeat: passwordRepeatRef as RefObject<HTMLInputElement>,
       firstName: firstNameRef,
       lastName: lastNameRef,
       emailAddress: emailRef,
@@ -252,7 +252,7 @@ export default function RegisterForm(props: Props) {
     const fallbackPath = pathname && pathname !== '/register' ? pathname : '/';
     const target = safeReturnTo && safeReturnTo !== '/register' ? safeReturnTo : fallbackPath;
 
-    router.push(target);
+    router.push(target as any);
     router.refresh();
   }
 
