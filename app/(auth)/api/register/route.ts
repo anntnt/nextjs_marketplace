@@ -13,6 +13,7 @@ import { createOrUpdateCartItem } from '../../../../database/cartProducts';
 import { type UserLogin, userSchema } from '../../../../migrations/0001-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 import { parseGuestCartCookie } from '../../../../util/guestCart';
+import { FLASH_MESSAGE_COOKIE, FLASH_MESSAGE_TYPE_COOKIE } from '../../../../lib/flashMessage';
 
 export type RegisterResponseBody =
   | {
@@ -224,6 +225,22 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
       maxAge: 0,
     });
   }
+
+  cookieStore.set({
+    name: FLASH_MESSAGE_COOKIE,
+    value: "Account created successfully! You're now logged in.",
+    path: '/',
+    sameSite: 'lax',
+    maxAge: 5,
+  });
+
+  cookieStore.set({
+    name: FLASH_MESSAGE_TYPE_COOKIE,
+    value: 'success',
+    path: '/',
+    sameSite: 'lax',
+    maxAge: 5,
+  });
 
   // 8. Return the new user information
   return NextResponse.json({
