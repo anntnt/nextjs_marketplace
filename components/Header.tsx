@@ -229,7 +229,7 @@ export default function Header(props: UserProps) {
                 <Link
                   href="/support"
                   onClick={closeMenu}
-                  className="inline-flex w-full items-center gap-2 py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
+                  className="text-brand-text inline-flex w-full items-center gap-2 py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
                 >
                   <FiHelpCircle className="h-4 w-4" aria-hidden="true" />
                   Help
@@ -265,7 +265,7 @@ export default function Header(props: UserProps) {
                     <Link
                       href={`/profile/${props.user.username}`}
                       onClick={closeMenu}
-                      className="block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
+                      className="text-brand-text block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
                     >
                       {props.user.firstname}'s Dashboard
                     </Link>
@@ -280,7 +280,7 @@ export default function Header(props: UserProps) {
                     <Link
                       href="/login"
                       onClick={closeMenu}
-                      className="block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
+                      className="text-brand-text block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
                     >
                       Login
                     </Link>
