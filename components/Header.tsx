@@ -128,18 +128,6 @@ export default function Header(props: UserProps) {
           </Link>
 
           <div className="flex flex-1 flex-wrap items-center justify-end gap-4 md:gap-6">
-            <ul className="hidden items-center gap-6 font-semibold md:flex xl:gap-8">
-              {props.user && props.user.roleId === 2 && (
-                <li>
-                  <Link
-                    href={`/profile/${props.user.username}/business`}
-                    className="text-white underline decoration-4 decoration-brand-accent transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning dark:decoration-brand-accent"
-                  >
-                    My Products
-                  </Link>
-                </li>
-              )}
-            </ul>
 
             <div className="hidden flex-1 md:flex">
               <Search placeholder="Search products" className="w-full max-w-2xl lg:max-w-3xl" />
@@ -162,6 +150,17 @@ export default function Header(props: UserProps) {
                     active:translate-y-0 md:inline-flex"
                 >
                   Open your shop
+                </Link>
+              ) : null}
+              {props.user && props.user.roleId === 2 ? (
+                <Link
+                  href={`/profile/${props.user.username}/business`}
+                  className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform
+                    hover:text-brand-warning hover:-translate-y-0.5 hover:bg-white
+                    focus:text-brand-warning focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60
+                    active:translate-y-0 md:inline-flex"
+                >
+                  My Products
                 </Link>
               ) : null}
               <div className="w-full md:hidden">
@@ -241,11 +240,10 @@ export default function Header(props: UserProps) {
                   <Link
                     href={`/profile/${props.user.username}/business`}
                     onClick={closeMenu}
-                    className="block w-full py-2 transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
+                    className="ml-0 block w-full max-w-[12rem] rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary 
+                    focus:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 active:bg-brand-primary"
                   >
-                    <span className="font-semibold underline decoration-4 decoration-brand-primary">
-                      My Products
-                    </span>
+                    My Products
                   </Link>
                 </li>
               )}
