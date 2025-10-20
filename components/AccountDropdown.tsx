@@ -1,12 +1,22 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { getSafeReturnToPath } from '../util/validation';
-import { useMemo, useState } from 'react';
+import { useMemo, useEffect, useRef, useState, useCallback } from 'react';
+import type { MouseEvent as ReactMouseEvent } from 'react';
+import { usePathname } from 'next/navigation';
 
-export default function Component() {
+export type AccountDropdownProps = {
+  onOpenChange?: (open: boolean) => void;
+};
+
+const focusableSelectors =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+export default function Component({ onOpenChange }: AccountDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const currentPath = pathname && pathname !== '/login' && pathname !== '/register' ? pathname : '/';
   const loginHref = useMemo(() => {
@@ -21,15 +31,99 @@ export default function Component() {
     }
     return `/register?returnTo=${currentPath}`;
   }, [currentPath, pathname]);
+
+  const focusFirstItem = () => {
+    requestAnimationFrame(() => {
+      const root = containerRef.current;
+      if (!root) return;
+
+      const preferred = root.querySelector<HTMLElement>(
+        'a[href="/login"], a[href^="/login"], [data-first-focus], button[data-action="login"]'
+      );
+      const fallback =
+        preferred || root.querySelector<HTMLElement>(focusableSelectors);
+      fallback?.focus();
+    });
+  };
+
+  useEffect(() => {
+    if (!isOpen || !openedByKeyboard) return;
+    focusFirstItem();
+  }, [isOpen, openedByKeyboard]);
+
+  const openDropdown = useCallback(
+    (byKeyboard: boolean) => {
+      setOpenedByKeyboard(byKeyboard);
+      setIsOpen(true);
+      onOpenChange?.(true);
+    },
+    [onOpenChange]
+  );
+
+  const closeDropdown = useCallback(() => {
+    setIsOpen(false);
+    setOpenedByKeyboard(false);
+    onOpenChange?.(false);
+  }, [onOpenChange]);
+
+  const handleMouseEnter = () => {
+    openDropdown(false);
+  };
+
+  const handleMouseLeave = () => {
+    const activeElement = document.activeElement;
+    if (activeElement && containerRef.current?.contains(activeElement)) {
+      return;
+    }
+    closeDropdown();
+  };
+
+  const handleBlurCapture = () => {
+    requestAnimationFrame(() => {
+      const activeElement = document.activeElement;
+      if (!activeElement || !containerRef.current?.contains(activeElement)) {
+        closeDropdown();
+      }
+    });
+  };
+
+  const handleButtonClick = (event: ReactMouseEvent<HTMLButtonElement>) => {
+    const triggeredByKeyboard = event.detail === 0;
+    if (isOpen) {
+      closeDropdown();
+      return;
+    }
+    openDropdown(triggeredByKeyboard);
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeDropdown();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [closeDropdown, isOpen]);
+
   return (
     <div
+      ref={containerRef}
       className="relative"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onBlurCapture={handleBlurCapture}
     >
       <button
         className="cursor-pointer bg-brand-secondary group hidden items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:flex"
         type="button"
+        data-account-toggle="true"
+        onClick={handleButtonClick}
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
       >
         <svg
           className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning group-focus:text-brand-warning group-active:text-brand-warning dark:text-brand-accent dark:group-hover:text-brand-warning dark:group-focus:text-brand-warning dark:group-active:text-brand-warning"
