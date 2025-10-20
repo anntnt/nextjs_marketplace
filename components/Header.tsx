@@ -212,13 +212,19 @@ export default function Header(props: UserProps) {
             </div>
 
         {isOpen && (
-          <div
-            className="w-full md:hidden"
-            id="navbar-menu"
-            role="menu"
-            aria-hidden={!isOpen}
-          >
-            <ul className="mt-4 flex flex-col items-start gap-2 bg-brand-surface p-4 text-brand-text shadow-lg dark:bg-dark-surface dark:text-dark-text">
+          <>
+            <div
+              className="fixed inset-0 z-40 bg-gradient-to-b from-transparent via-black/60 to-black/70 transition-opacity md:hidden"
+              aria-hidden="true"
+              onClick={closeMenu}
+            />
+            <div
+              className="relative z-50 w-full md:hidden"
+              id="navbar-menu"
+              role="menu"
+              aria-hidden={!isOpen}
+            >
+              <ul className="mt-4 flex flex-col items-start gap-2 bg-brand-surface p-4 text-brand-text shadow-lg dark:bg-dark-surface dark:text-dark-text">
               <li className="w-full">
                 <Link
                   href="/support"
@@ -293,8 +299,9 @@ export default function Header(props: UserProps) {
                   </li>
                 </>
               )}
-            </ul>
-          </div>
+              </ul>
+            </div>
+          </>
         )}
       </nav>
     </header>
