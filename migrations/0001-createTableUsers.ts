@@ -5,14 +5,16 @@ const USERNAME_PATTERN = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
 const USERNAME_MIN_MESSAGE = 'Username: Please enter at least 3 characters for the username.';
 const USERNAME_PATTERN_MESSAGE =
   'Username: Your username must have at least one letter and no unusual characters.';
-const PASSWORD_MIN_MESSAGE = 'Password: Please enter at least 8 characters for the password.';
+const PASSWORD_REQUIRED_MESSAGE = 'Password: Please enter your password.';
+const PASSWORD_REGISTER_MIN_MESSAGE =
+  'Password: Please enter at least 8 characters for the password.';
 
 export const userLoginSchema = z.object({
   username: z
     .string()
     .min(3, { message: USERNAME_MIN_MESSAGE })
     .regex(USERNAME_PATTERN, { message: USERNAME_PATTERN_MESSAGE }),
-  password: z.string().min(8, { message: PASSWORD_MIN_MESSAGE }),
+  password: z.string().min(1, { message: PASSWORD_REQUIRED_MESSAGE }),
 });
 
 export type UserLogin = {
@@ -32,9 +34,9 @@ const birthDateSchema = z.preprocess(
     return value;
   },
   z
-    .date({
-      required_error: 'Required',
-      invalid_type_error: 'Birth date: Please enter a valid date.',
+    .date()
+    .refine((value) => value instanceof Date, {
+      message: 'Birth date: Please enter a valid date.',
     })
     .superRefine((date, ctx) => {
       if (date.getFullYear() < MIN_BIRTH_YEAR) {
@@ -63,7 +65,7 @@ export const userSchema = z.object({
     .regex(USERNAME_PATTERN, { message: USERNAME_PATTERN_MESSAGE }),
   firstName: z.string(),
   lastName: z.string(),
-  password: z.string().min(8, { message: PASSWORD_MIN_MESSAGE }),
+  password: z.string().min(8, { message: PASSWORD_REGISTER_MIN_MESSAGE }),
   emailAddress: z.string(),
   birthday: birthDateSchema,
   gender: z.string().optional(),

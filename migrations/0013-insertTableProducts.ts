@@ -234,7 +234,7 @@ const rawProducts = [
   },
 ];
 
-const sellerUsernames = ['seller', 'seller2', 'seller3'];
+const sellerUsernames = ['seller1', 'seller2', 'seller3'];
 
 const products = rawProducts.map((product, index) => ({
   ...product,
