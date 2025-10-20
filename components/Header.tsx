@@ -127,13 +127,15 @@ export default function Header(props: UserProps) {
             />
           </Link>
 
-          <div className="flex flex-1 flex-wrap items-center justify-end gap-4 md:gap-6">
+          <div className="flex flex-1 flex-wrap items-center gap-4 md:gap-6">
 
-            <div className="hidden flex-1 md:flex">
-              <Search placeholder="Search products" className="w-full max-w-2xl lg:max-w-3xl" />
+            <div className="hidden flex-1 items-center justify-center md:flex">
+              <div className="w-full max-w-2xl lg:max-w-3xl">
+                <Search placeholder="Search products" className="w-full" />
+              </div>
             </div>
 
-            <div className="flex items-center gap-4 md:gap-6">
+            <div className="ml-auto flex items-center gap-3 md:gap-6">
               <Link
                 href="/support"
                 className="hidden items-center gap-1 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:inline-flex"
@@ -163,19 +165,18 @@ export default function Header(props: UserProps) {
                   My Products
                 </Link>
               ) : null}
-              <div className="w-full md:hidden">
-                <Search placeholder="Search products" />
-              </div>
               {props.user ? (
                 <>
-                  <div className="md:mr-10">
+                  <div className="hidden md:mr-10 md:block">
                     <ProfileDropdown user={props.user} />
                   </div>
                   {showCart ? <Cart cartSum={props.cartSum} /> : null}
                 </>
               ) : (
                 <>
-                  <AccountDropdown />                
+                  <div className="hidden md:inline-flex">
+                    <AccountDropdown />
+                  </div>
                   {showCart ? <Cart cartSum={props.cartSum} /> : null}
                 </>
               )}
@@ -204,6 +205,11 @@ export default function Header(props: UserProps) {
             </div>
           </div>
         </div>
+        <div className="order-last mt-3 w-full basis-full md:hidden">
+              <div className="flex w-full justify-center px-2">
+                <Search placeholder="Search products" className="w-full max-w-md" />
+              </div>
+            </div>
 
         {isOpen && (
           <div
