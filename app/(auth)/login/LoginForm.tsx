@@ -214,6 +214,7 @@ export default function LoginForm(props: Props) {
     <>
       <div className="mx-auto max-w-sm text-brand-text dark:text-dark-text">
         <form
+          noValidate
           className="py-8"
           aria-describedby={[
             authError ? 'auth-error' : null,
@@ -235,6 +236,8 @@ export default function LoginForm(props: Props) {
               ref={usernameRef}
               className={getInputClasses(Boolean(fieldErrors.username))}
               value={username}
+              required
+              aria-required="true"
               aria-invalid={
                 Boolean(fieldErrors.username) || authErrorFields.includes('username')
               }
@@ -268,6 +271,8 @@ export default function LoginForm(props: Props) {
               ref={passwordRef}
               className={getInputClasses(Boolean(fieldErrors.password))}
               value={password}
+              required
+              aria-required="true"
               aria-invalid={
                 Boolean(fieldErrors.password) || authErrorFields.includes('password')
               }

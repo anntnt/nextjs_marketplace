@@ -300,6 +300,8 @@ export default function RegisterForm(props: Props) {
                 value="3"
                 checked={roleId === 3}
                 onChange={handleRoleChange}
+                required
+                aria-required="true"
               />
               <label htmlFor="buyer">Buyer</label>
               <input
@@ -309,6 +311,8 @@ export default function RegisterForm(props: Props) {
                 value="2"
                 checked={roleId === 2}
                 onChange={handleRoleChange}
+                required
+                aria-required="true"
               />
               <label htmlFor="seller">Seller</label>
             </div>
@@ -335,6 +339,8 @@ export default function RegisterForm(props: Props) {
                 className={getInputClasses(Boolean(fieldErrors[id as FieldName]))}
                 aria-invalid={Boolean(fieldErrors[id as FieldName])}
                 aria-describedby={fieldErrors[id as FieldName] ? `${id}-error` : undefined}
+                required
+                aria-required="true"
                 value={value}
                 onChange={(e) => {
                   clearFieldError(id as FieldName);
@@ -409,6 +415,8 @@ export default function RegisterForm(props: Props) {
                 }}
                 aria-invalid={Boolean(fieldErrors.privacyAgreement)}
                 aria-describedby={fieldErrors.privacyAgreement ? 'privacy-error' : undefined}
+                required
+                aria-required="true"
                 className={`h-4 w-4 rounded text-brand-primary focus:ring-2 focus:ring-brand-primary/50 dark:bg-dark-surface ${fieldErrors.privacyAgreement ? 'border-red-500 focus:ring-red-300' : 'border-brand-muted/40 dark:border-dark-muted/40'}`}
               />
               <label htmlFor="privacyAgreement" className="ml-2 text-sm font-medium">
