@@ -3,10 +3,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import type { PropsWithChildren } from 'react';
 import { createElement, useEffect, useState } from 'react';
 import { FiHelpCircle } from 'react-icons/fi';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
+
+// Correctly type FocusTrap as a React component with children
+const FocusTrap = dynamic<PropsWithChildren<{ focusTrapOptions?: any }>>(
+  () => import('focus-trap-react').then((mod) => mod.default),
+  { ssr: false }
+);
 
 type UserWithUsernameAndRole = User & {
   username: string;
@@ -218,89 +225,95 @@ export default function Header(props: UserProps) {
               aria-hidden="true"
               onClick={closeMenu}
             />
-            <div
-              className="relative z-50 w-full md:hidden"
-              id="navbar-menu"
-              role="menu"
-              aria-hidden={!isOpen}
-            >
-              <ul className="mt-4 flex flex-col items-start gap-2 bg-brand-surface p-4 text-brand-text shadow-lg dark:bg-dark-surface dark:text-dark-text">
-              <li className="w-full">
-                <Link
-                  href="/support"
-                  onClick={closeMenu}
-                  className="text-brand-text inline-flex w-full items-center gap-2 py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
+              <FocusTrap
+                focusTrapOptions={{
+                  clickOutsideDeactivates: true, // ✅ allows clicking the dark overlay or burger button
+                  escapeDeactivates: true,       // ✅ pressing Escape closes the menu
+                }}>
+                <div
+                  className="relative z-50 w-full md:hidden"
+                  id="navbar-menu"
+                  role="menu"
+                  aria-hidden={!isOpen}
                 >
-                  <FiHelpCircle className="h-4 w-4" aria-hidden="true" />
-                  Help
-                </Link>
-              </li>
-              {(!props.user || props.user.roleId !== 2) && (
-                <li className="w-full">
-                  <Link
-                    href="/sell"
-                    onClick={closeMenu}
-                    className="ml-0 block w-full max-w-[12rem] rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary 
-                    focus:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 active:bg-brand-primary"
-                  >
-                    Open your shop
-                  </Link>
-                </li>
-              )}
-              {props.user && props.user.roleId === 2 && (
-                <li className="w-full">
-                  <Link
-                    href={`/profile/${props.user.username}/business`}
-                    onClick={closeMenu}
-                    className="ml-0 block w-full max-w-[12rem] rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary 
-                    focus:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 active:bg-brand-primary"
-                  >
-                    My Products
-                  </Link>
-                </li>
-              )}
-              {props.user ? (
-                <>
+                  <ul className="mt-4 flex flex-col items-start gap-2 bg-brand-surface p-4 text-brand-text shadow-lg dark:bg-dark-surface dark:text-dark-text">
                   <li className="w-full">
                     <Link
-                      href={`/profile/${props.user.username}`}
+                      href="/support"
                       onClick={closeMenu}
-                      className="text-brand-text block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
+                      className="text-brand-text inline-flex w-full items-center gap-2 py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
                     >
-                      {props.user.firstname}'s Dashboard
+                      <FiHelpCircle className="h-4 w-4" aria-hidden="true" />
+                      Help
                     </Link>
                   </li>
-                  <li className="w-full">
-                    <LogoutButton onLogout={closeMenu} />
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li className="w-full">
-                    <Link
-                      href="/login"
-                      onClick={closeMenu}
-                      className="text-brand-text block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
-                    >
-                      Login
-                    </Link>
-                  </li>
-                  <li className="w-full">
-                    <hr className="mb-4" />
-                    <div className="text-brand-muted dark:text-dark-muted">New to eStores?</div>
-                    <Link
-                      href="/register"
-                      onClick={closeMenu}
-                      className="text-center font-semibold text-brand-primary underline transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary"
-                    >
-                      Register
-                    </Link>{' '}
-                    as a <strong>buyer</strong> or <strong>seller</strong> and start exploring!
-                  </li>
-                </>
-              )}
-              </ul>
-            </div>
+                  {(!props.user || props.user.roleId !== 2) && (
+                    <li className="w-full">
+                      <Link
+                        href="/sell"
+                        onClick={closeMenu}
+                        className="ml-0 block w-full max-w-[12rem] rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary 
+                        focus:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 active:bg-brand-primary"
+                      >
+                        Open your shop
+                      </Link>
+                    </li>
+                  )}
+                  {props.user && props.user.roleId === 2 && (
+                    <li className="w-full">
+                      <Link
+                        href={`/profile/${props.user.username}/business`}
+                        onClick={closeMenu}
+                        className="ml-0 block w-full max-w-[12rem] rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary 
+                        focus:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 active:bg-brand-primary"
+                      >
+                        My Products
+                      </Link>
+                    </li>
+                  )}
+                  {props.user ? (
+                    <>
+                      <li className="w-full">
+                        <Link
+                          href={`/profile/${props.user.username}`}
+                          onClick={closeMenu}
+                          className="text-brand-text block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
+                        >
+                          {props.user.firstname}'s Dashboard
+                        </Link>
+                      </li>
+                      <li className="w-full">
+                        <LogoutButton onLogout={closeMenu} />
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="w-full">
+                        <Link
+                          href="/login"
+                          onClick={closeMenu}
+                          className="text-brand-text block w-full py-2 font-semibold transition-colors hover:text-brand-primary focus:text-brand-primary active:text-brand-primary"
+                        >
+                          Login
+                        </Link>
+                      </li>
+                      <li className="w-full">
+                        <hr className="mb-4" />
+                        <div className="text-brand-muted dark:text-dark-muted">New to eStores?</div>
+                        <Link
+                          href="/register"
+                          onClick={closeMenu}
+                          className="text-center font-semibold text-brand-primary underline transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary"
+                        >
+                          Register
+                        </Link>{' '}
+                        as a <strong>buyer</strong> or <strong>seller</strong> and start exploring!
+                      </li>
+                    </>
+                  )}
+                  </ul>
+                </div>
+            </FocusTrap>
           </>
         )}
       </nav>
