@@ -17,6 +17,10 @@ type FocusTrapProps = PropsWithChildren<{ focusTrapOptions?: any; active?: boole
 const focusTrapDynamic = dynamic<FocusTrapProps>(() => import('focus-trap-react'), {
   ssr: false,
 });
+// Dynamic import because FocusTrap needs to run only on client (not SSR)
+const FocusTrap = dynamic(() => import('focus-trap-react').then(mod => mod.default), {
+  ssr: false,
+});
 
 function FocusTrapWrapper(props: FocusTrapProps) {
   return createElement(focusTrapDynamic, props);
@@ -145,8 +149,8 @@ export default function Header(props: UserProps) {
   );
 
   return (
-    <header className="top-0 z-10 border-b border-brand-secondary/50 bg-brand-secondary text-white shadow-lg transition-colors dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text">
-      <nav className="py-3.5 sm:py-3">
+    <header className="top-0 relative z-[60] border-b border-brand-secondary/50 bg-brand-secondary text-white shadow-lg transition-colors dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text">
+      <nav className="py-3.5 sm:py-3 relative z-[60]">
         <div className="mx-auto flex w-full max-w-screen-2xl items-center gap-4 px-2 sm:px-4 lg:px-6">
           {/* Logo */}
           <Link
@@ -272,7 +276,7 @@ export default function Header(props: UserProps) {
               aria-hidden="true"
               onClick={closeMenu}
             />
-            <FocusTrap
+            <FocusTrapWrapper
               focusTrapOptions={{
                 clickOutsideDeactivates: true,
                 escapeDeactivates: true,
@@ -360,7 +364,7 @@ export default function Header(props: UserProps) {
                   )}
                 </ul>
               </div>
-            </FocusTrap>
+            </FocusTrapWrapper>
           </>
         )}
       </nav>
