@@ -34,7 +34,7 @@ export default async function CheckoutPage() {
   }, 0);
   const total = subTotal + STANDARD_DELIVERY_PRICE;
   return (
-    <main className="bg-brand-bg  antialiased dark:bg-dark-bg flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
+    <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text antialiased px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Checkout</h1>
         <div className="grid sm:grid-cols-2 gap-4 mt-8 py-8">

@@ -22,7 +22,7 @@ async function SingleCategoryClientPage(props: Props) {
   }
 
   return (
-    <main className="bg-brand-bg dark:bg-dark-bg flex-grow w-full max-w-full px-4 sm:px-8 py-12">
+    <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text px-4 sm:px-8 py-12">
       <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">
         {categoryNameObj.categoryName}
       </h1>

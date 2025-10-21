@@ -133,6 +133,11 @@ a:focus {
     outline-offset: 3px;
   }
 }
+
+main, #page-content {
+  padding-top: var(--header-height, 60px);
+}
+
 /* ===============================
    Account dropdown hover behavior
    =============================== */

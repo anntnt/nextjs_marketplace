@@ -76,7 +76,7 @@ export default async function CartPage() {
 
   if (!productsFromCart.length) {
     return (
-      <main className="flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
+      <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text px-5 sm:px-20 py-12">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Your Cart</h1>
 
@@ -103,7 +103,7 @@ export default async function CartPage() {
     : '/login?returnTo=%2Fcheckout';
 
   return (
-    <main className="bg-brand-bg  antialiased dark:bg-dark-bg flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
+    <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text antialiased px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Your Cart</h1>
         <div className="grid sm:grid-cols-2 gap-4 mt-8 py-8">

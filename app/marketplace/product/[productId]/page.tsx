@@ -27,7 +27,7 @@ export default async function SingleProductPage(props: Props) {
   }
 
   return (
-    <main className="bg-brand-bg  antialiased dark:bg-dark-bg flex-grow  w-full max-w-full px-5 sm:px-20 py-12">
+    <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text antialiased px-5 sm:px-20 py-12">
       <section className="py-12 dark:bg-dark-bg antialiased">
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
           <div
