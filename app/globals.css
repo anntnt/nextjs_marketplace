@@ -133,3 +133,55 @@ a:focus {
     outline-offset: 3px;
   }
 }
+/* ===============================
+   Account dropdown hover behavior
+   =============================== */
+
+   .menu-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  /* --- Submenu --- */
+  .submenu {
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: auto;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 50;
+  }
+  
+  /* Show submenu when hovering Account */
+  .menu-item.has-submenu:hover > .submenu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  /* Keep open while hovering submenu */
+  .menu-item.has-submenu .submenu:hover {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  /* Close Account dropdown when hovering another menu item */
+  .mainmenu > .menu-item:hover ~ .menu-item.has-submenu .submenu {
+    display: none;
+    opacity: 0;
+  }
+  

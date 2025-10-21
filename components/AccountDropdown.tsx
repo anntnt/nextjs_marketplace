@@ -11,14 +11,29 @@ export type AccountDropdownProps = {
 };
 
 const focusableSelectors =
-  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 
-export default function Component({ onOpenChange }: AccountDropdownProps) {
+export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
+  const [overlayReady, setOverlayReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const currentPath = pathname && pathname !== '/login' && pathname !== '/register' ? pathname : '/';
+
+  // --- helpers ----------------------------------------------------
+  const clearTimeouts = useCallback(
+    (ids: (ReturnType<typeof setTimeout> | null)[]) => ids.forEach((id) => id && clearTimeout(id)),
+    []
+  );
+  const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const overlayTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const safeContains = (parent?: Element | null, child?: Node | null): boolean =>
+    !!parent && !!child && parent.contains(child);
+
+  const currentPath =
+    pathname && pathname !== '/login' && pathname !== '/register' ? pathname : '/';
+
   const loginHref = useMemo(() => {
     const sanitized = pathname && pathname !== '/login' ? pathname : undefined;
     const safe = getSafeReturnToPath(sanitized);
@@ -26,111 +41,107 @@ export default function Component({ onOpenChange }: AccountDropdownProps) {
   }, [pathname]);
 
   const registerHref = useMemo(() => {
-    if (!pathname || pathname === '/register') {
-      return '/register';
-    }
+    if (!pathname || pathname === '/register') return '/register';
     return `/register?returnTo=${currentPath}`;
   }, [currentPath, pathname]);
 
-  const focusFirstItem = () => {
-    requestAnimationFrame(() => {
-      const root = containerRef.current;
-      if (!root) return;
-
-      const preferred = root.querySelector<HTMLElement>(
-        'a[href="/login"], a[href^="/login"], [data-first-focus], button[data-action="login"]'
-      );
-      const fallback =
-        preferred || root.querySelector<HTMLElement>(focusableSelectors);
-      fallback?.focus();
-    });
-  };
-
-  useEffect(() => {
-    if (!isOpen || !openedByKeyboard) return;
-    focusFirstItem();
-  }, [isOpen, openedByKeyboard]);
-
+  // --- open/close -------------------------------------------------
   const openDropdown = useCallback(
     (byKeyboard: boolean) => {
+      clearTimeouts([openTimer.current, overlayTimer.current]);
       setOpenedByKeyboard(byKeyboard);
       setIsOpen(true);
+      setOverlayReady(false);
+      overlayTimer.current = setTimeout(() => setOverlayReady(true), 180);
       onOpenChange?.(true);
     },
-    [onOpenChange]
+    [onOpenChange, clearTimeouts]
   );
 
   const closeDropdown = useCallback(() => {
+    clearTimeouts([openTimer.current, overlayTimer.current]);
     setIsOpen(false);
     setOpenedByKeyboard(false);
+    setOverlayReady(false);
     onOpenChange?.(false);
-  }, [onOpenChange]);
+  }, [onOpenChange, clearTimeouts]);
 
-  const handleMouseEnter = () => {
-    openDropdown(false);
+  const handleButtonClick = (e: ReactMouseEvent<HTMLButtonElement>) => {
+    const byKeyboard = e.detail === 0;
+    isOpen ? closeDropdown() : openDropdown(byKeyboard);
   };
 
-  const handleMouseLeave = () => {
-    const activeElement = document.activeElement;
-    if (activeElement && containerRef.current?.contains(activeElement)) {
-      return;
-    }
-    closeDropdown();
+  // --- keyboard escape --------------------------------------------
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeDropdown();
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isOpen, closeDropdown]);
+
+  // --- hover logic ------------------------------------------------
+  const onEnter = () => {
+    if (openTimer.current) clearTimeout(openTimer.current);
+    openTimer.current = setTimeout(() => openDropdown(false), 120);
+  };
+  const onLeave = (e: React.MouseEvent) => {
+    const next = (e.relatedTarget as Node) ?? null;
+    if (safeContains(containerRef.current, next)) return;
+    if (openTimer.current) clearTimeout(openTimer.current);
+    openTimer.current = setTimeout(() => closeDropdown(), 100);
   };
 
-  const handleBlurCapture = () => {
-    requestAnimationFrame(() => {
-      const activeElement = document.activeElement;
-      if (!activeElement || !containerRef.current?.contains(activeElement)) {
-        closeDropdown();
-      }
-    });
-  };
-
-  const handleButtonClick = (event: ReactMouseEvent<HTMLButtonElement>) => {
-    const triggeredByKeyboard = event.detail === 0;
-    if (isOpen) {
-      closeDropdown();
-      return;
-    }
-    openDropdown(triggeredByKeyboard);
-  };
-
+  // --- NEW: close when hovering another top-level nav item --------
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        closeDropdown();
-      }
+    const handlePointerOver = (e: PointerEvent) => {
+      const container = containerRef.current;
+      if (!container) return;
+      const target = e.target as Element | null;
+      if (!target) return;
+
+      // still inside dropdown? ignore
+      if (safeContains(container, target)) return;
+
+      // find nearest nav/header ancestor
+      const navRoot =
+        container.closest('[data-nav-root], nav, header, [role="navigation"]');
+      if (!navRoot) return;
+
+      // detect direct children of that nav root
+      const siblings = Array.from(navRoot.children);
+      const hoveredSibling = siblings.find((child) => child.contains(target));
+
+      // if hoveredSibling exists and it's not the Account container → close
+      if (hoveredSibling && hoveredSibling !== container) closeDropdown();
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [closeDropdown, isOpen]);
+    document.addEventListener('pointerover', handlePointerOver, true);
+    return () => document.removeEventListener('pointerover', handlePointerOver, true);
+  }, [isOpen, closeDropdown]);
 
+  // --- cleanup ----------------------------------------------------
+  useEffect(() => () => clearTimeouts([openTimer.current, overlayTimer.current]), [clearTimeouts]);
+
+  // --- render -----------------------------------------------------
   return (
     <div
       ref={containerRef}
-      className="relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onBlurCapture={handleBlurCapture}
+      className="relative z-[60]"
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
     >
       <button
-        className="cursor-pointer bg-brand-secondary group hidden items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:flex"
         type="button"
-        data-account-toggle="true"
-        onClick={handleButtonClick}
         aria-haspopup="menu"
         aria-expanded={isOpen}
+        onClick={handleButtonClick}
+        className="cursor-pointer bg-brand-secondary hidden md:flex items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning"
       >
         <svg
-          className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning group-focus:text-brand-warning group-active:text-brand-warning dark:text-brand-accent dark:group-hover:text-brand-warning dark:group-focus:text-brand-warning dark:group-active:text-brand-warning"
-          aria-hidden="true"
+          className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning"
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -142,13 +153,23 @@ export default function Component({ onOpenChange }: AccountDropdownProps) {
         </svg>
         Account
       </button>
+
       {isOpen && (
         <>
+          {/* Overlay */}
           <div
-            className="fixed inset-0 z-40 pointer-events-none bg-gradient-to-b from-transparent via-black/60 to-black/70 transition-opacity"
+            className="fixed inset-0 z-50 bg-gradient-to-b from-transparent via-black/60 to-black/70"
             aria-hidden
+            onClick={closeDropdown}
+            onMouseEnter={() => overlayReady && closeDropdown()}
           />
-          <div className="absolute right-0 top-full z-50 flex w-60 translate-x-10 flex-col items-stretch">
+
+          {/* Dropdown */}
+          <div
+            className="absolute right-0 top-full z-[70] flex w-60 translate-x-10 flex-col"
+            onMouseEnter={onEnter}
+            onMouseLeave={onLeave}
+          >
             <span className="block h-4" aria-hidden />
             <div className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl dark:border-dark-muted/20 dark:bg-dark-surface">
               <ul className="px-7 pb-7 pt-6 text-sm text-brand-muted dark:text-dark-muted">
@@ -168,13 +189,12 @@ export default function Component({ onOpenChange }: AccountDropdownProps) {
                   </div>
                   <Link
                     href={registerHref as any}
-                    className="text-center font-semibold text-brand-primary underline transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
+                    className="font-semibold text-brand-primary underline transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
                     onClick={closeDropdown}
                   >
                     Register
                   </Link>{' '}
-                  as a <strong>buyer</strong> or <strong>seller</strong> and start
-                  exploring!
+                  as a <strong>buyer</strong> or <strong>seller</strong> and start exploring!
                 </li>
               </ul>
             </div>
