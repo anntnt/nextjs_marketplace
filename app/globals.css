@@ -134,7 +134,7 @@ a:focus {
   }
 }
 
-main, #page-content {
+main{
   padding-top: var(--header-height, 60px);
 }
 
