@@ -112,6 +112,21 @@ export default function Header(props: UserProps) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+ 
+  //keeps the overlay exactly aligned below the nav even when the header resizes or scrolls.
+  useEffect(() => {
+    const header = document.querySelector('header');
+    if (!header) return;
+  
+    const updateOverlayTop = () => {
+      document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+    };
+  
+    updateOverlayTop(); // initial
+    window.addEventListener('resize', updateOverlayTop);
+    return () => window.removeEventListener('resize', updateOverlayTop);
+  }, []);
+  
 
   // Focus first element inside AccountDropdown (prefer Login)
   const focusFirstInDropdown = useCallback(() => {

@@ -186,13 +186,19 @@ useEffect(() => {
         Account
       </button>
 
-      {/* Overlay shown on hover or open */}
+      {/* Overlay — covers the page BELOW the header, fades smoothly, and closes on hover/click */}
       <div
-        className={`account-overlay fixed left-0 right-0 top-[60px] bottom-0 z-30 pointer-events-none transition-opacity duration-300 ${
-          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0'
+        className={`account-overlay fixed left-0 right-0 bottom-0 z-40 transition-opacity duration-300 ease-in-out ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
+        style={{ top: 'var(--header-height, 60px)' }}  // keeps overlay below header; no blur on nav
         aria-hidden
         onClick={closeDropdown}
+        onMouseEnter={() => {
+          // smooth fade-out without flicker
+          setOverlayReady(false);
+          setTimeout(closeDropdown, 180);
+        }}
       />
 
       {/* Dropdown */}
