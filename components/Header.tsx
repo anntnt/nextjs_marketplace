@@ -113,19 +113,28 @@ export default function Header(props: UserProps) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
  
-  //keeps the overlay exactly aligned below the nav even when the header resizes or scrolls.
+  // keeps the overlay exactly flush below the header even while scrolling
   useEffect(() => {
     const header = document.querySelector('header');
     if (!header) return;
-  
+
     const updateOverlayTop = () => {
+      const rect = header.getBoundingClientRect();
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const topOffset = rect.top + scrollY; // header’s distance from top of page
+      document.documentElement.style.setProperty('--header-offset', `${topOffset}px`);
       document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
     };
-  
+
     updateOverlayTop(); // initial
     window.addEventListener('resize', updateOverlayTop);
-    return () => window.removeEventListener('resize', updateOverlayTop);
+    window.addEventListener('scroll', updateOverlayTop, { passive: true });
+    return () => {
+      window.removeEventListener('resize', updateOverlayTop);
+      window.removeEventListener('scroll', updateOverlayTop);
+    };
   }, []);
+
   
 
   // Focus first element inside AccountDropdown (prefer Login)
@@ -164,7 +173,7 @@ export default function Header(props: UserProps) {
   );
 
   return (
-    <header className="top-0 relative z-[60] border-b border-brand-secondary/50 bg-brand-secondary text-white shadow-lg transition-colors dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text">
+    <header className="fixed top-0 left-0 right-0 z-[60] border-b border-brand-secondary/50 bg-brand-secondary text-white shadow-lg transition-colors dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text">
       <nav className="py-3.5 sm:py-3 relative z-[60]">
         <div className="mx-auto flex w-full max-w-screen-2xl items-center gap-4 px-2 sm:px-4 lg:px-6">
           {/* Logo */}

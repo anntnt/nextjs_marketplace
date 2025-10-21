@@ -20,6 +20,26 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
   const [overlayReady, setOverlayReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const [headerBottom, setHeaderBottom] = useState(0);
+
+  useEffect(() => {
+    const header = document.querySelector('header');
+    if (!header) return;
+
+    const updateHeaderBottom = () => {
+      const rect = header.getBoundingClientRect();
+      setHeaderBottom(rect.bottom + window.scrollY);
+    };
+
+    updateHeaderBottom();
+    window.addEventListener('scroll', updateHeaderBottom, { passive: true });
+    window.addEventListener('resize', updateHeaderBottom);
+    return () => {
+      window.removeEventListener('scroll', updateHeaderBottom);
+      window.removeEventListener('resize', updateHeaderBottom);
+    };
+  }, []);
+
   // Duplicate declaration removed
 
   // --- helpers ----------------------------------------------------
@@ -186,21 +206,21 @@ useEffect(() => {
         Account
       </button>
 
-      {/* Overlay — covers the page BELOW the header, fades smoothly, and closes on hover/click */}
+      {/* Overlay — starts below header, closes dropdown on hover */}
       <div
         className={`account-overlay fixed left-0 right-0 bottom-0 z-40 transition-opacity duration-300 ease-in-out ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
-        style={{ top: 'var(--header-height, 60px)' }}  // keeps overlay below header; no blur on nav
+        style={{ top: 'var(--header-height, 60px)' }}
         aria-hidden
         onClick={closeDropdown}
         onMouseEnter={() => {
-          // smooth fade-out without flicker
-          setOverlayReady(false);
-          setTimeout(closeDropdown, 180);
+          // close gracefully when user moves mouse onto overlay
+          setTimeout(() => {
+            closeDropdown();
+          }, 120); // short fade delay for smooth UX
         }}
       />
-
       {/* Dropdown */}
       {isOpen && (
         <div
