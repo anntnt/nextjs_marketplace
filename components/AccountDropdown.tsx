@@ -83,13 +83,27 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
     isOpen ? closeDropdown() : openDropdown(byKeyboard);
   };
 
-  // --- keyboard escape --------------------------------------------
-  useEffect(() => {
-    if (!isOpen) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeDropdown();
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [isOpen, closeDropdown]);
+// --- close dropdown on Escape or scroll ---------------------------
+useEffect(() => {
+  if (!isOpen) return;
+
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') closeDropdown();
+  };
+
+  const onScroll = () => {
+    closeDropdown();
+  };
+
+  document.addEventListener('keydown', onKey);
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  return () => {
+    document.removeEventListener('keydown', onKey);
+    window.removeEventListener('scroll', onScroll);
+  };
+}, [isOpen, closeDropdown]);
+
 
   // --- hover logic ------------------------------------------------
   const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
