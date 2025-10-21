@@ -174,7 +174,7 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
 
       {/* Overlay shown on hover or open */}
       <div
-        className={`account-overlay fixed left-0 right-0 top-[80px] bottom-0 z-30 pointer-events-none transition-opacity duration-300 ${
+        className={`account-overlay fixed left-0 right-0 top-[60px] bottom-0 z-30 pointer-events-none transition-opacity duration-300 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0'
         }`}
         aria-hidden
