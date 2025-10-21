@@ -134,8 +134,8 @@ a:focus {
   }
 }
 
-main{
-  padding-top: var(--header-height, 60px);
+main {
+  margin-top: var(--header-height, 60px);
 }
 
 /* ===============================
