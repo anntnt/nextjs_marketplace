@@ -1,24 +1,128 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import FocusTrap from 'focus-trap-react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+} from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
 
 type UserProps = { user?: User };
 
-export default function Component(props: UserProps) {
+const focusableSelectors =
+  'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+export default function ProfileDropdown({ user }: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const firstFocusableRef = useRef<HTMLAnchorElement | null>(null);
+
+  const closeDropdown = useCallback((restoreFocus = true) => {
+    setIsOpen(false);
+    if (restoreFocus) {
+      requestAnimationFrame(() => buttonRef.current?.focus());
+    }
+  }, []);
+
+  const openDropdown = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.stopPropagation();
+        closeDropdown();
+      }
+    };
+
+    const handleScroll = () => closeDropdown(false);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, closeDropdown]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    requestAnimationFrame(() => {
+      const focusTarget =
+        firstFocusableRef.current ??
+        dropdownRef.current?.querySelector<HTMLElement>(focusableSelectors);
+      focusTarget?.focus();
+    });
+  }, [isOpen]);
+
+  const handleButtonClick = (event: ReactMouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (isOpen) {
+      closeDropdown();
+      return;
+    }
+    openDropdown();
+  };
+
+  const handleMenuSelection = () => {
+    closeDropdown();
+  };
+
+  const handleMouseEnter = () => {
+    openDropdown();
+  };
+
+  const handleMouseLeave = () => {
+    closeDropdown(false);
+  };
+
+  const handleFocusLeave = (event: React.FocusEvent<HTMLDivElement>) => {
+    if (!dropdownRef.current?.contains(event.relatedTarget as Node)) {
+      closeDropdown(false);
+    }
+  };
+
+  const handleMenuKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Tab') return;
+    const focusable = dropdownRef.current?.querySelectorAll<HTMLElement>(focusableSelectors);
+    if (!focusable || focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    const active = document.activeElement as HTMLElement | null;
+
+    if (!event.shiftKey && active === last) {
+      event.preventDefault();
+      closeDropdown();
+    } else if (event.shiftKey && active === first) {
+      event.preventDefault();
+      closeDropdown();
+    }
+  };
 
   return (
     <div
-      className="relative"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      className="relative hidden md:block"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <button
-        className="bg-brand-secondary cursor-pointer group hidden items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:flex"
+        ref={buttonRef}
         type="button"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        aria-controls="profile-menu"
+        className="group inline-flex items-center gap-2 rounded-full border border-transparent bg-brand-secondary px-3 py-2 text-sm font-semibold text-white transition hover:text-brand-warning focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warning focus-visible:ring-offset-2 focus-visible:ring-offset-brand-secondary dark:text-dark-text"
+        onClick={handleButtonClick}
       >
         <svg
           className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning group-focus:text-brand-warning group-active:text-brand-warning dark:text-brand-accent dark:group-hover:text-brand-warning dark:group-focus:text-brand-warning dark:group-active:text-brand-warning"
@@ -35,36 +139,66 @@ export default function Component(props: UserProps) {
             clipRule="evenodd"
           />
         </svg>
-        Hi, {props.user?.firstname}
+        <span className="hidden sm:inline">Hi, {user?.firstname}</span>
       </button>
-      {isOpen && (
-        <>
+
+      <div
+        className={`fixed left-0 right-0 bottom-0 z-40 bg-gradient-to-b from-transparent via-black/60 to-black/70 transition-opacity duration-200 ease-in-out ${
+          isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+        style={{ top: 'var(--header-height, 60px)' }}
+        aria-hidden="true"
+        onClick={() => closeDropdown()}
+        onMouseEnter={() => setTimeout(() => closeDropdown(false), 120)}
+      />
+
+      <div
+        className={`absolute right-0 top-full z-[70] flex w-56 translate-x-10 flex-col transition-all duration-150 ease-out ${
+          isOpen
+            ? 'pointer-events-auto translate-y-0 opacity-100'
+            : 'pointer-events-none -translate-y-2 opacity-0'
+        }`}
+      >
+        <span className="block h-4" aria-hidden="true" />
+        <FocusTrap
+          active={isOpen}
+          focusTrapOptions={{
+            allowOutsideClick: true,
+            escapeDeactivates: false,
+            fallbackFocus: () => buttonRef.current ?? document.body,
+            onDeactivate: closeDropdown,
+          }}
+        >
           <div
-            className="fixed inset-0 z-40 pointer-events-none bg-gradient-to-b from-transparent via-black/60 to-black/70 transition-opacity"
-            aria-hidden
-          />
-          <div className="absolute right-0 top-full z-50 flex w-56 translate-x-10 flex-col items-stretch">
-            <span className="block h-4" aria-hidden />
-            <div className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl dark:border-dark-muted/20 dark:bg-dark-surface">
-              <ul className="px-6 pb-6 pt-5 text-sm text-brand-muted dark:text-dark-muted">
-                <li>
-                  {props.user && (
-                    <Link
-                      href={`/profile/${props.user.username}`}
-                      className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 active:bg-brand-secondary/90"
-                    >
-                      Dashboard
-                    </Link>
-                  )}
-                </li>
-                <li className="mt-4 flex justify-center">
-                  <LogoutButton />
-                </li>
-              </ul>
-            </div>
+            ref={dropdownRef}
+            id="profile-menu"
+            role="menu"
+            aria-label="Profile options"
+            className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl focus:outline-none dark:border-dark-muted/20 dark:bg-dark-surface"
+            onBlur={handleFocusLeave}
+            onKeyDown={handleMenuKeyDown}
+          >
+            <ul className="px-6 pb-6 pt-5 text-sm text-brand-muted dark:text-dark-muted">
+              <li>
+                {user && (
+                  <Link
+                    ref={firstFocusableRef}
+                    href={`/profile/${user.username}`}
+                    role="menuitem"
+                    className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 active:bg-brand-secondary/90"
+                    onClick={handleMenuSelection}
+                  >
+                    Dashboard
+                  </Link>
+                )}
+              </li>
+              <li className="mt-4 flex justify-center">
+                <LogoutButton onLogout={handleMenuSelection} />
+              </li>
+            </ul>
           </div>
-        </>
-      )}
+        </FocusTrap>
+      </div>
     </div>
   );
 }

@@ -141,11 +141,14 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
         if (suggestions.length >= 2) break;
       }
 
+      const suggestionSuffix =
+        suggestions.length > 0 ? ` Suggestions: ${suggestions.join(', ')}` : '';
+
       return NextResponse.json({
         success: false,
         errors: [
           {
-            message: 'Store name: The store name you entered is already taken. Please choose another one.',
+            message: `Store name: The store name you entered is already taken. Please choose another.${suggestionSuffix}`,
           },
         ],
       });
