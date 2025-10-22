@@ -457,7 +457,6 @@ export default function RegisterForm(props: Props) {
               role="alert"
               className="mb-5 rounded-md border border-red-500 bg-red-50 p-3 text-red-700"
             >
-              <p>Please correct the following errors:</p>
               <ul className="list-disc pl-5">
                 {formErrors.map((error) => (
                   <li key={error}>{error}</li>
@@ -511,7 +510,11 @@ export default function RegisterForm(props: Props) {
                 type={type}
                 className={getInputClasses(Boolean(fieldErrors[id as FieldName]))}
                 aria-invalid={Boolean(fieldErrors[id as FieldName])}
-                aria-describedby={fieldErrors[id as FieldName] ? `${id}-error` : undefined}
+                aria-describedby={
+                  [fieldErrors[id as FieldName] ? `${id}-error` : null]
+                    .filter(Boolean)
+                    .join(' ') || undefined
+                }
                 required
                 aria-required="true"
                 value={value}
@@ -523,9 +526,14 @@ export default function RegisterForm(props: Props) {
                 }}
               />
               {fieldErrors[id as FieldName] && (
-              <div id={`${id}-error`} className="mt-2" role="alert">
-                <ErrorMessage>{fieldErrors[id as FieldName]}</ErrorMessage>
-              </div>
+                <div
+                  id={`${id}-error`}
+                  className="mt-1"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  <ErrorMessage>{fieldErrors[id as FieldName]}</ErrorMessage>
+                </div>
               )}
             </div>
           ))}
@@ -571,7 +579,12 @@ export default function RegisterForm(props: Props) {
                 autoComplete="organization"
               />
               {fieldErrors.storeName ? (
-                <div id="storeName-error" className="mt-2" role="alert">
+                <div
+                  id="storeName-error"
+                  className="mt-1"
+                  role="alert"
+                  aria-live="polite"
+                >
                   <ErrorMessage>{fieldErrors.storeName}</ErrorMessage>
                 </div>
               ) : null}

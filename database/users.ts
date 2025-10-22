@@ -134,3 +134,17 @@ export const getUserWithPasswordHashInsecure = cache(
     return user;
   },
 );
+
+export const getUserByStoreName = cache(async (storeName: string) => {
+  const [user] = await sql<User[]>`
+    SELECT
+      id,
+      store_name AS "storeName"
+    FROM
+      users
+    WHERE
+      store_name ILIKE ${storeName}
+  `;
+
+  return user;
+});

@@ -7,6 +7,7 @@ import { createSessionInsecure } from '../../../../database/sessions';
 import {
   createUserInsecure,
   getUserByEmailInsecure,
+  getUserByStoreName,
   getUserInsecure,
 } from '../../../../database/users';
 import { createOrUpdateCartItem } from '../../../../database/cartProducts';
@@ -120,8 +121,36 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
     });
   }
 
-  const normalizedStoreName =
-    validatedUser.roleId === 2 ? trimmedStoreName : null;
+  let normalizedStoreName: string | null = null;
+  if (validatedUser.roleId === 2) {
+    normalizedStoreName = trimmedStoreName;
+    const existingStore = await getUserByStoreName(trimmedStoreName);
+    if (existingStore) {
+      const suggestionBase = trimmedStoreName.replace(/[^a-z0-9]/gi, '') || 'Store';
+      const suggestionCandidates = [
+        `${suggestionBase}Shop`,
+        `${suggestionBase}Market`,
+        `${suggestionBase}${Math.floor(Math.random() * 90 + 10)}`,
+      ];
+      const suggestions: string[] = [];
+
+      for (const suggestion of suggestionCandidates) {
+        if (!(await getUserByStoreName(suggestion))) {
+          suggestions.push(suggestion);
+        }
+        if (suggestions.length >= 2) break;
+      }
+
+      return NextResponse.json({
+        success: false,
+        errors: [
+          {
+            message: 'Store name: The store name you entered is already taken. Please choose another one.',
+          },
+        ],
+      });
+    }
+  }
   const user = await getUserInsecure(validatedUser.username);
 
   if (user) {
