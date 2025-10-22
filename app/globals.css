@@ -33,6 +33,10 @@ a:focus {
   }
 }
 
+html {
+  scroll-padding-top: calc(var(--header-height, 60px) + 1rem);
+}
+
 .skip-link {
   position: absolute;
   left: -999px;
@@ -137,8 +141,14 @@ a:focus {
   }
 }
 
+#page-content {
+  padding-top: var(--header-height, 60px);
+  scroll-margin-top: var(--header-height, 60px);
+}
+
 main {
-  margin-top: var(--header-height, 60px);
+  margin-top: 0;
+  scroll-margin-top: calc(var(--header-height, 60px) + 1rem);
 }
 
 /* ===============================

@@ -3,6 +3,7 @@ import { createElement, type ComponentProps, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Footer from '../components/Footer';
 import FlashMessageBanner from '../components/FlashMessageBanner';
+import PageContent from '../components/PageContent';
 import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
 import { getGuestCartTotalQuantity, parseGuestCartCookie } from '../util/guestCart';
@@ -78,9 +79,7 @@ export default async function RootLayout({ children }: Props) {
           <Header user={user} cartSum={cartSum} />
           <FlashMessageBanner message={flashMessage} type={flashMessageType} />
 
-          <div id="page-content" tabIndex={-1} className="flex-1 focus:outline-none">
-            {children}
-          </div>
+          <PageContent>{children}</PageContent>
 
           <Footer />
         </div>
