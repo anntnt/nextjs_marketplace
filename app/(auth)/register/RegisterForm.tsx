@@ -94,12 +94,12 @@ export default function RegisterForm(props: Props) {
       ? 'Set up your seller account'
       : variant === 'buyer'
         ? 'Start your buyer journey'
-        : 'Be part of eStores!';
+        : 'Start your eStores journey';
   const defaultIntro =
     variant === 'general'
       ? (
           <>
-            Sign up as a <strong>buyer</strong> to shop, or join as a <strong>seller</strong> to sell your products.
+            Buy what you love or start selling your own products
           </>
         )
       : variant === 'seller'
@@ -356,7 +356,7 @@ export default function RegisterForm(props: Props) {
         aria-hidden={isBlocked}
       >
         <h2 className="mb-4 text-center text-md">{subtitle}</h2>
-        <p className="text-sm text-brand-muted dark:text-dark-muted">{introContent}</p>
+        <p className="text-sm text-center text-brand-muted dark:text-dark-muted">{introContent}</p>
 
         <form
           noValidate
