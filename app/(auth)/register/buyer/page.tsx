@@ -18,9 +18,6 @@ export default async function BuyerRegisterPage(props: Props) {
     <main className="w-full max-w-full flex-grow bg-brand-bg px-5 py-16 text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text sm:px-20">
       <div className="mx-auto mb-8 max-w-2xl text-center">
         <h1 className="text-4xl font-semibold text-brand-text dark:text-dark-text">Register as Buyer</h1>
-        <p className="mt-3 text-brand-muted dark:text-dark-muted">
-          Now shop on eStores and discover amazing products selected just for you.
-        </p>
       </div>
       <RegistrationFlowClient
         variant="buyer"
