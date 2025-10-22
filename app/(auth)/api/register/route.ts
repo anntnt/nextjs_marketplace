@@ -17,9 +17,11 @@ import { FLASH_MESSAGE_COOKIE, FLASH_MESSAGE_TYPE_COOKIE } from '../../../../lib
 
 export type RegisterResponseBody =
   | {
+      success: true;
       user: { username: UserLogin['username']; roleId: number };
     }
   | {
+      success: false;
       errors: { message: string }[];
     };
 
@@ -83,32 +85,24 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
       message,
     }));
 
-    return NextResponse.json(
-      {
-        errors:
-          formattedErrors.length > 0
-            ? formattedErrors
-            : [{ message: 'Please check the form and try again.' }],
-      },
-      {
-        status: 400,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors:
+        formattedErrors.length > 0
+          ? formattedErrors
+          : [{ message: 'Please check the form and try again.' }],
+    });
   }
 
   if (result.data.password !== result.data.passwordRepeat) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message: 'Confirm password: The passwords do not match.',
-          },
-        ],
-      },
-      {
-        status: 400,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message: 'Confirm password: The passwords do not match.',
+        },
+      ],
+    });
   }
 
   // 3. Check if user already exist in the database
@@ -116,18 +110,14 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
   const trimmedStoreName = validatedUser.storeName?.trim() ?? '';
 
   if (validatedUser.roleId === 2 && trimmedStoreName.length === 0) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message: 'Store name: Please enter your store name.',
-          },
-        ],
-      },
-      {
-        status: 200,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message: 'Store name: Please enter your store name.',
+        },
+      ],
+    });
   }
 
   const normalizedStoreName =
@@ -135,37 +125,29 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
   const user = await getUserInsecure(validatedUser.username);
 
   if (user) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message:
-              'Username: The username you entered is not available. Please choose a different one.',
-          },
-        ],
-      },
-      {
-        status: 400,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message:
+            'Username: The username you entered is not available. Please choose a different one.',
+        },
+      ],
+    });
   }
 
   const userWithEmail = await getUserByEmailInsecure(validatedUser.emailAddress);
 
   if (userWithEmail) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message:
-              'Email address: The email address you entered is already in use. Please use a different one.',
-          },
-        ],
-      },
-      {
-        status: 400,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message:
+            'Email address: The email address you entered is already in use. Please use a different one.',
+        },
+      ],
+    });
   }
 
   // This is where you do confirm password
@@ -188,18 +170,14 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
   );
 
   if (!newUser) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message: 'Registration failed. Please check your information and try again.',
-          },
-        ],
-      },
-      {
-        status: 400,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message: 'Registration failed. Please check your information and try again.',
+        },
+      ],
+    });
   }
 
   // 6. Create a token
@@ -209,18 +187,14 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
   const session = await createSessionInsecure(newUser.id, token);
 
   if (!session) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message: 'There was a problem starting your session. Please try again.',
-          },
-        ],
-      },
-      {
-        status: 400,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message: 'There was a problem starting your session. Please try again.',
+        },
+      ],
+    });
   }
 
   const cookieStore = await cookies();
@@ -263,9 +237,9 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
 
   // 8. Return the new user information
   return NextResponse.json({
+    success: true,
     user: {
       username: newUser.username,
-      // Assuming roleId is not available, remove it or replace with a default value
       roleId: 0, // Replace 0 with an appropriate default or fetch it from another source
     },
   });

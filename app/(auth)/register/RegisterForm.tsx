@@ -338,18 +338,16 @@ export default function RegisterForm(props: Props) {
 
     let data: RegisterResponseBody | undefined;
     try {
-       data = await response.json();
-     } catch {
-       // if server returns no JSON, just ignore silently
-       data = undefined;
+      data = (await response.json()) as RegisterResponseBody;
+    } catch {
+      data = undefined;
     }
 
-     // Handle validation errors from backend (status 400 or custom validation)
-     if (!response.ok || (data && 'errors' in data)) {
-       setErrors(data?.errors ?? [{ message: 'Something went wrong. Please try again.' }]);
-       setShouldAutoFocusError(true);
-       return;
-     }
+    if (!data || !data.success) {
+      setErrors(data?.errors ?? [{ message: 'Please check the form and try again.' }]);
+      setShouldAutoFocusError(true);
+      return;
+    }
 
     const registerPaths = ['/register', '/register/seller', '/register/buyer'] as const;
     const fallbackPath = pathname && !registerPaths.includes(pathname) ? pathname : '/';
