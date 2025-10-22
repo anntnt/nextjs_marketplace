@@ -191,11 +191,13 @@ export default function LoginForm(props: Props) {
     const fallbackPath = pathname && pathname !== '/login' ? pathname : '/';
     const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : fallbackPath;
 
-    if (user.roleId === 2 || user.roleId === 3) {
-      router.push(target as any);
-    } else {
+    if (user.roleId === 2) {
       router.push(`/profile/${user.username}`);
+      router.refresh();
+      return;
     }
+
+    router.push(target as any);
 
     router.refresh();
   }
