@@ -113,6 +113,25 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
 
   // 3. Check if user already exist in the database
   const { passwordRepeat, ...validatedUser } = result.data;
+  const trimmedStoreName = validatedUser.storeName?.trim() ?? '';
+
+  if (validatedUser.roleId === 2 && trimmedStoreName.length === 0) {
+    return NextResponse.json(
+      {
+        errors: [
+          {
+            message: 'Store name: Please enter your store name.',
+          },
+        ],
+      },
+      {
+        status: 200,
+      },
+    );
+  }
+
+  const normalizedStoreName =
+    validatedUser.roleId === 2 ? trimmedStoreName : null;
   const user = await getUserInsecure(validatedUser.username);
 
   if (user) {
@@ -163,7 +182,7 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
     validatedUser.emailAddress,
     validatedUser.birthday,
     validatedUser.gender || null,
-    validatedUser.storeName || null,
+    normalizedStoreName,
     validatedUser.uAddress || null,
     validatedUser.roleId,
   );

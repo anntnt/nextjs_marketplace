@@ -25,7 +25,18 @@ type FieldName =
   | 'lastName'
   | 'emailAddress'
   | 'birthday'
+  | 'storeName'
   | 'privacyAgreement';
+
+type InputFieldConfig = {
+  id: FieldName;
+  label: string;
+  type: string;
+  value: string;
+  setter: (value: string) => void;
+  ref: RefObject<HTMLInputElement>;
+  autoComplete?: string;
+};
 
 const FIELD_LABELS: Record<FieldName, string> = {
   username: 'Username',
@@ -35,6 +46,7 @@ const FIELD_LABELS: Record<FieldName, string> = {
   lastName: 'Last name',
   emailAddress: 'Email address',
   birthday: 'Birth date',
+  storeName: 'Store name',
   privacyAgreement: 'Privacy Policy agreement',
 };
 
@@ -46,6 +58,7 @@ const FIELD_REQUIRED_MESSAGES: Record<FieldName, string> = {
   lastName: 'Please enter your last name.',
   emailAddress: 'Please enter your email address.',
   birthday: 'Please enter your birth date.',
+  storeName: 'Please enter your store name.',
   privacyAgreement: 'Please agree to the Privacy Policy.',
 };
 
@@ -143,6 +156,7 @@ export default function RegisterForm(props: Props) {
   const lastNameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
   const emailRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
   const birthdayRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
+  const storeNameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
   const privacyRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
 
   // Error mapping
@@ -178,6 +192,7 @@ export default function RegisterForm(props: Props) {
       'lastName',
       'emailAddress',
       'birthday',
+      'storeName',
       'privacyAgreement',
     ];
 
@@ -189,6 +204,7 @@ export default function RegisterForm(props: Props) {
       lastName: lastNameRef,
       emailAddress: emailRef,
       birthday: birthdayRef,
+      storeName: storeNameRef,
       privacyAgreement: privacyRef,
     };
 
@@ -231,6 +247,7 @@ export default function RegisterForm(props: Props) {
 
     const trimmedEmail = emailAddress.trim();
     const trimmedUsername = username.trim();
+    const trimmedStoreName = storeName.trim();
     const requiredFields: Array<{ key: FieldName; value: string }> = [
       { key: 'username', value: trimmedUsername },
       { key: 'password', value: password.trim() },
@@ -241,6 +258,9 @@ export default function RegisterForm(props: Props) {
       { key: 'birthday', value: birthday.trim() },
       { key: 'privacyAgreement', value: privacyAgreementAccepted ? 'true' : '' },
     ];
+    if (roleId === 2) {
+      requiredFields.push({ key: 'storeName', value: trimmedStoreName });
+    }
 
     const validationErrors: { message: string }[] = [];
 
@@ -310,7 +330,7 @@ export default function RegisterForm(props: Props) {
         emailAddress: trimmedEmail,
         birthday,
         gender,
-        storeName,
+        storeName: trimmedStoreName,
         uAddress,
         roleId,
       }),
@@ -348,6 +368,89 @@ export default function RegisterForm(props: Props) {
     }
     setRoleId(nextValue);
   };
+
+  const baseFieldConfigs: InputFieldConfig[] = [
+    {
+      id: 'username',
+      label: 'Username*',
+      type: 'text',
+      value: username,
+      setter: setUsername,
+      ref: usernameRef,
+      autoComplete: 'username',
+    },
+    {
+      id: 'password',
+      label: 'Password*',
+      type: 'password',
+      value: password,
+      setter: setPassword,
+      ref: passwordRef,
+      autoComplete: 'new-password',
+    },
+    {
+      id: 'passwordRepeat',
+      label: 'Confirm password*',
+      type: 'password',
+      value: passwordRepeat,
+      setter: setPasswordRepeat,
+      ref: passwordRepeatRef,
+      autoComplete: 'new-password',
+    },
+    {
+      id: 'firstName',
+      label: 'First name*',
+      type: 'text',
+      value: firstName,
+      setter: setFirstName,
+      ref: firstNameRef,
+      autoComplete: 'given-name',
+    },
+    {
+      id: 'lastName',
+      label: 'Last name*',
+      type: 'text',
+      value: lastName,
+      setter: setLastName,
+      ref: lastNameRef,
+      autoComplete: 'family-name',
+    },
+    {
+      id: 'emailAddress',
+      label: 'Email address*',
+      type: 'email',
+      value: emailAddress,
+      setter: setEmailAddress,
+      ref: emailRef,
+      autoComplete: 'email',
+    },
+    {
+      id: 'birthday',
+      label: 'Birth date*',
+      type: 'date',
+      value: birthday,
+      setter: setBirthday,
+      ref: birthdayRef,
+      autoComplete: 'bday',
+    },
+  ];
+
+  const sellerFieldConfigs: InputFieldConfig[] =
+    roleId === 2
+      ? [
+          {
+            id: 'storeName',
+            label: 'Store name*',
+            type: 'text',
+            value: storeName,
+            setter: setStoreName,
+            ref: storeNameRef,
+            autoComplete: 'organization',
+          },
+        ]
+      : [];
+
+  const inputFieldConfigs: InputFieldConfig[] = [...baseFieldConfigs, ...sellerFieldConfigs];
 
   return (
     <>
@@ -422,15 +525,7 @@ export default function RegisterForm(props: Props) {
           )}
 
           {/* Input fields */}
-          {([
-            { id: 'username', label: 'Username*', type: 'text', value: username, setter: setUsername, ref: usernameRef },
-          { id: 'password', label: 'Password*', type: 'password', value: password, setter: setPassword, ref: passwordRef },
-          { id: 'passwordRepeat', label: 'Confirm password*', type: 'password', value: passwordRepeat, setter: setPasswordRepeat, ref: passwordRepeatRef },
-            { id: 'firstName', label: 'First name*', type: 'text', value: firstName, setter: setFirstName, ref: firstNameRef },
-            { id: 'lastName', label: 'Last name*', type: 'text', value: lastName, setter: setLastName, ref: lastNameRef },
-            { id: 'emailAddress', label: 'Email address*', type: 'email', value: emailAddress, setter: setEmailAddress, ref: emailRef },
-            { id: 'birthday', label: 'Birth date*', type: 'date', value: birthday, setter: setBirthday, ref: birthdayRef },
-          ] as const).map(({ id, label, type, value, setter, ref }) => (
+          {inputFieldConfigs.map(({ id, label, type, value, setter, ref, autoComplete }) => (
             <div key={id} className="mb-5">
               <label htmlFor={id} className="block text-sm font-medium">
                 {label}
@@ -446,6 +541,7 @@ export default function RegisterForm(props: Props) {
                 aria-required="true"
                 value={value}
                 disabled={disableInputs}
+                autoComplete={autoComplete}
                 onChange={(e) => {
                   clearFieldError(id as FieldName);
                   setter(e.currentTarget.value);
@@ -477,24 +573,6 @@ export default function RegisterForm(props: Props) {
               <option value="other">Other</option>
             </select>
           </div>
-
-          {/* Conditional Seller field */}
-          {roleId === 2 && (
-            <div className="mb-5">
-              <label htmlFor="storeName" className="block mb-2 text-sm font-medium">
-                Store name
-              </label>
-              <input
-                id="storeName"
-                value={storeName}
-                onChange={(event) => setStoreName(event.currentTarget.value)}
-                className={getInputClasses(false)}
-                disabled={disableInputs}
-                required
-                aria-required="true"
-              />
-            </div>
-          )}
 
           {/* Address */}
           <div className="mb-5">
