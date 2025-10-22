@@ -121,15 +121,18 @@ a:focus {
   }
 
   button {
-    @apply border border-brand-primary bg-brand-primary cursor-pointer font-medium text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 dark:border-brand-primary dark:bg-brand-primary dark:hover:bg-brand-secondary;
-  }
+    @apply border border-brand-primary bg-brand-primary text-white font-medium cursor-pointer transition-colors
+           hover:bg-brand-secondary
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2
+           focus-visible:ring-offset-brand-secondary
+           dark:bg-brand-primary dark:hover:bg-brand-secondary;  }
 
   p {
     @apply text-lg;
   }
 
   *:focus-visible {
-    outline: 3px solid rgba(56, 189, 248, 0.85);
+    outline: 2px solid #ffffff;
     outline-offset: 3px;
   }
 }
