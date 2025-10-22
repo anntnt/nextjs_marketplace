@@ -236,9 +236,9 @@ useEffect(() => {
                 href={loginHref as any}
                 onClick={closeDropdown}
                 className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors
-                          hover:bg-brand-secondary hover:text-white focus:text-white 
-                          focus-visible:text-white focus-visible:bg-brand-secondary focus-visible:text-brand-accent focus-visible:outline-none
-                          focus-visible:ring-2 focus-visible:ring-brand-secondary/70 active:bg-brand-secondary/90"
+                          hover:bg-brand-secondary hover:text-white focus:text-white focus:ring-brand-warning
+                          focus-visible:text-white focus-visible:bg-brand-primary focus-visible:text-brand-accent focus-visible:outline-none
+                          focus-visible:ring-2 focus-visible:ring-brand-warning active:bg-brand-warning"
               >
                 Login
               </Link>
