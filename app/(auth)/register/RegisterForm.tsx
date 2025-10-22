@@ -104,7 +104,7 @@ export default function RegisterForm(props: Props) {
   const disableInputs = isBlocked;
   const subtitle =
     variant === 'seller'
-      ? 'Set up your seller account'
+      ? 'Set up your account and open your eStores shop today.'
       : variant === 'buyer'
         ? 'Start your buyer journey'
         : 'Start your eStores journey';
@@ -116,7 +116,7 @@ export default function RegisterForm(props: Props) {
           </>
         )
       : variant === 'seller'
-        ? 'Open your shop on eStores today!'
+        ? ''
         : 'Now shop on eStores and discover amazing products.';
   const introContent = props.intro ?? defaultIntro;
   const defaultFooterHint =
@@ -435,27 +435,12 @@ export default function RegisterForm(props: Props) {
     },
   ];
 
-  const sellerFieldConfigs: InputFieldConfig[] =
-    roleId === 2
-      ? [
-          {
-            id: 'storeName',
-            label: 'Store name*',
-            type: 'text',
-            value: storeName,
-            setter: setStoreName,
-            ref: storeNameRef,
-            autoComplete: 'organization',
-          },
-        ]
-      : [];
-
-  const inputFieldConfigs: InputFieldConfig[] = [...baseFieldConfigs, ...sellerFieldConfigs];
+  const inputFieldConfigs: InputFieldConfig[] = baseFieldConfigs;
 
   return (
     <>
       <div
-        className="mx-auto max-w-md rounded-2xl bg-white px-6 py-10 text-brand-text shadow-md dark:bg-gray-900 dark:text-dark-text"
+        className="mx-auto max-w-lg rounded-2xl bg-white px-6 py-10 text-brand-text shadow-md dark:bg-gray-900 dark:text-dark-text"
         aria-hidden={isBlocked}
       >
         <h2 className="mb-4 text-center text-md">{subtitle}</h2>
@@ -514,15 +499,7 @@ export default function RegisterForm(props: Props) {
                 <label htmlFor="seller">Seller</label>
               </div>
             </fieldset>
-          ) : (
-            <div className="mb-5 rounded-md border border-brand-muted/30 bg-brand-surface/40 p-4 text-sm text-brand-muted dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-muted">
-              You&apos;re registering as a{' '}
-              <span className="font-semibold text-brand-text dark:text-dark-text">
-                {roleId === 2 ? 'Seller' : 'Buyer'}
-              </span>
-              .
-            </div>
-          )}
+          ) : null}
 
           {/* Input fields */}
           {inputFieldConfigs.map(({ id, label, type, value, setter, ref, autoComplete }) => (
@@ -574,6 +551,35 @@ export default function RegisterForm(props: Props) {
             </select>
           </div>
 
+          {roleId === 2 ? (
+            <div className="mb-5">
+              <label htmlFor="storeName" className="block mb-2 text-sm font-medium">
+                Store name*
+              </label>
+              <input
+                id="storeName"
+                ref={storeNameRef}
+                value={storeName}
+                onChange={(event) => {
+                  clearFieldError('storeName');
+                  setStoreName(event.currentTarget.value);
+                }}
+                className={getInputClasses(Boolean(fieldErrors.storeName))}
+                disabled={disableInputs}
+                required
+                aria-required="true"
+                aria-invalid={Boolean(fieldErrors.storeName)}
+                aria-describedby={fieldErrors.storeName ? 'storeName-error' : undefined}
+                autoComplete="organization"
+              />
+              {fieldErrors.storeName ? (
+                <div id="storeName-error" className="mt-2" role="alert">
+                  <ErrorMessage>{fieldErrors.storeName}</ErrorMessage>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
           {/* Address */}
           <div className="mb-5">
             <label htmlFor="uAddress" className="block mb-2 text-sm font-medium">
@@ -585,6 +591,7 @@ export default function RegisterForm(props: Props) {
               onChange={(event) => setUAddress(event.currentTarget.value)}
               className={getInputClasses(false)}
               disabled={disableInputs}
+              autoComplete="street-address"
             />
           </div>
 
