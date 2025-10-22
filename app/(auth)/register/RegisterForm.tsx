@@ -2,12 +2,20 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
+import { useEffect, useMemo, useRef, useState, type RefObject, type ReactNode } from 'react';
 import { getSafeReturnToPath } from '../../../util/validation';
 import ErrorMessage from '../../ErrorMessage';
 import type { RegisterResponseBody } from '../api/register/route';
 
-type Props = { returnTo?: string | string[] };
+export type RegisterFormVariant = 'general' | 'seller' | 'buyer';
+
+type Props = {
+  returnTo?: string | string[];
+  variant?: RegisterFormVariant;
+  intro?: ReactNode;
+  footerHint?: ReactNode;
+  isBlocked?: boolean;
+};
 
 type FieldName =
   | 'username'
@@ -50,6 +58,19 @@ const MIN_BIRTH_YEAR = 1900;
 export default function RegisterForm(props: Props) {
   const router = useRouter();
   const pathname = usePathname();
+  const variant = props.variant ?? 'general';
+  const lockedRoleId = variant === 'seller' ? 2 : variant === 'buyer' ? 3 : undefined;
+  const showRoleSelection = variant === 'general';
+  const disableRoleToggle = !showRoleSelection;
+  const isBlocked = props.isBlocked ?? false;
+  const safeReturnTo = getSafeReturnToPath(props.returnTo);
+  const alternateTargetBase = variant === 'seller' ? '/register/buyer' : '/register/seller';
+  const alternateTarget =
+    variant === 'general'
+      ? null
+      : safeReturnTo
+        ? `${alternateTargetBase}?returnTo=${encodeURIComponent(safeReturnTo)}`
+        : alternateTargetBase;
 
   // Form state
   const [username, setUsername] = useState('');
@@ -61,12 +82,59 @@ export default function RegisterForm(props: Props) {
   const [birthday, setBirthday] = useState('');
   const [gender, setGender] = useState('');
   const [privacyAgreementAccepted, setPrivacyAgreementAccepted] = useState(false);
-  const [roleId, setRoleId] = useState(3);
+  const [roleId, setRoleId] = useState<number>(() => lockedRoleId ?? 3);
   const [storeName, setStoreName] = useState('');
   const [uAddress, setUAddress] = useState('');
   const [errors, setErrors] = useState<{ message: string }[]>([]);
   const [shouldAutoFocusError, setShouldAutoFocusError] = useState(false);
 
+  const disableInputs = isBlocked;
+  const subtitle =
+    variant === 'seller'
+      ? 'Set up your seller account'
+      : variant === 'buyer'
+        ? 'Start your buyer journey'
+        : 'Be part of eStores!';
+  const defaultIntro =
+    variant === 'general'
+      ? (
+          <>
+            Sign up as a <strong>buyer</strong> to shop, or join as a <strong>seller</strong> to sell your products.
+          </>
+        )
+      : variant === 'seller'
+        ? 'Open your shop on eStores today!'
+        : 'Now shop on eStores and discover amazing products.';
+  const introContent = props.intro ?? defaultIntro;
+  const defaultFooterHint =
+    variant === 'seller'
+      ? (
+          <p className="mt-8 text-center text-sm text-brand-muted dark:text-dark-muted">
+            Want to buy instead?{' '}
+            {alternateTarget ? (
+              <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget}>
+                Create a buyer account
+              </Link>
+            ) : (
+              'Create a buyer account'
+            )}
+          </p>
+        )
+      : variant === 'buyer'
+        ? (
+            <p className="mt-8 text-center text-sm text-brand-muted dark:text-dark-muted">
+              Want to sell instead?{' '}
+              {alternateTarget ? (
+                <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget}>
+                  Open your shop
+                </Link>
+              ) : (
+                'Open your shop'
+              )}
+            </p>
+          )
+        : null;
+  const footerContent = props.footerHint ?? defaultFooterHint;
   // Refs for accessibility
   const usernameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
   const passwordRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
@@ -137,6 +205,12 @@ export default function RegisterForm(props: Props) {
     setShouldAutoFocusError(false);
   }, [errors, fieldErrors, shouldAutoFocusError]);
 
+  useEffect(() => {
+    if (lockedRoleId && roleId !== lockedRoleId) {
+      setRoleId(lockedRoleId);
+    }
+  }, [lockedRoleId, roleId]);
+
   const getInputClasses = (hasError: boolean) =>
     `mt-2 block w-full rounded-lg border p-2.5 text-sm transition
      ${hasError ? 'border-red-500 ring-2 ring-red-300' : 'border-brand-muted/30 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/40'}
@@ -153,6 +227,7 @@ export default function RegisterForm(props: Props) {
 
   async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (isBlocked) return;
 
     const trimmedEmail = emailAddress.trim();
     const trimmedUsername = username.trim();
@@ -223,8 +298,9 @@ export default function RegisterForm(props: Props) {
     setErrors([]);
     setShouldAutoFocusError(false);
 
-    const response = await fetch('api/register', {
+    const response = await fetch('/api/register', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: trimmedUsername,
         password,
@@ -240,39 +316,54 @@ export default function RegisterForm(props: Props) {
       }),
     });
 
-    const data: RegisterResponseBody = await response.json();
-
-    if ('errors' in data) {
-      setErrors(data.errors);
-      setShouldAutoFocusError(true);
-      return;
+    let data: RegisterResponseBody | undefined;
+    try {
+       data = await response.json();
+     } catch {
+       // if server returns no JSON, just ignore silently
+       data = undefined;
     }
 
-    const safeReturnTo = getSafeReturnToPath(props.returnTo);
-    const fallbackPath = pathname && pathname !== '/register' ? pathname : '/';
-    const target = safeReturnTo && safeReturnTo !== '/register' ? safeReturnTo : fallbackPath;
+     // Handle validation errors from backend (status 400 or custom validation)
+     if (!response.ok || (data && 'errors' in data)) {
+       setErrors(data?.errors ?? [{ message: 'Something went wrong. Please try again.' }]);
+       setShouldAutoFocusError(true);
+       return;
+     }
+
+    const registerPaths = ['/register', '/register/seller', '/register/buyer'] as const;
+    const fallbackPath = pathname && !registerPaths.includes(pathname) ? pathname : '/';
+    const target =
+      safeReturnTo && !registerPaths.includes(safeReturnTo) ? safeReturnTo : fallbackPath;
 
     router.push(target as any);
     router.refresh();
   }
 
   const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRoleId(Number(event.target.value));
+    const nextValue = Number(event.target.value);
+    if (disableRoleToggle || (lockedRoleId && nextValue !== lockedRoleId)) {
+      event.preventDefault();
+      return;
+    }
+    setRoleId(nextValue);
   };
 
   return (
     <>
-      <div className="mx-auto max-w-lg text-brand-text dark:text-dark-text">
-        <h2 className="mb-4 text-center text-md">Be part of eStores!</h2>
-        <p className="text-sm text-brand-muted dark:text-dark-muted">
-          Sign up as a <strong>buyer</strong> to shop, or join as a <strong>seller</strong> to sell your products.
-        </p>
+      <div
+        className="mx-auto max-w-md rounded-2xl bg-white px-6 py-10 text-brand-text shadow-md dark:bg-gray-900 dark:text-dark-text"
+        aria-hidden={isBlocked}
+      >
+        <h2 className="mb-4 text-center text-md">{subtitle}</h2>
+        <p className="text-sm text-brand-muted dark:text-dark-muted">{introContent}</p>
 
         <form
           noValidate
           onSubmit={handleRegister}
           aria-describedby={formErrors.length ? 'form-errors' : undefined}
-          className="py-8"
+          className="mt-8"
+          aria-disabled={isBlocked}
         >
           {formErrors.length > 0 && (
             <div
@@ -290,33 +381,45 @@ export default function RegisterForm(props: Props) {
           )}
 
           {/* Role selection */}
-          <fieldset className="mb-5">
-            <legend className="block text-sm font-medium">Choose your role*</legend>
-            <div className="mt-2 flex items-center gap-4">
-              <input
-                type="radio"
-                id="buyer"
-                name="roleId"
-                value="3"
-                checked={roleId === 3}
-                onChange={handleRoleChange}
-                required
-                aria-required="true"
-              />
-              <label htmlFor="buyer">Buyer</label>
-              <input
-                type="radio"
-                id="seller"
-                name="roleId"
-                value="2"
-                checked={roleId === 2}
-                onChange={handleRoleChange}
-                required
-                aria-required="true"
-              />
-              <label htmlFor="seller">Seller</label>
+          {showRoleSelection ? (
+            <fieldset className="mb-5">
+              <legend className="block text-sm font-medium">Choose your role*</legend>
+              <div className="mt-2 flex items-center gap-4">
+                <input
+                  type="radio"
+                  id="buyer"
+                  name="roleId"
+                  value="3"
+                  checked={roleId === 3}
+                  onChange={handleRoleChange}
+                  required
+                  aria-required="true"
+                  disabled={disableInputs}
+                />
+                <label htmlFor="buyer">Buyer</label>
+                <input
+                  type="radio"
+                  id="seller"
+                  name="roleId"
+                  value="2"
+                  checked={roleId === 2}
+                  onChange={handleRoleChange}
+                  required
+                  aria-required="true"
+                  disabled={disableInputs}
+                />
+                <label htmlFor="seller">Seller</label>
+              </div>
+            </fieldset>
+          ) : (
+            <div className="mb-5 rounded-md border border-brand-muted/30 bg-brand-surface/40 p-4 text-sm text-brand-muted dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-muted">
+              You&apos;re registering as a{' '}
+              <span className="font-semibold text-brand-text dark:text-dark-text">
+                {roleId === 2 ? 'Seller' : 'Buyer'}
+              </span>
+              .
             </div>
-          </fieldset>
+          )}
 
           {/* Input fields */}
           {([
@@ -342,6 +445,7 @@ export default function RegisterForm(props: Props) {
                 required
                 aria-required="true"
                 value={value}
+                disabled={disableInputs}
                 onChange={(e) => {
                   clearFieldError(id as FieldName);
                   setter(e.currentTarget.value);
@@ -365,6 +469,7 @@ export default function RegisterForm(props: Props) {
               value={gender}
               onChange={(event) => setGender(event.currentTarget.value)}
               className={getInputClasses(false)}
+              disabled={disableInputs}
             >
               <option value="">Please select...</option>
               <option value="female">Female</option>
@@ -384,6 +489,9 @@ export default function RegisterForm(props: Props) {
                 value={storeName}
                 onChange={(event) => setStoreName(event.currentTarget.value)}
                 className={getInputClasses(false)}
+                disabled={disableInputs}
+                required
+                aria-required="true"
               />
             </div>
           )}
@@ -398,6 +506,7 @@ export default function RegisterForm(props: Props) {
               value={uAddress}
               onChange={(event) => setUAddress(event.currentTarget.value)}
               className={getInputClasses(false)}
+              disabled={disableInputs}
             />
           </div>
 
@@ -418,6 +527,7 @@ export default function RegisterForm(props: Props) {
                 required
                 aria-required="true"
                 className={`h-4 w-4 rounded text-brand-primary focus:ring-2 focus:ring-brand-primary/50 dark:bg-dark-surface ${fieldErrors.privacyAgreement ? 'border-red-500 focus:ring-red-300' : 'border-brand-muted/40 dark:border-dark-muted/40'}`}
+                disabled={disableInputs}
               />
               <label htmlFor="privacyAgreement" className="ml-2 text-sm font-medium">
                 I agree to the{' '}
@@ -442,14 +552,18 @@ export default function RegisterForm(props: Props) {
           <button
             type="submit"
             className="mb-2 w-full rounded-lg border border-brand-warning bg-brand-warning px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#d97706] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70"
+            disabled={disableInputs}
+            aria-disabled={disableInputs}
           >
             Register
           </button>
+
+          {footerContent}
         </form>
       </div>
 
       {/* Login section */}
-      <div className="mx-auto max-w-lg text-center text-lg text-brand-text dark:text-dark-text">
+      <div className="mx-auto mt-8 max-w-md text-center text-lg text-brand-text dark:text-dark-text">
         <hr className="mb-4" />
         <p className="text-brand-muted dark:text-dark-muted">Already have an account?</p>
         <Link

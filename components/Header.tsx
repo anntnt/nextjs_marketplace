@@ -3,13 +3,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
 import type { PropsWithChildren } from 'react';
 import type FocusTrap from 'focus-trap-react';
-import { createElement, useCallback, useEffect, useRef, useState } from 'react';
+import { createElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FiHelpCircle } from 'react-icons/fi';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { AccountDropdownProps } from './AccountDropdown';
 import type { User } from '../migrations/0001-createTableUsers';
+import { getSafeReturnToPath } from '../util/validation';
 
 type FocusTrapProps = PropsWithChildren<{ focusTrapOptions?: any; active?: boolean }>;
 
@@ -77,6 +79,14 @@ export default function Header(props: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const sellerRegisterHref = useMemo(() => {
+    const safe = pathname ? getSafeReturnToPath(pathname) : undefined;
+    if (!safe || safe === '/register' || safe === '/register/seller' || safe === '/register/buyer') {
+      return '/register/seller';
+    }
+    return `/register/seller?returnTo=${encodeURIComponent(safe)}`;
+  }, [pathname]);
 
   const toggleMenu = () => setIsOpen((previous) => !previous);
   const closeMenu = () => setIsOpen(false);
@@ -213,7 +223,7 @@ export default function Header(props: UserProps) {
               {/* Seller / Business buttons */}
               {!props.user || props.user.roleId !== 2 ? (
                 <Link
-                  href="/sell"
+                  href={sellerRegisterHref}
                   className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:text-brand-warning hover:-translate-y-0.5 hover:bg-white focus:text-brand-warning focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 active:translate-y-0 md:inline-flex"
                 >
                   Open your shop
@@ -325,7 +335,7 @@ export default function Header(props: UserProps) {
                   {(!props.user || props.user.roleId !== 2) && (
                     <li className="w-full">
                       <Link
-                        href="/sell"
+                        href={sellerRegisterHref}
                         onClick={closeMenu}
                         className="ml-0 block w-full max-w-[12rem] rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary focus:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 active:bg-brand-primary"
                       >

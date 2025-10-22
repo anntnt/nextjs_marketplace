@@ -12,6 +12,7 @@ export type AccountDropdownProps = {
 
 const focusableSelectors =
   'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+const REGISTER_PATHS = ['/register', '/register/seller', '/register/buyer'];
 
 export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +63,7 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
   };
 
   const currentPath =
-    pathname && pathname !== '/login' && pathname !== '/register' ? pathname : '/';
+    pathname && pathname !== '/login' && !REGISTER_PATHS.includes(pathname) ? pathname : '/';
 
   const loginHref = useMemo(() => {
     const sanitized = pathname && pathname !== '/login' ? pathname : undefined;
@@ -71,7 +72,7 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
   }, [pathname]);
 
   const registerHref = useMemo(() => {
-    if (!pathname || pathname === '/register') return '/register';
+    if (!pathname || REGISTER_PATHS.includes(pathname)) return '/register';
     return `/register?returnTo=${currentPath}`;
   }, [currentPath, pathname]);
 
