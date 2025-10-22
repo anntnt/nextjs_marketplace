@@ -269,7 +269,7 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
     success: true,
     user: {
       username: newUser.username,
-      roleId: 0, // Replace 0 with an appropriate default or fetch it from another source
+      roleId: validatedUser.roleId,
     },
   });
 }

@@ -350,6 +350,14 @@ export default function RegisterForm(props: Props) {
     }
 
     const registerPaths = ['/register', '/register/seller', '/register/buyer'] as const;
+
+    const userRoleId = data.user.roleId;
+    if (userRoleId === 2) {
+      router.push(`/profile/${data.user.username}`);
+      router.refresh();
+      return;
+    }
+
     const fallbackPath = pathname && !registerPaths.includes(pathname) ? pathname : '/';
     const target =
       safeReturnTo && !registerPaths.includes(safeReturnTo) ? safeReturnTo : fallbackPath;
