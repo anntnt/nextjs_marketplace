@@ -212,7 +212,7 @@ export default function LoginForm(props: Props) {
 
   return (
     <>
-      <div className="mx-auto max-w-sm text-brand-text dark:text-dark-text">
+      <div className="mx-auto max-w-md text-brand-text dark:text-dark-text">
         <form
           noValidate
           className="py-8"

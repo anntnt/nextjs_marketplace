@@ -262,7 +262,7 @@ export default function RegisterForm(props: Props) {
 
   return (
     <>
-      <div className="mx-auto max-w-sm text-brand-text dark:text-dark-text">
+      <div className="mx-auto max-w-lg text-brand-text dark:text-dark-text">
         <h2 className="mb-4 text-center text-md">Be part of eStores!</h2>
         <p className="text-sm text-brand-muted dark:text-dark-muted">
           Sign up as a <strong>buyer</strong> to shop, or join as a <strong>seller</strong> to sell your products.
