@@ -15,9 +15,11 @@ import { parseGuestCartCookie } from '../../../../util/guestCart';
 
 export type LoginResponseBody =
   | {
+      success: true;
       user: { username: UserLogin['username']; roleId: number };
     }
   | {
+      success: false;
       errors: { message: string }[];
     };
 
@@ -33,16 +35,14 @@ export async function POST(
   const result = userLoginSchema.safeParse(requestBody);
 
   if (!result.success) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message: 'Username or Password is invalid',
-          },
-        ],
-      },
-      { status: 400 },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message: 'Username or Password is invalid',
+        },
+      ],
+    });
   }
 
   // 3. verify the user credentials
@@ -51,18 +51,14 @@ export async function POST(
   );
 
   if (!userWithPasswordHash) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message: 'Username or Password is invalid',
-          },
-        ],
-      },
-      {
-        status: 400,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message: 'Username or Password is invalid',
+        },
+      ],
+    });
   }
 
   // 4. Validate the user password by comparing with hashed password
@@ -72,18 +68,14 @@ export async function POST(
   );
 
   if (!isPasswordValid) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message: 'Username or Password is invalid',
-          },
-        ],
-      },
-      {
-        status: 400,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message: 'Username or Password is invalid',
+        },
+      ],
+    });
   }
 
   // At this stage we already confirm that the user is who they say they are
@@ -94,18 +86,14 @@ export async function POST(
   const session = await createSessionInsecure(userWithPasswordHash.id, token);
 
   if (!session) {
-    return NextResponse.json(
-      {
-        errors: [
-          {
-            message: 'Problem creating session',
-          },
-        ],
-      },
-      {
-        status: 400,
-      },
-    );
+    return NextResponse.json({
+      success: false,
+      errors: [
+        {
+          message: 'Problem creating session',
+        },
+      ],
+    });
   }
 
   const requestCookies = await cookies();
@@ -116,6 +104,7 @@ export async function POST(
   const guestCartItems = parseGuestCartCookie(guestCartCookieValue);
 
   const response = NextResponse.json({
+    success: true,
     user: {
       username: userWithPasswordHash.username,
       roleId: userWithPasswordHash.roleId,

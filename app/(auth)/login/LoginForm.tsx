@@ -156,39 +156,28 @@ export default function LoginForm(props: Props) {
       }),
     });
 
-    if (!response.ok) {
-      try {
-        const errorBody = (await response.json()) as LoginResponseBody;
-        if ('errors' in errorBody) {
-          setErrors(
-                      errorBody.errors.map((error) => ({
-                        message: error.message,
-                        type: error.message.toLowerCase().includes('username or password')
-                          ? 'auth'
-                          : ('form' as 'auth' | 'field' | 'form'),
-                      })),
-                    );
-        } else {
-          setErrors([{ message: 'Unable to login. Please try again.', type: 'form' as const }]);
-        }
-      } catch {
-        setErrors([{ message: 'Unable to login. Please try again.', type: 'form' }]);
-      }
+    let data: LoginResponseBody | undefined;
+    try {
+      data = (await response.json()) as LoginResponseBody;
+    } catch {
+      data = undefined;
+    }
+
+    if (!response.ok || !data) {
+      setErrors([{ message: 'Unable to login. Please try again.', type: 'form' }]);
       setShouldAutoFocusError(true);
       return;
     }
 
-    const data: LoginResponseBody = await response.json();
-
-    if ('errors' in data) {
+    if (!data.success) {
       setErrors(
-              data.errors.map((error) => ({
-                message: error.message,
-                type: error.message.toLowerCase().includes('username or password')
-                  ? 'auth'
-                  : ('form' as 'auth' | 'field' | 'form'),
-              })),
-            );
+        data.errors.map((error) => ({
+          message: error.message,
+          type: error.message.toLowerCase().includes('username or password')
+            ? 'auth'
+            : 'form',
+        })),
+      );
       setShouldAutoFocusError(true);
       return;
     }
@@ -196,15 +185,16 @@ export default function LoginForm(props: Props) {
     setErrors([]);
     setShouldAutoFocusError(false);
 
+    const { user } = data;
+
     const safeReturnTo = getSafeReturnToPath(props.returnTo);
     const fallbackPath = pathname && pathname !== '/login' ? pathname : '/';
     const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : fallbackPath;
 
-    if (data.user.roleId === 2 || data.user.roleId === 3) {
-      
+    if (user.roleId === 2 || user.roleId === 3) {
       router.push(target as any);
     } else {
-      router.push(`/profile/${data.user.username}`);
+      router.push(`/profile/${user.username}`);
     }
 
     router.refresh();
