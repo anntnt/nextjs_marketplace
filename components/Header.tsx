@@ -57,7 +57,10 @@ function Cart(props: CartProps) {
   return createElement(cartComponent, props);
 }
 
-type ProfileDropdownProps = { user: User | UserWithUsernameAndRole | undefined };
+type ProfileDropdownProps = {
+  user: User | UserWithUsernameAndRole | undefined;
+  onOpenChange?: (open: boolean) => void;
+};
 const profileDropdownComponent = dynamic<ProfileDropdownProps>(
   () => import('./ProfileDropdown'),
   { ssr: false, loading: () => null }
@@ -78,7 +81,9 @@ function AccountDropdown(props: AccountDropdownProps) {
 export default function Header(props: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const accountDropdownRef = useRef<HTMLDivElement>(null);
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const sellerRegisterHref = useMemo(() => {
     const safe = pathname ? getSafeReturnToPath(pathname) : undefined;
@@ -148,10 +153,10 @@ export default function Header(props: UserProps) {
   
 
   // Focus first element inside AccountDropdown (prefer Login)
-  const focusFirstInDropdown = useCallback(() => {
+  const focusFirstInDropdown = useCallback((getRoot: () => HTMLElement | null | undefined) => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        const root = dropdownRef.current;
+        const root = getRoot();
         if (!root) return;
 
         // Prefer Login or custom data-first-focus element
@@ -176,7 +181,17 @@ export default function Header(props: UserProps) {
     (open: boolean) => {
       setIsAccountDropdownOpen(open);
       if (open) {
-        focusFirstInDropdown();
+        focusFirstInDropdown(() => accountDropdownRef.current);
+      }
+    },
+    [focusFirstInDropdown]
+  );
+
+  const handleProfileDropdownOpenChange = useCallback(
+    (open: boolean) => {
+      setIsProfileDropdownOpen(open);
+      if (open) {
+        focusFirstInDropdown(() => profileDropdownRef.current);
       }
     },
     [focusFirstInDropdown]
@@ -243,7 +258,21 @@ export default function Header(props: UserProps) {
               {props.user ? (
                 <>
                   <div className="hidden md:mr-10 md:block">
-                    <ProfileDropdown user={props.user} />
+                    <FocusTrapWrapper
+                      active={isProfileDropdownOpen}
+                      focusTrapOptions={{
+                        allowOutsideClick: true,
+                        escapeDeactivates: true,
+                        fallbackFocus: 'body',
+                      }}
+                    >
+                      <div ref={profileDropdownRef}>
+                        <ProfileDropdown
+                          user={props.user}
+                          onOpenChange={handleProfileDropdownOpenChange}
+                        />
+                      </div>
+                    </FocusTrapWrapper>
                   </div>
                   {showCart ? <Cart cartSum={props.cartSum} /> : null}
                 </>
@@ -259,7 +288,7 @@ export default function Header(props: UserProps) {
                         fallbackFocus: 'body',
                       }}
                     >
-                      <div ref={dropdownRef}>
+                      <div ref={accountDropdownRef}>
                         <AccountDropdown onOpenChange={handleAccountDropdownOpenChange} />
                       </div>
                     </FocusTrapWrapper>

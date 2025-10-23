@@ -5,6 +5,7 @@ import { getSafeReturnToPath } from '../util/validation';
 import { useMemo, useEffect, useRef, useState, useCallback } from 'react';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 import { usePathname } from 'next/navigation';
+import { FiChevronDown } from 'react-icons/fi';
 
 export type AccountDropdownProps = {
   onOpenChange?: (open: boolean) => void;
@@ -190,11 +191,17 @@ useEffect(() => {
         aria-haspopup="menu"
         aria-expanded={isOpen}
         onClick={handleButtonClick}
-        className="cursor-pointer bg-brand-secondary hidden md:flex items-center gap-2 border-0 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning"
+        className="group inline-flex items-center rounded-full border border-transparent bg-brand-secondary px-3 py-2 
+        text-sm font-semibold text-white transition hover:text-brand-warning focus-visible:outline-none 
+        focus-visible:ring-2 focus-visible:ring-brand-warning focus-visible:ring-offset-2 
+        focus-visible:ring-offset-brand-secondary dark:text-dark-text"
       >
         <svg
-          className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning"
+          className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning group-focus:text-brand-warning group-active:text-brand-warning dark:text-brand-accent dark:group-hover:text-brand-warning dark:group-focus:text-brand-warning dark:group-active:text-brand-warning"
+          aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
           fill="currentColor"
           viewBox="0 0 24 24"
         >
@@ -204,7 +211,8 @@ useEffect(() => {
             clipRule="evenodd"
           />
         </svg>
-        Account
+        <span>Account</span>
+        <FiChevronDown aria-hidden="true" className="h-4 w-4 ml-1" strokeWidth={3.2} />
       </button>
 
       {/* Overlay — starts below header, closes dropdown on hover */}

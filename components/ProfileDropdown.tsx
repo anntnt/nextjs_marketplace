@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import FocusTrap from 'focus-trap-react';
 import {
   useCallback,
   useEffect,
@@ -11,28 +10,36 @@ import {
 } from 'react';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { User } from '../migrations/0001-createTableUsers';
+import { FiChevronDown } from 'react-icons/fi';
 
-type UserProps = { user?: User };
+export type ProfileDropdownProps = {
+  user?: User;
+  onOpenChange?: (open: boolean) => void;
+};
 
 const focusableSelectors =
   'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
 
-export default function ProfileDropdown({ user }: UserProps) {
+export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const firstFocusableRef = useRef<HTMLAnchorElement | null>(null);
 
-  const closeDropdown = useCallback((restoreFocus = true) => {
-    setIsOpen(false);
-    if (restoreFocus) {
-      requestAnimationFrame(() => buttonRef.current?.focus());
-    }
-  }, []);
+  const closeDropdown = useCallback(
+    (restoreFocus = true) => {
+      setIsOpen(false);
+      onOpenChange?.(false);
+      if (restoreFocus) {
+        requestAnimationFrame(() => buttonRef.current?.focus());
+      }
+    },
+    [onOpenChange]
+  );
 
   const openDropdown = useCallback(() => {
     setIsOpen(true);
-  }, []);
+    onOpenChange?.(true);
+  }, [onOpenChange]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -53,16 +60,6 @@ export default function ProfileDropdown({ user }: UserProps) {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, closeDropdown]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    requestAnimationFrame(() => {
-      const focusTarget =
-        firstFocusableRef.current ??
-        dropdownRef.current?.querySelector<HTMLElement>(focusableSelectors);
-      focusTarget?.focus();
-    });
-  }, [isOpen]);
 
   const handleButtonClick = (event: ReactMouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -121,7 +118,7 @@ export default function ProfileDropdown({ user }: UserProps) {
         aria-haspopup="menu"
         aria-expanded={isOpen}
         aria-controls="profile-menu"
-        className="group inline-flex items-center gap-2 rounded-full border border-transparent bg-brand-secondary px-3 py-2 text-sm font-semibold text-white transition hover:text-brand-warning focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warning focus-visible:ring-offset-2 focus-visible:ring-offset-brand-secondary dark:text-dark-text"
+        className="group inline-flex items-center rounded-full border border-transparent bg-brand-secondary px-3 py-2 text-sm font-semibold text-white transition hover:text-brand-warning focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warning focus-visible:ring-offset-2 focus-visible:ring-offset-brand-secondary dark:text-dark-text"
         onClick={handleButtonClick}
       >
         <svg
@@ -140,6 +137,7 @@ export default function ProfileDropdown({ user }: UserProps) {
           />
         </svg>
         <span className="hidden sm:inline">Hi, {user?.firstname}</span>
+        <FiChevronDown aria-hidden="true" className="h-4 w-4 ml-1" strokeWidth={3.2} />
       </button>
 
       <div
@@ -160,44 +158,34 @@ export default function ProfileDropdown({ user }: UserProps) {
         }`}
       >
         <span className="block h-4" aria-hidden="true" />
-        <FocusTrap
-          active={isOpen}
-          focusTrapOptions={{
-            allowOutsideClick: true,
-            escapeDeactivates: false,
-            fallbackFocus: () => buttonRef.current ?? document.body,
-            onDeactivate: closeDropdown,
-          }}
+        <div
+          ref={dropdownRef}
+          id="profile-menu"
+          role="menu"
+          aria-label="Profile options"
+          className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl focus:outline-none dark:border-dark-muted/20 dark:bg-dark-surface"
+          onBlur={handleFocusLeave}
+          onKeyDown={handleMenuKeyDown}
         >
-          <div
-            ref={dropdownRef}
-            id="profile-menu"
-            role="menu"
-            aria-label="Profile options"
-            className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl focus:outline-none dark:border-dark-muted/20 dark:bg-dark-surface"
-            onBlur={handleFocusLeave}
-            onKeyDown={handleMenuKeyDown}
-          >
-            <ul className="px-6 pb-6 pt-5 text-sm text-brand-muted dark:text-dark-muted">
-              <li>
-                {user && (
-                  <Link
-                    ref={firstFocusableRef}
-                    href={`/profile/${user.username}`}
-                    role="menuitem"
-                    className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 active:bg-brand-secondary/90"
-                    onClick={handleMenuSelection}
-                  >
-                    Dashboard
-                  </Link>
-                )}
-              </li>
-              <li className="mt-4 flex justify-center">
-                <LogoutButton onLogout={handleMenuSelection} />
-              </li>
-            </ul>
-          </div>
-        </FocusTrap>
+          <ul className="px-6 pb-6 pt-5 text-sm text-brand-muted dark:text-dark-muted">
+            <li>
+              {user && (
+                <Link
+                  data-first-focus
+                  href={`/profile/${user.username}`}
+                  role="menuitem"
+                  className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors hover:bg-brand-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70 active:bg-brand-secondary/90"
+                  onClick={handleMenuSelection}
+                >
+                  Dashboard
+                </Link>
+              )}
+            </li>
+            <li className="mt-4 flex justify-center">
+              <LogoutButton onLogout={handleMenuSelection} />
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );
