@@ -24,12 +24,15 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const pendingFocusDir = useRef<'next' | 'prev' | null>(null);
 
   const closeDropdown = useCallback(
     (restoreFocus = true) => {
+      console.log('[ProfileDropdown] closeDropdown called', { restoreFocus });
       setIsOpen(false);
       onOpenChange?.(false);
       if (restoreFocus) {
+        console.log('[ProfileDropdown] restoring focus to button');
         requestAnimationFrame(() => buttonRef.current?.focus());
       }
     },
@@ -91,20 +94,63 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
   const handleMenuKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'Tab') return;
     const focusable = dropdownRef.current?.querySelectorAll<HTMLElement>(focusableSelectors);
+    console.log('[ProfileDropdown] Tab press detected', {
+      shift: event.shiftKey,
+      focusableCount: focusable?.length ?? 0,
+      active: document.activeElement,
+    });
     if (!focusable || focusable.length === 0) return;
 
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
     const active = document.activeElement as HTMLElement | null;
 
+    if (event.shiftKey && active === first) {
+      event.preventDefault();
+      pendingFocusDir.current = 'prev';
+      active?.blur();
+      closeDropdown(false);
+      console.log('[ProfileDropdown] Shift+Tab on first item → queue prev focus');
+      return;
+    }
+
     if (!event.shiftKey && active === last) {
       event.preventDefault();
-      closeDropdown();
-    } else if (event.shiftKey && active === first) {
-      event.preventDefault();
-      closeDropdown();
+      pendingFocusDir.current = 'next';
+      active?.blur();
+      closeDropdown(false);
+      console.log('[ProfileDropdown] Tab on last item → queue next focus');
     }
   };
+
+  useEffect(() => {
+    console.log('[ProfileDropdown] isOpen changed', { isOpen, active: document.activeElement });
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen && pendingFocusDir.current) {
+      const dir = pendingFocusDir.current;
+      pendingFocusDir.current = null;
+
+      // Defer just enough so dropdown is removed and button unfocused
+      requestAnimationFrame(() => {
+        // Explicitly blur the "Hi, ..." button so browser frees focus
+        buttonRef.current?.blur();
+
+        // Dispatch the custom event so Header's listener moves focus
+        document.dispatchEvent(
+          new CustomEvent('nav:neighbor-focus', {
+            detail: { direction: dir, sender: buttonRef.current },
+          })
+        );
+        console.log('[ProfileDropdown] nav:neighbor-focus dispatched from button', {
+          direction: dir,
+          button: buttonRef.current,
+        });
+      });
+    }
+  }, [isOpen]);
+
 
   return (
     <div
@@ -113,13 +159,23 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
       onMouseLeave={handleMouseLeave}
     >
       <button
+        data-nav-item="true"
         ref={buttonRef}
         type="button"
         aria-haspopup="menu"
         aria-expanded={isOpen}
         aria-controls="profile-menu"
-        className="group inline-flex items-center rounded-full border border-transparent bg-brand-secondary px-3 py-2 text-sm font-semibold text-white transition hover:text-brand-warning focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warning focus-visible:ring-offset-2 focus-visible:ring-offset-brand-secondary dark:text-dark-text"
+        className="group inline-flex items-center rounded-full border border-transparent bg-brand-secondary px-3 py-2 
+        text-sm font-semibold text-white transition hover:text-brand-warning focus-visible:outline-none 
+        focus-visible:ring-2 focus-visible:ring-brand-warning focus-visible:ring-offset-2 
+        focus-visible:ring-offset-brand-secondary dark:text-dark-text"
         onClick={handleButtonClick}
+        onFocus={() =>
+          console.log('[ProfileDropdown] button focused', {
+            isOpen,
+            active: document.activeElement,
+          })
+        }
       >
         <svg
           className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning group-focus:text-brand-warning group-active:text-brand-warning dark:text-brand-accent dark:group-hover:text-brand-warning dark:group-focus:text-brand-warning dark:group-active:text-brand-warning"

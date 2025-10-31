@@ -4,8 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
-import type { PropsWithChildren } from 'react';
-import type FocusTrap from 'focus-trap-react';
+import type { HTMLAttributes, PropsWithChildren } from 'react';
 import { createElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FiHelpCircle } from 'react-icons/fi';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
@@ -13,20 +12,6 @@ import type { AccountDropdownProps } from './AccountDropdown';
 import type { User } from '../migrations/0001-createTableUsers';
 import { getSafeReturnToPath } from '../util/validation';
 
-type FocusTrapProps = PropsWithChildren<{ focusTrapOptions?: any; active?: boolean }>;
-
-// FocusTrap dynamic import
-const focusTrapDynamic = dynamic<FocusTrapProps>(() => import('focus-trap-react'), {
-  ssr: false,
-});
-// Dynamic import because FocusTrap needs to run only on client (not SSR)
-const FocusTrap = dynamic(() => import('focus-trap-react').then(mod => mod.default), {
-  ssr: false,
-});
-
-function FocusTrapWrapper(props: FocusTrapProps) {
-  return createElement(focusTrapDynamic, props);
-}
 
 type UserWithUsernameAndRole = User & {
   username: string;
@@ -48,7 +33,7 @@ function Search(props: SearchProps) {
   return createElement(searchComponent, props);
 }
 
-type CartProps = { cartSum?: string };
+type CartProps = { cartSum?: string } & HTMLAttributes<HTMLDivElement>;
 const cartComponent = dynamic<CartProps>(() => import('./Cart'), {
   ssr: false,
   loading: () => null,
@@ -81,7 +66,6 @@ function AccountDropdown(props: AccountDropdownProps) {
 export default function Header(props: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
   const profileDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -96,6 +80,51 @@ export default function Header(props: UserProps) {
   const toggleMenu = () => setIsOpen((previous) => !previous);
   const closeMenu = () => setIsOpen(false);
   const showCart = !props.user || props.user.roleId === 3;
+
+  useEffect(() => {
+    const onNeighbor = (event: Event) => {
+      const { direction, sender } = (event as CustomEvent).detail || {};
+      const dir = direction as 'next' | 'prev' | undefined;
+      const origin = sender as HTMLElement | undefined;
+
+      console.log('[Header] nav:neighbor-focus received', { dir, origin });
+      if (!dir || !origin) {
+        console.warn('[Header] Missing direction or sender, aborting focus move');
+        return;
+      }
+
+      const root = document.querySelector('[data-nav-root]');
+      if (!root) return;
+
+      const items = Array.from(
+        root.querySelectorAll<HTMLElement>('[data-nav-item], [data-nav-cart-link], a[href], button')
+      ).filter(
+        (el) => el.offsetParent !== null && !el.hasAttribute('disabled') && el.tabIndex !== -1
+      );
+
+      if (!items.length) return;
+
+      const index = items.findIndex((el) => el === origin || el.contains(origin));
+      if (index === -1) {
+        console.warn('[Header] Sender not found among nav items', { origin });
+        return;
+      }
+
+      const target = dir === 'next'
+        ? items[index + 1] || items[0]
+        : items[index - 1] || items[items.length - 1];
+
+      if (!target) {
+        console.warn('[Header] No target nav item found for direction', dir);
+        return;
+      }
+      console.log('[Header] Moving focus to', target);
+      target.focus();
+    };
+
+    document.addEventListener('nav:neighbor-focus', onNeighbor);
+    return () => document.removeEventListener('nav:neighbor-focus', onNeighbor);
+  }, []);
 
   // Disable body scroll when mobile menu open
   useEffect(() => {
@@ -189,7 +218,6 @@ export default function Header(props: UserProps) {
 
   const handleProfileDropdownOpenChange = useCallback(
     (open: boolean) => {
-      setIsProfileDropdownOpen(open);
       if (open) {
         focusFirstInDropdown(() => profileDropdownRef.current);
       }
@@ -200,7 +228,10 @@ export default function Header(props: UserProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-[60] border-b border-brand-secondary/50 bg-brand-secondary text-white shadow-lg transition-colors dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text">
       <nav className="py-3.5 sm:py-3 relative z-[60]">
-        <div className="mx-auto flex w-full max-w-screen-2xl items-center gap-4 px-2 sm:px-4 lg:px-6">
+        <div
+          className="mx-auto flex w-full max-w-screen-2xl items-center gap-4 px-2 sm:px-4 lg:px-6"
+          data-nav-root
+        >
           {/* Logo */}
           <Link
             href="/"
@@ -229,6 +260,7 @@ export default function Header(props: UserProps) {
               {/* Support */}
               <Link
                 href="/support"
+                data-nav-item="true"
                 className="hidden items-center gap-1 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:inline-flex"
               >
                 <FiHelpCircle className="h-4 w-4" aria-hidden="true" />
@@ -238,7 +270,8 @@ export default function Header(props: UserProps) {
               {/* Seller / Business buttons */}
               {!props.user || props.user.roleId !== 2 ? (
                 <Link
-                  href={sellerRegisterHref}
+                  href={sellerRegisterHref as any}
+                  data-nav-item="true"
                   className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:text-brand-warning hover:-translate-y-0.5 hover:bg-white focus:text-brand-warning focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 active:translate-y-0 md:inline-flex"
                 >
                   Open your shop
@@ -248,6 +281,7 @@ export default function Header(props: UserProps) {
               {props.user && props.user.roleId === 2 ? (
                 <Link
                   href={`/profile/${props.user.username}/business`}
+                  data-nav-item="true"
                   className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:text-brand-warning hover:-translate-y-0.5 hover:bg-white focus:text-brand-warning focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 active:translate-y-0 md:inline-flex"
                 >
                   My Products
@@ -257,43 +291,23 @@ export default function Header(props: UserProps) {
               {/* Logged-in vs not logged-in */}
               {props.user ? (
                 <>
-                  <div className="hidden md:mr-10 md:block">
-                    <FocusTrapWrapper
-                      active={isProfileDropdownOpen}
-                      focusTrapOptions={{
-                        allowOutsideClick: true,
-                        escapeDeactivates: true,
-                        fallbackFocus: 'body',
-                      }}
-                    >
-                      <div ref={profileDropdownRef}>
-                        <ProfileDropdown
-                          user={props.user}
-                          onOpenChange={handleProfileDropdownOpenChange}
-                        />
-                      </div>
-                    </FocusTrapWrapper>
+                  <div className="hidden md:mr-10 md:block" ref={profileDropdownRef}>
+                    <ProfileDropdown
+                      user={props.user}
+                      onOpenChange={handleProfileDropdownOpenChange}
+                    />
                   </div>
-                  {showCart ? <Cart cartSum={props.cartSum} /> : null}
+                  {showCart ? <Cart data-nav-item="true" cartSum={props.cartSum} /> : null}
                 </>
               ) : (
                 <>
                   {/* ✅ Account dropdown with corrected focus behavior */}
                   <div className="hidden md:inline-flex relative">
-                    <FocusTrapWrapper
-                      active={isAccountDropdownOpen}
-                      focusTrapOptions={{
-                        allowOutsideClick: true,
-                        escapeDeactivates: true,
-                        fallbackFocus: 'body',
-                      }}
-                    >
-                      <div ref={accountDropdownRef}>
-                        <AccountDropdown onOpenChange={handleAccountDropdownOpenChange} />
-                      </div>
-                    </FocusTrapWrapper>
+                    <div ref={accountDropdownRef}>
+                      <AccountDropdown onOpenChange={handleAccountDropdownOpenChange} />
+                    </div>
                   </div>
-                  {showCart ? <Cart cartSum={props.cartSum} /> : null}
+                  {showCart ? <Cart data-nav-item="true" cartSum={props.cartSum} /> : null}
                 </>
               )}
 
@@ -339,12 +353,6 @@ export default function Header(props: UserProps) {
               aria-hidden="true"
               onClick={closeMenu}
             />
-            <FocusTrapWrapper
-              focusTrapOptions={{
-                clickOutsideDeactivates: true,
-                escapeDeactivates: true,
-              }}
-            >
               <div
                 className="relative z-50 w-full md:hidden"
                 id="navbar-menu"
@@ -364,7 +372,7 @@ export default function Header(props: UserProps) {
                   {(!props.user || props.user.roleId !== 2) && (
                     <li className="w-full">
                       <Link
-                        href={sellerRegisterHref}
+                        href={sellerRegisterHref as any}
                         onClick={closeMenu}
                         className="ml-0 block w-full max-w-[12rem] rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary focus:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 active:bg-brand-primary"
                       >
@@ -427,7 +435,6 @@ export default function Header(props: UserProps) {
                   )}
                 </ul>
               </div>
-            </FocusTrapWrapper>
           </>
         )}
       </nav>

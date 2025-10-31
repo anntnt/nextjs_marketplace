@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { getSafeReturnToPath } from '../util/validation';
 import { useMemo, useEffect, useRef, useState, useCallback } from 'react';
-import type { MouseEvent as ReactMouseEvent } from 'react';
+import type { MouseEvent as ReactMouseEvent, KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { usePathname } from 'next/navigation';
 import { FiChevronDown } from 'react-icons/fi';
 
@@ -20,7 +20,10 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [overlayReady, setOverlayReady] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const pendingFocusDir = useRef<'next' | 'prev' | null>(null);
   const pathname = usePathname();
   const [headerBottom, setHeaderBottom] = useState(0);
 
@@ -104,13 +107,66 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
     const byKeyboard = e.detail === 0;
     isOpen ? closeDropdown() : openDropdown(byKeyboard);
   };
+  const handleMenuKeyDown = useCallback(
+    (event: ReactKeyboardEvent<HTMLDivElement>) => {
+      if (event.key !== 'Tab') return;
+      const dropdown = dropdownRef.current;
+      if (!dropdown) return;
 
+      const focusable = dropdown.querySelectorAll<HTMLElement>(focusableSelectors);
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        event.stopPropagation();
+        (document.activeElement as HTMLElement | null)?.blur();
+
+        pendingFocusDir.current = 'prev';
+        closeDropdown();
+        return;
+      }
+
+      if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        event.stopPropagation();
+        (document.activeElement as HTMLElement | null)?.blur();
+
+        pendingFocusDir.current = 'next';
+        closeDropdown();
+      }
+    },
+    [closeDropdown]
+  );
+
+  useEffect(() => {
+    if (!isOpen && pendingFocusDir.current) {
+      const dir = pendingFocusDir.current;
+      pendingFocusDir.current = null;
+      requestAnimationFrame(() => {
+        document.dispatchEvent(
+          new CustomEvent('nav:neighbor-focus', {
+            detail: { direction: dir, sender: buttonRef.current },
+          })
+        );
+      });
+    }
+  }, [isOpen]);
+  
 // --- close dropdown on Escape or scroll ---------------------------
 useEffect(() => {
   if (!isOpen) return;
 
   const onKey = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') closeDropdown();
+    if (e.key === 'Escape') {
+      closeDropdown();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => buttonRef.current?.focus());
+      });
+    }
   };
 
   const onScroll = () => {
@@ -186,34 +242,34 @@ useEffect(() => {
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      <button
-        type="button"
-        aria-haspopup="menu"
-        aria-expanded={isOpen}
-        onClick={handleButtonClick}
-        className="group inline-flex items-center rounded-full border border-transparent bg-brand-secondary px-3 py-2 
-        text-sm font-semibold text-white transition hover:text-brand-warning focus-visible:outline-none 
-        focus-visible:ring-2 focus-visible:ring-brand-warning focus-visible:ring-offset-2 
-        focus-visible:ring-offset-brand-secondary dark:text-dark-text"
-      >
-        <svg
-          className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning group-focus:text-brand-warning group-active:text-brand-warning dark:text-brand-accent dark:group-hover:text-brand-warning dark:group-focus:text-brand-warning dark:group-active:text-brand-warning"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="currentColor"
-          viewBox="0 0 24 24"
+      <div data-nav-item="true">
+        <button
+          ref={buttonRef}
+          type="button"
+          aria-haspopup="menu"
+          aria-expanded={isOpen}
+          onClick={handleButtonClick}
+          className="group inline-flex items-center rounded-full border border-transparent bg-brand-secondary px-3 py-2 text-sm font-semibold text-white transition hover:text-brand-warning focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warning focus-visible:ring-offset-2 focus-visible:ring-offset-brand-secondary dark:text-dark-text"
         >
-          <path
-            fillRule="evenodd"
-            d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
-            clipRule="evenodd"
-          />
-        </svg>
-        <span>Account</span>
-        <FiChevronDown aria-hidden="true" className="h-4 w-4 ml-1" strokeWidth={3.2} />
-      </button>
+          <svg
+            className="h-6 w-6 text-white transition-colors group-hover:text-brand-warning group-focus:text-brand-warning group-active:text-brand-warning dark:text-brand-accent dark:group-hover:text-brand-warning dark:group-focus:text-brand-warning dark:group-active:text-brand-warning"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fillRule="evenodd"
+              d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <span>Account</span>
+          <FiChevronDown aria-hidden="true" className="h-4 w-4 ml-1" strokeWidth={3.2} />
+        </button>
+      </div>
 
       {/* Overlay — starts below header, closes dropdown on hover */}
       <div
@@ -238,20 +294,25 @@ useEffect(() => {
           onMouseLeave={onLeave}
         >
           <span className="block h-4" aria-hidden />
-          <div className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl dark:border-dark-muted/20 dark:bg-dark-surface">
+          <div
+            ref={dropdownRef}
+            className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl dark:border-dark-muted/20 dark:bg-dark-surface"
+            onKeyDown={handleMenuKeyDown}
+          >
             <ul className="px-7 pb-7 pt-6 text-sm text-brand-muted dark:text-dark-muted">
-            <li>
-              <Link
-                href={loginHref as any}
-                onClick={closeDropdown}
-                className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors
-                          hover:bg-brand-secondary hover:text-white focus:text-white focus:ring-brand-warning
-                          focus-visible:text-white focus-visible:bg-brand-primary focus-visible:text-brand-accent focus-visible:outline-none
-                          focus-visible:ring-2 focus-visible:ring-brand-warning active:bg-brand-warning"
-              >
-                Login
-              </Link>
-            </li>
+              <li>
+                <Link
+                  data-first-focus
+                  href={loginHref as any}
+                  onClick={closeDropdown}
+                  className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors
+                            hover:bg-brand-secondary hover:text-white focus:text-white focus:ring-brand-warning
+                            focus-visible:text-white focus-visible:bg-brand-primary focus-visible:text-brand-accent focus-visible:outline-none
+                            focus-visible:ring-2 focus-visible:ring-brand-warning active:bg-brand-warning"
+                >
+                  Login
+                </Link>
+              </li>
 
               <li className="text-md text-center">
                 <hr className="mt-4 mb-4" />

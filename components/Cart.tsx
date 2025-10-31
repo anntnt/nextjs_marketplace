@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import { BsCart4 } from 'react-icons/bs';
+import type { HTMLAttributes } from 'react';
 
-type ItemsProps = { cartSum?: string };
+type ItemsProps = { cartSum?: string } & HTMLAttributes<HTMLDivElement>;
 
-export default function Component(props: ItemsProps) {
-  const cartItems = props.cartSum ?? '0';
+export default function Component({ cartSum, className, ...divProps }: ItemsProps) {
+  const cartItems = cartSum ?? '0';
+  const containerClass = className ? `sm:me-5 ${className}` : 'sm:me-5';
+
   return (
-    <div className="sm:me-5">
+    <div className={containerClass} {...divProps}>
       <Link
+        data-nav-cart-link
         href="/cart"
         className="relative inline-flex items-center text-white transition-colors hover:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning"
       >
