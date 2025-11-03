@@ -46,7 +46,7 @@ export default async function SingleProductPage(props: Props) {
             </div>
 
             <div className="mt-6 sm:mt-8 lg:mt-0">
-              <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">
+              <h1 className="text-4xl font-semibold text-brand-text dark:text-dark-text">
                 {product.name}
               </h1>
               <div className="py-4 text-sm font-semibold sm:text-md text-brand-muted dark:text-dark-muted">
