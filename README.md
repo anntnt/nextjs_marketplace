@@ -48,9 +48,6 @@ As a **seller**, you can list your products on eStores and manage your inventory
 
 ## Project Setup locally
 
-> **Hint:** This project was built with **Node v20.17.0** and **Next.js 15.0.0-canary.171**.  
-> Using different versions may cause compatibility issues.
-
 ```bash
 git clone https://github.com/anntnt/nextjs_finalproject_marketplace.git
 cd nextjs_finalproject_marketplace
