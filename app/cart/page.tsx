@@ -107,7 +107,7 @@ export default async function CartPage() {
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Your Cart</h1>
         <div className="grid sm:grid-cols-2 gap-4 mt-8 py-8">
-          <div className="md:col-span-2 space-y-4">
+          <div className="space-y-4">
             {productsFromCart.map((product) => {
               return (
                 <div
