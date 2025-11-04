@@ -3,7 +3,7 @@
 #
 
 app = 'estores'
-primary_region = 'otp'
+primary_region = 'fra'
 
 [build]
 

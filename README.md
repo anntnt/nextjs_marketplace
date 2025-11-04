@@ -22,6 +22,10 @@ Marketplace eStores is an ongoing full-stack web application built with Next.js,
 
 As a **buyer**, you can browse and shop in the [marketplace](https://estores.fly.dev/marketplace) after you have **already logged in**.
 
+- Test accounts are available if you just want to explore without registering:
+  - role buyer — username `buyer`, password `buyer`
+  - role seller — username `seller1`, password `seller1`
+
 ![alt text](./public/images/marketplace.jpg)
 
 As a **seller**, you can list your products on eStores and manage your inventory by clicking My Products.
