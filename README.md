@@ -16,20 +16,21 @@ Marketplace eStores is an ongoing full-stack web application built with Next.js,
 
 ![alt text](./public/images/eStores.jpg)
 
-
-
+<br>
+<br>
 [Register](https://estores.fly.dev/register) on eStores as a **buyer** or **seller** to start exploring the marketplace.
 
 ![alt text](./public/images/register.jpg)
 
-
+<br>
 ![alt text](./public/images/register2.jpg)
 
 
-
+<br>
 As a **buyer**, you can browse and shop in the [marketplace](https://estores.fly.dev).
+<br>
+**Test accounts**:
 
-**Test accounts**
 You can use these test accounts to explore eStores without registering:
 
 | Role   | Username  | Password  |
@@ -38,11 +39,11 @@ You can use these test accounts to explore eStores without registering:
 | Seller | `seller1` | `seller1` |
 
 
-
+<br>
 As a **seller**, you can list your products on eStores and manage your inventory by clicking My Products.
 
 ![alt text](./public/images/myproducts.jpg)
-
+<br>
 ## Technologies
 
 - Next.js
@@ -60,7 +61,7 @@ As a **seller**, you can list your products on eStores and manage your inventory
 ### [Database diagram](https://drawsql.app/teams/myteam-1161/diagrams/estores)
 
 ![alt text](./public/images/drawsql_2.jpg)
-
+<br>
 ## Project Setup locally
 
 ```bash
@@ -168,8 +169,8 @@ You can create an account on Cloudinary and Stripe to obtain the API keys, then 
 ```bash
 pnpm run dev
 ```
-
-## Deployment
+<br>
+## Deploymen
 
 - Fly.io
 - Docker
