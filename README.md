@@ -17,10 +17,10 @@ Marketplace eStores is an ongoing full-stack web application built with Next.js,
 ![alt text](./public/images/eStores.jpg)<br><br><br>
 [Register](https://estores.fly.dev/register) on eStores as a **buyer** or **seller** to start exploring the marketplace.
 
-![alt text](./public/images/register.jpg)<br>
+![alt text](./public/images/register.jpg)<br><br>
 ![alt text](./public/images/register2.jpg)<br><br>
 As a **buyer**, you can browse and shop in the [marketplace](https://estores.fly.dev).<br><br>
-**Test accounts**:
+***Test accounts**:
 
 You can use these test accounts to explore eStores without registering:
 
