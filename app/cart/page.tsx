@@ -33,9 +33,11 @@ export default async function CartPage() {
   }
 
   if (user?.roleId === 3 && sessionToken && guestCartItems.length > 0) {
-    for (const item of guestCartItems) {
-      await createOrUpdateCartItem(sessionToken, item.productId, item.quantity);
-    }
+    await Promise.all(
+      guestCartItems.map((item) =>
+        createOrUpdateCartItem(sessionToken, item.productId, item.quantity),
+      ),
+    );
 
     cookieStore.delete('guestCart');
     guestCartItems = [];
