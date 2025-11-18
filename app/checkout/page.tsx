@@ -27,7 +27,12 @@ export default async function CheckoutPage() {
   if (user.roleId !== 3) {
     redirect('/buyer-area-only');
   }
-  const productsFromCart = await getCartProducts(sessionTokenCookie.value);
+  const productsFromCart = (await getCartProducts(sessionTokenCookie.value)).map(
+    (product) => ({
+      ...product,
+      price: Number(product.price),
+    }),
+  );
 
   const subTotal = productsFromCart.reduce((accumulator, product) => {
     return (accumulator += product.price * product.quantity);
