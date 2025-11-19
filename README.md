@@ -151,6 +151,31 @@ sudo -u <user name> psql -U <user name> <database name>
 pnpm migrate up
 ```
 
+### Optional: pgAdmin database client
+
+If you prefer a GUI (similar to phpMyAdmin) for inspecting PostgreSQL, a ready-to-use pgAdmin container is included.
+
+1. Copy the sample config and set your preferred credentials / port:
+
+   ```bash
+   cp .env.pgadmin.example .env.pgadmin
+   # edit .env.pgadmin with your email, password, and optional port
+   ```
+
+2. Start pgAdmin next to the app:
+
+   ```bash
+   docker compose -f docker-compose.pgadmin.yml --env-file .env.pgadmin up -d
+   ```
+
+3. Open http://localhost:5050 (or your chosen port), sign in with the credentials from `.env.pgadmin`, and add a new server connection that points to your local Postgres instance. For `Host`, use `host.docker.internal` on macOS/Windows. On Linux, use `localhost` if Postgres is exposed on the Docker host network or the bridge IP (commonly `172.17.0.1`). The username/password/database should match the values in your `.env` file.
+
+4. When you’re done, stop pgAdmin with:
+
+   ```bash
+   docker compose -f docker-compose.pgadmin.yml --env-file .env.pgadmin down
+   ```
+
 ### Cloudinary and Stripe
 
 You can create an account on Cloudinary and Stripe to obtain the API keys, then set them in the .env file to test the APIs locally.

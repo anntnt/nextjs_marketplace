@@ -439,9 +439,9 @@ export async function up(sql: Sql) {
 
   // Seed a limited number of products per category to keep the dataset lightweight
   categoryInfos.forEach((category, index) => {
-    const sellerId = sellerIds[index % sellerIds.length];
     for (let count = 0; count < PRODUCTS_PER_CATEGORY; count++) {
-      const seed = index * 1000 + count;
+      const seed = index * PRODUCTS_PER_CATEGORY + count;
+      const sellerId = sellerIds[seed % sellerIds.length];
       products.push(
         generateProduct(seed, category.id, category.name, sellerId),
       );
