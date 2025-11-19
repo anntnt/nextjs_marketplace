@@ -27,6 +27,7 @@ export type ProductWithSeller = {
   sellerId: number;
   storeName: string | null;
   categoryId: number | null;
+  categoryName: string | null;
   brand: string | null;
 };
 
@@ -231,10 +232,12 @@ export const getCategoryProductWithSellerInsecure = cache(
         COALESCE(
           NULLIF(users.store_name, ''),
           users.firstname || ' ' || users.lastname
-        ) AS "storeName"
+        ) AS "storeName",
+        product_categories.category_name AS "categoryName"
       FROM
         products
         INNER JOIN users ON products.seller_id = users.id
+        LEFT JOIN product_categories ON products.category_id = product_categories.id
       WHERE
         products.id = ${productId}
         AND users.role_id = 2

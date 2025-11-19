@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { getCategoryProductWithSellerInsecure } from '../../../../database/products';
@@ -26,10 +27,43 @@ export default async function SingleProductPage(props: Props) {
     return notFound();
   }
 
+  const categoryBreadcrumb =
+    product.categoryId && product.categoryName
+      ? { id: product.categoryId, name: product.categoryName }
+      : null;
+
   return (
     <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text antialiased px-5 sm:px-20 py-12">
       <section className="py-12 dark:bg-dark-bg antialiased">
         <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-6 text-sm text-brand-text dark:text-dark-text"
+          >
+            <ol className="flex flex-wrap items-center gap-2">
+              <li>
+                <Link
+                  href="/"
+                  className="transition text-brand-text hover:text-brand-primary dark:text-dark-text dark:hover:text-brand-secondary"
+                >
+                  Alle Kategorien
+                </Link>
+              </li>
+              {categoryBreadcrumb ? (
+                <>
+                  <li aria-hidden="true">/</li>
+                  <li>
+                    <Link
+                      href={`/marketplace/${categoryBreadcrumb.id}`}
+                      className="font-semibold transition text-brand-text hover:text-brand-primary dark:text-dark-text dark:hover:text-brand-secondary"
+                    >
+                      {categoryBreadcrumb.name}
+                    </Link>
+                  </li>
+                </>
+              ) : null}
+            </ol>
+          </nav>
           <div
             className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16"
             key={`products-${product.id}`}
