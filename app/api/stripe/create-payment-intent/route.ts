@@ -1,8 +1,14 @@
 import { type NextRequest, NextResponse } from 'next/server';
-// This is test secret API key.
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+const getStripeClient = () => {
+  const apiKey = process.env.STRIPE_SECRET_KEY;
+  if (!apiKey) {
+    throw new Error('STRIPE_SECRET_KEY environment variable is not configured');
+  }
+
+  return new Stripe(apiKey);
+};
 
 export type CreatePaymentResponseBodyPost =
   | {
@@ -16,6 +22,7 @@ export async function POST(
   request: NextRequest,
 ): Promise<NextResponse<CreatePaymentResponseBodyPost>> {
   try {
+    const stripe = getStripeClient();
     await request.json();
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
@@ -33,13 +40,17 @@ export async function POST(
       dpmCheckerLink: `https://dashboard.stripe.com/settings/payment_methods/review?transaction_id=${paymentIntent.id}`,
     });
   } catch (error) {
-    console.error('Internal Error:', error);
-    // Handle other errors (e.g., network issues, parsing errors)
+    console.error('Stripe payment intent error:', error);
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'Something went wrong while creating the payment intent';
+
     return NextResponse.json(
       {
         errors: [
           {
-            message: 'Username or Password is invalid',
+            message,
           },
         ],
       },
