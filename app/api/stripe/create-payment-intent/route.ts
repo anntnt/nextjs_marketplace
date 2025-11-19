@@ -4,7 +4,8 @@ import Stripe from 'stripe';
 const getStripeClient = () => {
   const apiKey = process.env.STRIPE_SECRET_KEY;
   if (!apiKey) {
-    throw new Error('STRIPE_SECRET_KEY environment variable is not configured');
+    console.warn('Stripe API key is not configured. Payment intent endpoint disabled.');
+    return null;
   }
 
   return new Stripe(apiKey);
@@ -23,6 +24,18 @@ export async function POST(
 ): Promise<NextResponse<CreatePaymentResponseBodyPost>> {
   try {
     const stripe = getStripeClient();
+    if (!stripe) {
+      return NextResponse.json(
+        {
+          errors: [
+            {
+              message: 'Stripe integration is not configured. Please try again later.',
+            },
+          ],
+        },
+        { status: 500 },
+      );
+    }
     await request.json();
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
