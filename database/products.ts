@@ -228,12 +228,16 @@ export const getCategoryProductWithSellerInsecure = cache(
     >`
       SELECT
         products.*,
-        users.store_name
+        COALESCE(
+          NULLIF(users.store_name, ''),
+          users.firstname || ' ' || users.lastname
+        ) AS "storeName"
       FROM
         products
         INNER JOIN users ON products.seller_id = users.id
       WHERE
         products.id = ${productId}
+        AND users.role_id = 2
     `;
 
     if (!productRaw) return undefined;
