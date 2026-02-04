@@ -634,14 +634,7 @@ export default function RegisterForm(props: Props) {
                 disabled={disableInputs}
               />
               <label htmlFor="privacyAgreement" className="ml-2 text-sm font-medium">
-                I agree to the{' '}
-                <Link
-                  href="/privacy-policy"
-                  className="text-brand-primary underline hover:text-brand-secondary focus:text-brand-secondary"
-                >
-                  Privacy Policy
-                </Link>
-                *
+                I agree to the Privacy Policy *
               </label>
             </div>
 
