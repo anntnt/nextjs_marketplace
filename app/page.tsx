@@ -88,7 +88,7 @@ export default function Home() {
               </div>
             </div>
             <p className="mt-6 text-center text-sm text-[#F87171]">
-              *eStores is a portfolio project and not a real marketplace.
+              *eStores is a demo project, not a real marketplace.
             </p>
           </div>
         </div>

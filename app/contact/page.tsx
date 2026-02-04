@@ -11,10 +11,11 @@ export default function Page() {
 
         <section className="py-8 text-lg">
           <p className="mb-8 text-left">
-          Hey there! I'm Ann Tran, a full-stack web developer who loves turning ideas into smooth, functional, and visually engaging web applications.<br />
+          Hey there! I'm Ann Tran, a Web developer with agency and freelance experience, specializing in building websites, web applications, and digital
+          advertising assets. I'm currently focused on modern frontend and full-stack development with React, with hands-on experience with Next.js and the PERN stack through personal projects.<br />
           </p>
           <p>
-          Have a question about this project, or just want to connect? I’d be happy to chat and exchange ideas!
+          Have a question about this project, or just want to connect? I'd be happy to chat and exchange ideas!
           </p>
 
           <ul className="mt-8 space-y-1 text-left text-base leading-tight">

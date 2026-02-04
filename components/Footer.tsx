@@ -16,18 +16,6 @@ export default function Component() {
           <Link href="/support" className="text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent">
             Support
           </Link>
-          <Link
-            href="/privacy-policy"
-            className="text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent"
-          >
-            Privacy Policy
-          </Link>
-          <Link
-            href="/terms-of-service"
-            className="text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent"
-          >
-            Terms of Service
-          </Link>
           <Link href="/contact" className="text-white transition-colors hover:text-[#F59E0B] dark:text-dark-text dark:hover:text-brand-accent">
             Contact
           </Link>
