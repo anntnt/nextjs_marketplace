@@ -13,7 +13,7 @@ type Props = {
 
 export default async function SellerProductsPage({ searchParams }: Props) {
   // 1. Check if the sessionToken cookie exists
-  const sessionTokenCookie = (cookies()).get('sessionToken');
+  const sessionTokenCookie = (await cookies()).get('sessionToken');
 
   // 2. Query the current user with the sessionToken
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
@@ -48,7 +48,7 @@ export default async function SellerProductsPage({ searchParams }: Props) {
     const target = totalPages === 1
       ? `/profile/${user.username}/business`
       : `/profile/${user.username}/business?page=${totalPages}`;
-    redirect(target);
+    redirect(target as any);
   }
 
   const baseHref = `/profile/${user.username}/business`;

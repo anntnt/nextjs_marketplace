@@ -71,7 +71,7 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
     const flattenedErrors = result.error.flatten();
     const fieldErrorMessages = Object.entries(flattenedErrors.fieldErrors).flatMap(
       ([field, messages]) =>
-        (messages ?? []).map((rawMessage) => {
+        (messages).map((rawMessage) => {
           const label = friendlyFieldNames[field] ?? field;
           const friendlyMessage =
             rawMessage === 'Required' && friendlyRequiredMessages[field]
@@ -81,7 +81,7 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
         }),
     );
 
-    const formErrorMessages = flattenedErrors.formErrors ?? [];
+    const formErrorMessages = flattenedErrors.formErrors;
     const formattedErrors = [...fieldErrorMessages, ...formErrorMessages].map((message) => ({
       message,
     }));

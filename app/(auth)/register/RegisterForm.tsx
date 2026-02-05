@@ -125,7 +125,7 @@ export default function RegisterForm(props: Props) {
           <p className="mt-8 text-center text-sm text-brand-muted dark:text-dark-muted">
             Want to buy instead?{' '}
             {alternateTarget ? (
-              <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget}>
+              <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget as any}>
                 Create a buyer account
               </Link>
             ) : (
@@ -138,7 +138,7 @@ export default function RegisterForm(props: Props) {
             <p className="mt-8 text-center text-sm text-brand-muted dark:text-dark-muted">
               Want to sell instead?{' '}
               {alternateTarget ? (
-                <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget}>
+                <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget  as any}>
                   Open your shop
                 </Link>
               ) : (
@@ -358,9 +358,9 @@ export default function RegisterForm(props: Props) {
       return;
     }
 
-    const fallbackPath = pathname && !registerPaths.includes(pathname) ? pathname : '/';
+    const fallbackPath = pathname && !registerPaths.includes(pathname as typeof registerPaths[number]) ? pathname : '/';
     const target =
-      safeReturnTo && !registerPaths.includes(safeReturnTo) ? safeReturnTo : fallbackPath;
+      safeReturnTo && !registerPaths.includes(safeReturnTo as typeof registerPaths[number]) ? safeReturnTo : fallbackPath;
 
     router.push(target as any);
     router.refresh();

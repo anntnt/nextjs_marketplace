@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
+import { useEffect, useMemo, useRef, useState} from 'react';
 import { getSafeReturnToPath } from '../../../util/validation';
 import ErrorMessage from '../../ErrorMessage';
 import type { LoginResponseBody } from '../api/login/route';
@@ -22,12 +22,15 @@ export default function LoginForm(props: Props) {
 
   type FieldName = 'username' | 'password';
 
-  const FIELD_LABELS: Record<FieldName, string> = {
-    username: 'Username',
-    password: 'Password',
-  };
-
-  const FIELD_REQUIRED_MESSAGES: Record<FieldName, string> = {
+  const fieldLabels = useMemo<Record<FieldName, string>>(
+    () => ({
+      username: 'Username',
+      password: 'Password',
+    }),
+    []
+  );
+  
+  const fieldRequiredMessages: Record<FieldName, string> = {
     username: 'Please enter your username.',
     password: 'Please enter your password.',
   };
@@ -57,7 +60,7 @@ export default function LoginForm(props: Props) {
         continue;
       }
 
-      const match = (Object.entries(FIELD_LABELS) as [FieldName, string][])
+      const match = (Object.entries(fieldLabels) as [FieldName, string][])
         .find(([, label]) => normalizedMessage.startsWith(label.toLowerCase()));
 
       if (match) {
@@ -75,30 +78,24 @@ export default function LoginForm(props: Props) {
       authError: authMessage,
       authErrorFields: Array.from(authFields),
     };
-  }, [errors]);
+  }, [errors, fieldLabels]);
 
   useEffect(() => {
     if (!shouldAutoFocusError || errors.length === 0) return;
 
     const fieldOrder: FieldName[] = ['username', 'password'];
-    const refs: Record<FieldName, RefObject<HTMLInputElement>> = {
-      username: usernameRef as RefObject<HTMLInputElement>,
-      password: passwordRef as RefObject<HTMLInputElement>,
-    };
 
     for (const field of fieldOrder) {
       const hasError = Boolean(fieldErrors[field]) || authErrorFields.includes(field);
       if (hasError) {
-        const ref = refs[field].current;
-        if (ref) {
-          ref.focus();
-          ref.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
-        }
         break;
       }
     }
 
-    setShouldAutoFocusError(false);
+    
+  // defer state update to avoid synchronous setState in effect
+  const id = setTimeout(() => setShouldAutoFocusError(false), 0);
+  return () => clearTimeout(id); // cleanup in case effect re-runs
   }, [errors, fieldErrors, authErrorFields, shouldAutoFocusError]);
 
   const clearFieldError = (field: FieldName) => {
@@ -108,7 +105,7 @@ export default function LoginForm(props: Props) {
           return false;
         }
         const lowerMessage = error.message.toLowerCase();
-        return !lowerMessage.startsWith(FIELD_LABELS[field].toLowerCase());
+        return !lowerMessage.startsWith(fieldLabels[field].toLowerCase());
       }),
     );
   };
@@ -126,14 +123,14 @@ export default function LoginForm(props: Props) {
 
     if (!trimmedUsername) {
       validationErrors.push({
-        message: `${FIELD_LABELS.username}: ${FIELD_REQUIRED_MESSAGES.username}`,
+        message: `${fieldLabels.username}: ${fieldRequiredMessages.username}`,
         type: 'field',
       });
     }
 
     if (!trimmedPassword) {
       validationErrors.push({
-        message: `${FIELD_LABELS.password}: ${FIELD_REQUIRED_MESSAGES.password}`,
+        message: `${fieldLabels.password}: ${fieldRequiredMessages.password}`,
         type: 'field',
       });
     }
@@ -310,9 +307,9 @@ export default function LoginForm(props: Props) {
             >
               <p className="font-medium">Please correct the following issues:</p>
               <ul className="mt-2 list-disc pl-5 text-sm">
-                {formErrors.map((error) => (
-                  <li key={error}>{error}</li>
-                ))}
+              {formErrors.map((error, index) => (
+                <li key={`form-error-${index}`}>{error}</li>
+              ))}
               </ul>
             </div>
           )}
