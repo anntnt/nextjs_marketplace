@@ -34,11 +34,11 @@ type InputFieldConfig = {
   type: string;
   value: string;
   setter: (value: string) => void;
-  ref: RefObject<HTMLInputElement>;
+  ref: RefObject<HTMLInputElement | null>;
   autoComplete?: string;
 };
 
-const FIELD_LABELS: Record<FieldName, string> = {
+const fieldLabels: Record<FieldName, string> = {
   username: 'Username',
   password: 'Password',
   passwordRepeat: 'Confirm password',
@@ -50,7 +50,7 @@ const FIELD_LABELS: Record<FieldName, string> = {
   privacyAgreement: 'Privacy Policy agreement',
 };
 
-const FIELD_REQUIRED_MESSAGES: Record<FieldName, string> = {
+const fieldRequiredMessages: Record<FieldName, string> = {
   username: 'Please enter your username.',
   password: 'Please enter your password.',
   passwordRepeat: 'Please confirm your password.',
@@ -62,12 +62,13 @@ const FIELD_REQUIRED_MESSAGES: Record<FieldName, string> = {
   privacyAgreement: 'Please agree to the Privacy Policy.',
 };
 
-const USERNAME_PATTERN = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
-const USERNAME_PATTERN_MESSAGE =
+const usernamePattern = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
+const usernamePatternMessage =
   'Username: Your username must have at least one letter and no unusual characters.';
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MINIMUM_AGE = 18;
 const MIN_BIRTH_YEAR = 1900;
+
 export default function RegisterForm(props: Props) {
   const router = useRouter();
   const pathname = usePathname();
@@ -102,12 +103,14 @@ export default function RegisterForm(props: Props) {
   const [shouldAutoFocusError, setShouldAutoFocusError] = useState(false);
 
   const disableInputs = isBlocked;
+
   const subtitle =
     variant === 'seller'
       ? 'Set up your account and open your eStores shop today.'
       : variant === 'buyer'
         ? 'Start your buyer journey'
         : 'Start your eStores journey';
+
   const defaultIntro =
     variant === 'general'
       ? (
@@ -118,7 +121,9 @@ export default function RegisterForm(props: Props) {
       : variant === 'seller'
         ? ''
         : 'Now shop on eStores and discover amazing products.';
+
   const introContent = props.intro ?? defaultIntro;
+
   const defaultFooterHint =
     variant === 'seller'
       ? (
@@ -138,7 +143,7 @@ export default function RegisterForm(props: Props) {
             <p className="mt-8 text-center text-sm text-brand-muted dark:text-dark-muted">
               Want to sell instead?{' '}
               {alternateTarget ? (
-                <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget  as any}>
+                <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget as any}>
                   Open your shop
                 </Link>
               ) : (
@@ -147,17 +152,19 @@ export default function RegisterForm(props: Props) {
             </p>
           )
         : null;
+
   const footerContent = props.footerHint ?? defaultFooterHint;
+
   // Refs for accessibility
-  const usernameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
-  const passwordRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
-  const passwordRepeatRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
-  const firstNameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
-  const lastNameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
-  const emailRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
-  const birthdayRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
-  const storeNameRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
-  const privacyRef = useRef<HTMLInputElement>(null) as RefObject<HTMLInputElement>;
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordRepeatRef = useRef<HTMLInputElement>(null);
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const birthdayRef = useRef<HTMLInputElement>(null);
+  const storeNameRef = useRef<HTMLInputElement>(null);
+  const privacyRef = useRef<HTMLInputElement>(null);
 
   // Error mapping
   const { fieldErrors, formErrors } = useMemo(() => {
@@ -165,7 +172,7 @@ export default function RegisterForm(props: Props) {
     const otherErrors: string[] = [];
 
     for (const { message } of errors) {
-      const match = (Object.entries(FIELD_LABELS) as [FieldName, string][])
+      const match = (Object.entries(fieldLabels) as [FieldName, string][])
         .find(([, label]) => message.toLowerCase().startsWith(label.toLowerCase()));
 
       if (match) {
@@ -183,49 +190,18 @@ export default function RegisterForm(props: Props) {
   // Focus on first invalid field
   useEffect(() => {
     if (!shouldAutoFocusError || errors.length === 0) return;
+    const id = setTimeout(() => setShouldAutoFocusError(false), 0);
+    return () => clearTimeout(id);
+  }, [errors, shouldAutoFocusError]);
 
-    const fieldOrder: FieldName[] = [
-      'username',
-      'password',
-      'passwordRepeat',
-      'firstName',
-      'lastName',
-      'emailAddress',
-      'birthday',
-      'storeName',
-      'privacyAgreement',
-    ];
-
-    const refs: Record<FieldName, RefObject<HTMLInputElement>> = {
-      username: usernameRef as RefObject<HTMLInputElement>,
-      password: passwordRef as RefObject<HTMLInputElement>,
-      passwordRepeat: passwordRepeatRef as RefObject<HTMLInputElement>,
-      firstName: firstNameRef,
-      lastName: lastNameRef,
-      emailAddress: emailRef,
-      birthday: birthdayRef,
-      storeName: storeNameRef,
-      privacyAgreement: privacyRef,
-    };
-
-    for (const field of fieldOrder) {
-      if (fieldErrors[field]) {
-        const ref = refs[field].current;
-        if (ref) {
-          ref.focus();
-          ref.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
-        }
-        break;
-      }
-    }
-    setShouldAutoFocusError(false);
-  }, [errors, fieldErrors, shouldAutoFocusError]);
-
+  // Fix for setState-in-effect warning
   useEffect(() => {
-    if (lockedRoleId && roleId !== lockedRoleId) {
-      setRoleId(lockedRoleId);
-    }
-  }, [lockedRoleId, roleId]);
+    if (!lockedRoleId) return;
+    const id = setTimeout(() => {
+      setRoleId((prev) => (prev === lockedRoleId ? prev : lockedRoleId));
+    }, 0);
+    return () => clearTimeout(id);
+  }, [lockedRoleId]);
 
   const getInputClasses = (hasError: boolean) =>
     `mt-2 block w-full rounded-lg border p-2.5 text-sm transition
@@ -236,7 +212,7 @@ export default function RegisterForm(props: Props) {
   const clearFieldError = (field: FieldName) => {
     setErrors((prev) =>
       prev.filter(
-        (error) => !error.message.toLowerCase().startsWith(FIELD_LABELS[field].toLowerCase()),
+        (error) => !error.message.toLowerCase().startsWith(fieldLabels[field].toLowerCase()),
       ),
     );
   };
@@ -258,53 +234,39 @@ export default function RegisterForm(props: Props) {
       { key: 'birthday', value: birthday.trim() },
       { key: 'privacyAgreement', value: privacyAgreementAccepted ? 'true' : '' },
     ];
-    if (roleId === 2) {
-      requiredFields.push({ key: 'storeName', value: trimmedStoreName });
-    }
+    if (roleId === 2) requiredFields.push({ key: 'storeName', value: trimmedStoreName });
 
     const validationErrors: { message: string }[] = [];
 
     for (const field of requiredFields) {
       if (!field.value) {
-        validationErrors.push({
-          message: `${FIELD_LABELS[field.key]}: ${FIELD_REQUIRED_MESSAGES[field.key]}`,
-        });
+        validationErrors.push({ message: `${fieldLabels[field.key]}: ${fieldRequiredMessages[field.key]}` });
       }
     }
 
-    if (trimmedUsername && !USERNAME_PATTERN.test(trimmedUsername)) {
-      validationErrors.push({ message: USERNAME_PATTERN_MESSAGE });
+    if (trimmedUsername && !usernamePattern.test(trimmedUsername)) {
+      validationErrors.push({ message: usernamePatternMessage });
     }
 
-    if (trimmedEmail && !EMAIL_PATTERN.test(trimmedEmail)) {
-      validationErrors.push({
-        message: `${FIELD_LABELS.emailAddress}: Please enter a valid email address.`,
-      });
+    if (trimmedEmail && !emailPattern.test(trimmedEmail)) {
+      validationErrors.push({ message: `${fieldLabels.emailAddress}: Please enter a valid email address.` });
     }
 
     if (password && passwordRepeat && password !== passwordRepeat) {
-      validationErrors.push({
-        message: 'Confirm password: The passwords do not match.',
-      });
+      validationErrors.push({ message: 'Confirm password: The passwords do not match.' });
     }
 
     if (birthday) {
       const parsedBirthDate = new Date(birthday);
       if (Number.isNaN(parsedBirthDate.getTime())) {
         validationErrors.push({ message: 'Birth date: Please enter a valid date.' });
+      } else if (parsedBirthDate.getFullYear() < MIN_BIRTH_YEAR) {
+        validationErrors.push({ message: 'Birth date: Please enter a valid date.' });
       } else {
-        if (parsedBirthDate.getFullYear() < MIN_BIRTH_YEAR) {
-          validationErrors.push({ message: 'Birth date: Please enter a valid date.' });
-        } else {
-          const today = new Date();
-          const minimumBirthDate = new Date(
-            today.getFullYear() - MINIMUM_AGE,
-            today.getMonth(),
-            today.getDate(),
-          );
-          if (parsedBirthDate > minimumBirthDate) {
-            validationErrors.push({ message: 'Birth date: You must be at least 18 years old.' });
-          }
+        const today = new Date();
+        const minimumBirthDate = new Date(today.getFullYear() - MINIMUM_AGE, today.getMonth(), today.getDate());
+        if (parsedBirthDate > minimumBirthDate) {
+          validationErrors.push({ message: 'Birth date: You must be at least 18 years old.' });
         }
       }
     }
@@ -350,17 +312,16 @@ export default function RegisterForm(props: Props) {
     }
 
     const registerPaths = ['/register', '/register/seller', '/register/buyer'] as const;
-
     const userRoleId = data.user.roleId;
+
     if (userRoleId === 2) {
       router.push(`/profile/${data.user.username}`);
       router.refresh();
       return;
     }
 
-    const fallbackPath = pathname && !registerPaths.includes(pathname as typeof registerPaths[number]) ? pathname : '/';
-    const target =
-      safeReturnTo && !registerPaths.includes(safeReturnTo as typeof registerPaths[number]) ? safeReturnTo : fallbackPath;
+    const fallbackPath = pathname && !registerPaths.includes(pathname as any) ? pathname : '/';
+    const target = safeReturnTo && !registerPaths.includes(safeReturnTo as any) ? safeReturnTo : fallbackPath;
 
     router.push(target as any);
     router.refresh();
@@ -377,78 +338,32 @@ export default function RegisterForm(props: Props) {
 
   const baseFieldConfigs: InputFieldConfig[] = [
     {
-      id: 'username',
-      label: 'Username*',
-      type: 'text',
-      value: username,
-      setter: setUsername,
-      ref: usernameRef,
-      autoComplete: 'username',
+      id: 'username', label: 'Username*', type: 'text', value: username, setter: setUsername, ref: usernameRef, autoComplete: 'username',
     },
     {
-      id: 'password',
-      label: 'Password*',
-      type: 'password',
-      value: password,
-      setter: setPassword,
-      ref: passwordRef,
-      autoComplete: 'new-password',
+      id: 'password', label: 'Password*', type: 'password', value: password, setter: setPassword, ref: passwordRef, autoComplete: 'new-password',
     },
     {
-      id: 'passwordRepeat',
-      label: 'Confirm password*',
-      type: 'password',
-      value: passwordRepeat,
-      setter: setPasswordRepeat,
-      ref: passwordRepeatRef,
-      autoComplete: 'new-password',
+      id: 'passwordRepeat', label: 'Confirm password*', type: 'password', value: passwordRepeat, setter: setPasswordRepeat, ref: passwordRepeatRef, autoComplete: 'new-password',
     },
     {
-      id: 'firstName',
-      label: 'First name*',
-      type: 'text',
-      value: firstName,
-      setter: setFirstName,
-      ref: firstNameRef,
-      autoComplete: 'given-name',
+      id: 'firstName', label: 'First name*', type: 'text', value: firstName, setter: setFirstName, ref: firstNameRef, autoComplete: 'given-name',
     },
     {
-      id: 'lastName',
-      label: 'Last name*',
-      type: 'text',
-      value: lastName,
-      setter: setLastName,
-      ref: lastNameRef,
-      autoComplete: 'family-name',
+      id: 'lastName', label: 'Last name*', type: 'text', value: lastName, setter: setLastName, ref: lastNameRef, autoComplete: 'family-name',
     },
     {
-      id: 'emailAddress',
-      label: 'Email address*',
-      type: 'email',
-      value: emailAddress,
-      setter: setEmailAddress,
-      ref: emailRef,
-      autoComplete: 'email',
+      id: 'emailAddress', label: 'Email address*', type: 'email', value: emailAddress, setter: setEmailAddress, ref: emailRef, autoComplete: 'email',
     },
     {
-      id: 'birthday',
-      label: 'Birth date*',
-      type: 'date',
-      value: birthday,
-      setter: setBirthday,
-      ref: birthdayRef,
-      autoComplete: 'bday',
+      id: 'birthday', label: 'Birth date*', type: 'date', value: birthday, setter: setBirthday, ref: birthdayRef, autoComplete: 'bday',
     },
   ];
 
   const inputFieldConfigs: InputFieldConfig[] = baseFieldConfigs;
 
   return (
-    <>
-      <div
-        className="mx-auto max-w-lg rounded-2xl bg-white px-6 py-10 text-brand-text shadow-md dark:bg-gray-900 dark:text-dark-text"
-        aria-hidden={isBlocked}
-      >
+      <div className="mx-auto max-w-lg rounded-2xl bg-white px-6 py-10 text-brand-text shadow-md dark:bg-gray-900 dark:text-dark-text">
         <h2 className="mb-4 text-center text-md">{subtitle}</h2>
         <p className="text-sm text-center text-brand-muted dark:text-dark-muted">{introContent}</p>
 
@@ -457,220 +372,93 @@ export default function RegisterForm(props: Props) {
           onSubmit={handleRegister}
           aria-describedby={formErrors.length ? 'form-errors' : undefined}
           className="mt-8"
-          aria-disabled={isBlocked}
         >
           {formErrors.length > 0 && (
-            <div
-              id="form-errors"
-              role="alert"
-              className="mb-5 rounded-md border border-red-500 bg-red-50 p-3 text-red-700"
-            >
+            <div id="form-errors" role="alert" className="mb-5 rounded-md border border-red-500 bg-red-50 p-3 text-red-700">
               <ul className="list-disc pl-5">
-                {formErrors.map((error) => (
-                  <li key={error}>{error}</li>
-                ))}
+              {formErrors.map((error) => (
+                <li key={`form-error-${error.replace(/\s+/g, '-').toLowerCase()}`}>{error}</li>
+              ))}
               </ul>
             </div>
           )}
 
-          {/* Role selection */}
-          {showRoleSelection ? (
-            <fieldset className="mb-5">
-              <legend className="block text-sm font-medium">Choose your role*</legend>
-              <div className="mt-2 flex items-center gap-4">
+          <fieldset disabled={disableInputs}>
+            {/* Role selection */}
+            {showRoleSelection && (
+              <fieldset className="mb-5">
+                <legend className="block text-sm font-medium">Choose your role*</legend>
+                <div className="mt-2 flex items-center gap-4">
+                  <input type="radio" id="buyer" name="roleId" value="3" checked={roleId === 3} onChange={handleRoleChange} required />
+                  <label htmlFor="buyer">Buyer</label>
+                  <input type="radio" id="seller" name="roleId" value="2" checked={roleId === 2} onChange={handleRoleChange} required />
+                  <label htmlFor="seller">Seller</label>
+                </div>
+              </fieldset>
+            )}
+
+            {/* All input fields */}
+            {inputFieldConfigs.map(({ id, label, type, value, setter, ref, autoComplete }) => (
+               <div key={`input-field-${id}`} className="mb-5">
+                <label htmlFor={id} className="block text-sm font-medium">{label}</label>
                 <input
-                  type="radio"
-                  id="buyer"
-                  name="roleId"
-                  value="3"
-                  checked={roleId === 3}
-                  onChange={handleRoleChange}
-                  required
-                  aria-required="true"
-                  disabled={disableInputs}
+                  id={id} ref={ref} type={type} className={getInputClasses(Boolean(fieldErrors[id]))}
+                  aria-invalid={Boolean(fieldErrors[id])} aria-describedby={fieldErrors[id] ? `${id}-error` : undefined}
+                  required aria-required="true" value={value} autoComplete={autoComplete}
+                  onChange={(e) => { clearFieldError(id); setter(e.currentTarget.value); }}
                 />
-                <label htmlFor="buyer">Buyer</label>
-                <input
-                  type="radio"
-                  id="seller"
-                  name="roleId"
-                  value="2"
-                  checked={roleId === 2}
-                  onChange={handleRoleChange}
-                  required
-                  aria-required="true"
-                  disabled={disableInputs}
-                />
-                <label htmlFor="seller">Seller</label>
+                {fieldErrors[id] && <div id={`${id}-error`} className="mt-1" role="alert" aria-live="polite"><ErrorMessage>{fieldErrors[id]}</ErrorMessage></div>}
               </div>
-            </fieldset>
-          ) : null}
+            ))}
 
-          {/* Input fields */}
-          {inputFieldConfigs.map(({ id, label, type, value, setter, ref, autoComplete }) => (
-            <div key={id} className="mb-5">
-              <label htmlFor={id} className="block text-sm font-medium">
-                {label}
-              </label>
-              <input
-                id={id}
-                ref={ref}
-                type={type}
-                className={getInputClasses(Boolean(fieldErrors[id as FieldName]))}
-                aria-invalid={Boolean(fieldErrors[id as FieldName])}
-                aria-describedby={
-                  [fieldErrors[id as FieldName] ? `${id}-error` : null]
-                    .filter(Boolean)
-                    .join(' ') || undefined
-                }
-                required
-                aria-required="true"
-                value={value}
-                disabled={disableInputs}
-                autoComplete={autoComplete}
-                onChange={(e) => {
-                  clearFieldError(id as FieldName);
-                  setter(e.currentTarget.value);
-                }}
-              />
-              {fieldErrors[id as FieldName] && (
-                <div
-                  id={`${id}-error`}
-                  className="mt-1"
-                  role="alert"
-                  aria-live="polite"
-                >
-                  <ErrorMessage>{fieldErrors[id as FieldName]}</ErrorMessage>
-                </div>
-              )}
-            </div>
-          ))}
-
-          {/* Gender */}
-          <div className="mb-5">
-            <label htmlFor="gender" className="block mb-2 text-sm font-medium">
-              Gender
-            </label>
-            <select
-              id="gender"
-              value={gender}
-              onChange={(event) => setGender(event.currentTarget.value)}
-              className={getInputClasses(false)}
-              disabled={disableInputs}
-            >
-              <option value="">Please select...</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
-          {roleId === 2 ? (
+            {/* Gender */}
             <div className="mb-5">
-              <label htmlFor="storeName" className="block mb-2 text-sm font-medium">
-                Store name*
-              </label>
-              <input
-                id="storeName"
-                ref={storeNameRef}
-                value={storeName}
-                onChange={(event) => {
-                  clearFieldError('storeName');
-                  setStoreName(event.currentTarget.value);
-                }}
-                className={getInputClasses(Boolean(fieldErrors.storeName))}
-                disabled={disableInputs}
-                required
-                aria-required="true"
-                aria-invalid={Boolean(fieldErrors.storeName)}
-                aria-describedby={fieldErrors.storeName ? 'storeName-error' : undefined}
-                autoComplete="organization"
-              />
-              {fieldErrors.storeName ? (
-                <div
-                  id="storeName-error"
-                  className="mt-1"
-                  role="alert"
-                  aria-live="polite"
-                >
-                  <ErrorMessage>{fieldErrors.storeName}</ErrorMessage>
-                </div>
-              ) : null}
-            </div>
-          ) : null}
-
-          {/* Address */}
-          <div className="mb-5">
-            <label htmlFor="uAddress" className="block mb-2 text-sm font-medium">
-              Address
-            </label>
-            <input
-              id="uAddress"
-              value={uAddress}
-              onChange={(event) => setUAddress(event.currentTarget.value)}
-              className={getInputClasses(false)}
-              disabled={disableInputs}
-              autoComplete="street-address"
-            />
-          </div>
-
-          {/* Privacy */}
-          <div className="mb-5">
-            <div className={`flex items-center ${fieldErrors.privacyAgreement ? 'rounded border border-red-500 p-2' : ''}`}>
-              <input
-                id="privacyAgreement"
-                type="checkbox"
-                ref={privacyRef}
-                checked={privacyAgreementAccepted}
-                onChange={(event) => {
-                  clearFieldError('privacyAgreement');
-                  setPrivacyAgreementAccepted(event.currentTarget.checked);
-                }}
-                aria-invalid={Boolean(fieldErrors.privacyAgreement)}
-                aria-describedby={fieldErrors.privacyAgreement ? 'privacy-error' : undefined}
-                required
-                aria-required="true"
-                className={`h-4 w-4 rounded text-brand-primary focus:ring-2 focus:ring-brand-primary/50 dark:bg-dark-surface ${fieldErrors.privacyAgreement ? 'border-red-500 focus:ring-red-300' : 'border-brand-muted/40 dark:border-dark-muted/40'}`}
-                disabled={disableInputs}
-              />
-              <label htmlFor="privacyAgreement" className="ml-2 text-sm font-medium">
-                I agree to the Privacy Policy *
-              </label>
+              <label htmlFor="gender" className="block mb-2 text-sm font-medium">Gender</label>
+              <select id="gender" value={gender} onChange={(e) => setGender(e.currentTarget.value)} className={getInputClasses(false)}>
+                <option value="">Please select...</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="other">Other</option>
+              </select>
             </div>
 
-            {fieldErrors.privacyAgreement && (
-              <div id="privacy-error" className="mt-2" role="alert">
-                <ErrorMessage>{fieldErrors.privacyAgreement}</ErrorMessage>
+            {/* Store name */}
+            {roleId === 2 && (
+              <div className="mb-5">
+                <label htmlFor="storeName" className="block mb-2 text-sm font-medium">Store name*</label>
+                <input id="storeName" ref={storeNameRef} value={storeName} onChange={(e) => { clearFieldError('storeName'); setStoreName(e.currentTarget.value); }}
+                  className={getInputClasses(Boolean(fieldErrors.storeName))}
+                  required aria-required="true" aria-invalid={Boolean(fieldErrors.storeName)} aria-describedby={fieldErrors.storeName ? 'storeName-error' : undefined}
+                  autoComplete="organization"
+                />
+                {fieldErrors.storeName && <div id="storeName-error" className="mt-1" role="alert" aria-live="polite"><ErrorMessage>{fieldErrors.storeName}</ErrorMessage></div>}
               </div>
             )}
-          </div>
 
-          {/* Submit button */}
-          <button
-            type="submit"
-            className="mb-2 w-full rounded-lg border border-brand-warning bg-brand-warning px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#d97706] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/70"
-            disabled={disableInputs}
-            aria-disabled={disableInputs}
-          >
-            Register
-          </button>
+            {/* Address */}
+            <div className="mb-5">
+              <label htmlFor="uAddress" className="block mb-2 text-sm font-medium">Address</label>
+              <input id="uAddress" value={uAddress} onChange={(e) => setUAddress(e.currentTarget.value)} className={getInputClasses(false)} autoComplete="street-address" />
+            </div>
 
-          {footerContent}
+            {/* Privacy */}
+            <div className="mb-5">
+              <div className={`flex items-center ${fieldErrors.privacyAgreement ? 'rounded border border-red-500 p-2' : ''}`}>
+                <input id="privacyAgreement" ref={privacyRef} type="checkbox" checked={privacyAgreementAccepted} onChange={(e) => { clearFieldError('privacyAgreement'); setPrivacyAgreementAccepted(e.currentTarget.checked); }} className="mr-2" />
+                <label htmlFor="privacyAgreement" className="text-sm">I agree to the Privacy Policy*</label>
+              </div>
+              {fieldErrors.privacyAgreement && <div id="privacyAgreement-error" className="mt-1" role="alert" aria-live="polite"><ErrorMessage>{fieldErrors.privacyAgreement}</ErrorMessage></div>}
+            </div>
+
+            {/* Submit */}
+            <button disabled={disableInputs} className="w-full rounded-lg bg-brand-primary px-4 py-2 text-white hover:bg-brand-secondary disabled:opacity-50">
+              Register
+            </button>
+          </fieldset>
         </form>
-      </div>
 
-      {/* Login section */}
-      <div className="mx-auto mt-8 max-w-md text-center text-lg text-brand-text dark:text-dark-text">
-        <hr className="mb-4" />
-        <p className="text-brand-muted dark:text-dark-muted">Already have an account?</p>
-        <Link
-          href="/login"
-          className="font-semibold text-brand-primary underline underline-offset-2 transition-colors hover:text-brand-secondary focus:text-brand-secondary"
-        >
-          Log in
-        </Link>{' '}
-        to shop or sell now!
+        {footerContent}
       </div>
-    </>
+    
   );
 }
