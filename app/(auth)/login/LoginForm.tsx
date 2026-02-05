@@ -307,8 +307,8 @@ export default function LoginForm(props: Props) {
             >
               <p className="font-medium">Please correct the following issues:</p>
               <ul className="mt-2 list-disc pl-5 text-sm">
-              {formErrors.map((error, index) => (
-                <li key={`form-error-${index}`}>{error}</li>
+              {formErrors.map((error) => (
+                <li key={`form-error-${error}`}>{error}</li>
               ))}
               </ul>
             </div>
