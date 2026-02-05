@@ -37,7 +37,7 @@ export async function POST(
     let errorMessage = '';
 
     result.error.issues.forEach((issue) => {
-      errorMessage = errorMessage + issue.path[0] + ':' + issue.message + '. ';
+      errorMessage = errorMessage + String(issue.path[0]) + ':' + issue.message + '. ';
     });
 
     return NextResponse.json(
@@ -122,7 +122,7 @@ export async function PUT(
     let errorMessage = '';
 
     result.error.issues.forEach((issue) => {
-      errorMessage = errorMessage + issue.path[0] + ':' + issue.message + '. ';
+      errorMessage = errorMessage + String(issue.path[0]) + ':' + issue.message + '. ';
     });
 
     return NextResponse.json(
@@ -218,16 +218,12 @@ export async function DELETE(): Promise<NextResponse<CartResponseDelete>> {
 
   const products = await removeCartItems(sessionTokenCookie);
 
-  if (!products) {
+  if (products.length === 0) {   
     return NextResponse.json(
-      {
-        error: 'Product not found',
-      },
-      {
-        status: 400,
-      },
+      { error: 'Product not found' },
+      { status: 400 }
     );
   }
-
+  
   return NextResponse.json({ products: products });
 }
