@@ -2,11 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   getProductCategoriesPaginatedInsecure,
   getProductCategoriesTotalInsecure,
+  type ProductCategory
 } from '../../../database/productCategories';
 
 const DEFAULT_LIMIT = 12;
 
-export async function GET(request: NextRequest) {
+type CategoriesResponse = {
+  categories: ProductCategory[];
+  total: number;
+};
+
+type ErrorResponse = { error: string };
+
+
+export async function GET(request: NextRequest)
+: Promise<NextResponse<CategoriesResponse | ErrorResponse>>  {
   const { searchParams } = new URL(request.url);
   const limitParam = searchParams.get('limit');
   const offsetParam = searchParams.get('offset');
