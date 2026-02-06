@@ -77,7 +77,7 @@ export default async function RootLayout({ children }: Props) {
       <body className="min-h-screen bg-brand-bg font-sans text-brand-text antialiased transition-colors dark:bg-dark-bg dark:text-dark-text">
         <div className="flex min-h-screen flex-col">
           <Header user={user} cartSum={cartSum} />
-          <FlashMessageBanner key={flashMessage} message={flashMessage} type={flashMessageType} />
+          <FlashMessageBanner key={`flash-${flashMessage}`} message={flashMessage} type={flashMessageType} />
 
           <PageContent>{children}</PageContent>
 
