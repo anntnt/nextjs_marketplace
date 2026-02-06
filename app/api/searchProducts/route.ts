@@ -1,8 +1,14 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { sql } from '../../../database/connect';
+import type { Product } from '../../../database/products';
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
+type ProductResponse = {
+  products: Product[];
+  totalCount: number;
+};
+
+export async function GET(request: NextRequest): Promise<NextResponse<ProductResponse>> {
   const url = new URL(request.url);
   const query = url.searchParams.get('query') || '';
   const limit = Number(url.searchParams.get('limit')) || 20;
@@ -63,5 +69,5 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     price: Number(product.price),
   }));
 
-  return NextResponse.json({ products, totalCount });
+  return NextResponse.json<ProductResponse>({ products, totalCount });
 }
