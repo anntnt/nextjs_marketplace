@@ -8,17 +8,11 @@ export default async function UserProfilePage() {
   const cookieStore = await cookies();
   const sessionTokenCookie = cookieStore.get('sessionToken');
 
-  if (!sessionTokenCookie) {
-    redirect('/login');
-  }
-
-  // 2. Query the current user with the sessionToken
-  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
+  const user = await getUser(sessionTokenCookie?.value ?? '');
 
   if (!user) {
     redirect('/login');
   }
-
 
   return (
     <main className="flex-grow w-full max-w-full bg-brand-bg px-5 py-12 text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text sm:px-10">

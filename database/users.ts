@@ -17,7 +17,7 @@ export type UserWithEmail = {
   id: number;
   emailAddress: string;
 };
-export const getUser = cache(async (sessionToken: Session['token']) => {
+export const getUser = cache(async (sessionToken: Session['token']): Promise<User | undefined> => {
   const [user] = await sql<User[]>`
     SELECT
       users.id,
