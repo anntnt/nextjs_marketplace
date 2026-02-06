@@ -296,9 +296,12 @@ useEffect(() => {
           <span className="block h-4" aria-hidden />
           <div
             ref={dropdownRef}
+            role="menu"
+            tabIndex={-1}
             className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl dark:border-dark-muted/20 dark:bg-dark-surface"
             onKeyDown={handleMenuKeyDown}
           >
+
             <ul className="px-7 pb-7 pt-6 text-sm text-brand-muted dark:text-dark-muted">
               <li>
                 <Link
