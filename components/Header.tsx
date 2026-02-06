@@ -65,7 +65,6 @@ function AccountDropdown(props: AccountDropdownProps) {
 
 export default function Header(props: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
   const profileDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -208,7 +207,6 @@ export default function Header(props: UserProps) {
 
   const handleAccountDropdownOpenChange = useCallback(
     (open: boolean) => {
-      setIsAccountDropdownOpen(open);
       if (open) {
         focusFirstInDropdown(() => accountDropdownRef.current);
       }
