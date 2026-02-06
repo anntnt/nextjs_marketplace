@@ -93,7 +93,9 @@ export default function VirtuosoSearchGrid({
   }, [query, page, pageSize]);
 
   useEffect(() => {
-    void fetchProducts();
+    fetchProducts().catch((error) => {
+      console.error(error);
+    });
   }, [fetchProducts]);
 
   // Render each product card
