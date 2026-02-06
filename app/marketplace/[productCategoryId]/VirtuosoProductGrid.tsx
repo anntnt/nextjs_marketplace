@@ -96,7 +96,9 @@ export default function VirtuosoProductGrid({
   }, [categoryId, effectivePageSize, currentPage]);
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts().catch((error) => {
+      console.error(error);
+    });
   }, [fetchProducts]);
 
   const renderItemContent = useCallback(
