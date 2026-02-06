@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CategoriesVirtuoso from '../components/CategoriesVirtuoso';
 
+
 export default function Home() {
   return (
     <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text">
