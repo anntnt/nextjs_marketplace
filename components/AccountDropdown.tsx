@@ -83,8 +83,12 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
 
   const handleButtonClick = (e: ReactMouseEvent<HTMLButtonElement>) => {
     const byKeyboard = e.detail === 0;
-    isOpen ? closeDropdown() : openDropdown(byKeyboard);
-  };
+    if (isOpen) {
+      closeDropdown();
+    } else {
+      openDropdown(byKeyboard);
+    }
+  };  
 
   const handleMenuKeyDown = useCallback(
     (event: ReactKeyboardEvent<HTMLDivElement>) => {
