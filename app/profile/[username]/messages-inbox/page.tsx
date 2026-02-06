@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getUser } from '../../../../database/users';
 
-export default async function UserProfilePage() {
+export default async function MessageInboxPage() {
 
     // 1. Check if the sessionToken cookie exists
     const sessionTokenCookie = (await cookies()).get('sessionToken');
