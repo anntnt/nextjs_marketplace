@@ -115,7 +115,7 @@ export default function CategoriesVirtuoso() {
     if (!category) return <div className="p-2" />;
 
     return (
-      <div className="p-2" key={category.id}>
+      <div className="p-2" key={`category-${category.id}`}>
         <Card
           className="flex flex-col"
           renderImage={() => (
