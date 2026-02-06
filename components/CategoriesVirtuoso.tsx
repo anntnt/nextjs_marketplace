@@ -107,7 +107,7 @@ export default function CategoriesVirtuoso() {
   }, [page]);
 
   useEffect(() => {
-    fetchCategories();
+    fetchCategories().catch(console.error);
   }, [fetchCategories]);
 
   const renderItemContent = (index: number) => {
