@@ -3,7 +3,7 @@
 import { Card } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { VirtuosoGrid } from 'react-virtuoso';
 import type { Product } from '../../../database/products';
 import AddToCartForm from './addToCartForm';
@@ -37,6 +37,7 @@ export default function VirtuosoProductGrid({
   const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const smoothScrollTo = useCallback((targetY: number, duration = 1100) => {
     if (typeof window === 'undefined') return;
@@ -60,10 +61,9 @@ export default function VirtuosoProductGrid({
   }, []);
 
   const scrollToTop = useCallback(() => {
-    if (typeof window === 'undefined') return;
+    if (!containerRef.current) return;
 
-    const target = document.getElementById('category-products');
-    const top = target?.getBoundingClientRect().top ?? 0;
+    const top = containerRef.current.getBoundingClientRect().top;
     const scrollTarget = window.scrollY + top - 120;
 
     smoothScrollTo(Math.max(0, scrollTarget));
@@ -74,7 +74,7 @@ export default function VirtuosoProductGrid({
       setCurrentPage(newPage);
       requestAnimationFrame(scrollToTop);
     },
-    [scrollToTop],
+    [scrollToTop]
   );
 
   const effectivePageSize = pageSize ?? 30; // Default page size if not provided
@@ -138,13 +138,12 @@ export default function VirtuosoProductGrid({
         </div>
       );
     },
-    [products, userRoleId],
+    [products, userRoleId]
   );
 
   const renderPagination = () => {
-    if (products.length === 0 || totalPages <= 1) {
-      return null;
-    }
+    if (products.length === 0 || totalPages <= 1) return null;
+    
 
     const start = Math.max(1, currentPage - 1);
     const end = Math.min(totalPages, currentPage + 1);
@@ -162,7 +161,7 @@ export default function VirtuosoProductGrid({
           onClick={() => changePage(i)}
         >
           {i}
-        </button>,
+        </button>
       );
     }
 
@@ -190,7 +189,7 @@ export default function VirtuosoProductGrid({
   };
 
   return (
-    <>
+    <div ref={containerRef} id="category-products">
       <VirtuosoGrid
         useWindowScroll
         totalCount={products.length}
@@ -202,6 +201,6 @@ export default function VirtuosoProductGrid({
         // Hier Höhe definieren:
       />
       {renderPagination()}
-    </>
+      </div>
   );
 }
