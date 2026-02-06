@@ -219,6 +219,7 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
           id="profile-menu"
           role="menu"
           aria-label="Profile options"
+          tabIndex={-1}  
           className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl focus:outline-none dark:border-dark-muted/20 dark:bg-dark-surface"
           onBlur={handleFocusLeave}
           onKeyDown={handleMenuKeyDown}
