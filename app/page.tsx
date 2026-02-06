@@ -1,35 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaLeaf, FaRocket, FaShieldHalved } from 'react-icons/fa6';
-import { FaShippingFast } from 'react-icons/fa';
 import CategoriesVirtuoso from '../components/CategoriesVirtuoso';
-
-const categoryHighlights = [
-  {
-    title: 'Handpicked Brands',
-    description: 'Curated collections from passionate sellers and boutique makers.',
-    href: '/#categories',
-    icon: <FaRocket className="h-6 w-6 text-brand-primary" />,
-  },
-  {
-    title: 'Eco-Friendly Picks',
-    description: 'Discover sustainable alternatives for mindful shoppers.',
-    href: '/#categories',
-    icon: <FaLeaf className="h-6 w-6 text-brand-secondary" />,
-  },
-  {
-    title: 'Buyer Protection',
-    description: 'Safe payments, verified sellers, and dedicated support.',
-    href: '/support',
-    icon: <FaShieldHalved className="h-6 w-6 text-brand-accent" />,
-  },
-  {
-    title: 'Fast Shipping',
-    description: 'Express delivery options across the EU with live tracking.',
-    href: '/#categories',
-    icon: <FaShippingFast className="h-6 w-6 text-brand-primary" />,
-  },
-];
 
 export default function Home() {
   return (
