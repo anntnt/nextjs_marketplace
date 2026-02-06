@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
-import type { HTMLAttributes, PropsWithChildren } from 'react';
+import type { HTMLAttributes} from 'react';
 import { createElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FiHelpCircle } from 'react-icons/fi';
 import LogoutButton from '../app/(auth)/logout/LogoutButton';
