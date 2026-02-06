@@ -109,7 +109,7 @@ export default function VirtuosoProductGrid({
       return (
         <div
           className="p-2"
-          key={product.id}
+          key={`product-${product.id}`}
         >
           <Card
             data-test-id={`product-id-${product.id}`}
