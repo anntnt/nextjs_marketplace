@@ -37,6 +37,7 @@ export default function CategoriesVirtuoso() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const categoriesRef = React.useRef<HTMLDivElement>(null);
 
   const smoothScrollTo = useCallback((targetY: number, duration = 1100) => {
     if (typeof window === 'undefined') return;
@@ -62,9 +63,10 @@ export default function CategoriesVirtuoso() {
   const scrollToTop = useCallback(() => {
     if (typeof window === 'undefined') return;
 
-    const target = document.getElementById('categories');
-    const top = target?.getBoundingClientRect().top ?? 0;
-    const scrollTarget = window.scrollY + top - 120;
+    if (!categoriesRef.current) return;
+    const rect = categoriesRef.current.getBoundingClientRect();
+    const scrollTarget = window.scrollY + rect.top - 120;
+    
 
     smoothScrollTo(Math.max(0, scrollTarget));
   }, [smoothScrollTo]);
@@ -190,7 +192,7 @@ export default function CategoriesVirtuoso() {
   };
 
   return (
-    <div className="relative">
+<div ref={categoriesRef} className="relative">
       {(loading || categories.length === 0) && (
         <div className="mb-6 flex w-full items-center justify-center">
           <div className="flex items-center gap-3 rounded-full border border-brand-muted/30 bg-brand-surface px-4 py-2 text-sm text-brand-muted shadow-sm shadow-brand-primary/10 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-muted">
@@ -228,3 +230,4 @@ export default function CategoriesVirtuoso() {
     </div>
   );
 }
+
