@@ -17,7 +17,7 @@ export default async function EditProductPage(props: Props) {
   const sessionTokenCookie = (await cookies()).get('sessionToken');
 
   // 2. Query the current user with the sessionToken
-  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
+  const user = await getUser(sessionTokenCookie?.value ?? '');
 
   // 3. If user doesn't exist, redirect to login page
   if (!user) {
