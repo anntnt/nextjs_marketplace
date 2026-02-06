@@ -57,6 +57,7 @@ export async function POST(
         categoryId: result.data.categoryId,
         size: null,
         color: null,
+        brand: null,
       }));
 
     if (!newProduct) {

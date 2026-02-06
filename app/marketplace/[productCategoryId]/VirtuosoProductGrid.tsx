@@ -35,7 +35,6 @@ export default function VirtuosoProductGrid({
   pageSize?: number;
 }) {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -81,7 +80,6 @@ export default function VirtuosoProductGrid({
   const effectivePageSize = pageSize ?? 30; // Default page size if not provided
 
   const fetchProducts = useCallback(async () => {
-    setLoading(true);
     try {
       const offset = (currentPage - 1) * effectivePageSize;
       const res = await fetch(
@@ -94,8 +92,6 @@ export default function VirtuosoProductGrid({
       setTotalPages(Math.max(1, Math.ceil(data.totalCount / effectivePageSize)));
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   }, [categoryId, effectivePageSize, currentPage]);
 
