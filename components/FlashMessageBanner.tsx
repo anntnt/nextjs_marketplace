@@ -9,21 +9,21 @@ type FlashMessageBannerProps = {
 };
 
 export default function FlashMessageBanner({ message, type = 'info' }: FlashMessageBannerProps) {
-  const [isVisible, setIsVisible] = useState(() => Boolean(message));
+  const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     if (!message) {
-      setIsVisible(false);
       return;
     }
 
-    setIsVisible(true);
-    const timeoutId = window.setTimeout(() => setIsVisible(false), 3000);
+    const timeoutId = window.setTimeout(() => setDismissed(true), 3000);
 
     return () => {
       window.clearTimeout(timeoutId);
     };
   }, [message]);
+
+  if (!message || dismissed) return null;
 
   const styles = useMemo(() => {
     switch (type) {
@@ -37,8 +37,6 @@ export default function FlashMessageBanner({ message, type = 'info' }: FlashMess
         return 'bg-info-light text-info dark:bg-brand-primary/20';
     }
   }, [type]);
-
-  if (!message || !isVisible) return null;
 
   return (
     <div className={`py-2 text-center text-sm ${styles}`} role="status" aria-live="polite">
