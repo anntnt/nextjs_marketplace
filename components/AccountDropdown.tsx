@@ -17,9 +17,6 @@ const REGISTER_PATHS = ['/register', '/register/seller', '/register/buyer'];
 
 export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
-  const [overlayVisible, setOverlayVisible] = useState(false);
-  const [overlayReady, setOverlayReady] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
