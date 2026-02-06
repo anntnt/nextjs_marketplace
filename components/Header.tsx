@@ -67,6 +67,9 @@ export default function Header(props: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
   const profileDropdownRef = useRef<HTMLDivElement>(null);
+  const navRootRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  
   const pathname = usePathname();
   const sellerRegisterHref = useMemo(() => {
     const safe = pathname ? getSafeReturnToPath(pathname) : undefined;
@@ -92,7 +95,7 @@ export default function Header(props: UserProps) {
         return;
       }
 
-      const root = document.querySelector('[data-nav-root]');
+      const root = navRootRef.current; 
       if (!root) return;
 
       const items = Array.from(
@@ -158,7 +161,7 @@ export default function Header(props: UserProps) {
  
   // keeps the overlay exactly flush below the header even while scrolling
   useEffect(() => {
-    const header = document.querySelector('header');
+    const header = headerRef.current;
     if (!header) return;
 
     const updateOverlayTop = () => {
@@ -224,11 +227,14 @@ export default function Header(props: UserProps) {
   );
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[60] border-b border-brand-secondary/50 bg-brand-secondary text-white shadow-lg transition-colors dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text">
+    <header 
+      ref={headerRef}
+      className="fixed top-0 left-0 right-0 z-[60] border-b border-brand-secondary/50 bg-brand-secondary text-white shadow-lg transition-colors dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text">
       <nav className="py-3.5 sm:py-3 relative z-[60]">
         <div
           className="mx-auto flex w-full max-w-screen-2xl items-center gap-4 px-2 sm:px-4 lg:px-6"
           data-nav-root
+          ref={navRootRef}
         >
           {/* Logo */}
           <Link
