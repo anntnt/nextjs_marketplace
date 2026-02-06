@@ -17,9 +17,10 @@ const REGISTER_PATHS = ['/register', '/register/seller', '/register/buyer'];
 
 export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
-  const [overlayVisible, setOverlayVisible] = useState(false);
-  const [overlayReady, setOverlayReady] = useState(false);
+  const openedByKeyboard = useRef(false);
+  const overlayVisible = useRef(false);
+  const overlayReady = useRef(false);
+
   const buttonRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,11 +35,9 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
   const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const overlayTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ✅ FIXED: safer version of safeContains
   const safeContains = (parent?: Element | null, child?: any): boolean => {
     if (!parent || !child) return false;
     try {
-      // Ensure child is actually a Node (to avoid runtime crash)
       return child instanceof Node && parent.contains(child);
     } catch {
       return false;
@@ -63,11 +62,11 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
   const openDropdown = useCallback(
     (byKeyboard: boolean) => {
       clearTimeouts([openTimer.current, overlayTimer.current]);
-      setOpenedByKeyboard(byKeyboard);
+      openedByKeyboard.current = byKeyboard;
       setIsOpen(true);
-      setOverlayVisible(true);
-      setOverlayReady(false);
-      overlayTimer.current = setTimeout(() => setOverlayReady(true), 180);
+      overlayVisible.current = true;
+      overlayReady.current = false;
+      overlayTimer.current = setTimeout(() => (overlayReady.current = true), 180);
       onOpenChange?.(true);
     },
     [onOpenChange, clearTimeouts]
@@ -76,9 +75,9 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
   const closeDropdown = useCallback(() => {
     clearTimeouts([openTimer.current, overlayTimer.current]);
     setIsOpen(false);
-    setOpenedByKeyboard(false);
-    setOverlayReady(false);
-    setOverlayVisible(false);
+    openedByKeyboard.current = false;
+    overlayReady.current = false;
+    overlayVisible.current = false;
     onOpenChange?.(false);
   }, [onOpenChange, clearTimeouts]);
 
@@ -86,6 +85,7 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
     const byKeyboard = e.detail === 0;
     isOpen ? closeDropdown() : openDropdown(byKeyboard);
   };
+
   const handleMenuKeyDown = useCallback(
     (event: ReactKeyboardEvent<HTMLDivElement>) => {
       if (event.key !== 'Tab') return;
@@ -134,33 +134,32 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
       });
     }
   }, [isOpen]);
-  
-// --- close dropdown on Escape or scroll ---------------------------
-useEffect(() => {
-  if (!isOpen) return;
 
-  const onKey = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
+  // --- close dropdown on Escape or scroll ---------------------------
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeDropdown();
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => buttonRef.current?.focus());
+        });
+      }
+    };
+
+    const onScroll = () => {
       closeDropdown();
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => buttonRef.current?.focus());
-      });
-    }
-  };
+    };
 
-  const onScroll = () => {
-    closeDropdown();
-  };
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('scroll', onScroll, { passive: true });
 
-  document.addEventListener('keydown', onKey);
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  return () => {
-    document.removeEventListener('keydown', onKey);
-    window.removeEventListener('scroll', onScroll);
-  };
-}, [isOpen, closeDropdown]);
-
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [isOpen, closeDropdown]);
 
   // --- hover logic ------------------------------------------------
   const hoverTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -168,7 +167,7 @@ useEffect(() => {
   const onEnter = () => {
     if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
     if (openTimer.current) clearTimeout(openTimer.current);
-    setOverlayVisible(true);
+    overlayVisible.current = true;
     openTimer.current = setTimeout(() => openDropdown(false), 120);
   };
 
@@ -179,11 +178,9 @@ useEffect(() => {
     if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
     hoverTimeout.current = setTimeout(() => {
       closeDropdown();
-      setOverlayVisible(false);
-    }, 200); // ← small delay prevents flicker
+      overlayVisible.current = false;
+    }, 200);
   };
-
-
 
   // --- NEW: close when hovering another top-level nav item --------
   useEffect(() => {
@@ -250,7 +247,7 @@ useEffect(() => {
         </button>
       </div>
 
-      {/* Overlay — starts below header, closes dropdown on hover */}
+      {/* Overlay */}
       <div
         className={`account-overlay fixed left-0 right-0 bottom-0 z-40 transition-opacity duration-300 ease-in-out ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -258,14 +255,8 @@ useEffect(() => {
         style={{ top: 'var(--header-height, 60px)' }}
         aria-hidden
         onClick={closeDropdown}
-        onMouseEnter={() => {
-          // close gracefully when user moves mouse onto overlay
-          setTimeout(() => {
-            closeDropdown();
-          }, 120); // short fade delay for smooth UX
-        }}
+        onMouseEnter={() => setTimeout(closeDropdown, 120)}
       />
-      {/* Dropdown */}
       {isOpen && (
         <div
           className="absolute right-0 top-full z-[70] flex w-60 translate-x-10 flex-col"
@@ -280,22 +271,17 @@ useEffect(() => {
             className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl dark:border-dark-muted/20 dark:bg-dark-surface"
             onKeyDown={handleMenuKeyDown}
           >
-
             <ul className="px-7 pb-7 pt-6 text-sm text-brand-muted dark:text-dark-muted">
               <li>
                 <Link
                   data-first-focus
                   href={loginHref as any}
                   onClick={closeDropdown}
-                  className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors
-                            hover:bg-brand-secondary hover:text-white focus:text-white focus:ring-brand-warning
-                            focus-visible:text-white focus-visible:bg-brand-primary focus-visible:text-brand-accent focus-visible:outline-none
-                            focus-visible:ring-2 focus-visible:ring-brand-warning active:bg-brand-warning"
+                  className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors hover:bg-brand-secondary hover:text-white focus:text-white focus:ring-brand-warning focus-visible:text-white focus-visible:bg-brand-primary focus-visible:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warning active:bg-brand-warning"
                 >
                   Login
                 </Link>
               </li>
-
               <li className="text-md text-center">
                 <hr className="mt-4 mb-4" />
                 <div className="text-center text-brand-text dark:text-dark-text">
