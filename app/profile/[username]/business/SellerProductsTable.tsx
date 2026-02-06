@@ -113,7 +113,7 @@ const listComponents = {
 
 export default function SellerProductsTable({ products, username }: Props) {
   const renderProductCard = useCallback(
-    (_index: number, product: Product) => (
+    (index: number, product: Product) => (
       <SellerProductCard product={product} username={username} />
     ),
     [username],
