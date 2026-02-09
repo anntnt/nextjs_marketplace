@@ -463,7 +463,7 @@ export async function up(sql: Sql) {
 
     const valuePlaceholders = chunk
       .map(
-        (_, chunkIndex) =>
+        (unusedChunk, chunkIndex) =>
           `($${chunkIndex * 7 + 1}, $${chunkIndex * 7 + 2}, $${chunkIndex * 7 + 3}, $${chunkIndex * 7 + 4}, $${chunkIndex * 7 + 5}, $${chunkIndex * 7 + 6}, $${chunkIndex * 7 + 7})`,
       )
       .join(', ');
