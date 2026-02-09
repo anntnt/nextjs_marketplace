@@ -218,7 +218,7 @@ export const getCategoryProductsInsecure = cache(
       price: Number(productRaw.price),
     }));
 
-    return { products, totalCount: count ?? 0 };
+    return { products, totalCount: count };
   },
 );
 
@@ -304,7 +304,7 @@ export const getProductsOfSeller = cache(
 
     return {
       products,
-      totalCount: count ?? 0,
+      totalCount: count,
     };
   },
 );
