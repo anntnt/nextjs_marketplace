@@ -108,7 +108,7 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
     if (event.shiftKey && active === first) {
       event.preventDefault();
       pendingFocusDir.current = 'prev';
-      active?.blur();
+      active.blur();
       closeDropdown(false);
       console.log('[ProfileDropdown] Shift+Tab on first item → queue prev focus');
       return;
@@ -117,7 +117,7 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
     if (!event.shiftKey && active === last) {
       event.preventDefault();
       pendingFocusDir.current = 'next';
-      active?.blur();
+      active.blur();
       closeDropdown(false);
       console.log('[ProfileDropdown] Tab on last item → queue next focus');
     }
