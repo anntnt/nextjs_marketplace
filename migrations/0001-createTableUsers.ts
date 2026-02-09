@@ -1,7 +1,7 @@
 import type { Sql } from 'postgres';
 import { z } from 'zod';
 
-const USERNAME_PATTERN = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
+const usernamePattern = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
 const USERNAME_MIN_MESSAGE = 'Username: Please enter at least 3 characters for the username.';
 const USERNAME_PATTERN_MESSAGE =
   'Username: Your username must have at least one letter and no unusual characters.';
@@ -13,7 +13,7 @@ export const userLoginSchema = z.object({
   username: z
     .string()
     .min(3, { message: USERNAME_MIN_MESSAGE })
-    .regex(USERNAME_PATTERN, { message: USERNAME_PATTERN_MESSAGE }),
+    .regex(usernamePattern, { message: USERNAME_PATTERN_MESSAGE }),
   password: z.string().min(1, { message: PASSWORD_REQUIRED_MESSAGE }),
 });
 
@@ -62,7 +62,7 @@ export const userSchema = z.object({
   username: z
     .string()
     .min(3, { message: USERNAME_MIN_MESSAGE })
-    .regex(USERNAME_PATTERN, { message: USERNAME_PATTERN_MESSAGE }),
+    .regex(usernamePattern, { message: USERNAME_PATTERN_MESSAGE }),
   firstName: z.string(),
   lastName: z.string(),
   password: z.string().min(8, { message: PASSWORD_REGISTER_MIN_MESSAGE }),
