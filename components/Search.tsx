@@ -31,7 +31,6 @@ export default function Search({ placeholder, className }: Props) {
         required
       />
       <button
-        type="submit"
         className="cursor-pointer absolute inset-y-1 right-2 flex items-center justify-center rounded-full px-3 py-1 text-sm font-semibold text-brand-primary transition-colors hover:text-brand-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 dark:text-brand-primary"
       >
         <svg
