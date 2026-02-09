@@ -16,7 +16,6 @@
     "**/*.jsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts",
-    "migrations/**/*"
+    ".next/types/**/*.ts"
   ]
 }
