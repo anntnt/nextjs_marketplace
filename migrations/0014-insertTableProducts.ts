@@ -248,7 +248,7 @@ const buildMeaningfulProductName = (seed: number, categoryName: string) => {
   const baseName = baseNames[seed % baseNames.length];
   const descriptor = descriptorWords[(seed * 7 + 3) % descriptorWords.length];
 
-  if (baseName.toLowerCase().includes(descriptor.toLowerCase())) {
+  if ((baseName ?? '').toLowerCase().includes((descriptor ?? '').toLowerCase())) {
     return baseName;
   }
 
@@ -402,7 +402,7 @@ export async function up(sql: Sql) {
     sellerId: number,
   ) => {
     const rawName = buildMeaningfulProductName(seed, categoryName);
-    const uniqueName = getUniqueProductName(rawName);
+    const uniqueName = getUniqueProductName(rawName ?? '');
     const name =
       uniqueName.length > 60 ? uniqueName.slice(0, 60).trimEnd() : uniqueName;
     const description = buildProductDescription(seed);
@@ -442,9 +442,13 @@ export async function up(sql: Sql) {
     for (let count = 0; count < PRODUCTS_PER_CATEGORY; count++) {
       const seed = index * PRODUCTS_PER_CATEGORY + count;
       const sellerId = sellerIds[seed % sellerIds.length];
-      products.push(
-        generateProduct(seed, category.id, category.name, sellerId),
-      );
+      if (sellerId !== undefined) {
+        products.push(
+          generateProduct(seed, category.id, category.name, sellerId),
+        );
+      } else {
+        throw new Error('Seller ID is undefined');
+      }
     }
   });
 
