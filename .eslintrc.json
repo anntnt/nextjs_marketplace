@@ -1,0 +1,14 @@
+{
+    "root": true,
+    "extends": ["next/core-web-vitals"],
+    "plugins": ["@stylistic"],
+    "rules": {
+      "dot-location": "off",
+      "new-parens": "off",
+      "no-mixed-operators": "off",
+      "no-whitespace-before-property": "off",
+      "rest-spread-spacing": "off",
+      "spaced-comment": "off"
+    }
+  }
+  
