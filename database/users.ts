@@ -135,7 +135,7 @@ export const getUserWithPasswordHashInsecure = cache(
   },
 );
 
-export const getUserByStoreName = cache(async (storeName: string) => {
+export const getUserByStoreNameInsecure = cache(async (storeName: string) => {
   const [user] = await sql<User[]>`
     SELECT
       id,

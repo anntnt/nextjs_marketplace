@@ -7,7 +7,7 @@ import { createSessionInsecure } from '../../../../database/sessions';
 import {
   createUserInsecure,
   getUserByEmailInsecure,
-  getUserByStoreName,
+  getUserByStoreNameInsecure,
   getUserInsecure,
 } from '../../../../database/users';
 import { createOrUpdateCartItem } from '../../../../database/cartProducts';
@@ -124,7 +124,7 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
   let normalizedStoreName: string | null = null;
   if (validatedUser.roleId === 2) {
     normalizedStoreName = trimmedStoreName;
-    const existingStore = await getUserByStoreName(trimmedStoreName);
+    const existingStore = await getUserByStoreNameInsecure(trimmedStoreName);
     if (existingStore) {
       const suggestionBase = trimmedStoreName.replace(/[^a-z0-9]/gi, '') || 'Store';
       const suggestionCandidates = [
@@ -135,7 +135,7 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
       const suggestions: string[] = [];
 
       for (const suggestion of suggestionCandidates) {
-        if (!(await getUserByStoreName(suggestion))) {
+        if (!(await getUserByStoreNameInsecure(suggestion))) {
           suggestions.push(suggestion);
         }
         if (suggestions.length >= 2) break;
