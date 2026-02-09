@@ -35,7 +35,7 @@ export async function DELETE(
     const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
     const updatedGuestCart = removeGuestCartItem(guestCartItems, productId);
 
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true } as CartProductResponseDelete);
 
     if (updatedGuestCart.length === 0) {
       response.cookies.set({ name: 'guestCart', value: '', path: '/', maxAge: 0 });

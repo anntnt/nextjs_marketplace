@@ -103,7 +103,7 @@ export async function POST(
     : undefined;
   const guestCartItems = parseGuestCartCookie(guestCartCookieValue);
 
-  const response = NextResponse.json({
+  const response = NextResponse.json<LoginResponseBody>({
     success: true,
     user: {
       username: userWithPasswordHash.username,
