@@ -47,7 +47,8 @@ export default function EditProductFormApi(props: Props) {
 
     setSuccessMessage('Product updated successfully');
 
-    redirect(`/profile/${props.username}/business/`);
+    router.push(`/profile/${props.username}/business/` as any);
+
   }
 
   return (
