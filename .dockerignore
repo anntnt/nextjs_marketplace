@@ -4,6 +4,7 @@ _.env
 .env.test
 .env_.local
 .env.development
+.env.production
 
 # Scripts
 

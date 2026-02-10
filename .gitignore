@@ -31,6 +31,7 @@ yarn-error.log*
 .env
 .env.local
 .env.pgadmin
+.env.production
 
 # vercel
 .vercel
@@ -49,3 +50,4 @@ playwright/test-results/
 /playwright/.cache/
 
 app/api/chat/
+.env*.local

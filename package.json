@@ -12,6 +12,7 @@
     "preflight": "preflight"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
     "@stripe/react-stripe-js": "^5.2.0",
     "@stripe/stripe-js": "^8.1.0",
     "@upleveled/ley": "^0.9.2",
