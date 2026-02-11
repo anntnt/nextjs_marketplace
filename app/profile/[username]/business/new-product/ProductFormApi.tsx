@@ -5,6 +5,7 @@ import { useState } from 'react';
 import type { ProductCategory } from '../../../../../database/productCategories';
 import type { ProductCreatePost } from '../../../../api/new-product/route';
 import ErrorMessage from '../../../../ErrorMessage';
+import { validateImageDimensions } from '../../../../../util/image';
 
 type Props = {
   sellerId: number;
@@ -30,6 +31,24 @@ export default function ProductFormApi(props: Props) {
     setDescription('');
     setCategoryId('');
   }
+
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+  
+    // Validate using your helper
+    const isValid = await validateImageDimensions(file, 640, 404);
+  
+    if (!isValid) {
+      alert("Image must match the 640×404 dimensions");
+      return;
+    }
+  
+    // Valid → set preview URL
+    setImageUrl(URL.createObjectURL(file));
+  };
+  
   async function productFormApiHandler(formData: FormData) {
     const response = await fetch('/api/new-product', {
       method: 'POST',
@@ -105,12 +124,11 @@ export default function ProductFormApi(props: Props) {
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
           Select Image:
           <input
-            value={imageUrl}
             className="block w-full cursor-pointer rounded-lg border border-brand-muted/30 bg-brand-surface text-sm text-brand-primary transition focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-brand-primary"
             type="file"
             name="image"
             accept="image/*"
-            onChange={(event) => setImageUrl(event.currentTarget.value)}
+            onChange={(event) => handleFileChange(event)}
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
@@ -153,3 +171,5 @@ export default function ProductFormApi(props: Props) {
     </div>
   );
 }
+
+
