@@ -2,6 +2,7 @@ import type { NextConfig } from 'next';
 import type { Configuration as WebpackConfiguration } from 'webpack';
 
 const nextConfig: NextConfig = {
+  turbopack: {},
   typedRoutes: true,
   webpack: (config: WebpackConfiguration, { isServer }) => {
     if (isServer) {
@@ -16,9 +17,6 @@ const nextConfig: NextConfig = {
     }
 
     return config;
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,
