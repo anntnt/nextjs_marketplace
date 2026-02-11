@@ -6,8 +6,9 @@ type Props = {
   };
 };
 
-export default function Page({ searchParams }: Props) {
-  const query = searchParams.query ?? '';
+export default async function Page({ searchParams }: Props) {
+  const params = await searchParams; // ← REQUIRED 
+  const query = params?.query ?? ''; // ← use params, not searchParams
 
   return (
     <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text antialiased px-4 sm:px-8 py-12">
