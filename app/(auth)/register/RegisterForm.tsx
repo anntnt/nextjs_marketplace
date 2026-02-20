@@ -306,7 +306,7 @@ export default function RegisterForm(props: Props) {
     }
 
     if (!data || !data.success) {
-      setErrors(data?.errors ?? [{ message: 'Please check the form and try again.' }]);
+      setErrors(data?.errors ?? [{ message: 'Register: Please check the form and try again.' }]);
       setShouldAutoFocusError(true);
       return;
     }
