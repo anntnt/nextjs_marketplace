@@ -94,185 +94,199 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
           : [{ message: 'Please check the form and try again.' }],
     });
   }
+  try {
 
-  if (result.data.password !== result.data.passwordRepeat) {
-    return NextResponse.json({
-      success: false,
-      errors: [
-        {
-          message: 'Confirm password: The passwords do not match.',
-        },
-      ],
-    });
-  }
-
-  // 3. Check if user already exist in the database
-  const { passwordRepeat, ...validatedUser } = result.data;
-  const trimmedStoreName = validatedUser.storeName?.trim() ?? '';
-
-  if (validatedUser.roleId === 2 && trimmedStoreName.length === 0) {
-    return NextResponse.json({
-      success: false,
-      errors: [
-        {
-          message: 'Store name: Please enter your store name.',
-        },
-      ],
-    });
-  }
-
-  let normalizedStoreName: string | null = null;
-  if (validatedUser.roleId === 2) {
-    normalizedStoreName = trimmedStoreName;
-    const existingStore = await getUserByStoreNameInsecure(trimmedStoreName);
-    if (existingStore) {
-      const suggestionBase = trimmedStoreName.replace(/[^a-z0-9]/gi, '') || 'Store';
-      const suggestionCandidates = [
-        `${suggestionBase}Shop`,
-        `${suggestionBase}Market`,
-        `${suggestionBase}${Math.floor(Math.random() * 90 + 10)}`,
-      ];
-      const suggestions: string[] = [];
-
-      for (const suggestion of suggestionCandidates) {
-        if (!(await getUserByStoreNameInsecure(suggestion))) {
-          suggestions.push(suggestion);
-        }
-        if (suggestions.length >= 2) break;
-      }
-
-      const suggestionSuffix =
-        suggestions.length > 0 ? ` Suggestions: ${suggestions.join(', ')}` : '';
-
+    if (result.data.password !== result.data.passwordRepeat) {
       return NextResponse.json({
         success: false,
         errors: [
           {
-            message: `Store name: The store name you entered is already taken. Please choose another.${suggestionSuffix}`,
+            message: 'Confirm password: The passwords do not match.',
           },
         ],
       });
     }
-  }
-  const user = await getUserInsecure(validatedUser.username);
 
-  if (user) {
-    return NextResponse.json({
-      success: false,
-      errors: [
-        {
-          message:
-            'Username: The username you entered is not available. Please choose a different one.',
-        },
-      ],
+    // 3. Check if user already exist in the database
+    const { passwordRepeat, ...validatedUser } = result.data;
+    const trimmedStoreName = validatedUser.storeName?.trim() ?? '';
+
+    if (validatedUser.roleId === 2 && trimmedStoreName.length === 0) {
+      return NextResponse.json({
+        success: false,
+        errors: [
+          {
+            message: 'Store name: Please enter your store name.',
+          },
+        ],
+      });
+    }
+
+    let normalizedStoreName: string | null = null;
+    if (validatedUser.roleId === 2) {
+      normalizedStoreName = trimmedStoreName;
+      const existingStore = await getUserByStoreNameInsecure(trimmedStoreName);
+      if (existingStore) {
+        const suggestionBase = trimmedStoreName.replace(/[^a-z0-9]/gi, '') || 'Store';
+        const suggestionCandidates = [
+          `${suggestionBase}Shop`,
+          `${suggestionBase}Market`,
+          `${suggestionBase}${Math.floor(Math.random() * 90 + 10)}`,
+        ];
+        const suggestions: string[] = [];
+
+        for (const suggestion of suggestionCandidates) {
+          if (!(await getUserByStoreNameInsecure(suggestion))) {
+            suggestions.push(suggestion);
+          }
+          if (suggestions.length >= 2) break;
+        }
+
+        const suggestionSuffix =
+          suggestions.length > 0 ? ` Suggestions: ${suggestions.join(', ')}` : '';
+
+        return NextResponse.json({
+          success: false,
+          errors: [
+            {
+              message: `Store name: The store name you entered is already taken. Please choose another.${suggestionSuffix}`,
+            },
+          ],
+        });
+      }
+    }
+    const user = await getUserInsecure(validatedUser.username);
+
+    if (user) {
+      return NextResponse.json({
+        success: false,
+        errors: [
+          {
+            message:
+              'Username: The username you entered is not available. Please choose a different one.',
+          },
+        ],
+      });
+    }
+
+    const userWithEmail = await getUserByEmailInsecure(validatedUser.emailAddress);
+
+    if (userWithEmail) {
+      return NextResponse.json({
+        success: false,
+        errors: [
+          {
+            message:
+              'Email address: The email address you entered is already in use. Please use a different one.',
+          },
+        ],
+      });
+    }
+
+    // confirm password
+
+    // 4. Hash the plain password from the user
+    const passwordHash = await bcrypt.hash(validatedUser.password, 12);
+
+    // 5. Save the user information with the hashed password in the database
+    const newUser = await createUserInsecure(
+      validatedUser.username,
+      passwordHash,
+      validatedUser.firstName,
+      validatedUser.lastName,
+      validatedUser.emailAddress,
+      validatedUser.birthday,
+      validatedUser.gender || null,
+      normalizedStoreName,
+      validatedUser.uAddress || null,
+      validatedUser.roleId,
+    );
+
+    if (!newUser) {
+      return NextResponse.json({
+        success: false,
+        errors: [
+          {
+            message: 'Registration failed. Please check your information and try again.',
+          },
+        ],
+      });
+    }
+
+    // 6. Create a token
+    const token = crypto.randomBytes(100).toString('base64');
+
+    // 7. Create the session record
+    const session = await createSessionInsecure(newUser.id, token);
+
+    if (!session) {
+      return NextResponse.json({
+        success: false,
+        errors: [
+          {
+            message: 'There was a problem starting your session. Please try again.',
+          },
+        ],
+      });
+    }
+
+    const cookieStore = await cookies();
+    const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+
+    cookieStore.set({
+      name: 'sessionToken',
+      value: session.token,
+      ...secureCookieOptions,
     });
-  }
 
-  const userWithEmail = await getUserByEmailInsecure(validatedUser.emailAddress);
+    if (guestCartItems.length > 0) {
+      for (const item of guestCartItems) {
+        await createOrUpdateCartItem(session.token, item.productId, item.quantity);
+      }
 
-  if (userWithEmail) {
-    return NextResponse.json({
-      success: false,
-      errors: [
-        {
-          message:
-            'Email address: The email address you entered is already in use. Please use a different one.',
-        },
-      ],
-    });
-  }
-
-  // This is where you do confirm password
-
-  // 4. Hash the plain password from the user
-  const passwordHash = await bcrypt.hash(validatedUser.password, 12);
-
-  // 5. Save the user information with the hashed password in the database
-  const newUser = await createUserInsecure(
-    validatedUser.username,
-    passwordHash,
-    validatedUser.firstName,
-    validatedUser.lastName,
-    validatedUser.emailAddress,
-    validatedUser.birthday,
-    validatedUser.gender || null,
-    normalizedStoreName,
-    validatedUser.uAddress || null,
-    validatedUser.roleId,
-  );
-
-  if (!newUser) {
-    return NextResponse.json({
-      success: false,
-      errors: [
-        {
-          message: 'Registration failed. Please check your information and try again.',
-        },
-      ],
-    });
-  }
-
-  // 6. Create a token
-  const token = crypto.randomBytes(100).toString('base64');
-
-  // 7. Create the session record
-  const session = await createSessionInsecure(newUser.id, token);
-
-  if (!session) {
-    return NextResponse.json({
-      success: false,
-      errors: [
-        {
-          message: 'There was a problem starting your session. Please try again.',
-        },
-      ],
-    });
-  }
-
-  const cookieStore = await cookies();
-  const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
-
-  cookieStore.set({
-    name: 'sessionToken',
-    value: session.token,
-    ...secureCookieOptions,
-  });
-
-  if (guestCartItems.length > 0) {
-    for (const item of guestCartItems) {
-      await createOrUpdateCartItem(session.token, item.productId, item.quantity);
+      cookieStore.set({
+        name: 'guestCart',
+        value: '',
+        path: '/',
+        maxAge: 0,
+      });
     }
 
     cookieStore.set({
-      name: 'guestCart',
-      value: '',
+      name: FLASH_MESSAGE_COOKIE,
+      value: "Account created successfully! You're now logged in.",
       path: '/',
-      maxAge: 0,
+      sameSite: 'lax',
+      maxAge: 5,
     });
+
+    cookieStore.set({
+      name: FLASH_MESSAGE_TYPE_COOKIE,
+      value: 'success',
+      path: '/',
+      sameSite: 'lax',
+      maxAge: 5,
+    });
+
+    // 8. Return the new user information
+    return NextResponse.json({
+      success: true,
+      user: {
+        username: newUser.username,
+        roleId: validatedUser.roleId,
+      },
+    });
+  } catch (error) {
+    console.error('Register route error:', error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        errors: [
+          { message: 'Something went wrong during registration. Please try again.' },
+        ],
+      },
+      { status: 500 },
+    );
   }
-
-  cookieStore.set({
-    name: FLASH_MESSAGE_COOKIE,
-    value: "Account created successfully! You're now logged in.",
-    path: '/',
-    sameSite: 'lax',
-    maxAge: 5,
-  });
-
-  cookieStore.set({
-    name: FLASH_MESSAGE_TYPE_COOKIE,
-    value: 'success',
-    path: '/',
-    sameSite: 'lax',
-    maxAge: 5,
-  });
-
-  // 8. Return the new user information
-  return NextResponse.json({
-    success: true,
-    user: {
-      username: newUser.username,
-      roleId: validatedUser.roleId,
-    },
-  });
 }
