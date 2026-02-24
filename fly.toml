@@ -2,13 +2,9 @@
 #
 #
 
-<<<<<<< Updated upstream
-app = 'estores'
-primary_region = 'fra'
-=======
 app = 'estores2'
 primary_region = 'ams'
->>>>>>> Stashed changes
+
 
 [build]
 
