@@ -1,4 +1,12 @@
 FROM node:lts-alpine AS builder
+
+#flyctl releases info will show this metadata.
+ARG GIT_BRANCH
+ARG GIT_COMMIT
+LABEL git_branch=$GIT_BRANCH git_commit=$GIT_COMMIT
+ENV NEXT_PUBLIC_GIT_BRANCH=$GIT_BRANCH
+ENV NEXT_PUBLIC_GIT_COMMIT=$GIT_COMMIT
+
 # Install necessary tools
 RUN apk add --no-cache libc6-compat yq --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
 # Install pnpm

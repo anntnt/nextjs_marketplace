@@ -6,7 +6,11 @@ export async function up(sql: Sql) {
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       name varchar(60) NOT NULL,
       brand varchar(60),
+<<<<<<< Updated upstream
       price integer NOT NULL,
+=======
+      price decimal NOT NULL,
+>>>>>>> Stashed changes
       image_url varchar(255) NOT NULL,
       description text NOT NULL,
       size varchar(50),

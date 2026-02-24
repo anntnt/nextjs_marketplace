@@ -9,7 +9,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_balls_13_wc6vaz_c_fill_w_710_h_448_dxz0qd.jpg',
     description: 'Christmas tree hanging ornaments',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 2,
@@ -19,7 +25,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_balls_9_ze7l6a_c_fill_w_710_h_448_g_auto_psiaph.jpg',
     description: 'Christmas tree hanging ornaments',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 3,
@@ -29,7 +41,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/xmas_decor_14_mlrtnx_z61afa.jpg',
     description: 'Christmas decoration',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 4,
@@ -39,8 +57,15 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005663/xmas_house_27_uvfekj_zhhzx8.jpg',
     description:
+<<<<<<< Updated upstream
       'This cozy Christmas house features a welcoming porch adorned with festive lights and holiday decorations...',
     categoryName: 'Christmas Decorations',
+=======
+      'This cozy Christmas house features a welcoming porch adorned with festive lights and holiday decorations, creating a warm, inviting atmosphere. Perfect for adding a touch of holiday cheer to any space, this charming scene embodies the spirit of Christmas and is ideal for gift-giving or seasonal decor.',
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 5,
@@ -50,7 +75,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/santa_27_ocxhfb_c_fill_w_710_h_448_jc4inf.jpg',
     description: 'Christmas decoration',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 6,
@@ -60,7 +91,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_snow_globe_zpqoaw_c_fill_w_710_h_448_wml1hs.jpg',
     description: 'Snow globe',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 7,
@@ -70,7 +107,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/junlebells_25_aatiuc_awm8ft.jpg',
     description: 'Jingle Bells',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 8,
@@ -80,7 +123,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005663/xmas_decor_23_2_knxwgg_c_fill_w_710_h_448_g_auto_haupzv.jpg',
     description: 'Christmas decoration',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 9,
@@ -90,7 +139,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_tree_210_bl8six_c_fill_w_710_h_448_g_auto_t91ca5.jpg',
     description: 'Christmas tree',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 10,
@@ -100,7 +155,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016818/macarons_13_trtxy2_yhjsja.jpg',
     description: 'Macarons',
+<<<<<<< Updated upstream
     categoryName: 'Snacks',
+=======
+    seller_id: 1,
+    category_id: 9,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 11,
@@ -110,7 +171,12 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016817/berries_14_eoj7dj_xw16b6.jpg',
     description: 'Berry Mix',
+<<<<<<< Updated upstream
     categoryName: 'Snacks',
+=======
+    category_id: 9,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 12,
@@ -120,7 +186,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016817/donuts_11_2_bfsohy_yhjfir.jpg',
     description: 'Donuts',
+<<<<<<< Updated upstream
     categoryName: 'Snacks',
+=======
+    seller_id: 1,
+    category_id: 9,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 13,
@@ -130,7 +202,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016818/pancakes_9_pq7no0_rxftu1.jpg',
     description: 'Pancakes',
+<<<<<<< Updated upstream
     categoryName: 'Snacks',
+=======
+    seller_id: 1,
+    category_id: 9,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 14,
@@ -140,7 +218,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734016912/xmas_tree_29_tzfayw_ilngud.jpg',
     description: 'Christmas tree',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 15,
@@ -150,7 +234,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005661/xmas_wreath_36_xa98c5_c_fill_w_710_h_448_g_auto_ssoz4b.jpg',
     description: 'Christmas decoration set',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 16,
@@ -160,7 +250,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734005662/santa_27_ocxhfb_c_fill_w_710_h_448_jc4inf.jpg',
     description: 'Mini Santa',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 1,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 17,
@@ -170,7 +266,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017033/cupcakes_21_n2ijnf_npygpa.jpg',
     description: 'Cupcakes',
+<<<<<<< Updated upstream
     categoryName: 'Snacks',
+=======
+    seller_id: 1,
+    category_id: 9,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 18,
@@ -180,7 +282,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017095/mobile-phone_v586rg_xc7fgo.png',
     description: 'Smartphone',
+<<<<<<< Updated upstream
     categoryName: 'Electronics',
+=======
+    seller_id: 1,
+    category_id: 5,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 19,
@@ -190,7 +298,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017111/Power_Bank_Wireless_21_v5mgda_ytjjdi.jpg',
     description: 'Wireless Power Bank',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Gifts Ideas',
+=======
+    seller_id: 1,
+    category_id: 2,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 20,
@@ -200,7 +314,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017148/xmas_wreath_31_fwuc4d_vjaws7.jpg',
     description: 'Christmas wreath',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Decorations',
+=======
+    seller_id: 3,
+    category_id: 1,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 21,
@@ -210,7 +330,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017196/Bluetooth_speaker-52_o3r58r_c_pad_b_gen_fill_w_710_h_448_pyffk8.jpg',
     description: 'Bluetooth speaker',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Gifts Ideas',
+=======
+    seller_id: 1,
+    category_id: 2,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 22,
@@ -220,7 +346,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017233/lipsticks-5893481_1280_wzq6qk_sc8oi6.jpg',
     description: 'Lipstick',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Gifts Ideas',
+=======
+    seller_id: 1,
+    category_id: 2,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
   {
     id: 23,
@@ -230,7 +362,13 @@ const rawProducts = [
     image_url:
       'https://res.cloudinary.com/dnglmyclj/image/upload/v1734017262/toy_hk5kt9_hymzz0.jpg',
     description: 'Doll house',
+<<<<<<< Updated upstream
     categoryName: 'Christmas Gifts Ideas',
+=======
+    seller_id: 1,
+    category_id: 2,
+    brand: 'Unknown'
+>>>>>>> Stashed changes
   },
 ];
 
@@ -322,7 +460,8 @@ export async function up(sql: Sql) {
           image_url,
           description,
           seller_id,
-          category_id
+          category_id,
+          brand
         )
       VALUES
         (
@@ -331,8 +470,14 @@ export async function up(sql: Sql) {
           ${product.price},
           ${product.image_url},
           ${product.description},
+<<<<<<< Updated upstream
           ${sellerId},
           ${categoryId}
+=======
+          ${product.seller_id},
+          ${product.category_id},
+          ${product.brand}
+>>>>>>> Stashed changes
         )
     `;
   }
