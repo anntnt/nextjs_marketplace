@@ -1,4 +1,5 @@
 import './globals.css';
+import 'flowbite';
 import { createElement, type ComponentProps, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Footer from '../components/Footer';
