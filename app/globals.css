@@ -1,7 +1,3 @@
-@reference 'tailwindcss';
-@config '../tailwind.config.js';
-@import 'flowbite';
-@import 'flowbite/dist/flowbite.min.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
