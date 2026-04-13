@@ -18,6 +18,10 @@ export const getProductCategoriesInsecure = cache(async () => {
       *
     FROM
       product_categories
+    WHERE
+      id IS NOT NULL
+      AND image_url IS NOT NULL
+      AND category_name IS NOT NULL
   `;
 
   return productCategories;
@@ -32,6 +36,10 @@ export const getProductCategoriesPaginatedInsecure = async (
       *
     FROM
       product_categories
+    WHERE
+      id IS NOT NULL
+      AND image_url IS NOT NULL
+      AND category_name IS NOT NULL
     ORDER BY
       category_name
     LIMIT ${limit}
@@ -53,7 +61,7 @@ export const getProductCategoriesTotalInsecure = async () => {
 };
 
 export const getCategoryInsecure = cache(async (id: number) => {
-  const [productCategory] = await sql<ProductCategory[]>`
+  const [productCategory] = await sql<{ id: number | null; imageUrl: string | null; categoryName: string | null; parentCategoryId: number | null }[]>`
     SELECT
       *
     FROM
@@ -72,6 +80,7 @@ export const getCategoryNameInsecure = cache(async (id: number) => {
       product_categories
     WHERE
       id = ${id}
+      AND category_name IS NOT NULL
   `;
 
   return productCategoryName;
