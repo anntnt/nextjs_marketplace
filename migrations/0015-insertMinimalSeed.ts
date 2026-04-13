@@ -58,7 +58,11 @@ export async function up(sql: Sql) {
 export async function down(sql: Sql) {
   await sql`
     DELETE FROM products
-    WHERE name = 'Sample Product' AND brand = 'Acme'
+    WHERE category_id IN (
+      SELECT id
+      FROM product_categories
+      WHERE category_name = 'Sample Category'
+    )
   `;
 
   await sql`
