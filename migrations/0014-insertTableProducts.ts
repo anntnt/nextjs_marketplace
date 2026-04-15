@@ -280,13 +280,13 @@ export async function up(sql: Sql) {
     TRUNCATE TABLE products RESTART IDENTITY CASCADE
   `;
 
-  const categories = await sql<{ id: number; category_name: string | null }[]>`
+  const categories = await sql<{ id: number; categoryName: string }[]>`
     SELECT id, category_name FROM product_categories
     ORDER BY id
   `;
   const categoryInfos = categories.map((row) => ({
     id: row.id,
-    name: row.category_name ?? FALLBACK_CATEGORY_NAME,
+    name: row.categoryName,
   }));
 
   if (categoryInfos.length === 0) {
