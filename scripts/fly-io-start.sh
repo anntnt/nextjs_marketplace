@@ -11,5 +11,5 @@ fi
 echo "Setting up PostgreSQL on Fly.io..."
 su postgres -c "pg_ctl start -D /postgres-volume/run/postgresql/data"
 
-#pnpm migrate up
+pnpm migrate up
 ./node_modules/.bin/next start
