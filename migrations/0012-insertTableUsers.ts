@@ -62,12 +62,12 @@ export async function up(sql: Sql) {
     let roleId = roleIdByName.get(user.roleName);
 
     if (!roleId) {
-      const [newRole] = await sql<{ id: number }[]>`
+      const [newRole] = await sql<{ id: number | null }[]>`
         INSERT INTO roles (name)
         VALUES (${user.roleName})
         RETURNING id
       `;
-      if (!newRole) {
+      if (!newRole || newRole.id === null) {
         throw new Error(`Failed to insert role: ${user.roleName}`);
       }
       roleId = newRole.id;
