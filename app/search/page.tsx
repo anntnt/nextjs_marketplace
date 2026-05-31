@@ -1,14 +1,14 @@
 import VirtuosoSearchGrid from './VirtuosoSearchGrid';
 
 type Props = {
-  searchParams: {
-    query?: string;
-  };
+  searchParams: Promise<{
+    query?: string | string[];
+  }>;
 };
 
-export default function Page({ searchParams }: Props) {
-  const params = searchParams; // ← REQUIRED 
-  const query = params.query ?? ''; // ← use params, not searchParams
+export default async function Page({ searchParams }: Props) {
+  const params = await searchParams;
+  const query = Array.isArray(params.query) ? params.query[0] ?? '' : params.query ?? '';
 
   return (
     <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text antialiased px-4 sm:px-8 py-12">
