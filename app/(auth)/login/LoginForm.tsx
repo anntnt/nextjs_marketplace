@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState} from 'react';
 import { getSafeReturnToPath } from '../../../util/validation';
 import ErrorMessage from '../../../components/ui/ErrorMessage';
@@ -112,7 +112,6 @@ export default function LoginForm(props: Props) {
   };
 
   const router = useRouter();
-  const pathname = usePathname();
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
