@@ -11,6 +11,7 @@ import LogoutButton from '../app/(auth)/logout/LogoutButton';
 import type { AccountDropdownProps } from './AccountDropdown';
 import type { User } from '../migrations/0001-createTableUsers';
 import { getSafeReturnToPath } from '../util/validation';
+import type { Route } from 'next';
 
 
 type UserWithUsernameAndRole = User & {
@@ -272,7 +273,7 @@ export default function Header(props: UserProps) {
               {/* Seller / Business buttons */}
               {!props.user || props.user.roleId !== 2 ? (
                 <Link
-                  href={sellerRegisterHref as any}
+                  href={sellerRegisterHref as Route}
                   data-nav-item="true"
                   className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:text-brand-warning hover:-translate-y-0.5 hover:bg-white focus:text-brand-warning focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 active:translate-y-0 md:inline-flex"
                 >
@@ -374,7 +375,7 @@ export default function Header(props: UserProps) {
                   {(!props.user || props.user.roleId !== 2) && (
                     <li className="w-full">
                       <Link
-                        href={sellerRegisterHref as any}
+                        href={sellerRegisterHref as Route}
                         onClick={closeMenu}
                         className="ml-0 block w-full max-w-[12rem] rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-center font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary focus:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/60 active:bg-brand-primary"
                       >
