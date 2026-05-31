@@ -7,6 +7,7 @@ import { getSafeReturnToPath } from '../../../util/validation';
 import ErrorMessage from '../../ErrorMessage';
 import type { LoginResponseBody } from '../api/login/route';
 
+
 type Props = { returnTo?: string | string[] };
 
 export default function LoginForm(props: Props) {
@@ -185,8 +186,9 @@ export default function LoginForm(props: Props) {
     const { user } = data;
 
     const safeReturnTo = getSafeReturnToPath(props.returnTo);
-    const fallbackPath = pathname && pathname !== '/login' ? pathname : '/';
-    const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : fallbackPath;
+    const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : '/';
+
+    router.push(target);
 
     if (user.roleId === 2) {
       router.push(`/profile/${user.username}`);
@@ -194,7 +196,7 @@ export default function LoginForm(props: Props) {
       return;
     }
 
-    router.push(target as any);
+    router.push(target);
 
     router.refresh();
   }

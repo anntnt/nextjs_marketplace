@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState, type RefObject, type ReactNode } 
 import { getSafeReturnToPath } from '../../../util/validation';
 import ErrorMessage from '../../ErrorMessage';
 import type { RegisterResponseBody } from '../api/register/route';
+import type { Route } from 'next';
 
 export type RegisterFormVariant = 'general' | 'seller' | 'buyer';
 
@@ -68,6 +69,7 @@ const usernamePatternMessage =
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MINIMUM_AGE = 18;
 const MIN_BIRTH_YEAR = 1900;
+const registerPaths = new Set<string>(['/register', '/register/seller', '/register/buyer']);
 
 export default function RegisterForm(props: Props) {
   const router = useRouter();
@@ -78,8 +80,8 @@ export default function RegisterForm(props: Props) {
   const disableRoleToggle = !showRoleSelection;
   const isBlocked = props.isBlocked ?? false;
   const safeReturnTo = getSafeReturnToPath(props.returnTo);
-  const alternateTargetBase = variant === 'seller' ? '/register/buyer' : '/register/seller';
-  const alternateTarget =
+  const alternateTargetBase: Route = variant === 'seller' ? '/register/buyer' : '/register/seller';
+  const alternateTarget: Route | null =
     variant === 'general'
       ? null
       : safeReturnTo
@@ -129,26 +131,22 @@ export default function RegisterForm(props: Props) {
       ? (
           <p className="mt-8 text-center text-sm text-brand-muted dark:text-dark-muted">
             Want to buy instead?{' '}
-            {alternateTarget ? (
-              <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget as any}>
+            {alternateTarget && (
+              <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget}>
                 Create a buyer account
               </Link>
-            ) : (
-              'Create a buyer account'
-            )}
+            ) }
           </p>
         )
       : variant === 'buyer'
         ? (
             <p className="mt-8 text-center text-sm text-brand-muted dark:text-dark-muted">
               Want to sell instead?{' '}
-              {alternateTarget ? (
-                <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget as any}>
+              {alternateTarget && (
+                <Link className="font-semibold text-brand-primary hover:text-brand-secondary" href={alternateTarget}>
                   Open your shop
                 </Link>
-              ) : (
-                'Open your shop'
-              )}
+              ) }
             </p>
           )
         : null;
@@ -311,7 +309,6 @@ export default function RegisterForm(props: Props) {
       return;
     }
 
-    const registerPaths = ['/register', '/register/seller', '/register/buyer'] as const;
     const userRoleId = data.user.roleId;
 
     if (userRoleId === 2) {
@@ -320,11 +317,14 @@ export default function RegisterForm(props: Props) {
       return;
     }
 
-    const fallbackPath = pathname && !registerPaths.includes(pathname as any) ? pathname : '/';
-    const target = safeReturnTo && !registerPaths.includes(safeReturnTo as any) ? safeReturnTo : fallbackPath;
+    const fallbackPath: Route =pathname && !registerPaths.has(pathname) ? (pathname as Route) : '/';
 
-    router.push(target as any);
+    const target: Route =
+      safeReturnTo && !registerPaths.has(safeReturnTo) ? safeReturnTo : fallbackPath;
+
+    router.push(target);
     router.refresh();
+
   }
 
   const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
