@@ -188,8 +188,6 @@ export default function LoginForm(props: Props) {
     const safeReturnTo = getSafeReturnToPath(props.returnTo);
     const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : '/';
 
-    router.push(target);
-
     if (user.roleId === 2) {
       router.push(`/profile/${user.username}`);
       router.refresh();
