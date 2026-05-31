@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { getProductsOfSeller } from '../../../../database/products';
 import { getUser } from '../../../../database/users';
 import SellerProductsTable from './SellerProductsTable';
+import type { Route } from 'next';
 
 type Props = {
   searchParams: Promise<{
@@ -45,10 +46,11 @@ export default async function SellerProductsPage({ searchParams }: Props) {
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   if (page > totalPages && totalCount > 0) {
-    const target = totalPages === 1
-      ? `/profile/${user.username}/business`
-      : `/profile/${user.username}/business?page=${totalPages}`;
-    redirect(target as any);
+  const target = totalPages === 1
+    ? `/profile/${user.username}/business`
+    : `/profile/${user.username}/business?page=${totalPages}`;
+
+  redirect(target as Route);
   }
 
   const baseHref = `/profile/${user.username}/business`;
