@@ -2,7 +2,6 @@
 
 import { cookies } from 'next/headers';
 import { deleteSession } from '../../../database/sessions';
-import { setFlashMessage } from '../../actions/flashMessage';
 
 export async function logout() {
   // Task: Implement the user logout workflow
@@ -18,8 +17,6 @@ export async function logout() {
     // 3. Delete the session cookie from the browser
     cookieStore.delete(token.name);
   }
-
-  await setFlashMessage('You have been logged out successfully.', 'success');
 
   return;
 }

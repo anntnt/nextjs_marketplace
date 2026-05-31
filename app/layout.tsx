@@ -1,15 +1,15 @@
+// Suppress TypeScript complaint for side-effect CSS import when no declaration file is present
+// @ts-ignore
 import './globals.css';
 import 'flowbite';
 import { createElement, type ComponentProps, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Footer from '../components/Footer';
-import FlashMessageBanner from '../components/FlashMessageBanner';
 import PageContent from '../components/PageContent';
 import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
 import { getGuestCartTotalQuantity, parseGuestCartCookie } from '../util/guestCart';
 import { cookies, headers } from 'next/headers';
-import type { FlashMessageType } from '../lib/flashMessage';
 
 const headerComponent = dynamic(() => import('../components/Header'), { ssr: true });
 type HeaderProps = ComponentProps<typeof headerComponent>;
@@ -53,9 +53,6 @@ export default async function RootLayout({ children }: Props) {
   const htmlLang = getPreferredLanguage(headerList.get('accept-language'));
   const sessionTokenCookie = cookieStore.get('sessionToken');
   const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
-  const flashMessageCookie = cookieStore.get('flashMessage');
-  const flashMessage = flashMessageCookie?.value;
-  const flashMessageType = cookieStore.get('flashMessageType')?.value as FlashMessageType | undefined;
 
   // 2. Get the current logged in user from the database using the sessionToken value
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
@@ -78,8 +75,6 @@ export default async function RootLayout({ children }: Props) {
       <body className="min-h-screen bg-brand-bg font-sans text-brand-text antialiased transition-colors dark:bg-dark-bg dark:text-dark-text">
         <div className="flex min-h-screen flex-col">
           <Header user={user} cartSum={cartSum} />
-          <FlashMessageBanner key={`flash-${flashMessage}`} message={flashMessage} type={flashMessageType} />
-
           <PageContent>{children}</PageContent>
 
           <Footer />
