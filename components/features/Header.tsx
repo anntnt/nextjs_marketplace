@@ -2,16 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
-import type { HTMLAttributes} from 'react';
-import { createElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FiHelpCircle } from 'react-icons/fi';
-import LogoutButton from '../app/(auth)/logout/LogoutButton';
-import type { AccountDropdownProps } from './AccountDropdown';
-import type { User } from '../migrations/0001-createTableUsers';
-import { getSafeReturnToPath } from '../util/validation';
+import type { User } from '../../migrations/0001-createTableUsers';
+import { getSafeReturnToPath } from '../../util/validation';
 import type { Route } from 'next';
+import Search from './Search';
+import Cart from './Cart';
+import ProfileDropdown from './ProfileDropdown';
+import AccountDropdown from './AccountDropdown';
+import LogoutButton from '../../app/(auth)/logout/LogoutButton';
 
 
 type UserWithUsernameAndRole = User & {
@@ -24,51 +25,10 @@ type UserProps = {
   cartSum?: string;
 };
 
-type SearchProps = { placeholder: string; className?: string };
-const searchComponent = dynamic<SearchProps>(
-  () => import('./Search'),
-  { ssr: false, loading: () => null }
-);
-
-function Search(props: SearchProps) {
-  return createElement(searchComponent, props);
-}
-
-type CartProps = { cartSum?: string } & HTMLAttributes<HTMLDivElement>;
-const cartComponent = dynamic<CartProps>(() => import('./Cart'), {
-  ssr: false,
-  loading: () => null,
-});
-function Cart(props: CartProps) {
-  return createElement(cartComponent, props);
-}
-
-type ProfileDropdownProps = {
-  user: User | UserWithUsernameAndRole | undefined;
-  onOpenChange?: (open: boolean) => void;
-};
-const profileDropdownComponent = dynamic<ProfileDropdownProps>(
-  () => import('./ProfileDropdown'),
-  { ssr: false, loading: () => null }
-);
-function ProfileDropdown(props: ProfileDropdownProps) {
-  return createElement(profileDropdownComponent, props);
-}
-
-const accountDropdownDynamic = dynamic<AccountDropdownProps>(() => import('./AccountDropdown'), {
-  ssr: false,
-  loading: () => null,
-});
-
-function AccountDropdown(props: AccountDropdownProps) {
-  return createElement(accountDropdownDynamic, props);
-}
-
 export default function Header(props: UserProps) {
   const [isOpen, setIsOpen] = useState(false);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
   const profileDropdownRef = useRef<HTMLDivElement>(null);
-  const navRootRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   
   const pathname = usePathname();
@@ -83,49 +43,6 @@ export default function Header(props: UserProps) {
   const toggleMenu = () => setIsOpen((previous) => !previous);
   const closeMenu = () => setIsOpen(false);
   const showCart = !props.user || props.user.roleId === 3;
-
-  useEffect(() => {
-    const onNeighbor = (event: Event) => {
-      const { direction, sender } = (event as CustomEvent).detail || {};
-      const dir = direction as 'next' | 'prev' | undefined;
-      const origin = sender as HTMLElement | undefined;
-
-      if (!dir || !origin) {
-        console.warn('[Header] Missing direction or sender, aborting focus move');
-        return;
-      }
-
-      const root = navRootRef.current; 
-      if (!root) return;
-
-      const items = Array.from(
-        root.querySelectorAll<HTMLElement>('[data-nav-item], [data-nav-cart-link], a[href], button')
-      ).filter(
-        (el) => el.offsetParent !== null && !el.hasAttribute('disabled') && el.tabIndex !== -1
-      );
-
-      if (!items.length) return;
-
-      const index = items.findIndex((el) => el === origin || el.contains(origin));
-      if (index === -1) {
-        console.warn('[Header] Sender not found among nav items', { origin });
-        return;
-      }
-
-      const target = dir === 'next'
-        ? items[index + 1] || items[0]
-        : items[index - 1] || items[items.length - 1];
-
-      if (!target) {
-        console.warn('[Header] No target nav item found for direction', dir);
-        return;
-      }
-      target.focus();
-    };
-
-    document.addEventListener('nav:neighbor-focus', onNeighbor);
-    return () => document.removeEventListener('nav:neighbor-focus', onNeighbor);
-  }, []);
 
   // Disable body scroll when mobile menu open
   useEffect(() => {
@@ -232,8 +149,6 @@ export default function Header(props: UserProps) {
       <nav className="py-3.5 sm:py-3 relative z-[60]">
         <div
           className="mx-auto flex w-full max-w-screen-2xl items-center gap-4 px-2 sm:px-4 lg:px-6"
-          data-nav-root
-          ref={navRootRef}
         >
           {/* Logo */}
           <Link
@@ -263,7 +178,6 @@ export default function Header(props: UserProps) {
               {/* Support */}
               <Link
                 href="/support"
-                data-nav-item="true"
                 className="hidden items-center gap-1 font-semibold text-white transition-colors hover:text-brand-warning focus:text-brand-warning active:text-brand-warning dark:text-dark-text dark:hover:text-brand-warning dark:focus:text-brand-warning dark:active:text-brand-warning md:inline-flex"
               >
                 <FiHelpCircle className="h-4 w-4" aria-hidden="true" />
@@ -274,7 +188,6 @@ export default function Header(props: UserProps) {
               {!props.user || props.user.roleId !== 2 ? (
                 <Link
                   href={sellerRegisterHref as Route}
-                  data-nav-item="true"
                   className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:text-brand-warning hover:-translate-y-0.5 hover:bg-white focus:text-brand-warning focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 active:translate-y-0 md:inline-flex"
                 >
                   Open your shop
@@ -284,7 +197,6 @@ export default function Header(props: UserProps) {
               {props.user && props.user.roleId === 2 ? (
                 <Link
                   href={`/profile/${props.user.username}/business`}
-                  data-nav-item="true"
                   className="hidden rounded-full border border-brand-warning bg-brand-warning px-4 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:text-brand-warning hover:-translate-y-0.5 hover:bg-white focus:text-brand-warning focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/60 active:translate-y-0 md:inline-flex"
                 >
                   My Products
@@ -300,7 +212,7 @@ export default function Header(props: UserProps) {
                       onOpenChange={handleProfileDropdownOpenChange}
                     />
                   </div>
-                  {showCart ? <Cart data-nav-item="true" cartSum={props.cartSum} /> : null}
+                  {showCart ? <Cart cartSum={props.cartSum} /> : null}
                 </>
               ) : (
                 <>
@@ -310,7 +222,7 @@ export default function Header(props: UserProps) {
                       <AccountDropdown onOpenChange={handleAccountDropdownOpenChange} />
                     </div>
                   </div>
-                  {showCart ? <Cart data-nav-item="true" cartSum={props.cartSum} /> : null}
+                  {showCart ? <Cart cartSum={props.cartSum} /> : null}
                 </>
               )}
 

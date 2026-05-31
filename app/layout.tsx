@@ -2,21 +2,15 @@
 // @ts-ignore
 import './globals.css';
 import 'flowbite';
-import { createElement, type ComponentProps, type ReactNode } from 'react';
-import dynamic from 'next/dynamic';
-import Footer from '../components/Footer';
+import type { ReactNode } from 'react';
+import Footer from '../components/features/Footer';
 import PageContent from '../components/ui/PageContent';
 import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
 import { getGuestCartTotalQuantity, parseGuestCartCookie } from '../util/guestCart';
 import { cookies, headers } from 'next/headers';
+import Header from '../components/features/Header';
 
-const headerComponent = dynamic(() => import('../components/Header'), { ssr: true });
-type HeaderProps = ComponentProps<typeof headerComponent>;
-
-function Header(props: HeaderProps) {
-  return createElement(headerComponent, props);
-}
 
 export const metadata = {
   title: {

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import CategoriesVirtuoso from '../components/CategoriesVirtuoso';
+import CategoriesVirtuoso from '../components/features/CategoriesVirtuoso';
 
 
 export default function Home() {

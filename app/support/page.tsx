@@ -1,4 +1,4 @@
-import SupportTopics from '../../components/SupportTopics';
+import SupportTopics from '../../components/features/SupportTopics';
 
 export const metadata = {
   title: 'Support',

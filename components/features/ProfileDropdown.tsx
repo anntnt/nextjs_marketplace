@@ -8,12 +8,12 @@ import {
   useState,
   type MouseEvent as ReactMouseEvent,
 } from 'react';
-import LogoutButton from '../app/(auth)/logout/LogoutButton';
-import type { User } from '../migrations/0001-createTableUsers';
+import LogoutButton from '../../app/(auth)/logout/LogoutButton';
+import type { User } from '../../migrations/0001-createTableUsers';
 import { FiChevronDown } from 'react-icons/fi';
 
 export type ProfileDropdownProps = {
-  user?: User;
+  user?: User | (User & { username: string; role: string });
   onOpenChange?: (open: boolean) => void;
 };
 
