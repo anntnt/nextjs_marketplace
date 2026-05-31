@@ -23,12 +23,6 @@ a:focus {
   color: #f59e0b;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
 html {
   scroll-padding-top: calc(var(--header-height, 60px) + 1rem);
 }
