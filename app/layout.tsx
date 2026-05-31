@@ -5,7 +5,7 @@ import 'flowbite';
 import { createElement, type ComponentProps, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import Footer from '../components/Footer';
-import PageContent from '../components/PageContent';
+import PageContent from '../components/ui/PageContent';
 import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
 import { getGuestCartTotalQuantity, parseGuestCartCookie } from '../util/guestCart';
@@ -76,7 +76,6 @@ export default async function RootLayout({ children }: Props) {
         <div className="flex min-h-screen flex-col">
           <Header user={user} cartSum={cartSum} />
           <PageContent>{children}</PageContent>
-
           <Footer />
         </div>
       </body>
