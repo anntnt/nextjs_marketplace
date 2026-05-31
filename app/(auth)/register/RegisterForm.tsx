@@ -65,7 +65,7 @@ const fieldRequiredMessages: Record<FieldName, string> = {
 
 const usernamePattern = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
 const usernamePatternMessage =
-  'Username: Your username must have at least one letter and no unusual characters.';
+  'Username: Your username must be 3-20 characters, include at least one letter, and use only letters, numbers, or underscores.';
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MINIMUM_AGE = 18;
 const MIN_BIRTH_YEAR = 1900;
