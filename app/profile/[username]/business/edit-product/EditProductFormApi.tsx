@@ -6,6 +6,7 @@ import type { ProductCategory } from '../../../../../database/productCategories'
 import type { Product } from '../../../../../database/products';
 import type { ProductEditPut } from '../../../../api/edit-product/route';
 import ErrorMessage from '../../../../ErrorMessage';
+import type { Route } from 'next';
 
 type Props = {
   username: string;
@@ -47,7 +48,7 @@ export default function EditProductFormApi(props: Props) {
 
     setSuccessMessage('Product updated successfully');
 
-    router.push(`/profile/${props.username}/business/` as any);
+    router.push(`/profile/${props.username}/business` as Route);
 
   }
 
