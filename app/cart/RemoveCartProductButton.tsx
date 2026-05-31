@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ProductFromCart } from '../../database/cartProducts';
 import type { CartProductResponseDelete } from '../api/cart/[productId]/route';
-import ErrorMessage from '../ErrorMessage';
+import ErrorMessage from '../../components/ui/ErrorMessage';
 
 type Props = {
   productId: ProductFromCart['id'];

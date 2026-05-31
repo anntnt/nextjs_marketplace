@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState, type RefObject, type ReactNode } from 'react';
 import { getSafeReturnToPath } from '../../../util/validation';
-import ErrorMessage from '../../ErrorMessage';
+import ErrorMessage from '../../../components/ui/ErrorMessage';
 import type { RegisterResponseBody } from '../api/register/route';
 import type { Route } from 'next';
 

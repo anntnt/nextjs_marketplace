@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { ProductCategory } from '../../../../../database/productCategories';
 import type { ProductCreatePost } from '../../../../api/new-product/route';
-import ErrorMessage from '../../../../ErrorMessage';
+import ErrorMessage from '../../../../../components/ui/ErrorMessage';
 import { validateImageDimensions } from '../../../../../util/image';
 
 type Props = {

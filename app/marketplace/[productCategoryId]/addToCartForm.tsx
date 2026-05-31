@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { BsCart4 } from 'react-icons/bs';
 import type { Product } from '../../../database/products';
 import type { CreateCartProductResponseBodyPost } from '../../api/cart-items/route';
-import ErrorMessage from '../../ErrorMessage';
+import ErrorMessage from '../../../components/ui/ErrorMessage';
 import { formatEuroFromCents } from '../../../util/price';
 
 type Props = {

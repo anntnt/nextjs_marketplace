@@ -4,7 +4,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useEffect, useState } from 'react';
 import type { CreatePaymentResponseBodyPost } from '../../api/stripe/create-payment-intent/route';
-import ErrorMessage from '../../ErrorMessage';
+import ErrorMessage from '../../../components/ui/ErrorMessage';
 import CheckoutForm from './CheckoutForm';
 import CompletePage from './CompletePage';
 

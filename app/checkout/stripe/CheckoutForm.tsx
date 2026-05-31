@@ -8,7 +8,7 @@ import {
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import type { CreatePaymentResponseBodyPost } from '../../api/stripe/create-payment-intent/route';
-import ErrorMessage from '../../ErrorMessage';
+import ErrorMessage from '../../../components/ui/ErrorMessage';
 
 export default function CheckoutForm() {
   const stripe = useStripe();

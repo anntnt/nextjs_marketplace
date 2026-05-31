@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { BsCart4 } from 'react-icons/bs';
 import type { CreateCartProductResponseBodyPost } from '../../../api/cart-items/route';
-import ErrorMessage from '../../../ErrorMessage';
+import ErrorMessage from '../../../../components/ui/ErrorMessage';
 
 type Props = {
   productId: number;

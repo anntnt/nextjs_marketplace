@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import type { Product } from '../../../../database/products';
 import type { ProductResponseDelete } from '../../../api/products/[productId]/route';
-import ErrorMessage from '../../../ErrorMessage';
+import ErrorMessage from '../../../../components/ui/ErrorMessage';
 
 type Props = { id: Product['id'] };
 

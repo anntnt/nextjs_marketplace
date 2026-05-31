@@ -5,7 +5,7 @@ import { useState } from 'react';
 import type { ProductCategory } from '../../../../../database/productCategories';
 import type { Product } from '../../../../../database/products';
 import type { ProductEditPut } from '../../../../api/edit-product/route';
-import ErrorMessage from '../../../../ErrorMessage';
+import ErrorMessage from '../../../../../components/ui/ErrorMessage';
 import type { Route } from 'next';
 
 type Props = {
