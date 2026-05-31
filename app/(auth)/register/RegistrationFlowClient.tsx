@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import RegisterForm, { type RegisterFormVariant } from './RegisterForm';
 import { logout } from '../logout/actions';
 import { getSafeReturnToPath } from '../../../util/validation';
+import type { Route } from 'next';
 
 const SELLER_ROLE_ID = 2;
 const BUYER_ROLE_ID = 3;
@@ -58,16 +59,16 @@ export default function RegistrationFlowClient({ variant, returnTo, currentUserR
     };
   }, [variant]);
 
-  const basePath = variant === 'seller' ? '/register/seller' : '/register/buyer';
-  const targetWithReturnTo = safeReturnTo
-    ? `${basePath}?returnTo=${encodeURIComponent(safeReturnTo)}`
-    : basePath;
+  const basePath: Route = variant === 'seller' ? '/register/seller' : '/register/buyer';
+  const targetWithReturnTo: Route = safeReturnTo
+  ? `${basePath}?returnTo=${encodeURIComponent(safeReturnTo)}`
+  : basePath;
 
   const handleConfirm = async () => {
     try {
       setIsProcessing(true);
       await logout();
-      router.replace(targetWithReturnTo as any);
+      router.replace(targetWithReturnTo);
       router.refresh();
     } catch (error) {
       console.error('Failed to switch account role', error);
