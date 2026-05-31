@@ -6,6 +6,7 @@ import { useMemo, useEffect, useRef, useState, useCallback } from 'react';
 import type { MouseEvent as ReactMouseEvent, KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { usePathname } from 'next/navigation';
 import { FiChevronDown } from 'react-icons/fi';
+import type { Route } from 'next';
 
 export type AccountDropdownProps = {
   onOpenChange?: (open: boolean) => void;
@@ -279,7 +280,7 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
               <li>
                 <Link
                   data-first-focus
-                  href={loginHref as any}
+                  href={loginHref as Route}
                   onClick={closeDropdown}
                   className="mx-auto block w-36 rounded-lg border border-brand-primary bg-brand-primary px-4 py-2 text-center font-semibold text-white transition-colors hover:bg-brand-secondary hover:text-white focus:text-white focus:ring-brand-warning focus-visible:text-white focus-visible:bg-brand-primary focus-visible:text-brand-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warning active:bg-brand-warning"
                 >
@@ -292,7 +293,7 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
                   New to eStores?
                 </div>
                 <Link
-                  href={registerHref as any}
+                  href={registerHref as Route}
                   className="font-semibold text-brand-primary underline transition-colors hover:text-brand-secondary focus:text-brand-secondary active:text-brand-secondary dark:text-brand-primary"
                   onClick={closeDropdown}
                 >
