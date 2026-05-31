@@ -3,13 +3,13 @@
 import './globals.css';
 import 'flowbite';
 import type { ReactNode } from 'react';
-import Footer from '../components/features/Footer';
+import Footer from '../components/navigation/Footer';
 import PageContent from '../components/ui/PageContent';
 import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
 import { getGuestCartTotalQuantity, parseGuestCartCookie } from '../util/guestCart';
 import { cookies, headers } from 'next/headers';
-import Header from '../components/features/Header';
+import Header from '../components/navigation/Header';
 
 
 export const metadata = {
