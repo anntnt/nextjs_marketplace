@@ -35,7 +35,8 @@ You can use these test accounts to explore eStores without registering:
 
 <br>
 
-When creating items as a seller, please choose the <b>‘Sample Category’</b> for better viewing, since other categories are crowded and new items can be difficult to spot.
+When testing seller product creation, choose **Sample Category** so the new product is easy to find in the demo marketplace.
+
 ![alt text](./public/images/sample-category.png)
 <br>
 <br>

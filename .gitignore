@@ -49,5 +49,4 @@ playwright/test-results/
 /blob-report/
 /playwright/.cache/
 
-app/api/chat/
 .env*.local
