@@ -32,12 +32,12 @@ export default function Page() {
             <li>
               💻 GitHub:{' '}
               <a
-                href="https://github.com/anntnt/nextjs_marketplace"
+                href="https://github.com/anntnt-vienna/nextjs_marketplace"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-brand-primary underline-offset-2 transition-colors hover:text-brand-secondary hover:underline dark:text-brand-primary"
               >
-                github.com/anntnt/nextjs_marketplace
+                github.com/anntnt-vienna/nextjs_marketplace
               </a>
             </li>
           </ul>

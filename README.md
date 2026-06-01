@@ -63,8 +63,8 @@ When testing seller product creation, choose **Sample Category** so the new prod
 ## Project Setup locally
 
 ```bash
-git clone https://github.com/anntnt/nextjs_finalproject_marketplace.git
-cd nextjs_finalproject_marketplace
+git clone https://github.com/anntnt-vienna/nextjs_marketplace.git
+cd nextjs_marketplace
 pnpm install
 ```
 
