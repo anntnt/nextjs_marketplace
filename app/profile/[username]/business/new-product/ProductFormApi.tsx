@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import type { ProductCategory } from '../../../../../database/productCategories';
 import type { ProductCreatePost } from '../../../../api/new-product/route';
 import ErrorMessage from '../../../../../components/ui/ErrorMessage';
-import { validateImageDimensions } from '../../../../../util/image';
+import { getProductImagePreviewUrl } from '../../../../../util/image';
 
 type Props = {
   sellerId: number;
@@ -39,17 +39,18 @@ export default function ProductFormApi(props: Props) {
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-  
-    // Validate using your helper
-    const isValid = await validateImageDimensions(file, 640, 404);
-  
-    if (!isValid) {
-      alert("Image must match the 640×404 dimensions");
+
+    const result = await getProductImagePreviewUrl(file);
+
+    if (!result.success) {
+      alert(result.error);
+      event.target.value = '';
       return;
     }
-  
-    // Valid → set preview URL
-    setImageUrl(URL.createObjectURL(file));
+
+    if (result.imageUrl) {
+      setImageUrl(result.imageUrl);
+    }
   };
   
   async function productFormApiHandler(formData: FormData) {

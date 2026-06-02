@@ -7,6 +7,7 @@ import type { Product } from '../../../../../database/products';
 import type { ProductEditPut } from '../../../../api/edit-product/route';
 import ErrorMessage from '../../../../../components/ui/ErrorMessage';
 import type { Route } from 'next';
+import { getProductImagePreviewUrl } from '../../../../../util/image';
 
 type Props = {
   username: string;
@@ -21,10 +22,28 @@ export default function EditProductFormApi(props: Props) {
   const [price, setPrice] = useState(
     (props.product.price / 100).toFixed(2),
   );
+  const [imageUrl, setImageUrl] = useState(props.product.imageUrl);
   const [description, setDescription] = useState(props.product.description);
   const [categoryId, setCategoryId] = useState(props.product.categoryId);
 
   const router = useRouter();
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const result = await getProductImagePreviewUrl(file);
+
+    if (!result.success) {
+      alert(result.error);
+      event.target.value = '';
+      return;
+    }
+
+    if (result.imageUrl) {
+      setImageUrl(result.imageUrl);
+    }
+  };
 
   async function updateProductFormApiHandler(formData: FormData) {
     const response = await fetch('/api/edit-product', {
@@ -101,12 +120,14 @@ export default function EditProductFormApi(props: Props) {
           />
         </label>
         <div className="block mb-2 ">
+          {imageUrl && (
           <Image
-            src={props.product.imageUrl}
+            src={imageUrl}
             width={500}
             height={375}
             alt={`Product ${name}`}
           />
+          )}
         </div>
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
           Select new image:
@@ -115,6 +136,7 @@ export default function EditProductFormApi(props: Props) {
             type="file"
             name="image"
             accept="image/*"
+            onChange={(event) => handleFileChange(event)}
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
