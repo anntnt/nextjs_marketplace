@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   type Product,
   updateProduct,
-  updateProductSchema,
   updateProductWithoutImage,
 } from '../../../database/products';
+import { updateProductSchema } from '../../../lib/validation/product';
+import { formatZodIssues } from '../../../lib/validation/formatErrors';
 import { cloudinaryUpload } from '../../../util/cloudinaryUpload';
 import { getCookie } from '../../../util/cookies';
 
@@ -29,7 +30,7 @@ export async function PUT(
       const response = await cloudinaryUpload(formData, 'server-action-images');
 
       if (!response.imageUrl) {
-        return NextResponse.json({ error: 'Image upload failed 1' });
+        return NextResponse.json({ error: 'Image upload failed' });
       }
       imageUrl = response.imageUrl;
     }
@@ -46,7 +47,7 @@ export async function PUT(
 
     if (!result.success) {
       return NextResponse.json({
-        error: JSON.stringify(result.error.issues),
+        error: formatZodIssues(result.error),
       });
     }
     const sessionTokenCookie = await getCookie('sessionToken');
@@ -77,7 +78,7 @@ export async function PUT(
         })));
 
     if (!updatedProduct) {
-      return NextResponse.json({ error: 'Product update failed 2' });
+      return NextResponse.json({ error: 'Product update failed' });
     }
 
     return NextResponse.json({ product: updatedProduct });

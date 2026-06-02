@@ -3,11 +3,12 @@ import { NextResponse } from 'next/server';
 import {
   type Cart,
   type CartProduct,
-  cartProductSchema,
   createOrUpdateCartItem,
   removeCartItems,
   updateCartItem,
 } from '../../../database/cartProducts';
+import { cartProductSchema } from '../../../lib/validation/cart';
+import { formatZodIssues } from '../../../lib/validation/formatErrors';
 import { getUser } from '../../../database/users';
 import { getCookie } from '../../../util/cookies';
 import {
@@ -34,14 +35,8 @@ export async function POST(
   // 2. Validate cart product data with zod
   const result = cartProductSchema.safeParse(body);
   if (!result.success) {
-    let errorMessage = '';
-
-    result.error.issues.forEach((issue) => {
-      errorMessage = errorMessage + String(issue.path[0]) + ':' + issue.message + '. ';
-    });
-
     return NextResponse.json(
-      { error: errorMessage },
+      { error: formatZodIssues(result.error) },
       {
         status: 400,
       },
@@ -119,14 +114,8 @@ export async function PUT(
   // 2. Validate cart product data with zod
   const result = cartProductSchema.safeParse(body);
   if (!result.success) {
-    let errorMessage = '';
-
-    result.error.issues.forEach((issue) => {
-      errorMessage = errorMessage + String(issue.path[0]) + ':' + issue.message + '. ';
-    });
-
     return NextResponse.json(
-      { error: errorMessage },
+      { error: formatZodIssues(result.error) },
       {
         status: 400,
       },

@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
   createProduct,
-  newProductSchema,
   type Product,
 } from '../../../database/products';
+import { newProductSchema } from '../../../lib/validation/product';
+import { formatZodIssues } from '../../../lib/validation/formatErrors';
 import { cloudinaryUpload } from '../../../util/cloudinaryUpload';
 import { getCookie } from '../../../util/cookies';
 
@@ -24,9 +25,12 @@ export async function POST(
     const response = await cloudinaryUpload(formData, 'server-action-images');
 
     if (!response.imageUrl) {
-      return NextResponse.json({
-        error: `Image upload failed, response: ${response.error}`,
-      });
+      return NextResponse.json(
+        {
+          error: `Image upload failed, response: ${response.error}`,
+        },
+        { status: 400 },
+      );
     }
 
     const body = {
@@ -41,9 +45,12 @@ export async function POST(
     const result = newProductSchema.safeParse(body);
 
     if (!result.success) {
-      return NextResponse.json({
-        error: JSON.stringify(result.error.issues),
-      });
+      return NextResponse.json(
+        {
+          error: formatZodIssues(result.error),
+        },
+        { status: 400 },
+      );
     }
     const sessionTokenCookie = await getCookie('sessionToken');
     const newProduct =
@@ -61,13 +68,19 @@ export async function POST(
       }));
 
     if (!newProduct) {
-      return NextResponse.json({ error: 'newProduct creation failed' });
+      return NextResponse.json(
+        { error: 'Product creation failed. Please check your seller session.' },
+        { status: 400 },
+      );
     }
 
     return NextResponse.json({ product: newProduct });
   } catch {
-    return NextResponse.json({
-      error: 'Image upload failed',
-    });
+    return NextResponse.json(
+      {
+        error: 'Image upload failed',
+      },
+      { status: 500 },
+    );
   }
 }

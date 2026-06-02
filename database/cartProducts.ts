@@ -1,5 +1,4 @@
 import { cache } from 'react';
-import { z } from 'zod';
 import type { Session } from '../migrations/0010-createTableSessions';
 import { sql } from './connect';
 
@@ -26,10 +25,7 @@ export type CartProduct = {
 export type CartSum = {
   totalamount: string | null;
 };
-export const cartProductSchema = z.object({
-  productId: z.number(),
-  quantity: z.number(),
-});
+
 export type Cart = {
   id: number;
   productId: number;

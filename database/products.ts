@@ -1,5 +1,4 @@
 import { cache } from 'react';
-import { z } from 'zod';
 import type { Session } from '../migrations/0010-createTableSessions';
 import { sql } from './connect';
 
@@ -31,26 +30,6 @@ export type ProductWithSeller = {
   brand: string | null;
 };
 
-export const newProductSchema = z.object({
-  name: z.string(),
-  price: z.number(),
-  imageUrl: z.string(),
-  description: z.string(),
-  sellerId: z.number(),
-  categoryId: z.number(),
-  size: z.string().nullable().optional(),
-  color: z.string().nullable().optional(),
-  brand: z.string().nullable().optional(),
-});
-
-export const updateProductSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  price: z.number(),
-  imageUrl: z.string().optional(),
-  description: z.string(),
-  categoryId: z.number(),
-});
 export const createProduct = cache(
   async (sessionToken: Session['token'], newProduct: Omit<Product, 'id'>) => {
     const [productRaw] = await sql<
@@ -206,7 +185,7 @@ export const getCategoryProductsInsecure = cache(
       WHERE
         category_id = ${categoryId}
       ORDER BY
-        id
+        products.id DESC
       LIMIT
         ${limit}
       OFFSET
@@ -305,7 +284,7 @@ export const getProductsOfSeller = cache(
       INNER JOIN sessions ON products.seller_id = sessions.user_id
       WHERE sessions.token = ${sessionToken}
         AND sessions.expiry_timestamp > now()
-      ORDER BY products.id
+      ORDER BY products.id DESC
       LIMIT ${limit}
       OFFSET ${offset}
     `;
