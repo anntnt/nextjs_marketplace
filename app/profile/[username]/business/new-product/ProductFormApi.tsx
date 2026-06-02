@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { ProductCategory } from '../../../../../database/productCategories';
 import type { ProductCreatePost } from '../../../../api/new-product/route';
 import ErrorMessage from '../../../../../components/ui/ErrorMessage';
@@ -16,11 +16,11 @@ export default function ProductFormApi(props: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [name, setName] = useState('');
-
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [description, setDescription] = useState('');
   const [categoryId, setCategoryId] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
 
@@ -30,6 +30,9 @@ export default function ProductFormApi(props: Props) {
     setImageUrl('');
     setDescription('');
     setCategoryId('');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   }
 
 
@@ -128,6 +131,7 @@ export default function ProductFormApi(props: Props) {
             type="file"
             name="image"
             accept="image/*"
+            ref={fileInputRef}
             onChange={(event) => handleFileChange(event)}
           />
         </label>
@@ -180,5 +184,4 @@ export default function ProductFormApi(props: Props) {
     </div>
   );
 }
-
 

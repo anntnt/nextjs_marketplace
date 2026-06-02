@@ -27,7 +27,7 @@ export async function POST(
     if (!response.imageUrl) {
       return NextResponse.json(
         {
-          error: `Image upload failed, response: ${response.error}`,
+          error: `${response.error}`,
         },
         { status: 400 },
       );
