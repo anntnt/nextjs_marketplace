@@ -113,7 +113,7 @@ export default function LoginForm(props: Props) {
 
   const router = useRouter();
 
-  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+  async function handleLogin(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const trimmedUsername = username.trim();

@@ -215,7 +215,7 @@ export default function RegisterForm(props: Props) {
     );
   };
 
-  async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
+  async function handleRegister(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     if (isBlocked) return;
 
