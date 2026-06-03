@@ -15,13 +15,8 @@ import AccountDropdown from './AccountDropdown';
 import LogoutButton from '../../app/(auth)/logout/LogoutButton';
 
 
-type UserWithUsernameAndRole = User & {
-  username: string;
-  role: string;
-};
-
 type UserProps = {
-  user: User | UserWithUsernameAndRole | undefined;
+  user: User | undefined;
   cartSum?: string;
 };
 
