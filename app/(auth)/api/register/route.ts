@@ -182,8 +182,6 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
       });
     }
 
-    // confirm password
-
     // 4. Hash the plain password from the user
     const passwordHash = await bcrypt.hash(validatedUser.password, 12);
 
@@ -232,7 +230,15 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
     const cookieStore = await cookies();
     const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
 
-    cookieStore.set({
+    const response = NextResponse.json<RegisterResponseBody>({
+      success: true,
+      user: {
+        username: newUser.username,
+        roleId: validatedUser.roleId,
+      },
+    });
+
+    response.cookies.set({
       name: 'sessionToken',
       value: session.token,
       ...secureCookieOptions,
@@ -243,7 +249,7 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
         await createOrUpdateCartItem(session.token, item.productId, item.quantity);
       }
 
-      cookieStore.set({
+      response.cookies.set({
         name: 'guestCart',
         value: '',
         path: '/',
@@ -251,14 +257,7 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
       });
     }
 
-    // 8. Return the new user information
-    return NextResponse.json({
-      success: true,
-      user: {
-        username: newUser.username,
-        roleId: validatedUser.roleId,
-      },
-    });
+    return response;
   } catch (error) {
     console.error('Register route error:', error);
 

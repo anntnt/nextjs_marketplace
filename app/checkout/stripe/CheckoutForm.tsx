@@ -1,5 +1,4 @@
 'use client';
-// @ts-expect-error -- Next.js handles CSS side-effect imports at build time
 import './stripe.css';
 import {
   PaymentElement,
