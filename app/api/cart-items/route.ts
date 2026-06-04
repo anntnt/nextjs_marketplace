@@ -47,7 +47,9 @@ export async function POST(
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
   const cookieStore = await cookies();
-  const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+  const guestCartItems = parseGuestCartCookie(
+    cookieStore.get('guestCart')?.value,
+  );
 
   /* Assume that user logged in and click the button 'Add to cart' */
 
@@ -126,7 +128,9 @@ export async function PUT(
   /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
   const cookieStore = await cookies();
-  const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+  const guestCartItems = parseGuestCartCookie(
+    cookieStore.get('guestCart')?.value,
+  );
 
   /* Assume that user logged in and click the button 'Add to cart' */
 
@@ -143,7 +147,12 @@ export async function PUT(
     });
 
     if (updatedGuestCart.length === 0) {
-      response.cookies.set({ name: 'guestCart', value: '', path: '/', maxAge: 0 });
+      response.cookies.set({
+        name: 'guestCart',
+        value: '',
+        path: '/',
+        maxAge: 0,
+      });
     } else {
       response.cookies.set({
         name: 'guestCart',
@@ -198,21 +207,25 @@ export async function DELETE(): Promise<NextResponse<CartResponseDelete>> {
   // 4. Remove product
   if (!sessionTokenCookie) {
     const response = NextResponse.json({ products: [] });
-    const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+    const guestCartItems = parseGuestCartCookie(
+      cookieStore.get('guestCart')?.value,
+    );
     if (guestCartItems.length > 0) {
-      response.cookies.set({ name: 'guestCart', value: '', path: '/', maxAge: 0 });
+      response.cookies.set({
+        name: 'guestCart',
+        value: '',
+        path: '/',
+        maxAge: 0,
+      });
     }
     return response;
   }
 
   const products = await removeCartItems(sessionTokenCookie);
 
-  if (products.length === 0) {   
-    return NextResponse.json(
-      { error: 'Product not found' },
-      { status: 400 }
-    );
+  if (products.length === 0) {
+    return NextResponse.json({ error: 'Product not found' }, { status: 400 });
   }
-  
+
   return NextResponse.json({ products: products });
 }

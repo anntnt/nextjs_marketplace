@@ -108,11 +108,15 @@ export async function up(sql: Sql) {
       SELECT
         ${productCategory.name},
         ${productCategory.image_url}
-      WHERE NOT EXISTS (
-        SELECT 1
-        FROM product_categories
-        WHERE category_name = ${productCategory.name}
-      )
+      WHERE
+        NOT EXISTS (
+          SELECT
+            1
+          FROM
+            product_categories
+          WHERE
+            category_name = ${productCategory.name}
+        )
     `;
   }
 }

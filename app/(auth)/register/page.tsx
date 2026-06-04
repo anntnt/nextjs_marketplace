@@ -34,7 +34,9 @@ export default async function RegisterPage(props: Props) {
   return (
     <main className="w-full max-w-full flex-grow bg-brand-bg px-5 py-16 text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text sm:px-20">
       <div className="mx-auto mb-8 max-w-2xl text-center">
-        <h1 className="text-4xl font-semibold text-brand-text dark:text-dark-text">Create your eStores account</h1>
+        <h1 className="text-4xl font-semibold text-brand-text dark:text-dark-text">
+          Create your eStores account
+        </h1>
       </div>
       <RegisterForm variant="general" returnTo={returnTo} />
     </main>

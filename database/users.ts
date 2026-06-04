@@ -17,31 +17,33 @@ export type UserWithEmail = {
   id: number;
   emailAddress: string;
 };
-export const getUser = cache(async (sessionToken: Session['token']): Promise<User | undefined> => {
-  const [user] = await sql<User[]>`
-    SELECT
-      users.id,
-      users.username,
-      users.firstname,
-      users.lastname,
-      users.email_address,
-      users.birthday,
-      users.gender,
-      users.store_name,
-      users.address,
-      users.role_id
-    FROM
-      users
-      INNER JOIN sessions ON (
-        sessions.user_id = users.id
-        AND sessions.expiry_timestamp > now()
-      )
-    WHERE
-      sessions.token = ${sessionToken}
-  `;
+export const getUser = cache(
+  async (sessionToken: Session['token']): Promise<User | undefined> => {
+    const [user] = await sql<User[]>`
+      SELECT
+        users.id,
+        users.username,
+        users.firstname,
+        users.lastname,
+        users.email_address,
+        users.birthday,
+        users.gender,
+        users.store_name,
+        users.address,
+        users.role_id
+      FROM
+        users
+        INNER JOIN sessions ON (
+          sessions.user_id = users.id
+          AND sessions.expiry_timestamp > now()
+        )
+      WHERE
+        sessions.token = ${sessionToken}
+    `;
 
-  return user;
-});
+    return user;
+  },
+);
 
 export const getUserInsecure = cache(async (username: User['username']) => {
   const [user] = await sql<UserWithUsername[]>`
@@ -57,30 +59,31 @@ export const getUserInsecure = cache(async (username: User['username']) => {
   return user;
 });
 
-export const getUserByEmailInsecure = cache(async (emailAddress: User['emailAddress']) => {
-  const [user] = await sql<
-    {
-      id: number;
-      emailAddress: string;
-    }[]
-  >`
-    SELECT
-      id,
-      email_address AS "emailAddress"
-    FROM
-      users
-    WHERE
-      email_address = ${emailAddress}
-  `;
+export const getUserByEmailInsecure = cache(
+  async (emailAddress: User['emailAddress']) => {
+    const [user] = await sql<
+      {
+        id: number;
+        emailAddress: string;
+      }[]
+    >`
+      SELECT
+        id,
+        email_address AS "emailAddress"
+      FROM
+        users
+      WHERE
+        email_address = ${emailAddress}
+    `;
 
-  if (!user) return undefined;
+    if (!user) return undefined;
 
-  return {
-    id: user.id,
-    emailAddress: user.emailAddress,
-  };
-});
-
+    return {
+      id: user.id,
+      emailAddress: user.emailAddress,
+    };
+  },
+);
 
 export const createUserInsecure = cache(
   async (

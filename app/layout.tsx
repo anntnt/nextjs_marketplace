@@ -7,10 +7,12 @@ import Footer from '../components/navigation/Footer';
 import PageContent from '../components/ui/PageContent';
 import { getCartSum } from '../database/cartProducts';
 import { getUser } from '../database/users';
-import { getGuestCartTotalQuantity, parseGuestCartCookie } from '../util/guestCart';
+import {
+  getGuestCartTotalQuantity,
+  parseGuestCartCookie,
+} from '../util/guestCart';
 import { cookies, headers } from 'next/headers';
 import Header from '../components/navigation/Header';
-
 
 export const metadata = {
   title: {
@@ -46,7 +48,9 @@ export default async function RootLayout({ children }: Props) {
   const headerList = await headers();
   const htmlLang = getPreferredLanguage(headerList.get('accept-language'));
   const sessionTokenCookie = cookieStore.get('sessionToken');
-  const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+  const guestCartItems = parseGuestCartCookie(
+    cookieStore.get('guestCart')?.value,
+  );
 
   // 2. Get the current logged in user from the database using the sessionToken value
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));

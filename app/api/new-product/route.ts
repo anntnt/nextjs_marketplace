@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  createProduct,
-  type Product,
-} from '../../../database/products';
+import { createProduct, type Product } from '../../../database/products';
 import { newProductSchema } from '../../../lib/validation/product';
 import { formatZodIssues } from '../../../lib/validation/formatErrors';
 import { cloudinaryUpload } from '../../../util/cloudinaryUpload';

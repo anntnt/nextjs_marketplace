@@ -248,7 +248,9 @@ const buildMeaningfulProductName = (seed: number, categoryName: string) => {
   const baseName = baseNames[seed % baseNames.length];
   const descriptor = descriptorWords[(seed * 7 + 3) % descriptorWords.length];
 
-  if ((baseName ?? '').toLowerCase().includes((descriptor ?? '').toLowerCase())) {
+  if (
+    (baseName ?? '').toLowerCase().includes((descriptor ?? '').toLowerCase())
+  ) {
     return baseName;
   }
 
@@ -268,21 +270,25 @@ const getUniqueProductName = (candidateName: string) => {
 
   const suffix = ` #${currentCount + 1}`;
   const maxBaseLength = Math.max(0, 60 - suffix.length);
-  const trimmedBase = candidateName.length > maxBaseLength
-    ? candidateName.slice(0, maxBaseLength).trimEnd()
-    : candidateName;
+  const trimmedBase =
+    candidateName.length > maxBaseLength
+      ? candidateName.slice(0, maxBaseLength).trimEnd()
+      : candidateName;
 
   return `${trimmedBase}${suffix}`;
 };
 
 export async function up(sql: Sql) {
-  await sql`
-    TRUNCATE TABLE products RESTART IDENTITY CASCADE
-  `;
+  await sql` TRUNCATE TABLE products restart identity cascade `;
 
   const categories = await sql<{ id: number; categoryName: string }[]>`
-    SELECT id, category_name FROM product_categories
-    ORDER BY id
+    SELECT
+      id,
+      category_name
+    FROM
+      product_categories
+    ORDER BY
+      id
   `;
   const categoryInfos = categories.map((row) => ({
     id: row.id,
@@ -294,7 +300,14 @@ export async function up(sql: Sql) {
   }
 
   const sellers = await sql<{ id: number }[]>`
-    SELECT id FROM users WHERE role_id = 2 ORDER BY id
+    SELECT
+      id
+    FROM
+      users
+    WHERE
+      role_id = 2
+    ORDER BY
+      id
   `;
   const sellerIds = sellers.map((seller) => seller.id);
 
@@ -410,7 +423,8 @@ export async function up(sql: Sql) {
     const price = Math.floor(Math.random() * 145 * 100 + 500); // store as cents (€5.00 - €149.99)
 
     const imageUrl = CATEGORY_IMAGE_PLACEHOLDER;
-    const brand = brands[Math.floor(Math.random() * brands.length)] ?? 'Generic';
+    const brand =
+      brands[Math.floor(Math.random() * brands.length)] ?? 'Generic';
 
     return {
       name,
@@ -492,7 +506,8 @@ export async function up(sql: Sql) {
 export async function down(sql: Sql) {
   await sql`
     DELETE FROM products
-    WHERE image_url = ${CATEGORY_IMAGE_PLACEHOLDER}
+    WHERE
+      image_url = ${CATEGORY_IMAGE_PLACEHOLDER}
       AND description LIKE 'Lorem ipsum dolor sit amet% tempor incididunt%'
   `;
 }

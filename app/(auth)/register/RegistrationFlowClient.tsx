@@ -16,7 +16,11 @@ type Props = {
   currentUserRoleId?: number | null;
 };
 
-export default function RegistrationFlowClient({ variant, returnTo, currentUserRoleId }: Props) {
+export default function RegistrationFlowClient({
+  variant,
+  returnTo,
+  currentUserRoleId,
+}: Props) {
   const router = useRouter();
   const safeReturnTo = getSafeReturnToPath(returnTo);
   const shouldShowConflictModal =
@@ -59,10 +63,11 @@ export default function RegistrationFlowClient({ variant, returnTo, currentUserR
     };
   }, [variant]);
 
-  const basePath: Route = variant === 'seller' ? '/register/seller' : '/register/buyer';
+  const basePath: Route =
+    variant === 'seller' ? '/register/seller' : '/register/buyer';
   const targetWithReturnTo: Route = safeReturnTo
-  ? `${basePath}?returnTo=${encodeURIComponent(safeReturnTo)}`
-  : basePath;
+    ? `${basePath}?returnTo=${encodeURIComponent(safeReturnTo)}`
+    : basePath;
 
   const handleConfirm = async () => {
     try {
@@ -95,7 +100,10 @@ export default function RegistrationFlowClient({ variant, returnTo, currentUserR
             aria-describedby="role-switch-description"
             className="w-full max-w-md rounded-2xl bg-white px-6 py-6 text-brand-text shadow-xl dark:bg-gray-900 dark:text-dark-text"
           >
-            <h2 id="role-switch-title" className="text-xl font-semibold text-brand-text dark:text-dark-text">
+            <h2
+              id="role-switch-title"
+              className="text-xl font-semibold text-brand-text dark:text-dark-text"
+            >
               {modalTitle}
             </h2>
             <p
@@ -127,7 +135,11 @@ export default function RegistrationFlowClient({ variant, returnTo, currentUserR
         </div>
       ) : null}
 
-      <RegisterForm isBlocked={disableForm} variant={variant} returnTo={returnTo} />
+      <RegisterForm
+        isBlocked={disableForm}
+        variant={variant}
+        returnTo={returnTo}
+      />
     </>
   );
 }

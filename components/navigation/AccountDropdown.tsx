@@ -3,7 +3,10 @@
 import Link from 'next/link';
 import { getSafeReturnToPath } from '../../util/validation';
 import { useMemo, useEffect, useRef, useState, useCallback } from 'react';
-import type { MouseEvent as ReactMouseEvent, KeyboardEvent as ReactKeyboardEvent } from 'react';
+import type {
+  MouseEvent as ReactMouseEvent,
+  KeyboardEvent as ReactKeyboardEvent,
+} from 'react';
 import { usePathname } from 'next/navigation';
 import { FiChevronDown } from 'react-icons/fi';
 import type { Route } from 'next';
@@ -16,7 +19,9 @@ const focusableSelectors =
   'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
 const REGISTER_PATHS = ['/register', '/register/seller', '/register/buyer'];
 
-export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) {
+export default function AccountDropdown({
+  onOpenChange,
+}: AccountDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const openedByKeyboard = useRef(false);
   const overlayVisible = useRef(false);
@@ -30,8 +35,9 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
 
   // --- helpers ----------------------------------------------------
   const clearTimeouts = useCallback(
-    (ids: (ReturnType<typeof setTimeout> | null)[]) => ids.forEach((id) => id && clearTimeout(id)),
-    []
+    (ids: (ReturnType<typeof setTimeout> | null)[]) =>
+      ids.forEach((id) => id && clearTimeout(id)),
+    [],
   );
   const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const overlayTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -46,7 +52,9 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
   };
 
   const currentPath =
-    pathname && pathname !== '/login' && !REGISTER_PATHS.includes(pathname) ? pathname : '/';
+    pathname && pathname !== '/login' && !REGISTER_PATHS.includes(pathname)
+      ? pathname
+      : '/';
 
   const loginHref = useMemo(() => {
     const sanitized = pathname && pathname !== '/login' ? pathname : undefined;
@@ -67,10 +75,13 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
       setIsOpen(true);
       overlayVisible.current = true;
       overlayReady.current = false;
-      overlayTimer.current = setTimeout(() => (overlayReady.current = true), 180);
+      overlayTimer.current = setTimeout(
+        () => (overlayReady.current = true),
+        180,
+      );
       onOpenChange?.(true);
     },
-    [onOpenChange, clearTimeouts]
+    [onOpenChange, clearTimeouts],
   );
 
   const closeDropdown = useCallback(() => {
@@ -89,7 +100,7 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
     } else {
       openDropdown(byKeyboard);
     }
-  };  
+  };
 
   const handleMenuKeyDown = useCallback(
     (event: ReactKeyboardEvent<HTMLDivElement>) => {
@@ -97,7 +108,8 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
       const dropdown = dropdownRef.current;
       if (!dropdown) return;
 
-      const focusable = dropdown.querySelectorAll<HTMLElement>(focusableSelectors);
+      const focusable =
+        dropdown.querySelectorAll<HTMLElement>(focusableSelectors);
       if (!focusable.length) return;
 
       const first = focusable[0];
@@ -123,7 +135,7 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
         closeDropdown();
       }
     },
-    [closeDropdown]
+    [closeDropdown],
   );
 
   useEffect(() => {
@@ -134,7 +146,7 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
         document.dispatchEvent(
           new CustomEvent('nav:neighbor-focus', {
             detail: { direction: dir, sender: buttonRef.current },
-          })
+          }),
         );
       });
     }
@@ -198,8 +210,9 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
       if (!target) return;
       if (safeContains(container, target)) return;
 
-      const navRoot =
-        container.closest('[data-nav-root], nav, header, [role="navigation"]');
+      const navRoot = container.closest(
+        '[data-nav-root], nav, header, [role="navigation"]',
+      );
       if (!navRoot) return;
 
       const siblings = Array.from(navRoot.children);
@@ -209,11 +222,15 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
     };
 
     document.addEventListener('pointerover', handlePointerOver, true);
-    return () => document.removeEventListener('pointerover', handlePointerOver, true);
+    return () =>
+      document.removeEventListener('pointerover', handlePointerOver, true);
   }, [isOpen, closeDropdown]);
 
   // --- cleanup ----------------------------------------------------
-  useEffect(() => () => clearTimeouts([openTimer.current, overlayTimer.current]), [clearTimeouts]);
+  useEffect(
+    () => () => clearTimeouts([openTimer.current, overlayTimer.current]),
+    [clearTimeouts],
+  );
 
   // --- render -----------------------------------------------------
   return (
@@ -248,14 +265,20 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
             />
           </svg>
           <span>Account</span>
-          <FiChevronDown aria-hidden="true" className="h-4 w-4 ml-1" strokeWidth={3.2} />
+          <FiChevronDown
+            aria-hidden="true"
+            className="h-4 w-4 ml-1"
+            strokeWidth={3.2}
+          />
         </button>
       </div>
 
       {/* Overlay */}
       <div
         className={`account-overlay fixed left-0 right-0 bottom-0 z-40 transition-opacity duration-300 ease-in-out ${
-          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          isOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
         }`}
         style={{ top: 'var(--header-height, 60px)' }}
         aria-hidden
@@ -299,7 +322,8 @@ export default function AccountDropdown({ onOpenChange }: AccountDropdownProps) 
                 >
                   Register
                 </Link>{' '}
-                as a <strong>buyer</strong> or <strong>seller</strong> and start exploring!
+                as a <strong>buyer</strong> or <strong>seller</strong> and start
+                exploring!
               </li>
             </ul>
           </div>

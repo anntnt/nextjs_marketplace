@@ -74,7 +74,7 @@ export default function VirtuosoProductGrid({
       setCurrentPage(newPage);
       requestAnimationFrame(scrollToTop);
     },
-    [scrollToTop]
+    [scrollToTop],
   );
 
   const effectivePageSize = pageSize ?? 30; // Default page size if not provided
@@ -86,10 +86,13 @@ export default function VirtuosoProductGrid({
         `/api/products?categoryId=${categoryId}&limit=${effectivePageSize}&offset=${offset}`,
       );
       if (!res.ok) throw new Error('Failed to fetch products');
-      const data: { products: Product[]; totalCount: number } = await res.json();
+      const data: { products: Product[]; totalCount: number } =
+        await res.json();
 
       setProducts(data.products);
-      setTotalPages(Math.max(1, Math.ceil(data.totalCount / effectivePageSize)));
+      setTotalPages(
+        Math.max(1, Math.ceil(data.totalCount / effectivePageSize)),
+      );
     } catch (error) {
       console.error(error);
     }
@@ -107,10 +110,7 @@ export default function VirtuosoProductGrid({
       if (!product) return null;
 
       return (
-        <div
-          className="p-2"
-          key={`product-${product.id}`}
-        >
+        <div className="p-2" key={`product-${product.id}`}>
           <Card
             data-test-id={`product-id-${product.id}`}
             className="flex h-full w-full flex-col !rounded-sm"
@@ -140,12 +140,11 @@ export default function VirtuosoProductGrid({
         </div>
       );
     },
-    [products, userRoleId]
+    [products, userRoleId],
   );
 
   const renderPagination = () => {
     if (products.length === 0 || totalPages <= 1) return null;
-    
 
     const start = Math.max(1, currentPage - 1);
     const end = Math.min(totalPages, currentPage + 1);
@@ -163,7 +162,7 @@ export default function VirtuosoProductGrid({
           onClick={() => changePage(i)}
         >
           {i}
-        </button>
+        </button>,
       );
     }
 
@@ -199,10 +198,10 @@ export default function VirtuosoProductGrid({
         components={{
           List: VirtuosoGridList,
         }}
-        style={{ height: "390px" }}
+        style={{ height: '390px' }}
         // Hier Höhe definieren:
       />
       {renderPagination()}
-      </div>
+    </div>
   );
 }

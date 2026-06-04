@@ -24,14 +24,15 @@ As a **buyer**, you can browse and shop in the [marketplace](https://estores2.fl
 As a **seller**, you can list your products on eStores and manage your inventory by clicking My Products.
 
 ![alt text](./public/images/myproducts.jpg)<br><br>
-### ***Test accounts***:
+
+### **_Test accounts_**:
 
 You can use these test accounts to explore eStores without registering:
 
 | Role   | Username  | Password  |
 | ------ | --------- | --------- |
 | Buyer  | `buyer`   | `buyer`   |
-| Seller | `seller1` | `seller1` | 
+| Seller | `seller1` | `seller1` |
 
 <br>
 
@@ -58,7 +59,6 @@ When testing seller product creation, choose **Sample Category** so the new prod
 ### [Database diagram](https://drawsql.app/teams/myteam-1161/diagrams/estores)
 
 ![alt text](./public/images/drawsql_2.jpg)
-
 
 ## Project Setup locally
 
@@ -193,9 +193,8 @@ You can create an account on Cloudinary and Stripe to obtain the API keys, then 
 pnpm run dev
 ```
 
-
 ## Deployment
 
 - Fly.io
 - Docker
-// redeploy
+  // redeploy

@@ -32,13 +32,22 @@ export async function DELETE(
   const productId = Number((await params).productId);
 
   if (!sessionTokenCookie) {
-    const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+    const guestCartItems = parseGuestCartCookie(
+      cookieStore.get('guestCart')?.value,
+    );
     const updatedGuestCart = removeGuestCartItem(guestCartItems, productId);
 
-    const response = NextResponse.json({ success: true } as CartProductResponseDelete);
+    const response = NextResponse.json({
+      success: true,
+    } as CartProductResponseDelete);
 
     if (updatedGuestCart.length === 0) {
-      response.cookies.set({ name: 'guestCart', value: '', path: '/', maxAge: 0 });
+      response.cookies.set({
+        name: 'guestCart',
+        value: '',
+        path: '/',
+        maxAge: 0,
+      });
     } else {
       response.cookies.set({
         name: 'guestCart',
@@ -55,10 +64,7 @@ export async function DELETE(
   // Remove product
   const product =
     sessionTokenCookie &&
-    (await removeCartProducts(
-      sessionTokenCookie,
-      productId,
-    ));
+    (await removeCartProducts(sessionTokenCookie, productId));
 
   if (!product) {
     return NextResponse.json(

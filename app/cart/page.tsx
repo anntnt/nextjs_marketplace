@@ -23,7 +23,9 @@ export const metadata = {
 export default async function CartPage() {
   const cookieStore = await cookies();
   const sessionTokenCookie = cookieStore.get('sessionToken');
-  let guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+  let guestCartItems = parseGuestCartCookie(
+    cookieStore.get('guestCart')?.value,
+  );
 
   const sessionToken = sessionTokenCookie?.value;
   const user = sessionToken ? await getUser(sessionToken) : undefined;
@@ -71,16 +73,16 @@ export default async function CartPage() {
         quantity: quantityById.get(product.id) ?? 0,
       }))
       .filter((product) => product.quantity > 0)
-      .sort(
-        (a, b) => (orderById.get(a.id) ?? 0) - (orderById.get(b.id) ?? 0),
-      );
+      .sort((a, b) => (orderById.get(a.id) ?? 0) - (orderById.get(b.id) ?? 0));
   }
 
   if (!productsFromCart.length) {
     return (
       <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text px-5 sm:px-20 py-12">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-          <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Your Cart</h1>
+          <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">
+            Your Cart
+          </h1>
 
           <p>Your cart is empty</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -100,14 +102,14 @@ export default async function CartPage() {
     return accumulator + product.price * product.quantity;
   }, 0);
   const total = subTotal + STANDARD_DELIVERY_PRICE;
-  const checkoutHref = !isGuest
-    ? '/checkout'
-    : '/login?returnTo=%2Fcheckout';
+  const checkoutHref = !isGuest ? '/checkout' : '/login?returnTo=%2Fcheckout';
 
   return (
     <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text antialiased px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Your Cart</h1>
+        <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">
+          Your Cart
+        </h1>
         <div className="grid sm:grid-cols-2 gap-4 mt-8 py-8">
           <div className="space-y-4">
             {productsFromCart.map((product) => {
@@ -175,7 +177,9 @@ export default async function CartPage() {
             <ul className="space-y-4 text-brand-text dark:text-dark-text">
               <li className="flex flex-wrap gap-4 text-md">
                 Subtotal
-                <span className="ml-auto ">{formatEuroFromCents(subTotal)}</span>
+                <span className="ml-auto ">
+                  {formatEuroFromCents(subTotal)}
+                </span>
               </li>
               <li className="flex flex-wrap gap-4 text-md">
                 Shipping{' '}
@@ -211,8 +215,9 @@ export default async function CartPage() {
 
             {isGuest ? (
               <p className="mt-4 text-sm text-brand-muted dark:text-dark-muted">
-                You can add products without signing in. We will ask you to log in
-                or create an account before checkout so we can save your order.
+                You can add products without signing in. We will ask you to log
+                in or create an account before checkout so we can save your
+                order.
               </p>
             ) : null}
 

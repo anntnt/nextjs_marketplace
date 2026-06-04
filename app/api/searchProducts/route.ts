@@ -8,7 +8,9 @@ type ProductResponse = {
   totalCount: number;
 };
 
-export async function GET(request: NextRequest): Promise<NextResponse<ProductResponse>> {
+export async function GET(
+  request: NextRequest,
+): Promise<NextResponse<ProductResponse>> {
   const url = new URL(request.url);
   const query = url.searchParams.get('query') || '';
   const limit = Number(url.searchParams.get('limit')) || 20;
@@ -25,7 +27,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<ProductRes
   // Fetch total count for pagination
   const totalCountResult = await sql<{ count: string }[]>`
     SELECT
-      count(*) AS COUNT
+      count(*) AS count
     FROM
       products
     WHERE

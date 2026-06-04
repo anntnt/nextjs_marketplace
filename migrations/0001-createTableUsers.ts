@@ -2,7 +2,8 @@ import type { Sql } from 'postgres';
 import { z } from 'zod';
 
 const usernamePattern = /^(?=.*[a-zA-Z])[a-zA-Z0-9_]{3,20}$/;
-const USERNAME_MIN_MESSAGE = 'Username: Please enter at least 3 characters for the username.';
+const USERNAME_MIN_MESSAGE =
+  'Username: Please enter at least 3 characters for the username.';
 const USERNAME_PATTERN_MESSAGE =
   'Username: Your username must have at least one letter and no unusual characters.';
 const PASSWORD_REQUIRED_MESSAGE = 'Password: Please enter your password.';
@@ -48,7 +49,11 @@ const birthDateSchema = z.preprocess(
       }
 
       const today = new Date();
-      const threshold = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+      const threshold = new Date(
+        today.getFullYear() - 18,
+        today.getMonth(),
+        today.getDate(),
+      );
       if (date > threshold) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -99,7 +104,7 @@ export async function up(sql: Sql) {
       gender varchar(10),
       store_name varchar(50),
       address varchar(50),
-      role_id integer NOT NULL REFERENCES roles (id) ON DELETE cascade
+      role_id integer NOT NULL REFERENCES roles (id) ON DELETE CASCADE
     )
   `;
 }

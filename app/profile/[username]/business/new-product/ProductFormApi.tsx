@@ -35,8 +35,9 @@ export default function ProductFormApi(props: Props) {
     }
   }
 
-
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -52,7 +53,7 @@ export default function ProductFormApi(props: Props) {
       setImageUrl(result.imageUrl);
     }
   };
-  
+
   async function productFormApiHandler(formData: FormData) {
     const response = await fetch('/api/new-product', {
       method: 'POST',
@@ -144,7 +145,7 @@ export default function ProductFormApi(props: Props) {
               className="h-auto w-full object-cover"
             />
           </div>
-        )}        
+        )}
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
           Description
           <textarea
@@ -185,4 +186,3 @@ export default function ProductFormApi(props: Props) {
     </div>
   );
 }
-

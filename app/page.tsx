@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CategoriesVirtuoso from '../components/features/CategoriesVirtuoso';
 
-
 export default function Home() {
   return (
     <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text">
@@ -14,16 +13,16 @@ export default function Home() {
         <div className="mx-auto w-full max-w-screen-3xl px-4 sm:px-8">
           <div className="mx-auto mb-8 max-w-3xl text-center">
             <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">
-            Your world. Organized for you.
+              Your world. Organized for you.
             </h1>
             <p className="mt-3 text-brand-muted dark:text-dark-muted">
-            Discover collections that fit your lifestyle — simple, inspiring, and made for everyday living.
+              Discover collections that fit your lifestyle — simple, inspiring,
+              and made for everyday living.
             </p>
           </div>
           <CategoriesVirtuoso />
         </div>
       </section>
-
 
       {/* Call to action */}
       <section className="bg-gradient-to-r from-[#F59E0B] via-[#FCDFAF] to-[#A7F3D0] py-24 text-brand-text transition-colors sm:py-28 lg:py-32">
@@ -35,7 +34,8 @@ export default function Home() {
                   Ready to grow with eStores?
                 </h2>
                 <p className="text-brand-muted">
-                  Launch your storefront in minutes, access EU-wide shipping, and connect with shoppers who value quality.
+                  Launch your storefront in minutes, access EU-wide shipping,
+                  and connect with shoppers who value quality.
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <Link

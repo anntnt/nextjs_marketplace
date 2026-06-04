@@ -4,7 +4,11 @@ import type { HTMLAttributes } from 'react';
 
 type ItemsProps = { cartSum?: string } & HTMLAttributes<HTMLDivElement>;
 
-export default function Component({ cartSum, className, ...divProps }: ItemsProps) {
+export default function Component({
+  cartSum,
+  className,
+  ...divProps
+}: ItemsProps) {
   const cartItems = cartSum ?? '0';
   const containerClass = className ? `sm:me-5 ${className}` : 'sm:me-5';
 

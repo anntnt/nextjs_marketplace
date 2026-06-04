@@ -96,15 +96,16 @@ function SellerProductCard({ product, username }: RowProps) {
   );
 }
 
-const VirtuosoList = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      {...props}
-      className={`flex flex-col gap-4 ${className ?? ''}`.trim()}
-    />
-  ),
-);
+const VirtuosoList = forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    {...props}
+    className={`flex flex-col gap-4 ${className ?? ''}`.trim()}
+  />
+));
 VirtuosoList.displayName = 'SellerProductsList';
 
 const listComponents = {

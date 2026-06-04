@@ -19,16 +19,16 @@ export default function EditProductFormApi(props: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [name, setName] = useState(props.product.name);
-  const [price, setPrice] = useState(
-    (props.product.price / 100).toFixed(2),
-  );
+  const [price, setPrice] = useState((props.product.price / 100).toFixed(2));
   const [imageUrl, setImageUrl] = useState(props.product.imageUrl);
   const [description, setDescription] = useState(props.product.description);
   const [categoryId, setCategoryId] = useState(props.product.categoryId);
 
   const router = useRouter();
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -68,7 +68,6 @@ export default function EditProductFormApi(props: Props) {
     setSuccessMessage('Product updated successfully');
 
     router.push(`/profile/${props.username}/business` as Route);
-
   }
 
   return (
@@ -121,12 +120,12 @@ export default function EditProductFormApi(props: Props) {
         </label>
         <div className="block mb-2 ">
           {imageUrl && (
-          <Image
-            src={imageUrl}
-            width={500}
-            height={375}
-            alt={`Product ${name}`}
-          />
+            <Image
+              src={imageUrl}
+              width={500}
+              height={375}
+              alt={`Product ${name}`}
+            />
           )}
         </div>
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">

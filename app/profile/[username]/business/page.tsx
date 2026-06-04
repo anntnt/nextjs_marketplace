@@ -32,9 +32,10 @@ export default async function SellerProductsPage({ searchParams }: Props) {
     ? resolvedSearchParams.page[0]
     : resolvedSearchParams.page;
   const requestedPage = Number(pageParamRaw);
-  const page = Number.isFinite(requestedPage) && requestedPage > 0
-    ? Math.floor(requestedPage)
-    : 1;
+  const page =
+    Number.isFinite(requestedPage) && requestedPage > 0
+      ? Math.floor(requestedPage)
+      : 1;
   const pageSize = 25;
 
   const { products, totalCount } = await getProductsOfSeller(
@@ -46,16 +47,19 @@ export default async function SellerProductsPage({ searchParams }: Props) {
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
 
   if (page > totalPages && totalCount > 0) {
-  const target = totalPages === 1
-    ? `/profile/${user.username}/business`
-    : `/profile/${user.username}/business?page=${totalPages}`;
+    const target =
+      totalPages === 1
+        ? `/profile/${user.username}/business`
+        : `/profile/${user.username}/business?page=${totalPages}`;
 
-  redirect(target as Route);
+    redirect(target as Route);
   }
 
   const baseHref = `/profile/${user.username}/business`;
   const makePageHref = (targetPage: number) =>
-    targetPage <= 1 ? { pathname: baseHref } : { pathname: baseHref, query: { page: targetPage } };
+    targetPage <= 1
+      ? { pathname: baseHref }
+      : { pathname: baseHref, query: { page: targetPage } };
 
   const hasPrevious = page > 1;
   const hasNext = page < totalPages;
@@ -65,7 +69,9 @@ export default async function SellerProductsPage({ searchParams }: Props) {
 
   return (
     <main className="flex-grow w-full max-w-full bg-brand-bg px-5 py-12 text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text md:px-20">
-      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">My Products</h1>
+      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">
+        My Products
+      </h1>
       <section className="py-8">
         <div className="mx-auto max-w-screen-md px-4 2xl:px-0">
           <Link

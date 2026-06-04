@@ -11,7 +11,10 @@ import {
   getUserInsecure,
 } from '../../../../database/users';
 import { createOrUpdateCartItem } from '../../../../database/cartProducts';
-import { type UserLogin, userSchema } from '../../../../migrations/0001-createTableUsers';
+import {
+  type UserLogin,
+  userSchema,
+} from '../../../../migrations/0001-createTableUsers';
 import { secureCookieOptions } from '../../../../util/cookies';
 import { parseGuestCartCookie } from '../../../../util/guestCart';
 
@@ -29,7 +32,9 @@ const registerSchema = userSchema.extend({
   passwordRepeat: z.string(),
 });
 
-export async function POST(request: Request): Promise<NextResponse<RegisterResponseBody>> {
+export async function POST(
+  request: Request,
+): Promise<NextResponse<RegisterResponseBody>> {
   // Task: Implement the user registration workflow
 
   // 1. Get the user data from the request
@@ -68,22 +73,25 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
     };
 
     const flattenedErrors = result.error.flatten();
-    const fieldErrorMessages = Object.entries(flattenedErrors.fieldErrors).flatMap(
-      ([field, messages]) =>
-        (messages).map((rawMessage) => {
-          const label = friendlyFieldNames[field] ?? field;
-          const friendlyMessage =
-            rawMessage === 'Required' && friendlyRequiredMessages[field]
-              ? friendlyRequiredMessages[field]
-              : rawMessage;
-          return `${label}: ${friendlyMessage}`;
-        }),
+    const fieldErrorMessages = Object.entries(
+      flattenedErrors.fieldErrors,
+    ).flatMap(([field, messages]) =>
+      messages.map((rawMessage) => {
+        const label = friendlyFieldNames[field] ?? field;
+        const friendlyMessage =
+          rawMessage === 'Required' && friendlyRequiredMessages[field]
+            ? friendlyRequiredMessages[field]
+            : rawMessage;
+        return `${label}: ${friendlyMessage}`;
+      }),
     );
 
     const formErrorMessages = flattenedErrors.formErrors;
-    const formattedErrors = [...fieldErrorMessages, ...formErrorMessages].map((message) => ({
-      message,
-    }));
+    const formattedErrors = [...fieldErrorMessages, ...formErrorMessages].map(
+      (message) => ({
+        message,
+      }),
+    );
 
     return NextResponse.json({
       success: false,
@@ -94,7 +102,6 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
     });
   }
   try {
-
     if (result.data.password !== result.data.passwordRepeat) {
       return NextResponse.json({
         success: false,
@@ -126,7 +133,8 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
       normalizedStoreName = trimmedStoreName;
       const existingStore = await getUserByStoreNameInsecure(trimmedStoreName);
       if (existingStore) {
-        const suggestionBase = trimmedStoreName.replace(/[^a-z0-9]/gi, '') || 'Store';
+        const suggestionBase =
+          trimmedStoreName.replace(/[^a-z0-9]/gi, '') || 'Store';
         const suggestionCandidates = [
           `${suggestionBase}Shop`,
           `${suggestionBase}Market`,
@@ -142,7 +150,9 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
         }
 
         const suggestionSuffix =
-          suggestions.length > 0 ? ` Suggestions: ${suggestions.join(', ')}` : '';
+          suggestions.length > 0
+            ? ` Suggestions: ${suggestions.join(', ')}`
+            : '';
 
         return NextResponse.json({
           success: false,
@@ -168,7 +178,9 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
       });
     }
 
-    const userWithEmail = await getUserByEmailInsecure(validatedUser.emailAddress);
+    const userWithEmail = await getUserByEmailInsecure(
+      validatedUser.emailAddress,
+    );
 
     if (userWithEmail) {
       return NextResponse.json({
@@ -204,7 +216,8 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
         success: false,
         errors: [
           {
-            message: 'Registration failed. Please check your information and try again.',
+            message:
+              'Registration failed. Please check your information and try again.',
           },
         ],
       });
@@ -221,14 +234,17 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
         success: false,
         errors: [
           {
-            message: 'There was a problem starting your session. Please try again.',
+            message:
+              'There was a problem starting your session. Please try again.',
           },
         ],
       });
     }
 
     const cookieStore = await cookies();
-    const guestCartItems = parseGuestCartCookie(cookieStore.get('guestCart')?.value);
+    const guestCartItems = parseGuestCartCookie(
+      cookieStore.get('guestCart')?.value,
+    );
 
     const response = NextResponse.json<RegisterResponseBody>({
       success: true,
@@ -246,7 +262,11 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
 
     if (guestCartItems.length > 0) {
       for (const item of guestCartItems) {
-        await createOrUpdateCartItem(session.token, item.productId, item.quantity);
+        await createOrUpdateCartItem(
+          session.token,
+          item.productId,
+          item.quantity,
+        );
       }
 
       response.cookies.set({
@@ -265,7 +285,10 @@ export async function POST(request: Request): Promise<NextResponse<RegisterRespo
       {
         success: false,
         errors: [
-          { message: 'Something went wrong during registration. Please try again.' },
+          {
+            message:
+              'Something went wrong during registration. Please try again.',
+          },
         ],
       },
       { status: 500 },

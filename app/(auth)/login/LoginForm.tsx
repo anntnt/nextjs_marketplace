@@ -2,11 +2,10 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState} from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { getSafeReturnToPath } from '../../../util/validation';
 import ErrorMessage from '../../../components/ui/ErrorMessage';
 import type { LoginResponseBody } from '../api/login/route';
-
 
 type Props = { returnTo?: string | string[] };
 
@@ -28,9 +27,9 @@ export default function LoginForm(props: Props) {
       username: 'Username',
       password: 'Password',
     }),
-    []
+    [],
   );
-  
+
   const fieldRequiredMessages: Record<FieldName, string> = {
     username: 'Please enter your username.',
     password: 'Please enter your password.',
@@ -44,42 +43,49 @@ export default function LoginForm(props: Props) {
      }
      dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40`;
 
-  const { fieldErrors, formErrors, authError, authErrorFields } = useMemo(() => {
-    const fieldErrorMap: Partial<Record<FieldName, string>> = {};
-    const otherErrors: string[] = [];
-    let authMessage = '';
-    const authFields = new Set<FieldName>();
+  const { fieldErrors, formErrors, authError, authErrorFields } =
+    useMemo(() => {
+      const fieldErrorMap: Partial<Record<FieldName, string>> = {};
+      const otherErrors: string[] = [];
+      let authMessage = '';
+      const authFields = new Set<FieldName>();
 
-    for (const error of errors) {
-      const { message } = error;
-      const normalizedMessage = message.toLowerCase();
+      for (const error of errors) {
+        const { message } = error;
+        const normalizedMessage = message.toLowerCase();
 
-      if (normalizedMessage.includes('username or password is invalid')) {
-        authMessage = 'The username or password you entered is incorrect.';
-        authFields.add('username');
-        authFields.add('password');
-        continue;
+        if (normalizedMessage.includes('username or password is invalid')) {
+          authMessage = 'The username or password you entered is incorrect.';
+          authFields.add('username');
+          authFields.add('password');
+          continue;
+        }
+
+        const match = (
+          Object.entries(fieldLabels) as [FieldName, string][]
+        ).find(([, label]) =>
+          normalizedMessage.startsWith(label.toLowerCase()),
+        );
+
+        if (match) {
+          const [field, label] = match;
+          const remainder = message
+            .slice(label.length)
+            .trim()
+            .replace(/^:\s*/, '');
+          fieldErrorMap[field] = remainder || message;
+        } else {
+          otherErrors.push(message);
+        }
       }
 
-      const match = (Object.entries(fieldLabels) as [FieldName, string][])
-        .find(([, label]) => normalizedMessage.startsWith(label.toLowerCase()));
-
-      if (match) {
-        const [field, label] = match;
-        const remainder = message.slice(label.length).trim().replace(/^:\s*/, '');
-        fieldErrorMap[field] = remainder || message;
-      } else {
-        otherErrors.push(message);
-      }
-    }
-
-    return {
-      fieldErrors: fieldErrorMap,
-      formErrors: otherErrors,
-      authError: authMessage,
-      authErrorFields: Array.from(authFields),
-    };
-  }, [errors, fieldLabels]);
+      return {
+        fieldErrors: fieldErrorMap,
+        formErrors: otherErrors,
+        authError: authMessage,
+        authErrorFields: Array.from(authFields),
+      };
+    }, [errors, fieldLabels]);
 
   useEffect(() => {
     if (!shouldAutoFocusError || errors.length === 0) return;
@@ -87,16 +93,16 @@ export default function LoginForm(props: Props) {
     const fieldOrder: FieldName[] = ['username', 'password'];
 
     for (const field of fieldOrder) {
-      const hasError = Boolean(fieldErrors[field]) || authErrorFields.includes(field);
+      const hasError =
+        Boolean(fieldErrors[field]) || authErrorFields.includes(field);
       if (hasError) {
         break;
       }
     }
 
-    
-  // defer state update to avoid synchronous setState in effect
-  const id = setTimeout(() => setShouldAutoFocusError(false), 0);
-  return () => clearTimeout(id); // cleanup in case effect re-runs
+    // defer state update to avoid synchronous setState in effect
+    const id = setTimeout(() => setShouldAutoFocusError(false), 0);
+    return () => clearTimeout(id); // cleanup in case effect re-runs
   }, [errors, fieldErrors, authErrorFields, shouldAutoFocusError]);
 
   const clearFieldError = (field: FieldName) => {
@@ -161,7 +167,9 @@ export default function LoginForm(props: Props) {
     }
 
     if (!response.ok || !data) {
-      setErrors([{ message: 'Unable to login. Please try again.', type: 'form' }]);
+      setErrors([
+        { message: 'Unable to login. Please try again.', type: 'form' },
+      ]);
       setShouldAutoFocusError(true);
       return;
     }
@@ -185,7 +193,8 @@ export default function LoginForm(props: Props) {
     const { user } = data;
 
     const safeReturnTo = getSafeReturnToPath(props.returnTo);
-    const target = safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : '/';
+    const target =
+      safeReturnTo && safeReturnTo !== '/login' ? safeReturnTo : '/';
 
     if (user.roleId === 2) {
       router.push(`/profile/${user.username}`);
@@ -204,12 +213,14 @@ export default function LoginForm(props: Props) {
         <form
           noValidate
           className="py-8"
-          aria-describedby={[
-            authError ? 'auth-error' : null,
-            formErrors.length ? 'login-form-errors' : null,
-          ]
-            .filter(Boolean)
-            .join(' ') || undefined}
+          aria-describedby={
+            [
+              authError ? 'auth-error' : null,
+              formErrors.length ? 'login-form-errors' : null,
+            ]
+              .filter(Boolean)
+              .join(' ') || undefined
+          }
           onSubmit={async (event) => await handleLogin(event)}
         >
           <div className="mb-5">
@@ -227,21 +238,31 @@ export default function LoginForm(props: Props) {
               required
               aria-required="true"
               aria-invalid={
-                Boolean(fieldErrors.username) || authErrorFields.includes('username')
+                Boolean(fieldErrors.username) ||
+                authErrorFields.includes('username')
               }
-              aria-describedby={[
-                fieldErrors.username ? 'username-error' : null,
-                authError && authErrorFields.includes('username') ? 'auth-error' : null,
-              ]
-                .filter(Boolean)
-                .join(' ') || undefined}
+              aria-describedby={
+                [
+                  fieldErrors.username ? 'username-error' : null,
+                  authError && authErrorFields.includes('username')
+                    ? 'auth-error'
+                    : null,
+                ]
+                  .filter(Boolean)
+                  .join(' ') || undefined
+              }
               onChange={(event) => {
                 clearFieldError('username');
                 setUsername(event.currentTarget.value);
               }}
             />
             {fieldErrors.username && (
-              <div id="username-error" className="mt-2" role="alert" aria-live="polite">
+              <div
+                id="username-error"
+                className="mt-2"
+                role="alert"
+                aria-live="polite"
+              >
                 <ErrorMessage>{fieldErrors.username}</ErrorMessage>
               </div>
             )}
@@ -262,21 +283,31 @@ export default function LoginForm(props: Props) {
               required
               aria-required="true"
               aria-invalid={
-                Boolean(fieldErrors.password) || authErrorFields.includes('password')
+                Boolean(fieldErrors.password) ||
+                authErrorFields.includes('password')
               }
-              aria-describedby={[
-                fieldErrors.password ? 'password-error' : null,
-                authError && authErrorFields.includes('password') ? 'auth-error' : null,
-              ]
-                .filter(Boolean)
-                .join(' ') || undefined}
+              aria-describedby={
+                [
+                  fieldErrors.password ? 'password-error' : null,
+                  authError && authErrorFields.includes('password')
+                    ? 'auth-error'
+                    : null,
+                ]
+                  .filter(Boolean)
+                  .join(' ') || undefined
+              }
               onChange={(event) => {
                 clearFieldError('password');
                 setPassword(event.currentTarget.value);
               }}
             />
             {fieldErrors.password && (
-              <div id="password-error" className="mt-2" role="alert" aria-live="polite">
+              <div
+                id="password-error"
+                className="mt-2"
+                role="alert"
+                aria-live="polite"
+              >
                 <ErrorMessage>{fieldErrors.password}</ErrorMessage>
               </div>
             )}
@@ -304,11 +335,13 @@ export default function LoginForm(props: Props) {
               aria-live="assertive"
               className="mb-5 rounded-md border border-red-500 bg-red-50 p-3 text-red-700"
             >
-              <p className="font-medium">Please correct the following issues:</p>
+              <p className="font-medium">
+                Please correct the following issues:
+              </p>
               <ul className="mt-2 list-disc pl-5 text-sm">
-              {formErrors.map((error) => (
-                <li key={`form-error-${error}`}>{error}</li>
-              ))}
+                {formErrors.map((error) => (
+                  <li key={`form-error-${error}`}>{error}</li>
+                ))}
               </ul>
             </div>
           )}
@@ -325,8 +358,8 @@ export default function LoginForm(props: Props) {
         >
           Sign up
         </Link>{' '}
-        as a <strong>buyer</strong> or <strong>seller</strong>&nbsp; and
-        start exploring!
+        as a <strong>buyer</strong> or <strong>seller</strong>&nbsp; and start
+        exploring!
       </div>
     </>
   );

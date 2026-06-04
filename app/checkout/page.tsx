@@ -27,12 +27,12 @@ export default async function CheckoutPage() {
   if (user.roleId !== 3) {
     redirect('/buyer-area-only');
   }
-  const productsFromCart = (await getCartProducts(sessionTokenCookie.value)).map(
-    (product) => ({
-      ...product,
-      price: Number(product.price),
-    }),
-  );
+  const productsFromCart = (
+    await getCartProducts(sessionTokenCookie.value)
+  ).map((product) => ({
+    ...product,
+    price: Number(product.price),
+  }));
 
   const subTotal = productsFromCart.reduce((accumulator, product) => {
     return (accumulator += product.price * product.quantity);
@@ -41,7 +41,9 @@ export default async function CheckoutPage() {
   return (
     <main className="w-full max-w-full flex-grow bg-brand-bg text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text antialiased px-5 sm:px-20 py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">Checkout</h1>
+        <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">
+          Checkout
+        </h1>
         <div className="grid sm:grid-cols-2 gap-4 mt-8 py-8">
           <div className="space-y-4">
             <div className="grid grid-cols-1 gap-4 space-y-4">
@@ -61,7 +63,9 @@ export default async function CheckoutPage() {
             <ul className="space-y-4 rounded-lg border border-brand-border bg-brand-surface px-4 py-6 text-brand-text shadow-sm dark:border-dark-muted/60 dark:bg-dark-surface sm:p-6">
               <li className="flex flex-wrap gap-4 text-md">
                 Subtotal
-                <span className="ml-auto ">{formatEuroFromCents(subTotal)}</span>
+                <span className="ml-auto ">
+                  {formatEuroFromCents(subTotal)}
+                </span>
               </li>
               <li className="flex flex-wrap gap-4 text-md">
                 Shipping{' '}

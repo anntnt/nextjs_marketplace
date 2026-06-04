@@ -158,9 +158,12 @@ export const getCategoryProductsInsecure = cache(
     offset = 0, // default offset
   ): Promise<{ products: Product[]; totalCount: number }> => {
     const result = await sql<{ count: number }[]>`
-      SELECT COUNT(*)::int AS count
-      FROM products
-      WHERE category_id = ${categoryId}
+      SELECT
+        count(*)::int AS count
+      FROM
+        products
+      WHERE
+        category_id = ${categoryId}
     `;
     const count = result[0]?.count ?? 0;
 
@@ -221,8 +224,8 @@ export const getCategoryProductWithSellerInsecure = cache(
     >`
       SELECT
         products.*,
-        COALESCE(
-          NULLIF(users.store_name::text, ''),
+        coalesce(
+          nullif(users.store_name::text, ''),
           users.firstname || ' ' || users.lastname
         )::text AS "storeName",
         product_categories.category_name AS "categoryName"
@@ -252,15 +255,20 @@ export const getProductsOfSeller = cache(
     page = 1,
     pageSize = 25,
   ): Promise<{ products: Product[]; totalCount: number }> => {
-    const currentPage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
-    const limit = Number.isFinite(pageSize) && pageSize > 0 ? Math.floor(pageSize) : 25;
+    const currentPage =
+      Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
+    const limit =
+      Number.isFinite(pageSize) && pageSize > 0 ? Math.floor(pageSize) : 25;
     const offset = (currentPage - 1) * limit;
 
     const result = await sql<{ count: number }[]>`
-      SELECT COUNT(*)::int AS count
-      FROM products
-      INNER JOIN sessions ON products.seller_id = sessions.user_id
-      WHERE sessions.token = ${sessionToken}
+      SELECT
+        count(*)::int AS count
+      FROM
+        products
+        INNER JOIN sessions ON products.seller_id = sessions.user_id
+      WHERE
+        sessions.token = ${sessionToken}
         AND sessions.expiry_timestamp > now();
     `;
     const count = result[0]?.count ?? 0;
@@ -279,14 +287,20 @@ export const getProductsOfSeller = cache(
         categoryId: number | null;
       }[]
     >`
-      SELECT products.*
-      FROM products
-      INNER JOIN sessions ON products.seller_id = sessions.user_id
-      WHERE sessions.token = ${sessionToken}
+      SELECT
+        products.*
+      FROM
+        products
+        INNER JOIN sessions ON products.seller_id = sessions.user_id
+      WHERE
+        sessions.token = ${sessionToken}
         AND sessions.expiry_timestamp > now()
-      ORDER BY products.id DESC
-      LIMIT ${limit}
-      OFFSET ${offset}
+      ORDER BY
+        products.id DESC
+      LIMIT
+        ${limit}
+      OFFSET
+        ${offset}
     `;
 
     const products: Product[] = productsRaw.map((productRaw) => ({
@@ -443,9 +457,14 @@ export async function getProductsByIds(ids: number[]): Promise<Product[]> {
       brand: string | null;
     }[]
   >`
-    SELECT *
-    FROM products
-    WHERE id = ANY(${ids})
+    SELECT
+      *
+    FROM
+      products
+    WHERE
+      id = ANY (
+        ${ids}
+      )
   `;
 
   return productsRaw.map((productRaw) => ({

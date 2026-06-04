@@ -3,7 +3,9 @@ export type GuestCartItem = {
   quantity: number;
 };
 
-export function parseGuestCartCookie(value: string | undefined): GuestCartItem[] {
+export function parseGuestCartCookie(
+  value: string | undefined,
+): GuestCartItem[] {
   if (!value) return [];
 
   try {
@@ -11,14 +13,23 @@ export function parseGuestCartCookie(value: string | undefined): GuestCartItem[]
     if (!Array.isArray(parsed)) return [];
 
     return parsed
-    .filter((item): item is { productId: unknown; quantity: unknown } =>
-      typeof item === 'object' && item !== null && 'productId' in item && 'quantity' in item
-    )
-    .map((item) => ({
-      productId: Number(item.productId),
-      quantity: Number(item.quantity),
-    }))
-      .filter((item) => Number.isInteger(item.productId) && Number.isInteger(item.quantity) && item.quantity > 0);
+      .filter(
+        (item): item is { productId: unknown; quantity: unknown } =>
+          typeof item === 'object' &&
+          item !== null &&
+          'productId' in item &&
+          'quantity' in item,
+      )
+      .map((item) => ({
+        productId: Number(item.productId),
+        quantity: Number(item.quantity),
+      }))
+      .filter(
+        (item) =>
+          Number.isInteger(item.productId) &&
+          Number.isInteger(item.quantity) &&
+          item.quantity > 0,
+      );
   } catch {
     return [];
   }

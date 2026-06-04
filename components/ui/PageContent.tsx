@@ -31,7 +31,12 @@ export default function PageContent({ children }: PageContentProps) {
   }, [pathname]);
 
   return (
-    <div ref={containerRef} id="page-content" tabIndex={-1} className="flex-1 focus:outline-none">
+    <div
+      ref={containerRef}
+      id="page-content"
+      tabIndex={-1}
+      className="flex-1 focus:outline-none"
+    >
       {children}
     </div>
   );

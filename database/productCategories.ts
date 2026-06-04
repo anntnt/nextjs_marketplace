@@ -42,8 +42,10 @@ export const getProductCategoriesPaginatedInsecure = async (
       AND category_name IS NOT NULL
     ORDER BY
       category_name
-    LIMIT ${limit}
-    OFFSET ${offset}
+    LIMIT
+      ${limit}
+    OFFSET
+      ${offset}
   `;
 
   return productCategories;
@@ -52,7 +54,7 @@ export const getProductCategoriesPaginatedInsecure = async (
 export const getProductCategoriesTotalInsecure = async () => {
   const [result] = await sql<{ count: number }[]>`
     SELECT
-      COUNT(*)::int AS count
+      count(*)::int AS count
     FROM
       product_categories
   `;
@@ -61,7 +63,14 @@ export const getProductCategoriesTotalInsecure = async () => {
 };
 
 export const getCategoryInsecure = cache(async (id: number) => {
-  const [productCategory] = await sql<{ id: number; imageUrl: string; categoryName: string; parentCategoryId: number | null }[]>`
+  const [productCategory] = await sql<
+    {
+      id: number;
+      imageUrl: string;
+      categoryName: string;
+      parentCategoryId: number | null;
+    }[]
+  >`
     SELECT
       *
     FROM

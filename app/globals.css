@@ -40,7 +40,9 @@ html {
   color: #f9fafb;
   padding: 0.75rem 1.5rem;
   font-weight: 600;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .skip-link:focus,
@@ -119,7 +121,8 @@ html {
            hover:bg-brand-secondary
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2
            focus-visible:ring-offset-brand-secondary
-           dark:bg-brand-primary dark:hover:bg-brand-secondary;  }
+           dark:bg-brand-primary dark:hover:bg-brand-secondary;
+  }
 
   p {
     @apply text-lg;
@@ -145,79 +148,82 @@ main {
    Account dropdown hover behavior
    =============================== */
 
-   .menu-item {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  /* --- Submenu --- */
-  .submenu {
-    list-style: none;
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: auto;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    background: #fff;
-    border-radius: 0 0 8px 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    opacity: 0;
-    transform: translateY(6px);
-    pointer-events: none;
-    transition: opacity 0.15s ease, transform 0.15s ease;
-    z-index: 50;
-  }
-  
-  /* Show submenu when hovering Account */
-  .menu-item.has-submenu:hover > .submenu {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  
-  /* Keep open while hovering submenu */
-  .menu-item.has-submenu .submenu:hover {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  
-  /* Close Account dropdown when hovering another menu item */
-  .mainmenu > .menu-item:hover ~ .menu-item.has-submenu .submenu {
-    display: none;
-    opacity: 0;
-  }
-  /* Overlay base */
+.menu-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* --- Submenu --- */
+.submenu {
+  list-style: none;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: auto;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  z-index: 50;
+}
+
+/* Show submenu when hovering Account */
+.menu-item.has-submenu:hover > .submenu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Keep open while hovering submenu */
+.menu-item.has-submenu .submenu:hover {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Close Account dropdown when hovering another menu item */
+.mainmenu > .menu-item:hover ~ .menu-item.has-submenu .submenu {
+  display: none;
+  opacity: 0;
+}
+/* Overlay base */
+:root {
+  --header-height: 60px; /* default for desktop */
+}
+
+/* Softer, more transparent overlay like mobile menu */
+.account-overlay {
+  background: rgba(0, 0, 0, 0.4); /* light, like your mobile menu */
+  backdrop-filter: blur(2px);
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.account-overlay.opacity-0,
+.account-overlay.pointer-events-none {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.account-overlay.opacity-100 {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 767px) {
   :root {
-    --header-height: 60px; /* default for desktop */
+    --header-height: 56px;
   }
-  
-  /* Softer, more transparent overlay like mobile menu */
-  .account-overlay {
-    background: rgba(0, 0, 0, 0.4); /* light, like your mobile menu */
-    backdrop-filter: blur(2px);
-    transition: opacity 0.25s ease, visibility 0.25s ease;
-  }
-  
-  .account-overlay.opacity-0,
-  .account-overlay.pointer-events-none {
-    opacity: 0;
-    visibility: hidden;
-  }
-  
-  .account-overlay.opacity-100 {
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  @media (max-width: 767px) {
-    :root {
-      --header-height: 56px;
-    }
-  }
-  
+}

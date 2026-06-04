@@ -6,7 +6,8 @@ const users = [
     firstname: 'Buyer',
     lastname: 'Account',
     email_address: 'buyer@example.com',
-    password_hash: '$2b$12$hSEIcJGaJULykV0lg7mbqeY25ljTizvGIdz/EsFtPKNN8mszHKaVK',
+    password_hash:
+      '$2b$12$hSEIcJGaJULykV0lg7mbqeY25ljTizvGIdz/EsFtPKNN8mszHKaVK',
     birthday: new Date('1992-02-02'),
     gender: null,
     store_name: null,
@@ -18,7 +19,8 @@ const users = [
     firstname: 'Seller',
     lastname: 'One',
     email_address: 'seller@example.com',
-    password_hash: '$2b$12$NqUxNsmoYjrHNxnDsTr6leV9JQnPD8MHuTkVuoa34hHYaii.rDSzu',
+    password_hash:
+      '$2b$12$NqUxNsmoYjrHNxnDsTr6leV9JQnPD8MHuTkVuoa34hHYaii.rDSzu',
     birthday: new Date('1990-01-01'),
     gender: null,
     store_name: 'Essentia Store',
@@ -30,7 +32,8 @@ const users = [
     firstname: 'Seller',
     lastname: 'Two',
     email_address: 'seller2@example.com',
-    password_hash: '$2b$12$hryLqoI/CjZD25bj9MlNP.z4YFhA0JdrLEMj5OVgi1LdRH1gtynAW',
+    password_hash:
+      '$2b$12$hryLqoI/CjZD25bj9MlNP.z4YFhA0JdrLEMj5OVgi1LdRH1gtynAW',
     birthday: new Date('1991-03-03'),
     gender: null,
     store_name: 'TrendNest Store',
@@ -42,7 +45,8 @@ const users = [
     firstname: 'Seller',
     lastname: 'Three',
     email_address: 'seller3@example.com',
-    password_hash: '$2b$12$TUgUS3RxKgjRs9ftR9ZKhebN1K2tPCZrg17G1TV0ED/f8YpCaCbDS',
+    password_hash:
+      '$2b$12$TUgUS3RxKgjRs9ftR9ZKhebN1K2tPCZrg17G1TV0ED/f8YpCaCbDS',
     birthday: new Date('1993-04-04'),
     gender: null,
     store_name: 'Moori Store',
@@ -53,7 +57,11 @@ const users = [
 
 export async function up(sql: Sql) {
   const roles = await sql<{ id: number; name: string }[]>`
-    SELECT id, name FROM roles
+    SELECT
+      id,
+      name
+    FROM
+      roles
   `;
 
   const roleIdByName = new Map(roles.map((role) => [role.name, role.id]));
@@ -63,9 +71,14 @@ export async function up(sql: Sql) {
 
     if (!roleId) {
       const [newRole] = await sql<{ id: number }[]>`
-        INSERT INTO roles (name)
-        VALUES (${user.roleName})
-        RETURNING id
+        INSERT INTO
+          roles (name)
+        VALUES
+          (
+            ${user.roleName}
+          )
+        RETURNING
+          id
       `;
       if (!newRole) {
         throw new Error(`Failed to insert role: ${user.roleName}`);

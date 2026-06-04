@@ -6,7 +6,7 @@ export async function up(sql: Sql) {
       id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
       star int NOT NULL,
       content text,
-      product_id integer NOT NULL REFERENCES products (id) ON DELETE cascade,
+      product_id integer NOT NULL REFERENCES products (id) ON DELETE CASCADE,
       user_id integer NOT NULL REFERENCES users (id)
     )
   `;

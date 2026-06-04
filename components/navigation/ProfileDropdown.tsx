@@ -20,7 +20,10 @@ export type ProfileDropdownProps = {
 const focusableSelectors =
   'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])';
 
-export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownProps) {
+export default function ProfileDropdown({
+  user,
+  onOpenChange,
+}: ProfileDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -34,7 +37,7 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
         requestAnimationFrame(() => buttonRef.current?.focus());
       }
     },
-    [onOpenChange]
+    [onOpenChange],
   );
 
   const openDropdown = useCallback(() => {
@@ -91,7 +94,8 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
 
   const handleMenuKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'Tab') return;
-    const focusable = dropdownRef.current?.querySelectorAll<HTMLElement>(focusableSelectors);
+    const focusable =
+      dropdownRef.current?.querySelectorAll<HTMLElement>(focusableSelectors);
     if (!focusable || focusable.length === 0) return;
 
     const first = focusable[0];
@@ -128,12 +132,11 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
         document.dispatchEvent(
           new CustomEvent('nav:neighbor-focus', {
             detail: { direction: dir, sender: buttonRef.current },
-          })
+          }),
         );
       });
     }
   }, [isOpen]);
-
 
   return (
     <div
@@ -170,12 +173,18 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
           />
         </svg>
         <span className="hidden sm:inline">Hi, {user?.firstname}</span>
-        <FiChevronDown aria-hidden="true" className="h-4 w-4 ml-1" strokeWidth={3.2} />
+        <FiChevronDown
+          aria-hidden="true"
+          className="h-4 w-4 ml-1"
+          strokeWidth={3.2}
+        />
       </button>
 
       <div
         className={`fixed left-0 right-0 bottom-0 z-40 bg-gradient-to-b from-transparent via-black/60 to-black/70 transition-opacity duration-200 ease-in-out ${
-          isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+          isOpen
+            ? 'pointer-events-auto opacity-100'
+            : 'pointer-events-none opacity-0'
         }`}
         style={{ top: 'var(--header-height, 60px)' }}
         aria-hidden="true"
@@ -196,7 +205,7 @@ export default function ProfileDropdown({ user, onOpenChange }: ProfileDropdownP
           id="profile-menu"
           role="menu"
           aria-label="Profile options"
-          tabIndex={-1}  
+          tabIndex={-1}
           className="rounded-lg border border-brand-muted/20 bg-brand-surface shadow-xl focus:outline-none dark:border-dark-muted/20 dark:bg-dark-surface"
           onBlur={handleFocusLeave}
           onKeyDown={handleMenuKeyDown}

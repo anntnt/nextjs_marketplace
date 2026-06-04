@@ -80,7 +80,8 @@ export default function VirtuosoSearchGrid({
       );
       if (!res.ok) throw new Error('Failed to fetch products');
 
-      const data: { products: Product[]; totalCount: number } = await res.json();
+      const data: { products: Product[]; totalCount: number } =
+        await res.json();
       setProducts(data.products);
       setTotalCount(data.totalCount);
     } catch (error) {
@@ -173,85 +174,83 @@ export default function VirtuosoSearchGrid({
   );
 
   return (
-      <div ref={containerRef}>
-        {loading && (
-          <div className="mb-6 flex w-full items-center justify-center">
-            <div className="flex items-center gap-3 rounded-full border border-brand-muted/30 bg-brand-surface px-4 py-2 text-sm text-brand-muted shadow-sm shadow-brand-primary/15 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-muted">
-              <svg
-                className="h-4 w-4 animate-spin"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                />
-              </svg>
-              Loading results…
-            </div>
+    <div ref={containerRef}>
+      {loading && (
+        <div className="mb-6 flex w-full items-center justify-center">
+          <div className="flex items-center gap-3 rounded-full border border-brand-muted/30 bg-brand-surface px-4 py-2 text-sm text-brand-muted shadow-sm shadow-brand-primary/15 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-muted">
+            <svg
+              className="h-4 w-4 animate-spin"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              />
+            </svg>
+            Loading results…
           </div>
-        )}
-        <VirtuosoGrid
-          useWindowScroll
-          totalCount={products.length}
-          itemContent={renderItemContent}
-          components={{ List: VirtuosoGridList }}
-        />
-        {/* Pagination */}
-        {shouldShowPagination && (
-          <nav
-            className="mt-6 flex items-center justify-center gap-2 text-brand-muted dark:text-dark-muted"
-            aria-label="Pagination"
+        </div>
+      )}
+      <VirtuosoGrid
+        useWindowScroll
+        totalCount={products.length}
+        itemContent={renderItemContent}
+        components={{ List: VirtuosoGridList }}
+      />
+      {/* Pagination */}
+      {shouldShowPagination && (
+        <nav
+          className="mt-6 flex items-center justify-center gap-2 text-brand-muted dark:text-dark-muted"
+          aria-label="Pagination"
+        >
+          <button
+            className="rounded border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-50 disabled:hover:border-brand-muted/30 disabled:hover:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:hover:border-dark-muted/30 dark:disabled:hover:text-dark-muted"
+            disabled={page === 1 || loading}
+            onClick={() => changePage(1)}
           >
-            <button
-              className="rounded border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-50 disabled:hover:border-brand-muted/30 disabled:hover:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:hover:border-dark-muted/30 dark:disabled:hover:text-dark-muted"
-              disabled={page === 1 || loading}
-              onClick={() => changePage(1)}
-            >
-              First
-            </button>
-            {pageNumbers.map((pageNumber) =>
-              pageNumber === '...'
-                ? (
-                    <span key={`dots-${pageNumber}-${page}`} className="px-2">
-                      ...
-                    </span>
-                  )
-                : (
-                    <button
-                      key={`page-${page}-${pageNumber}`}
-                      onClick={() => changePage(Number(pageNumber))}
-                      className={`rounded border px-3 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-50 ${
-                        pageNumber === page
-                          ? 'border-brand-primary bg-brand-primary text-white'
-                          : 'border-brand-muted/30 text-brand-muted hover:border-brand-primary hover:text-brand-primary dark:border-dark-muted/30 dark:text-dark-muted dark:hover:border-brand-primary dark:hover:text-brand-primary'
-                      }`}
-                      disabled={loading || pageNumber === page}
-                    >
-                      {pageNumber}
-                    </button>
-                  ),
-            )}
+            First
+          </button>
+          {pageNumbers.map((pageNumber) =>
+            pageNumber === '...' ? (
+              <span key={`dots-${pageNumber}-${page}`} className="px-2">
+                ...
+              </span>
+            ) : (
+              <button
+                key={`page-${page}-${pageNumber}`}
+                onClick={() => changePage(Number(pageNumber))}
+                className={`rounded border px-3 py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-50 ${
+                  pageNumber === page
+                    ? 'border-brand-primary bg-brand-primary text-white'
+                    : 'border-brand-muted/30 text-brand-muted hover:border-brand-primary hover:text-brand-primary dark:border-dark-muted/30 dark:text-dark-muted dark:hover:border-brand-primary dark:hover:text-brand-primary'
+                }`}
+                disabled={loading || pageNumber === page}
+              >
+                {pageNumber}
+              </button>
+            ),
+          )}
 
-            <button
-              className="rounded border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-50 disabled:hover:border-brand-muted/30 disabled:hover:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:hover:border-dark-muted/30 dark:disabled:hover:text-dark-muted"
-              disabled={page === totalPages || loading}
-              onClick={() => changePage(totalPages)}
-            >
-              Last
-            </button>
-          </nav>
-        )}
-      </div>
+          <button
+            className="rounded border border-brand-muted/30 px-3 py-1 transition-colors hover:border-brand-primary hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary/60 disabled:opacity-50 disabled:hover:border-brand-muted/30 disabled:hover:text-brand-muted dark:border-dark-muted/30 dark:hover:border-brand-primary dark:hover:text-brand-primary dark:disabled:hover:border-dark-muted/30 dark:disabled:hover:text-dark-muted"
+            disabled={page === totalPages || loading}
+            onClick={() => changePage(totalPages)}
+          >
+            Last
+          </button>
+        </nav>
+      )}
+    </div>
   );
 }

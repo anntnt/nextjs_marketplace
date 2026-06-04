@@ -1,7 +1,8 @@
 import { cookies } from 'next/headers';
 import type { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
-const getCookieStore = async (): Promise<ReadonlyRequestCookies> => await cookies();
+const getCookieStore = async (): Promise<ReadonlyRequestCookies> =>
+  await cookies();
 
 export async function getCookie(name: string): Promise<string | undefined> {
   const cookieStore = await getCookieStore();

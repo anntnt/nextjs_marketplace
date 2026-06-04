@@ -16,7 +16,9 @@ export default async function UserProfilePage() {
 
   return (
     <main className="flex-grow w-full max-w-full bg-brand-bg px-5 py-12 text-brand-text transition-colors dark:bg-dark-bg dark:text-dark-text sm:px-10">
-      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">{user.username}'s Dashboard</h1>
+      <h1 className="text-4xl font-semibold text-center text-brand-text dark:text-dark-text">
+        {user.username}'s Dashboard
+      </h1>
 
       <section className="mb-4 py-8 md:py-12">
         <div className="mx-auto max-w-screen-xl px-4 md:px-6 lg:px-8 xl:px-10 2xl:px-20">
@@ -43,7 +45,10 @@ export default async function UserProfilePage() {
             </div>
           )}
           <hr className="my-4 border-brand-muted/20 dark:border-dark-muted/20" />
-          <nav className="mb-4 flex text-brand-muted dark:text-dark-muted" aria-label="Breadcrumb">
+          <nav
+            className="mb-4 flex text-brand-muted dark:text-dark-muted"
+            aria-label="Breadcrumb"
+          >
             <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
               <li className="inline-flex items-center">
                 <Link

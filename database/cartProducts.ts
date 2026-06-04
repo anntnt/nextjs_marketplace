@@ -110,8 +110,7 @@ export const createOrUpdateCartItem = cache(
             token = ${sessionToken}
             AND sessions.expiry_timestamp > now()
         )
-      ON CONFLICT (product_id, user_id) DO
-      UPDATE
+      ON CONFLICT (product_id, user_id) DO UPDATE
       SET
         amount = carts_products.amount + ${quantity}
       RETURNING

@@ -98,9 +98,10 @@ export async function POST(
 
   const requestCookies = await cookies();
   const guestCartCookie = requestCookies.get('guestCart');
-  const guestCartCookieValue = typeof guestCartCookie?.value === 'string'
-    ? guestCartCookie.value
-    : undefined;
+  const guestCartCookieValue =
+    typeof guestCartCookie?.value === 'string'
+      ? guestCartCookie.value
+      : undefined;
   const guestCartItems = parseGuestCartCookie(guestCartCookieValue);
 
   const response = NextResponse.json<LoginResponseBody>({
@@ -119,7 +120,11 @@ export async function POST(
 
   if (guestCartItems.length > 0) {
     for (const item of guestCartItems) {
-      await createOrUpdateCartItem(session.token, item.productId, item.quantity);
+      await createOrUpdateCartItem(
+        session.token,
+        item.productId,
+        item.quantity,
+      );
     }
 
     response.cookies.set({
