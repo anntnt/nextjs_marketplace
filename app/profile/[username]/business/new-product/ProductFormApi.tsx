@@ -104,7 +104,7 @@ export default function ProductFormApi(props: Props) {
       >
         <input name="sellerId" type="hidden" value={props.sellerId} />
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-          Name
+          Name*
           <input
             className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
             required
@@ -114,7 +114,7 @@ export default function ProductFormApi(props: Props) {
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-          Price €
+          Price* €
           <input
             value={price}
             type="number"
@@ -127,12 +127,14 @@ export default function ProductFormApi(props: Props) {
         </label>
 
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-          Select Image:
+          Select Image*:
           <input
             className="block w-full cursor-pointer rounded-lg border border-brand-muted/30 bg-brand-surface text-sm text-brand-primary transition focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-brand-primary"
             type="file"
             name="image"
             accept="image/*"
+            required
+            aria-required="true"
             ref={fileInputRef}
             onChange={(event) => handleFileChange(event)}
           />
@@ -147,7 +149,7 @@ export default function ProductFormApi(props: Props) {
           </div>
         )}
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-          Description
+          Description*
           <textarea
             value={description}
             className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
@@ -158,14 +160,14 @@ export default function ProductFormApi(props: Props) {
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-          Category
+          Category*
           <select
             value={categoryId}
             className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text"
             name="categoryId"
             onChange={(event) => setCategoryId(event.currentTarget.value)}
           >
-            <option>Please select one...</option>
+            <option value="">Please select one...</option>
             {props.productCategories.map((productCategory) => {
               return (
                 <option

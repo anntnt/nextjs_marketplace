@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getProductCategoriesInsecure } from '../../../../../database/productCategories';
 import { getProductInsecure } from '../../../../../database/products';
 import { getUser } from '../../../../../database/users';
@@ -29,8 +29,15 @@ export default async function EditProductPage(props: Props) {
   }
 
   const productId = Number((await props.searchParams).productId);
+  if (!Number.isInteger(productId) || productId <= 0) {
+    notFound();
+  }
+
 
   const product = await getProductInsecure(productId);
+  if (!product || product.sellerId !== user.id) {
+    notFound();
+  }
 
   const productCategories = await getProductCategoriesInsecure();
 
@@ -41,7 +48,7 @@ export default async function EditProductPage(props: Props) {
       </h1>
       <EditProductFormApi
         username={user.username}
-        product={product!}
+        product={product}
         productCategories={productCategories}
       />
     </main>

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   type Product,
   updateProduct,
-  updateProductWithoutImage,
 } from '../../../database/products';
 import { updateProductSchema } from '../../../lib/validation/product';
 import { formatZodIssues } from '../../../lib/validation/formatErrors';
@@ -54,28 +53,17 @@ export async function PUT(
 
     const updatedProduct =
       sessionTokenCookie &&
-      ((result.data.imageUrl &&
-        (await updateProduct(sessionTokenCookie, {
-          id: result.data.id,
-          name: result.data.name,
-          price: result.data.price,
-          imageUrl: result.data.imageUrl,
-          description: result.data.description,
-          categoryId: result.data.categoryId,
-          brand: null,
-          size: null,
-          color: null,
-        }))) ||
-        (await updateProductWithoutImage(sessionTokenCookie, {
-          id: result.data.id,
-          name: result.data.name,
-          price: result.data.price,
-          description: result.data.description,
-          categoryId: result.data.categoryId,
-          brand: null,
-          size: null,
-          color: null,
-        })));
+      (await updateProduct(sessionTokenCookie, {
+        id: result.data.id,
+        name: result.data.name,
+        price: result.data.price,
+        imageUrl: result.data.imageUrl ?? null,
+        description: result.data.description,
+        categoryId: result.data.categoryId,
+        brand: null,
+        size: null,
+        color: null,
+      }));
 
     if (!updatedProduct) {
       return NextResponse.json({ error: 'Product update failed' });

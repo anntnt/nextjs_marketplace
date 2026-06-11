@@ -352,7 +352,9 @@ export const removeProduct = cache(
 export const updateProduct = cache(
   async (
     sessionToken: Session['token'],
-    updatedProduct: Omit<Product, 'sellerId'>,
+    updatedProduct: Omit<Product, 'sellerId' | 'imageUrl'> & {
+      imageUrl: string | null;
+    },
   ) => {
     const [productRaw] = await sql<
       {
@@ -372,7 +374,7 @@ export const updateProduct = cache(
       SET
         name = ${updatedProduct.name},
         price = ${updatedProduct.price},
-        image_url = ${updatedProduct.imageUrl},
+        image_url = COALESCE(${updatedProduct.imageUrl}, products.image_url),
         description = ${updatedProduct.description},
         size = NULL,
         color = NULL,
@@ -383,6 +385,7 @@ export const updateProduct = cache(
         sessions.token = ${sessionToken}
         AND sessions.expiry_timestamp > now()
         AND products.id = ${updatedProduct.id}
+        AND products.seller_id = sessions.user_id
       RETURNING
         products.*
     `;
@@ -395,50 +398,6 @@ export const updateProduct = cache(
   },
 );
 
-export const updateProductWithoutImage = cache(
-  async (
-    sessionToken: Session['token'],
-    updatedProduct: Omit<Product, 'sellerId' | 'imageUrl'>,
-  ) => {
-    const [productRaw] = await sql<
-      {
-        id: number;
-        name: string;
-        price: number;
-        imageUrl: string;
-        description: string;
-        size: string | null;
-        color: string | null;
-        sellerId: number;
-        categoryId: number | null;
-        brand: string | null;
-      }[]
-    >`
-      UPDATE products
-      SET
-        name = ${updatedProduct.name},
-        price = ${updatedProduct.price},
-        description = ${updatedProduct.description},
-        size = NULL,
-        color = NULL,
-        category_id = ${updatedProduct.categoryId}
-      FROM
-        sessions
-      WHERE
-        sessions.token = ${sessionToken}
-        AND sessions.expiry_timestamp > now()
-        AND products.id = ${updatedProduct.id}
-      RETURNING
-        products.*
-    `;
-    if (!productRaw) return undefined;
-    const product: Product = {
-      ...productRaw,
-      price: Number(productRaw.price),
-    };
-    return product;
-  },
-);
 
 export async function getProductsByIds(ids: number[]): Promise<Product[]> {
   if (ids.length === 0) return [];

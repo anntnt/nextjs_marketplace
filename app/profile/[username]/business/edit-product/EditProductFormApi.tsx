@@ -22,7 +22,9 @@ export default function EditProductFormApi(props: Props) {
   const [price, setPrice] = useState((props.product.price / 100).toFixed(2));
   const [imageUrl, setImageUrl] = useState(props.product.imageUrl);
   const [description, setDescription] = useState(props.product.description);
-  const [categoryId, setCategoryId] = useState(props.product.categoryId);
+  const [categoryId, setCategoryId] = useState(
+    props.product.categoryId?.toString() ?? '',
+  );
 
   const router = useRouter();
 
@@ -97,7 +99,7 @@ export default function EditProductFormApi(props: Props) {
         {' '}
         <input name="productId" type="hidden" value={props.product.id} />
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-          Name
+          Name*
           <input
             value={name}
             className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
@@ -107,7 +109,7 @@ export default function EditProductFormApi(props: Props) {
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-          Price €
+          Price* €
           <input
             value={price}
             type="number"
@@ -139,7 +141,7 @@ export default function EditProductFormApi(props: Props) {
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-          Description
+          Description*
           <textarea
             value={description}
             className=" block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
@@ -150,16 +152,16 @@ export default function EditProductFormApi(props: Props) {
           />
         </label>
         <label className="block mb-2 text-sm font-medium text-brand-text dark:text-dark-text">
-          Category
+          Category*
           <select
-            value={categoryId as number}
+            value={categoryId}
             className="block w-full rounded-lg border border-brand-muted/30 bg-brand-surface p-2.5 text-sm text-brand-text placeholder:text-brand-muted transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/40 dark:border-dark-muted/40 dark:bg-dark-surface dark:text-dark-text dark:placeholder:text-dark-muted dark:focus:border-brand-primary dark:focus:ring-brand-primary/40"
             name="categoryId"
-            onChange={(event) =>
-              setCategoryId(Number(event.currentTarget.value))
-            }
+            required
+            aria-required="true"
+            onChange={(event) => setCategoryId(event.currentTarget.value)}
           >
-            <option>Please select one...</option>
+            <option value="">Please select one...</option>
             {props.productCategories.map((productCategory) => {
               return (
                 <option
