@@ -9,9 +9,9 @@ import {
 } from '../../database/cartProducts';
 import { getProductsByIds } from '../../database/products';
 import { getUser } from '../../database/users';
-import { STANDARD_DELIVERY_PRICE } from '../../util/const';
-import { parseGuestCartCookie } from '../../util/guestCart';
-import { formatEuroFromCents } from '../../util/price';
+import { STANDARD_DELIVERY_PRICE } from '../../lib/checkout/constants';
+import { parseGuestCartCookie } from '../../lib/cart/guestCart';
+import { formatEuroFromCents } from '../../lib/format/price';
 import EditProductQuantitiesForm from './EditProductQuantitiesForm';
 import RemoveCartProductButton from './RemoveCartProductButton';
 

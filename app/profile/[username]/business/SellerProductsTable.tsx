@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { forwardRef, useCallback } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import type { Product } from '../../../../database/products';
-import { formatEuroFromCents } from '../../../../util/price';
+import { formatEuroFromCents } from '../../../../lib/format/price';
 import ButtonRemoveProduct from './ButtonRemoveProduct';
 
 type Props = {

@@ -6,8 +6,8 @@ import {
 } from '../../../database/products';
 import { updateProductSchema } from '../../../lib/validation/product';
 import { formatZodIssues } from '../../../lib/validation/formatErrors';
-import { cloudinaryUpload } from '../../../util/cloudinaryUpload';
-import { getCookie } from '../../../util/cookies';
+import { cloudinaryUpload } from '../../../lib/image/cloudinary';
+import { getCookie } from '../../../lib/cookies';
 
 export type ProductEditPut =
   | {

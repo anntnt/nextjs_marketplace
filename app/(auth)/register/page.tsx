@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getValidSessionToken } from '../../../database/sessions';
-import { getSafeReturnToPath } from '../../../util/validation';
+import { getSafeReturnToPath } from '../../../lib/validation/returnTo';
 import RegisterForm from './RegisterForm';
 
 type Props = {

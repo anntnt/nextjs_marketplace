@@ -1,5 +1,5 @@
 import type { Route } from 'next';
-import { getSafeReturnToPath } from '../../util/validation';
+import { getSafeReturnToPath } from '../validation/returnTo';
 
 const registerPaths = ['/register', '/register/seller', '/register/buyer'];
 

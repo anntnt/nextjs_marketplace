@@ -3,8 +3,8 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 import { getCartProducts } from '../../database/cartProducts';
 import { getUser } from '../../database/users';
-import { STANDARD_DELIVERY_PRICE } from '../../util/const';
-import { formatEuroFromCents } from '../../util/price';
+import { STANDARD_DELIVERY_PRICE } from '../../lib/checkout/constants';
+import { formatEuroFromCents } from '../../lib/format/price';
 import PaymentCheckComponent from './PaymentCheckComponent';
 
 export const metadata = {

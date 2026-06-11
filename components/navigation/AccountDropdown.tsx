@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { getSafeReturnToPath } from '../../util/validation';
+import { getSafeReturnToPath } from '../../lib/validation/returnTo';
 import { useMemo, useEffect, useRef, useState, useCallback } from 'react';
 import type {
   MouseEvent as ReactMouseEvent,

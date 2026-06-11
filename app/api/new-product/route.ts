@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createProduct, type Product } from '../../../database/products';
 import { newProductSchema } from '../../../lib/validation/product';
 import { formatZodIssues } from '../../../lib/validation/formatErrors';
-import { cloudinaryUpload } from '../../../util/cloudinaryUpload';
-import { getCookie } from '../../../util/cookies';
+import { cloudinaryUpload } from '../../../lib/image/cloudinary';
+import { getCookie } from '../../../lib/cookies';
 
 export type ProductCreatePost =
   | {

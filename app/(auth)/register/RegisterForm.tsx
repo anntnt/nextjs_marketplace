@@ -10,7 +10,7 @@ import {
   type RefObject,
   type ReactNode,
 } from 'react';
-import { getSafeReturnToPath } from '../../../util/validation';
+import { getSafeReturnToPath } from '../../../lib/validation/returnTo';
 import ErrorMessage from '../../../components/ui/ErrorMessage';
 import type { RegisterResponseBody } from '../api/register/route';
 import type { Route } from 'next';

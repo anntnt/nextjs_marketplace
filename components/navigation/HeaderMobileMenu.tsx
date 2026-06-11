@@ -9,7 +9,7 @@ import { isSeller } from '../../lib/navigation/header';
 type Props = {
   user: User | undefined;
   isOpen: boolean;
-  sellerRegisterHref: Route | string;
+  sellerRegisterHref: Route;
   onClose: () => void;
 };
 

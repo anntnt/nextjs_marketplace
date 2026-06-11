@@ -1,12 +1,12 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { removeCartProducts } from '../../../../database/cartProducts';
-import { getCookie } from '../../../../util/cookies';
+import { getCookie } from '../../../../lib/cookies';
 import {
   parseGuestCartCookie,
   removeGuestCartItem,
   serializeGuestCart,
-} from '../../../../util/guestCart';
+} from '../../../../lib/cart/guestCart';
 
 export type CartProductResponseDelete =
   | {

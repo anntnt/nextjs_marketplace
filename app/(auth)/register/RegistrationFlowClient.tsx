@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import RegisterForm, { type RegisterFormVariant } from './RegisterForm';
 import { logout } from '../logout/actions';
-import { getSafeReturnToPath } from '../../../util/validation';
+import { getSafeReturnToPath } from '../../../lib/validation/returnTo';
 import type { Route } from 'next';
 
 const SELLER_ROLE_ID = 2;

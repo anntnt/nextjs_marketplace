@@ -10,13 +10,13 @@ import {
 import { cartProductSchema } from '../../../lib/validation/cart';
 import { formatZodIssues } from '../../../lib/validation/formatErrors';
 import { getUser } from '../../../database/users';
-import { getCookie } from '../../../util/cookies';
+import { getCookie } from '../../../lib/cookies';
 import {
   parseGuestCartCookie,
   replaceGuestCartItemQuantity,
   serializeGuestCart,
   upsertGuestCartItem,
-} from '../../../util/guestCart';
+} from '../../../lib/cart/guestCart';
 
 export type CreateCartProductResponseBodyPost =
   | {
@@ -44,7 +44,6 @@ export async function POST(
   }
 
   // 3. Get the token from the cookie
-  /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
   const cookieStore = await cookies();
   const guestCartItems = parseGuestCartCookie(
@@ -125,7 +124,6 @@ export async function PUT(
   }
 
   // 3. Get the token from the cookie
-  /* Will do later, when user doesn't login then store cart data in to localStorage, but now user should login to add to cart ...*/
   const sessionTokenCookie = await getCookie('sessionToken');
   const cookieStore = await cookies();
   const guestCartItems = parseGuestCartCookie(

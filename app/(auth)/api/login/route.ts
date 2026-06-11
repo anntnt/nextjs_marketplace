@@ -10,8 +10,8 @@ import {
   type UserLogin,
   userLoginSchema,
 } from '../../../../migrations/0001-createTableUsers';
-import { secureCookieOptions } from '../../../../util/cookies';
-import { parseGuestCartCookie } from '../../../../util/guestCart';
+import { secureCookieOptions } from '../../../../lib/cookies';
+import { parseGuestCartCookie } from '../../../../lib/cart/guestCart';
 
 export type LoginResponseBody =
   | {

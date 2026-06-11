@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import { getCategoryProductWithSellerInsecure } from '../../../../database/products';
 import { getUser } from '../../../../database/users';
-import { formatEuroFromCents } from '../../../../util/price';
+import { formatEuroFromCents } from '../../../../lib/format/price';
 import ProductForm from './productForm';
 
 type Props = {

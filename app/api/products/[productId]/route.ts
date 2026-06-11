@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { type Product, removeProduct } from '../../../../database/products';
-import { getCookie } from '../../../../util/cookies';
+import { getCookie } from '../../../../lib/cookies';
 
 export type ProductResponseDelete =
   | {

@@ -7,7 +7,7 @@ import type { Product } from '../../../../../database/products';
 import type { ProductEditPut } from '../../../../api/edit-product/route';
 import ErrorMessage from '../../../../../components/ui/ErrorMessage';
 import type { Route } from 'next';
-import { getProductImagePreviewUrl } from '../../../../../util/image';
+import { getProductImagePreviewUrl } from '../../../../../lib/image/productImage';
 
 type Props = {
   username: string;

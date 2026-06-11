@@ -10,7 +10,7 @@ import { getUser } from '../database/users';
 import {
   getGuestCartTotalQuantity,
   parseGuestCartCookie,
-} from '../util/guestCart';
+} from '../lib/cart/guestCart';
 import { cookies, headers } from 'next/headers';
 import Header from '../components/navigation/Header';
 

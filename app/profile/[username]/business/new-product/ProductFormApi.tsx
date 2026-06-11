@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import type { ProductCategory } from '../../../../../database/productCategories';
 import type { ProductCreatePost } from '../../../../api/new-product/route';
 import ErrorMessage from '../../../../../components/ui/ErrorMessage';
-import { getProductImagePreviewUrl } from '../../../../../util/image';
+import { getProductImagePreviewUrl } from '../../../../../lib/image/productImage';
 
 type Props = {
   sellerId: number;
